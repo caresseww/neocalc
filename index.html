@@ -664,6 +664,7 @@ document.addEventListener('input',e=>{
   if(t.id==='wt'){
     const v=parseFloat(t.value); if(!isFinite(v))return;
     W=Math.min(6,Math.max(0.4,v));
+    if(W!==v)$('wt').value=String(W);
     $('wtNow').textContent='按 '+W.toFixed(2)+'kg 计算';
     try{localStorage.setItem('vasoW',String(W));}catch(err){}
     updateAll(); return;
