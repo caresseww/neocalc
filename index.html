@@ -141,7 +141,6 @@ details.more summary{font-size:12.5px; color:var(--ink2); font-weight:700; curso
 .mrow.warn{border-left-color:var(--red); background:var(--redbg); border-radius:0 8px 8px 0; padding:6px 9px;}
 .mrow.cmp{border-left-color:var(--navy2); background:var(--navybg); border-radius:0 8px 8px 0; padding:6px 9px;}
 .copied{font-size:12.5px; color:#0c7a4d; font-weight:800;}
-.foot{margin-top:16px; font-size:10.5px; color:var(--ink2); border-top:1px solid var(--line); padding-top:8px; line-height:1.6;}
 .metarow{display:flex; gap:18px; row-gap:10px; flex-wrap:wrap; align-items:center; background:#fff; border:1px solid var(--line);
   border-radius:11px; padding:11px 13px; margin-top:10px; font-size:13px; color:var(--ink2);}
 .metarow label{display:flex; align-items:center; gap:5px; font-weight:700; white-space:nowrap;}
@@ -167,7 +166,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   .chead .csum{font-size:10.5px;}
 }
 @media print{
-  header,nav,.btnrow,details,#p0,#p1,#pS,.searchrow,#cartbar,.copied,.del,.foot{display:none !important;}
+  header,nav,.btnrow,details,#p0,#p1,#pS,.searchrow,#cartbar,.copied,.del{display:none !important;}
   .page{display:block !important;}
 }
 </style>
@@ -228,7 +227,6 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <details class="ref"><summary>🖼 长图预览（长按保存/转发）</summary><div class="ref-body"><img id="imgPrev" style="display:none"></div></details>
   <details class="ref"><summary>📄 复制文本预览</summary><div class="ref-body"><textarea id="ordTxt"></textarea></div></details>
 </div>
-<div class="foot">换算口径：本院医嘱库 2025+ 实测 · 剂量与泵速独立填写 · 须上级医师核对后录入</div>
 <div id="cartbar">
   <span style="font-size:17px">🧺</span>
   <span class="clabel">医嘱单 <b id="cartCnt">0</b> 条</span>
