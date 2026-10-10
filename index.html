@@ -382,7 +382,7 @@ function calcH24(id){
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
           `实际剂量：液速<b>${f2(R)}ml/h</b>＝<b>${f2(R*2.4)} μg/kg/h</b>`,
           `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`,
-          `调液速：0.1ml/h＝<b>${f2(dose/R)} μg/kg/h</b>`], R, dose};
+          `调液速：0.1ml/h＝<b>0.24 μg/kg/h</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
@@ -395,7 +395,7 @@ function calcH24(id){
     ck:[ck1,
         `实际剂量：泵速<b>${f2(R)}ml/h</b>＝<b>${f2(R*g.rateDiv)} ${g.unit}</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`,
-        `调液速：0.1ml/h＝<b>${f2(dose/R)} ${g.unit}</b>`], R, dose};
+        `调液速：0.1ml/h＝<b>${f(g.rateDiv/10,2)} ${g.unit}</b>`], R, dose};
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
 function calcAmp(id){
