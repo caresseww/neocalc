@@ -74,7 +74,10 @@ nav button.on{background:var(--navy); border-color:var(--navy); color:#fff; box-
 .ckbox{border:1px dashed #8a8a90; border-radius:11px; padding:8px 11px; margin-top:7px; background:#fafaf7;
   font-size:12px; color:#333;}
 .ckbox .t{font-size:11px; font-weight:800; color:var(--ink2); letter-spacing:1px; margin-bottom:3px;}
-.ckbox .r{font-family:var(--mono); font-size:11.5px; margin-top:3px; word-break:break-all;}
+.ckbox .r{font-family:var(--mono); font-size:11.5px; margin-top:2px; word-break:break-all; line-height:1.4;}
+.ckbox .r b{color:var(--navy); font-weight:800;}
+.dosebox{background:var(--navybg); border:1px solid #9db4d8;}
+.dosebox .t{color:var(--navy2);}
 .btnrow{display:flex; gap:9px; margin-top:9px; align-items:center; flex-wrap:wrap;}
 .btn{border:none; border-radius:11px; padding:10px 18px; font-size:14px; font-weight:800; cursor:pointer;}
 .btn.pri{background:var(--navy); color:#fff;}
@@ -278,19 +281,19 @@ function maintHtml(c){
     <h3>${c.title} <span class="en">${g.en}</span></h3>
     <div class="spec">一支规格：<b>${g.spec}</b></div>
     <div class="labeq" style="margin-top:8px">剂量 <input id="din_${c.id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}
-      <span class="hint">泵速在下方板块内可自由调整</span></div>
-    <div class="modetabs"><button id="mt_h24_${c.id}" class="on" onclick="setMode('${c.id}','h24')">按 24 小时配</button><button id="mt_amp_${c.id}" onclick="setMode('${c.id}','amp')">按整支配</button></div>
-    <div id="sec_h24_${c.id}">
-      <div class="labeq">泵速 <input id="rin_${c.id}" type="number" inputmode="decimal" step="0.1" min="0"> ml/h</div>
-      <div class="ordbox" id="ord_${c.id}"></div>
-      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${c.id}">—</span>kg）</div><div class="ckr" id="ckr_${c.id}"></div></div>
+      ｜ 泵速 <input id="rin_${c.id}" type="number" inputmode="decimal" step="0.1" min="0"> ml/h
+      <span class="hint">两者互相联动，改哪个都行</span></div>
+    <div class="ordbox" id="ord_${c.id}"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${c.id}">—</span>kg）</div><div class="ckr" id="ckr_${c.id}"></div></div>
+    <div class="ckbox dosebox"><div class="t">剂量说明 · 三源对照（单位：${g.unit}）</div>
+      <div class="r"><b>规格</b>：每支 ${g.spec}</div>
+      <div class="r"><b>UpToDate英文版</b>：${g.utd}</div>
+      <div class="r"><b>手册第六版</b>：${g.hb}</div>
+      <div class="r"><b>本院医嘱库既往</b>：${g.hosp.replace('本院既往','')}</div>
     </div>
-    <div id="sec_amp_${c.id}" style="display:none">
-      <div class="labeq">目标剂量 <input id="adin_${c.id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}
-        ｜ 泵速 <input id="rin2_${c.id}" type="number" inputmode="decimal" step="0.1" min="0.05"> ml/h</div>
-      <div class="labeq">整支药量 <input id="amin_${c.id}" type="number" inputmode="decimal" step="${g.specMg<1?0.1:1}" min="0" value="${g.specMg}"> mg（可改，如用半支）</div>
-      <div class="ordbox" id="aord_${c.id}"></div>
-      <div class="ckbox"><div class="t">核对</div><div class="ackr" id="ackr_${c.id}"></div></div>
+    <div class="ckbox dosebox"><div class="t">剂量说明 · 三源对照</div>
+      <div class="r"><b>规格</b>：每支 ${g.spec}</div>
+      <div class="r"><b>范围</b>：${g.utd}｜${g.hosp}</div>
     </div>
     <div class="btnrow"><button class="btn pri" id="add_${c.id}" onclick="toggleBasket('${c.id}')">＋ 加医嘱</button></div>
     <details class="more"><summary>应用场景 · 药理 · 不良反应 ▾</summary>
