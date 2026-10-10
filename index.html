@@ -13,7 +13,17 @@
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
 body{margin:0; background:var(--paper); color:var(--ink);
   font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif; font-size:15px; line-height:1.55;}
-.wrap{max-width:640px; margin:0 auto; padding:0 12px 56px;}
+.wrap{max-width:640px; margin:0 auto; padding:0 12px 96px;}
+#cartbar{position:fixed; left:12px; right:12px; bottom:calc(10px + env(safe-area-inset-bottom)); z-index:60;
+  background:linear-gradient(165deg,#0e315f,#155089); color:#fff; border-radius:16px;
+  display:flex; align-items:center; gap:10px; padding:11px 16px; box-shadow:0 4px 18px rgba(4,16,34,.4);}
+#cartbar .clabel{font-size:13.5px; font-weight:700; opacity:.95;}
+#cartbar .clabel b{font-family:var(--mono); font-size:15px;}
+#cartbar .cbtn{margin-left:auto; border:none; background:#fff; color:var(--navy); border-radius:11px;
+  padding:9px 16px; font-size:13.5px; font-weight:800; cursor:pointer;}
+#cartbar .cbtn:active{opacity:.85;}
+.linklike{border:none; background:none; color:var(--navy2); font-size:12.5px; font-weight:800;
+  padding:8px 4px; cursor:pointer;}
 header{position:sticky; top:0; z-index:50; background:linear-gradient(165deg,#081c38 0%,#0e315f 55%,#155089 100%); color:#fff;
   padding:16px 18px 12px; box-shadow:0 2px 12px rgba(4,16,34,.35); overflow:hidden;
   transition:padding .18s ease;}
@@ -157,7 +167,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   .chead .csum{font-size:10.5px;}
 }
 @media print{
-  header,nav,.btnrow,details,#p0,#p1,#pS,.searchrow,.copied,.del,.foot{display:none !important;}
+  header,nav,.btnrow,details,#p0,#p1,#pS,.searchrow,#cartbar,.copied,.del,.foot{display:none !important;}
   .page{display:block !important;}
 }
 </style>
@@ -175,7 +185,6 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <nav>
     <button data-act="go" data-page="0" class="on" id="nav0">血管活性药物</button>
     <button data-act="go" data-page="1" id="nav1">镇静镇痛药</button>
-    <button data-act="go" data-page="2" id="nav2">医嘱单<sup id="bkCnt" style="color:#b45309"></sup></button>
   </nav>
   <div class="searchrow" id="searchrow">
     <input id="q" type="search" inputmode="search" placeholder="搜药名：多巴胺 / 芬太尼 / 力月西…" autocomplete="off">
@@ -220,6 +229,10 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <details class="ref"><summary>📄 复制文本预览</summary><div class="ref-body"><textarea id="ordTxt"></textarea></div></details>
 </div>
 <div class="foot">换算口径：本院医嘱库 2025+ 实测 · 剂量与泵速独立填写 · 须上级医师核对后录入</div>
+<div id="cartbar">
+  <span style="font-size:17px">🧺</span>
+  <span class="clabel">医嘱单 <b id="cartCnt">0</b> 条</span>
+  <button class="cbtn" data-act="go" data-page="2">查看医嘱单 ›</button>
 </div>
 
 <script>
@@ -368,8 +381,8 @@ function calcH24(id){
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
   if(g.dynamic){
     const bagMg=dose*W*12/1000;
-    return {t1:`特利加压素${f(bagMg,2)}mg，入0.9%氯化钠至12ml，1ml/h`,
-      prep:[`特利加压素 ${f(bagMg,2)}mg/12h`,`0.9%氯化钠或5%葡萄糖 至12ml`],
+    return {t1:`特利加压素1ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
+      prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至12ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(bagMg,2)}mg</b>（12h袋）`,
           `液体核对：泵速<b>1ml/h</b>；12小时入液<b>12ml</b>`], R:1, dose};
   }
@@ -474,7 +487,7 @@ function cardHtml(id){
         <button data-act="mode" data-card="${id}" data-mode="amp">按整支配</button>
       </div>
       <div id="sec_h24_${id}">
-        ${g.dynamic?'':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
+        ${g.dynamic?'<div class="labeq">泵速 <b>1</b> ml/h · 12h袋匀速</div>':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       </div>
@@ -483,7 +496,8 @@ function cardHtml(id){
         <div class="ordbox" id="aord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
       </div>
-      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@maint" id="add_${id}_maint">＋ 加医嘱</button></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@maint" id="add_${id}_maint">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
     </div>`;
   }
   /* 静推区 */
@@ -495,7 +509,8 @@ function cardHtml(id){
       <div class="labeq">剂量 <input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"> ${u}</div>
       <div class="ordbox" id="ordp_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
-      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
     </div>`;
   }
   /* 复苏区 */
@@ -508,7 +523,8 @@ function cardHtml(id){
         <div class="labeq">剂量 <input data-act="resus" data-rt="iv" id="din_${id}_iv" type="number" inputmode="decimal" step="0.05" min="0.05" max="0.3" value="0.2"> ml/kg（0.1–0.3＝0.01–0.03mg/kg）</div>
         <div class="ordbox" id="ord_${id}_iv"></div>
         <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${id}_iv">—</span>kg）</div><div id="ckr_${id}_iv"></div></div>
-        <div class="btnrow"><button class="btn red" data-act="add" data-key="${id}@resus@iv" id="add_${id}_iv">＋ 复苏静推加医嘱</button></div>
+        <div class="btnrow"><button class="btn red" data-act="add" data-key="${id}@resus@iv" id="add_${id}_iv">＋ 复苏静推加医嘱</button>
+          <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
         <div class="note">q3–5min 可重复；正压通气＋胸外按压下给药；推注≥1分钟；外渗→酚妥拉明局部浸润</div>
       </div>
       <div class="redsec">
@@ -526,7 +542,7 @@ function cardHtml(id){
       <span class="tri" id="tri_${id}">▸</span>
       <span class="ct">${g.name}</span><span class="en">${g.en}</span>
       <span class="cspec">${g.spec}</span>
-      <span class="csum" id="sum_${id}"></span>
+      <span class="csum">每支 ${f(g.specMg,2)}mg</span>
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       ${formTabs}
@@ -626,26 +642,55 @@ function updCard(id){
       const cw=$('ckw_'+id+'_'+rt); if(cw)cw.textContent=W.toFixed(2);
     });
   }
-  /* 摘要（按当前形式） */
-  const sumEl=$('sum_'+id);
-  if(sumEl){
-    const form=S[id].form;
-    if(form==='maint'&&$('ord_'+id)){
-      const pm=isPerMin(g);
-      const dEl=parseFloat($('din_'+id).value);
-      const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
-      const rEl=parseFloat($('rin_'+id).value);
-      const R=g.dynamic?1:((isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g)));
-      sumEl.textContent=f(dose,2)+' '+g.unit+' · '+f2(R)+'ml/h';
-    }else if(form==='push'&&pushDose!==null){
-      sumEl.textContent=f(pushDose,2).replace(/\.0+$/,'')+' '+(id==='fentanyl'?'μg/kg':'mg/kg');
-    }else if(form==='resus'){
-      sumEl.textContent='IV '+f(RES.iv,2)+' · ET '+f(RES.et,2)+' ml/kg';
-    }
-  }
   document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
 }
 function updateAll(){DRUGCARDS.forEach(c=>updCard(c.id)); renderBasket();}
+
+/* ================= 搜索（跨两页聚合，DOM 移动保留输入状态） ================= */
+var searching=false, curPage=0;
+function applySearch(qraw){
+  const q=(qraw||'').trim();
+  if(!q){exitSearch(); return;}
+  searching=true;
+  if(view.drug)exitDrugSilent();
+  if(view.grp!==null)resetView();
+  rehome();
+  openCap=null;
+  const words=q.toLowerCase().split(/\s+/);
+  const hits=DRUGCARDS.filter(dc=>{
+    const g=DRUGS[dc.id];
+    const hay=(g.name+' '+g.en+' '+(ALIAS[dc.id]||'')).toLowerCase();
+    return words.every(w=>hay.indexOf(w)>-1);
+  });
+  $('holderS').innerHTML='';
+  hits.forEach(dc=>{
+    const el=$('card_'+dc.id);
+    if(el){
+      if($('body_'+dc.id).style.display==='none')toggleCap(dc.id,false);
+      el.style.display='block';
+      $('holderS').appendChild(el);
+    }
+  });
+  $('sEmpty').style.display=hits.length?'none':'block';
+  ['nav0','nav1'].forEach((k,i)=>{$(k).className=i===curPage?'on':'';});
+  ['p0','p1','p2'].forEach(k=>{$(k).className='page';});
+  $('pS').className='page on';
+}
+function rehome(){
+  GROUPS.forEach((gr,gi)=>{
+    const gb=$('lbody_'+gi); if(!gb)return;
+    gr.cards.forEach(id=>{const el=$('card_'+id); if(el){el.style.display=''; gb.appendChild(el);}});
+  });
+  $('holderS').innerHTML='';
+  openCap=null;
+}
+function exitSearch(){
+  if(!searching)return;
+  searching=false;
+  $('q').value='';
+  rehome();
+  go(curPage);
+}
 
 function setMode(id,m){
   S[id].mode=m;
@@ -739,7 +784,7 @@ function updCga(){
 }
 function renderBasket(){
   const ks=Object.keys(basket);
-  $('bkCnt').textContent=ks.length?`(${ks.length})`:'';
+  $('cartCnt').textContent=ks.length;
   const ms=metaSummary();
   $('ordMeta').innerHTML=(ms.length?ms.join(' · ')+' · ':'')+'体重 <b style="font-family:var(--mono)">'+W.toFixed(2)+'</b> kg · '+new Date().toLocaleDateString('zh-CN');
   $('ordList').innerHTML=ks.length?ks.map((k,i)=>{
@@ -817,9 +862,10 @@ function go(n){
   curPage=n;
   resetView();
   if(searching){searching=false; $('q').value=''; rehome();}
-  ['nav0','nav1','nav2'].forEach((k,i)=>{$(k).className=n===i?'on':'';});
+  ['nav0','nav1'].forEach((k,i)=>{$(k).className=n===i?'on':'';});
   ['p0','p1','p2','pS'].forEach((k,i)=>{$(k).className='page'+(n===i?' on':'');});
   $('searchrow').style.display=n===2?'none':'';
+  $('cartbar').style.display=n===2?'none':'flex';
   window.scrollTo(0,0);
 }
 
