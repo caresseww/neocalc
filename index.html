@@ -75,6 +75,7 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .ghead:active{background:#eef3fb;}
 .gtri{color:var(--navy2); font-size:13px; width:13px; flex:0 0 auto;}
 .gtitle2{font-size:16px; font-weight:800;}
+.gico{font-size:21px; flex:0 0 auto;}
 .gsub{font-size:11.5px; color:var(--ink2); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .gmain{min-width:0; flex:1;}
 .gcnt{margin-left:auto; font-family:var(--mono); font-size:12px; color:#fff; background:var(--navy2);
@@ -183,23 +184,16 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
     <input id="wt" type="number" inputmode="decimal" step="0.05" min="0.4" max="6" value="1.5"><span class="unit">kg</span>
     <span class="wtnow" id="wtNow"></span>
   </div>
-  <nav>
-    <button data-act="go" data-page="0" class="on" id="nav0">血管活性药物</button>
-    <button data-act="go" data-page="1" id="nav1">镇静镇痛药</button>
-  </nav>
   <div class="searchrow" id="searchrow">
     <input id="q" type="search" inputmode="search" placeholder="搜药名：多巴胺 / 芬太尼 / 力月西…" autocomplete="off">
   </div>
 </header>
 
 <div class="wrap">
-<div class="page on" id="p0">
-  <div id="cats0"></div>
-  <div id="list0"></div>
-</div>
-<div class="page" id="p1">
-  <div id="cats1"></div>
-  <div id="list1"></div>
+<div class="page on" id="pMain">
+  <div id="viewL1"></div>
+  <div id="viewL2" style="display:none"></div>
+  <div id="viewL3" style="display:none"></div>
 </div>
 <div class="page" id="pS">
   <div id="holderS"></div>
@@ -207,6 +201,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 </div>
 
 <div class="page" id="p2">
+  <div class="backrow" data-act="go" data-page="0">‹ 返回药物</div>
   <div class="metarow">
     <label>床号 <input data-meta="bed" placeholder="选填"></label>
     <label>姓名 <input data-meta="name" placeholder="选填"></label>
@@ -386,6 +381,7 @@ function calcH24(id){
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
       prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
+          `实际剂量：液速<b>${f2(R)}ml/h</b>＝<b>${f2(R*2.4)} μg/kg/h</b>`,
           `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`,
           `调液速：0.1ml/h＝<b>0.24 μg/kg/h</b>`], R, dose};
   }
@@ -397,7 +393,9 @@ function calcH24(id){
     : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,2)}μg/h）`;
   return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/${unitTail(g)}，维持24小时`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
-    ck:[ck1,`液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`,
+    ck:[ck1,
+        `实际剂量：泵速<b>${f2(R)}ml/h</b>＝<b>${f2(R*g.rateDiv)} ${g.unit}</b>`,
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`,
         `调液速：0.1ml/h＝<b>${f(g.rateDiv/10,2)} ${g.unit}</b>`], R, dose};
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
@@ -558,40 +556,70 @@ function cardHtml(id){
   </div>`;
 }
 function renderCards(){
-  const cats={0:'',1:''}, lists={0:'',1:''};
-  GROUPS.forEach((gr,gi)=>{
-    const names=gr.cards.map(id=>DRUGS[id].name).join(' · ');
-    cats[gr.page]+=`<div class="group" data-act="cat" data-grp="${gi}">
-      <div class="ghead">
-        <span class="gtri">▸</span>
-        <div class="gmain"><div class="gtitle2">${gr.title}</div><div class="gsub">${names}</div></div>
-        <span class="gcnt">${gr.cards.length}</span>
-      </div>
-    </div>`;
-    lists[gr.page]+=`<div id="lwrap_${gi}" style="display:none">
-      <div class="backrow" data-act="backcat" data-grp="${gi}">‹ 分类</div>
+  /* L1: 两大类框 */
+  const l1meta=[{p:0,name:'血管活性药物',icon:'🫀'},{p:1,name:'镇静镇痛药',icon:'😴'}];
+  $('viewL1').innerHTML=l1meta.map(m=>{
+    const grps=GROUPS.filter(g=>g.page===m.p);
+    const n=grps.reduce((a,g)=>a+g.cards.length,0);
+    const sub=grps.map(g=>g.title).join(' · ');
+    return `<div class="group" data-act="l1" data-l1="${m.p}">
+      <div class="ghead"><span class="gico">${m.icon}</span>
+        <div class="gmain"><div class="gtitle2">${m.name}</div><div class="gsub">${sub}</div></div>
+        <span class="gcnt">${n}</span>
+      </div></div>`;
+  }).join('');
+  /* L2: 分类框(按大类容器), L3: 药列表 */
+  $('viewL2').innerHTML=`<div class="backrow" data-act="backl1">‹ 返回</div>`+
+    [0,1].map(p=>`<div id="l2g_${p}" style="display:none">`+
+      GROUPS.map((gr,gi)=>gr.page===p?`<div class="group" data-act="cat" data-grp="${gi}">
+        <div class="ghead">
+          <span class="gtri">▸</span>
+          <div class="gmain"><div class="gtitle2">${gr.title}</div><div class="gsub">${gr.cards.map(id=>DRUGS[id].name).join(' · ')}</div></div>
+          <span class="gcnt">${gr.cards.length}</span>
+        </div></div>`:'').join('')+`</div>`).join('');
+  $('viewL3').innerHTML=GROUPS.map((gr,gi)=>`<div id="lwrap_${gi}" style="display:none">
+      <div class="backrow" data-act="backcat" data-grp="${gi}">‹ ${l1meta[gr.page].name}</div>
       <div class="backrow" data-act="backlist" data-grp="${gi}" id="backdrug_${gi}" style="display:none">‹ 返回列表</div>
       <div id="lbody_${gi}">${gr.cards.map(id=>cardHtml(id)).join('')}</div>
-    </div>`;
-  });
-  $('cats0').innerHTML=cats[0]; $('list0').innerHTML=lists[0];
-  $('cats1').innerHTML=cats[1]; $('list1').innerHTML=lists[1];
+    </div>`).join('');
 }
-/* drill-down 视图：分类 → 药列表 → 单药详情（切换+退出，不原地展开） */
-var view={grp:null, drug:null, page:null};
-function openCat(gi){
-  const gr=GROUPS[gi];
-  view={grp:gi, drug:null, page:gr.page};
-  $('cats'+gr.page).style.display='none';
-  $('lwrap_'+gi).style.display='block';
+/* ===== drill-down 四级视图：大类 → 分类 → 药列表 → 详情（切换+退出） ===== */
+var view={l1:null, grp:null, drug:null};
+const L1NAME=['血管活性药物','镇静镇痛药'];
+function show(a,b,c){
+  $('viewL1').style.display=a?'block':'none';
+  $('viewL2').style.display=b?'block':'none';
+  $('viewL3').style.display=c?'block':'none';
 }
+function openL1(x){
+  view={l1:x, grp:null, drug:null};
+  show(false,true,false);
+  [0,1].forEach(p=>{$('l2g_'+p).style.display=p===x?'block':'none';});
+  window.scrollTo(0,0);
+}
+function backL1(){
+  view={l1:null, grp:null, drug:null};
+  show(true,false,false);
+  window.scrollTo(0,0);
+}
+
 function resetView(){
   if(view.drug)exitDrugSilent();
-  if(view.grp!==null){
-    $('lwrap_'+view.grp).style.display='none';
-    $('cats'+view.page).style.display='block';
-  }
-  view={grp:null, drug:null, page:null};
+  if(view.grp!==null)backCat();
+  else if(view.l1!==null)backL1();
+}
+function openCat(gi){
+  view.l1=GROUPS[gi].page;
+  view.grp=gi;
+  show(false,false,true);
+  GROUPS.forEach((g,i)=>{$('lwrap_'+i).style.display=i===gi?'block':'none';});
+  window.scrollTo(0,0);
+}
+function backCat(){
+  view.grp=null;
+  show(false,true,false);
+  [0,1].forEach(p=>{$('l2g_'+p).style.display=p===view.l1?'block':'none';});
+  window.scrollTo(0,0);
 }
 function enterDrug(id){
   view.drug=id;
@@ -609,10 +637,6 @@ function exitDrugSilent(){
   $('backdrug_'+gi).style.display='none';
   openCap=null;
   view.drug=null;
-}
-function exitDrug(){
-  exitDrugSilent();
-  updCard&&null;
 }
 
 /* 单卡刷新：按 S[id].form 所在区刷新 + 摘要 */
@@ -677,8 +701,8 @@ function applySearch(qraw){
     }
   });
   $('sEmpty').style.display=hits.length?'none':'block';
-  ['nav0','nav1'].forEach((k,i)=>{$(k).className=i===curPage?'on':'';});
-  ['p0','p1','p2'].forEach(k=>{$(k).className='page';});
+  $('pMain').className='page';
+  $('p2').className='page';
   $('pS').className='page on';
 }
 function rehome(){
@@ -757,6 +781,7 @@ function gotoDrug(key){
   const gi=GROUPS.findIndex(g=>g.cards.includes(id)); if(gi<0)return;
   if(dc.forms.includes(form))S[id].form=form;
   go(dc.page);
+  view.l1=dc.page;
   openCat(gi);
   enterDrug(id);
 }
@@ -877,8 +902,9 @@ function go(n){
   curPage=n;
   resetView();
   if(searching){searching=false; $('q').value=''; rehome();}
-  ['nav0','nav1'].forEach((k,i)=>{$(k).className=n===i?'on':'';});
-  ['p0','p1','p2','pS'].forEach((k,i)=>{$(k).className='page'+(n===i?' on':'');});
+  $('pMain').className='page'+(n===0?' on':'');
+  $('p2').className='page'+(n===2?' on':'');
+  $('pS').className='page';
   $('searchrow').style.display=n===2?'none':'';
   $('cartbar').style.display=n===2?'none':'flex';
   window.scrollTo(0,0);
@@ -915,8 +941,10 @@ document.addEventListener('click',e=>{
       else if(view.grp!==null){ enterDrug(id); }
       break;
     }
+    case 'l1': openL1(parseInt(b.dataset.l1,10)); break;
+    case 'backl1': backL1(); break;
     case 'cat': openCat(parseInt(b.dataset.grp,10)); break;
-    case 'backcat': resetView(); break;
+    case 'backcat': backCat(); break;
     case 'backlist': exitDrugSilent(); break;
     case 'form': setForm(b.dataset.card,b.dataset.form); break;
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
@@ -935,7 +963,10 @@ window.addEventListener('scroll',()=>{
   if(window._raf)return; window._raf=true;
   requestAnimationFrame(()=>{
     window._raf=false;
-    document.querySelector('header').className=window.scrollY>48?'compact':'';
+    const h=document.querySelector('header'), y=window.scrollY;
+    /* 迟滞带：>80 收起、<30 展开，避免阈值附近抖动闪屏 */
+    if(y>80)h.className='compact';
+    else if(y<30)h.className='';
   });
 },{passive:true});
 
