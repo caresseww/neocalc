@@ -340,7 +340,7 @@ const DRUGCARDS=[
  {id:'epi',page:0,forms:['maint','resus']},
  {id:'ne',page:0,forms:['maint']},
  {id:'milrinone',page:0,forms:['maint']},
-  {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['maint','load']},
+  {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['load','maint']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
@@ -495,7 +495,7 @@ function cardHtml(id){
   let maintSec='';
   if(dc.forms.includes('maint')){
     const tab1=g.dynamic?'按12小时袋配':'按24小时配';
-    maintSec=`<div id="sec_maint_${id}">
+    maintSec=`<div id="sec_maint_${id}" style="display:${c.form==='maint'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
       <div class="modetabs" id="mt_${id}">
         <button data-act="mode" data-card="${id}" data-mode="h24" class="on">${tab1}</button>
@@ -520,7 +520,7 @@ function cardHtml(id){
   if(dc.forms.includes('push')){
     const u=id==='fentanyl'?'μg/kg':'mg/kg';
     const def=id==='fentanyl'?2:0.1, step=id==='fentanyl'?0.5:0.05;
-    pushSec=`<div id="sec_push_${id}" style="display:none">
+    pushSec=`<div id="sec_push_${id}" style="display:${c.form==='push'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="1">＋</button></div> ${u}</div>
       <div class="ordbox" id="ordp_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
@@ -531,7 +531,7 @@ function cardHtml(id){
   /* 首剂区 */
   let loadSec='';
   if(dc.forms.includes('load')){
-    loadSec=`<div id="sec_load_${id}" style="display:none">
+    loadSec=`<div id="sec_load_${id}" style="display:${c.form==='load'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinl_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinl_${id}" type="number" inputmode="decimal" step="5" min="0" value="20"><button type="button" class="stp" data-act="step" data-t="dinl_${id}" data-dir="1">＋</button></div> μg/kg（首剂，20μg/kg）</div>
       <div class="ordbox" id="ordl_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrl_${id}"></div></div>
@@ -761,7 +761,7 @@ function setMode(id,m){
 }
 function setForm(id,f){
   S[id].form=f;
-  ['maint','push','resus'].forEach(fm=>{
+  ['load','maint','push','resus'].forEach(fm=>{
     const sec=$('sec_'+fm+'_'+id);
     if(sec)sec.style.display=f===fm?'block':'none';
   });
