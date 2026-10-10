@@ -380,12 +380,13 @@ function calcH24(id){
   const dEl=parseFloat($('din_'+id).value);
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
   if(g.dynamic){
-    const bagMg=dose*W*12/1000;
-    const R=50/12;
+    const bagMg=0.12*W;   /* 标准袋：0.12mg/kg→50ml（=10μg/kg/h×12h），剂量变化靠液速 */
+    const rEl=parseFloat($('rin_'+id).value);
+    const R=(isFinite(rEl)&&rEl>0)?rEl:50/12;
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
       prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
-      ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(bagMg,2)}mg</b>（12h袋）`,
-          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>50ml</b>`], R, dose};
+      ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
+          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
@@ -488,10 +489,10 @@ function cardHtml(id){
         <button data-act="mode" data-card="${id}" data-mode="amp">按整支配</button>
       </div>
       <div id="sec_h24_${id}">
-        ${g.dynamic?'<div class="labeq">泵速 <b>4.17</b> ml/h · 50ml／12h袋匀速</div>':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
+        ${g.dynamic?`<div class="labeq">液速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="4.17"> ml/h · 50ml／12h袋</div>`:`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
-        ${g.dynamic?'':'<div class="note">剂量与泵速独立填写；调剂量后请同步核对泵速</div>'}
+        <div class="note">剂量与液速独立填写；调剂量后请同步核对液速</div>
       </div>
       <div id="sec_amp_${id}" style="display:none">
         <div class="labeq">泵速 <input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>
