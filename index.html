@@ -25,7 +25,7 @@ body{margin:0; background:var(--paper); color:var(--ink);
 .linklike{border:none; background:none; color:var(--navy2); font-size:12.5px; font-weight:800;
   padding:8px 4px; cursor:pointer;}
 header{position:sticky; top:0; z-index:50; background:linear-gradient(165deg,#081c38 0%,#0e315f 55%,#155089 100%); color:#fff;
-  padding:16px 18px 12px; box-shadow:0 2px 12px rgba(4,16,34,.35); overflow:hidden;
+  padding:10px 16px 8px; box-shadow:0 2px 12px rgba(4,16,34,.35); overflow:hidden;
   transform:translateZ(0); will-change:transform;}
 header .hmini{display:none; position:absolute; right:16px; top:12px; font-size:11px; font-weight:800;
   letter-spacing:2px; opacity:.85; white-space:nowrap;}
@@ -38,16 +38,16 @@ header.compact .wtnow{display:none;}
 header::after{content:''; position:absolute; right:-6px; top:4px; width:200px; height:100%; opacity:.15;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'%3E%3Cpolyline points='0,42 46,42 56,42 64,14 72,62 80,32 88,42 200,42' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right center / contain;
   pointer-events:none;}
-header .t0{font-size:23px; font-weight:900; letter-spacing:6px;
+header .t0{font-size:18px; font-weight:900; letter-spacing:4px;
   background:linear-gradient(180deg,#ffffff 30%,#bcd4f5); -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 1px 4px rgba(4,16,34,.45));}
-header .t0::before{content:''; display:block; width:34px; height:3px; border-radius:2px; margin-bottom:7px;
+header .t0::before{content:''; display:block; width:28px; height:2px; border-radius:2px; margin-bottom:4px;
   background:linear-gradient(90deg,#f5b544,#fde3b0);}
-.brandrow{display:flex; align-items:center; gap:8px; margin-top:5px;}
+.brandrow{display:flex; align-items:center; gap:7px; margin-top:3px;}
 header .brand{font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:1.5px;
   border:1px solid rgba(255,255,255,.38); border-radius:20px; padding:1px 9px; background:rgba(255,255,255,.08);}
 header .t2{font-size:10.5px; opacity:.78; font-style:italic; letter-spacing:.4px;}
-.wtrow{display:flex; align-items:center; gap:10px; margin-top:12px; padding-top:11px;
+.wtrow{display:flex; align-items:center; gap:10px; margin-top:8px; padding-top:8px;
   border-top:1px solid rgba(255,255,255,.22);}
 .wtrow label{font-size:13.5px; font-weight:700;}
 #wt{width:100px; font-size:23px; font-weight:800; text-align:center; border:none; border-radius:10px;
@@ -65,17 +65,17 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .searchrow input::placeholder{color:#8a97ab;}
 .searchrow input:focus{outline:none; background:#fff;}
 .searchrow input::-webkit-search-cancel-button{-webkit-appearance:none;}
-.group{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px 0;
+.group{background:var(--card); border:1px solid var(--line); border-radius:14px; margin:9px 0;
   box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden; cursor:pointer;}
 .group:active{background:#f4f7fc;}
 .backrow{display:flex; align-items:center; gap:4px; padding:9px 4px 7px; color:var(--navy2);
   font-size:13.5px; font-weight:800; cursor:pointer; user-select:none;}
 .backrow:active{opacity:.55;}
-.ghead{display:flex; align-items:center; gap:11px; padding:14px 15px; min-height:50px; cursor:pointer; user-select:none;}
+.ghead{display:flex; align-items:center; gap:10px; padding:11px 14px; min-height:42px; cursor:pointer; user-select:none;}
 .ghead:active{background:#eef3fb;}
 .gtri{color:var(--navy2); font-size:13px; width:13px; flex:0 0 auto;}
-.gtitle2{font-size:16px; font-weight:800;}
-.gico{font-size:21px; flex:0 0 auto;}
+.gtitle2{font-size:15px; font-weight:800;}
+.gico{font-size:19px; flex:0 0 auto;}
 .gsub{font-size:11.5px; color:var(--ink2); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .gmain{min-width:0; flex:1;}
 .gcnt{margin-left:auto; font-family:var(--mono); font-size:12px; color:#fff; background:var(--navy2);
@@ -84,7 +84,7 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 #lbody_0 .card, #lbody_1 .card, #lbody_2 .card, #lbody_3 .card, #lbody_4 .card{margin:9px 0;}
 .card{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px 0;
   box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden;}
-.chead{display:flex; align-items:baseline; gap:8px; padding:10px 14px; min-height:38px; cursor:pointer; user-select:none;}
+.chead{display:flex; align-items:baseline; gap:7px; padding:8px 12px; min-height:33px; cursor:pointer; user-select:none;}
 .chead:active{background:#eef3fb;}
 .card{scroll-margin-top:150px;}
 .chead .csum{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--navy2); font-weight:700;
@@ -92,7 +92,7 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .card.open .csum{display:none;}
 .card:not(.open) .cspec{display:none;}
 .chead .tri{color:var(--navy2); font-size:13px; width:13px; flex:0 0 auto;}
-.chead .ct{font-size:18px; font-weight:800;}
+.chead .ct{font-size:16px; font-weight:800;}
 .chead .en{font-size:12px; color:var(--ink2); font-weight:400;}
 .chead .cspec{margin-left:auto; font-size:11.5px; color:var(--ink2); font-family:var(--mono); text-align:right;}
 .card.open{border-color:#c9d4e8;}
@@ -177,11 +177,11 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 <header>
   <div class="t0">新生儿药物计算器</div>
   <div class="hmini">新生儿药物计算器</div>
-  <div class="brandrow"><span class="brand">CHFU-NeoAI</span><span class="t2">To make your life easier</span></div>
   <div class="wtrow">
     <label>体重</label>
     <input id="wt" type="number" inputmode="decimal" step="0.05" min="0.4" max="6" value="1.5"><span class="unit">kg</span>
     <span class="wtnow" id="wtNow"></span>
+    <span class="brand" style="margin-left:auto">CHFU-NeoAI</span><span class="t2">To make your life easier</span>
   </div>
   <div class="searchrow" id="searchrow">
     <input id="q" type="search" inputmode="search" placeholder="搜药名：多巴胺 / 芬太尼 / 力月西…" autocomplete="off">
@@ -415,8 +415,8 @@ function calcAmp(id){
     : `${g.name}${f2(R)}ml/h=${f(act,2)}ug/kg/${unitTail(g)}`;
   return {t1,
     prep:[`${g.name} ${f(M,2)}mg`,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
-    ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b>；可维持${f(dur,0)}h · 每0.1ml/h≈${f(act/R/10,2)}`,
-        `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml`], R, dose};
+    ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b> · 每0.1ml/h≈${f(act/R/10,2)}`,
+        `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml；可维持${f(dur,0)}h`], R, dose};
 }
 /* 静推/首剂（剂量框 dinp_ 与维持分开） */
 function calcPush(id){
