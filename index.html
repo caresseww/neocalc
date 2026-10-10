@@ -420,8 +420,11 @@ function calcAmp(id){
   const t1=g.dynamic
     ? `特利加压素${f(M,2)}mg，入0.9%氯化钠至${f(V,0)}ml，${f2(R)}ml/h`
     : `${g.name}${f2(R)}ml/h=${f(act,2)}ug/kg/${unitTail(g)}`;
+  const drugLine = id==='ne'
+    ? `重酒石酸去甲肾上腺素 ${f(M*2,2)}mg（去甲肾${f(M,2)}mg，原液1ml）`
+    : `${g.name} ${f(M,2)}mg`;
   return {t1,
-    prep:[`${g.name} ${f(M,2)}mg`,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
+    prep:[drugLine,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
     ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b>`,
         `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml；可维持${f(dur,0)}h`], R, dose};
 }
