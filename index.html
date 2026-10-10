@@ -27,11 +27,8 @@ body{margin:0; background:var(--paper); color:var(--ink);
 header{position:sticky; top:0; z-index:50; background:linear-gradient(165deg,#081c38 0%,#0e315f 55%,#155089 100%); color:#fff;
   padding:10px 16px 8px; box-shadow:0 2px 12px rgba(4,16,34,.35); overflow:hidden;
   transform:translateZ(0); will-change:transform;}
-header .hmini{display:none; position:absolute; right:16px; top:12px; font-size:11px; font-weight:800;
-  letter-spacing:2px; opacity:.85; white-space:nowrap;}
 header.compact{padding:9px 18px 8px;}
 header.compact .t0, header.compact .brandrow{display:none;}
-header.compact .hmini{display:block;}
 header.compact .wtrow{margin-top:0; padding-top:0; border-top:none;}
 header.compact #wt{font-size:19px; padding:2px 8px; width:84px;}
 header.compact .wtnow{display:none;}
@@ -189,7 +186,6 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 <body>
 <header>
   <div class="t0">新生儿药物计算器</div>
-  <div class="hmini">新生儿药物计算器</div>
   <div class="wtrow">
     <label>体重</label>
     <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="wt" data-dir="-1">−</button><input id="wt" type="number" inputmode="decimal" step="0.05" min="0.4" max="6" value="1.5"><button type="button" class="stp" data-act="step" data-t="wt" data-dir="1">＋</button></div><span class="unit">kg</span>
