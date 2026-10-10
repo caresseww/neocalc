@@ -376,13 +376,13 @@ function calcH24(id){
   if(g.dynamic){
     const bagMg=0.12*W;   /* 标准袋：0.12mg/kg→50ml（=10μg/kg/h×12h），剂量变化靠液速 */
     const rEl=parseFloat($('rin_'+id).value);
-    const R=(isFinite(rEl)&&rEl>0)?rEl:50/12;
+    const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(dose/2.4);
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
       prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
           `实际剂量：液速<b>${f2(R)}ml/h</b>＝<b>${f2(R*2.4)} μg/kg/h</b>`,
           `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`,
-          `调液速：0.1ml/h＝<b>0.24 μg/kg/h</b>`], R, dose};
+          `调液速：0.1ml/h＝<b>${f2(dose/R)} μg/kg/h</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
@@ -395,7 +395,7 @@ function calcH24(id){
     ck:[ck1,
         `实际剂量：泵速<b>${f2(R)}ml/h</b>＝<b>${f2(R*g.rateDiv)} ${g.unit}</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`,
-        `调液速：0.1ml/h＝<b>${f(g.rateDiv/10,2)} ${g.unit}</b>`], R, dose};
+        `调液速：0.1ml/h＝<b>${f2(dose/R)} ${g.unit}</b>`], R, dose};
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
 function calcAmp(id){
@@ -642,8 +642,15 @@ function exitDrugSilent(){
 function updCard(id){
   if(!S[id])return;
   const g=DRUGS[id];
-  /* 维持区（h24 与 amp 两块都算） */
+  /* 维持区：未手动改过泵速时,泵速框随剂量自动更新为建议值;手动改过则保持独立 */
   if($('ord_'+id)){
+    const dEl=parseFloat($('din_'+id).value);
+    const defD=(isFinite(dEl)&&dEl>0)?dEl:g.def;
+    if(!S[id].rateTouched){
+      const sug=g.dynamic? niceRate(defD/2.4) : niceRate(rateOf(defD,g));
+      const rin=$('rin_'+id);
+      if(rin && parseFloat(rin.value)!==sug) rin.value=String(sug);
+    }
     const h24=calcH24(id), amp=calcAmp(id);
     $('ord_'+id).innerHTML=`<div class="o1">${h24.t1}</div><div class="o2">${h24.prep.join('<br>')}</div>`;
     $('ckr_'+id).innerHTML=h24.ck.map(r=>`<div class="r">${r}</div>`).join('');
@@ -928,7 +935,10 @@ document.addEventListener('input',e=>{
     updCga(); renderBasket(); return;
   }
   const a=t.dataset.act;
-  if(a==='dose'||a==='rate'||a==='amprate'){updCard(t.dataset.card);}
+  if(a==='dose'||a==='rate'||a==='amprate'){
+    if(a==='rate')S[t.dataset.card].rateTouched=true;
+    updCard(t.dataset.card);
+  }
   else if(a==='resus'){updCard('epi');}
 });
 document.addEventListener('click',e=>{
