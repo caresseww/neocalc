@@ -62,6 +62,8 @@ nav button.on{background:#0a1f3d; border-color:#0a1f3d; color:#fff; box-shadow:0
 .ordbox .o2{font-family:var(--mono); font-size:12.5px; color:var(--ink2); margin-top:4px; word-break:break-all;
   border-top:1px dashed var(--line); padding-top:4px;}
 .ordbox .o3{font-size:10.5px; color:var(--ink2); margin-top:4px; font-family:-apple-system,'PingFang SC',sans-serif;}
+.spec{font-size:11.5px; color:var(--ink2); margin-top:2px;}
+.spec b{color:var(--ink);}
 /* 核对框 */
 .ckbox{border:1px dashed #8a8a90; border-radius:10px; padding:7px 10px; margin-top:6px; background:#fafaf8;
   font-size:12px; color:#333;}
@@ -176,7 +178,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 'use strict';
 /* ============ 数据：rate=泵速系数(剂量×系数=ml/h，按体重配液所以与体重无关，系数=2025+库内反推) ============ */
 const DRUGS = {
-  dopamine:{ name:'多巴胺', en:'Dopamine', cat:'v', unit:'μg/kg/min',
+  dopamine:{ name:'多巴胺', en:'Dopamine', spec:'重酒石酸2mg/1ml（＝碱基1mg）', spec:'20mg/2ml（10mg/ml）', cat:'v', unit:'μg/kg/min',
     def:5, step:'0.5', utd:'持续IV 2–20μg/kg/min，常从5起（难治个案至50）；效应分档1–5=DA、5–15=β1、>15=α（Lexicomp新生儿）', hosp:'本院既往 2.5–10μg/kg/min（最常5、3）',
     ind:'新生儿休克液体复苏后最常用的一线升压药（UpToDate：晶体10–20ml/kg复苏后仍低灌注即启动）；亦用于窒息后低血压、PDA结扎术后低心排。早产儿交感末梢储备不足，升压反应偏弱；新生儿研究提示脓毒症休克时其升压失败率高于肾上腺素/去甲肾上腺素。',
     pharm:'内源性儿茶酚胺，受体效应呈剂量依赖：<5μg/kg/min以DA1/DA2为主（肾、肠系膜血管扩张——但新生儿不存在「肾剂量」，5μg/kg/min已有明显α效应）；中剂量激动β1（正性肌力、加速传导）；>10μg/kg/min以α1缩血管为主。间接作用=促进交感末梢囊泡释放去甲肾上腺素：早产儿末梢发育不全、储存少→效应减弱，且24–72小时内快速耐药。血浆半衰期约2–11分钟，持续泵入即可、无需负荷。经肝COMT/MAO代谢。',
@@ -186,7 +188,7 @@ const DRUGS = {
     hb:'2–20 μg/kg/min', conv:'0.1ml/h＝3μg/kg/min',
     compat:'NS、5%GS均可；与碳酸氢钠/氨茶碱等碱性液同管即失活；呋塞米同管配伍禁忌（浑浊）；建议独立泵腔、独立通路；外渗处理：酚妥拉明0.5–1mg＋NS稀释至1–2ml局部多点浸润（越早越好）。',
     ord:(R,D)=>`多巴胺${R}ml/h=${D}ug/kg/min,维持24小时`},
-  dobutamine:{ name:'多巴酚丁胺', en:'Dobutamine', cat:'v', unit:'μg/kg/min',
+  dobutamine:{ name:'多巴酚丁胺', en:'Dobutamine', spec:'20mg/2ml（10mg/ml）', cat:'v', unit:'μg/kg/min',
     def:5, step:'0.5', utd:'2–25μg/kg/min持续IV，常从5起、10–20分钟滴定（Lexicomp/Starship新生儿一致）', hosp:'本院既往 2.5–10μg/kg/min（最常5、3）',
     ind:'心源性低灌注的首选直接正性肌力药：窒息后心肌功能不全、脓毒症心肌抑制、动脉导管结扎术后低心排；PPHN合并体循环灌注不足时与降肺压措施联用。评估疗效看乳酸/尿量/灌注而非单看MAP（升流量不强升压）。',
     pharm:'消旋混合物：(−)异构体激动β1/β2、(+)异构体为弱α1拮抗，净效应=直接β1正性肌力为主＋β2轻度扩血管降后负荷。不依赖交感末梢储存——早产儿效应可靠；持续输注>72小时可经β受体下调出现耐受。起效约10分钟，血浆半衰期约2分钟，经肝代谢。',
@@ -196,7 +198,7 @@ const DRUGS = {
     hb:'2–25 μg/kg/min', conv:'0.1ml/h＝3μg/kg/min',
     compat:'NS、5%GS均可；碱性液（碳酸氢钠）失活；外渗处理同多巴胺（酚妥拉明局部浸润）；独立泵腔。',
     ord:(R,D)=>`多巴酚丁胺${R}ml/hr=${D}ug/kg/min,维持24小时`},
-  epi:{ name:'肾上腺素', en:'Epinephrine', cat:'v', unit:'μg/kg/min',
+  epi:{ name:'肾上腺素', en:'Epinephrine', spec:'1mg/1ml', cat:'v', unit:'μg/kg/min',
     def:0.1, step:'0.01', utd:'维持0.05–0.5μg/kg/min（可至1），从0.05起、按0.02递增；复苏1:10000 0.01–0.03mg/kg q3–5min（Lexicomp/各新生儿指南一致）', hosp:'本院既往 泵入0.05–0.5μg/kg/min（最常0.1/0.2/0.3）',
     ind:'① 心肺复苏一线（NRP：充分正压通气+胸外按压后HR<60 → 1:10000，0.01–0.03mg/kg IV/IO q3–5min；无静脉通路时气管内0.05–0.1mg/kg并尽快建静脉）；② 冷休克/心肌功能不全为主的升压；③ 脓毒症休克心肌抑制明显者优先；④ 支气管痉挛（β2）。',
     pharm:'α1+β1+β2全谱激动：低剂量以β效应为主（强心＋β2扩血管），上调剂量α缩血管渐占优。起效即刻、半衰期2–3分钟，必须持续泵入。经肝COMT/MAO代谢＋硫酸结合（新生儿硫酸结合通路活跃），清除率随日龄与成熟度上升。',
@@ -220,7 +222,7 @@ const DRUGS = {
     compat:'NS、5%GS均可；碱性液失活；不与含碱性药物共管；单泵独立通路；剂量按碱基、抽药按重酒石酸盐×2（2mg盐≈1mg碱基）。',
     note:'⚠ 剂量按碱基、抽药按重酒石酸盐×2（2mg盐≈1mg碱基）',
     ord:(R,D)=>`去甲肾上腺素${R}ml/h=${D}ug/kg/min,维持24小时`},
-  milrinone:{ name:'米力农', en:'Milrinone', cat:'v', unit:'μg/kg/min',
+  milrinone:{ name:'米力农', en:'Milrinone', spec:'5mg/5ml（1mg/ml，鲁南力康）', cat:'v', unit:'μg/kg/min',
     def:0.25, step:'0.05', utd:'负荷50μg/kg×60min（或免负荷），维持0.25–0.75μg/kg/min（Starship/ANMF一致）；肾损减50–75%', hosp:'本院既往 0.1–0.5μg/kg/min（最常0.1/0.2/0.25）',
     ind:'PPHN辅助治疗（降低PVR、改善右室输出，血压可耐受时）；心脏术后低心排综合征；脓毒症心肌病辅助。预防性使用证据有限（早产儿RCT未见明确获益），起效30–60分钟——不能当急救药，低血压时禁负荷。',
     pharm:'双吡啶类PDE3抑制剂→心肌与血管平滑肌cAMP升高→正性肌力＋正性舒张＋血管扩张；不经β受体，β受体下调时仍有效。新生儿分布容积大、经肾清除，半衰期显著长于成人（早产儿更长）→负荷后效应持续，肾功能不全需减量。',
@@ -230,7 +232,7 @@ const DRUGS = {
     hb:'0.25–0.75 μg/kg/min（使用时保证足够血容量）——与UpToDate完全一致', conv:'泵速(ml/h)＝剂量(μg/kg/min)',
     compat:'NS、5%GS均可；呋塞米同管配伍禁忌；负荷量25–50μg/kg需30–60分钟缓给或免负荷。',
     ord:(R,D)=>`米力农${R}ml/h=${D}ug/kg/min,维持24小时`},
-  terli:{ name:'特利加压素', en:'Terlipressin', cat:'v', unit:'μg/kg/h',
+  terli:{ name:'特利加压素', en:'Terlipressin', spec:'注射用粉针 1mg/支', cat:'v', unit:'μg/kg/h',
     def:10, step:'1', utd:'未收录新生儿专篇；文献：负荷20μg/kg＋持续4–20μg/kg/h（Rodríguez-Núñez 2010等系列/短程RCT）', hosp:'本院既往 持续2–10μg/kg/h（主用10，12h袋）',
     ind:'儿茶酚胺抵抗性（难治性）分布型休克抢救：EPI/NE＋激素仍不稳定的低SVR休克。新生儿证据=小样本系列研究/短程RCT，全部为超说明书使用，需上级签核+知情。本院惯例：首剂（20μg/kg缓推）后半小时接12h维持袋。',
     pharm:'赖氨酸加压素前体，体内缓慢水解释放活性加压素→V1受体→血管平滑肌收缩（SVR↑）；有效半衰期约6小时，适合12小时匀速泵入；对心率、肺循环几乎无影响；治疗剂量下V2抗利尿作用弱但存在。文献剂量：负荷20μg/kg、持续4–20μg/kg/h（本院主用10）。',
@@ -239,7 +241,7 @@ const DRUGS = {
     hb:'未收录', conv:'1ml/h固定泵速，剂量由配液总量决定（12h袋弃余量）',
     compat:'NS、5%GS均可；12h袋弃余量换新；与常用抢救药无明确配伍禁忌报道。',
     ord:(R,D,M)=>`特利加压素${M}mg,入0.9%氯化钠12ml,维持12小时，弃余量`},
-  fentanyl:{ name:'芬太尼', en:'Fentanyl', cat:'s', unit:'μg/kg/h',
+  fentanyl:{ name:'芬太尼', en:'Fentanyl', spec:'0.1mg/2ml（50μg/ml）', cat:'s', unit:'μg/kg/h',
     def:0.5, step:'0.1', utd:'持续0.5–5μg/kg/h（常用1起）；单次0.5–4μg/kg缓推（AAP：1–2μg/kg后0.5–1μg/kg/h滴定）', hosp:'本院既往 0.2–2μg/kg/h（最常0.5、1）',
     ind:'新生儿中重度疼痛与操作镇痛一线（插管、中心置管、腰穿、伤口处理）及机械通气镇静主力（UpToDate新生儿疼痛管理）；HFOV/NO治疗时阻断疼痛应激。输注>5天需计划性减停，防医源性撤药。',
     pharm:'合成阿片μ受体激动，高脂溶性，效价≈吗啡100倍；起效1–2分钟、单次作用30–60分钟；不释放组胺，血流动力学较吗啡稳定。经肝CYP3A4代谢，早产儿清除慢（半衰期6–32小时）＋分布容积大→蓄积与耐受随日龄显现。',
@@ -252,7 +254,7 @@ const DRUGS = {
       hint:'缓推≥3min；备通气；胸壁僵硬→肌松/气囊通气',
       ord:(d)=>[`芬太尼 ${f2(d*W)}μg 静推 st`,`＝${d}μg/kg · 缓推≥3min · 备通气`]},
     ord:(R,D)=>`芬太尼${R}ml/h=${D}ug/kg/hr,维持24小时`},
-  midazolam:{ name:'咪达唑仑', en:'Midazolam', cat:'s', unit:'μg/kg/min',
+  midazolam:{ name:'咪达唑仑', en:'Midazolam', spec:'10mg/2ml（5mg/ml，力月西）', cat:'s', unit:'μg/kg/min',
     def:1, step:'0.5', utd:'持续0.5μg/kg/min（<32周，0.03mg/kg/h）/1μg/kg/min（≥32周，0.06mg/kg/h）；单次0.05–0.1mg/kg缓推；UpToDate不作新生儿常规一线镇静', hosp:'本院既往 0.5–3μg/kg/min（最常1、2）',
     ind:'抗惊厥二线、操作前镇静/抗焦虑；机械通气镇静仅在充分镇痛基础上短程使用。UpToDate不推荐作新生儿常规一线镇静——通气早产儿RCT提示常规输注与死亡/重度IVH/NEC风险升高相关；需上级同意并尽快降档。',
     pharm:'苯二氮卓类，GABA-A受体变构增强抑制性传递；水溶性、起效2–5分钟；经肝CYP3A4/5代谢为活性产物α-羟基咪达唑仑（肾排）——早产儿CYP3A不成熟，半衰期可>20小时，明显蓄积；红霉素/唑类抗真菌药抑制其代谢。',
@@ -265,7 +267,7 @@ const DRUGS = {
       hint:'缓推≥2min，监测BP；备复苏气囊',
       ord:(d)=>[`咪达唑仑 ${f2(d*W)}mg 静推 st`,`＝${d}mg/kg · 缓推≥2min · 监测BP`]},
     ord:(R,D)=>`咪达唑仑${R}ml/h=${D}ug/kg.min,维持24小时`},
-  vecuronium:{ name:'维库溴铵', en:'Vecuronium', cat:'m', unit:'μg/kg/min',
+  vecuronium:{ name:'维库溴铵', en:'Vecuronium', spec:'注射用 4mg/支（复溶4ml＝1mg/ml，仙林）', cat:'m', unit:'μg/kg/min',
     def:2, step:'0.5', utd:'首剂80–100μg/kg（0.08–0.1mg/kg）；持续0.8–1.7μg/kg/min（原文0.05–0.1mg/kg/h，ASHP/FDA一致）', hosp:'本院既往 0.5–2.5μg/kg/min（最常2、1）',
     ind:'高频振荡通气人机对抗、PPHN需「封堵」自主呼吸、亚低温期间防寒战（寒战升高氧耗与肺血管阻力）。绝对前提：插管＋呼吸机＋充分镇痛镇静，且为最后的手段。',
     pharm:'氨基甾体类非去极化肌松药，竞争性阻断神经肌肉接头nAChR；中效（单次约30–45分钟）；肝内代谢为有活性的3-去乙酰维库溴铵（肾脏排泄）→肾功能不全者作用延长；组胺释放少、血流动力学较稳。',
@@ -381,11 +383,13 @@ function cardHtml(id){
   const g=DRUGS[id];
   let h=`<div class="card" id="card_${id}">
     <h3>${g.name} <span class="en">${g.en}</span></h3>
+    <div class="spec">一支规格：${g.spec}</div>
     <div class="labeq">剂量 <input id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}
       ｜ 泵速 <input id="rin_${id}" type="number" inputmode="decimal" step="0.1" min="0" placeholder="1" value="" ${g.dynamic?'disabled title="1ml/h固定"':''}> ml/h</div>
     <div class="ordbox" id="ord_${id}"></div>
     <div class="ckbox" id="ck_${id}"><div class="t">核对（体重 <span id="ckw_${id}"></span>kg）</div><div id="ckr_${id}"></div></div>
     <div class="ckbox dosebox"><div class="t">剂量说明 · 三源对照（单位：${g.unit}）</div>
+      <div class="r"><b>规格</b>：每支 ${g.spec}</div>
       <div class="r"><b>UpToDate英文版</b>：${g.utd}</div>
       <div class="r"><b>手册第六版</b>：${g.hb}</div>
       <div class="r"><b>本院医嘱库既往</b>：${g.hosp.replace('本院既往','')}</div>
