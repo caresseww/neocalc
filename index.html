@@ -143,10 +143,18 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <button data-p="2" onclick="go(2)">③ 医嘱单<sup id="bkCnt" style="color:#b45309"></sup></button>
 </nav>
 
-<div class="page on" id="p0"></div>
-<div class="page" id="p1"></div>
+<div class="page on" id="p0">
+  <div id="resus"></div>
+  <div class="subnav" id="sub0"></div>
+  <div class="drugnav" id="dn0"></div>
+  <div id="holder0"></div>
+</div>
+<div class="page" id="p1">
+  <div class="subnav" id="sub1"></div>
+  <div class="drugnav" id="dn1"></div>
+  <div id="holder1"></div>
+</div>
 
-<!-- ===== 医嘱单 ===== -->
 <div class="page" id="p2">
   <div class="metarow">
     <label>床号 <input id="m_bed" placeholder="选填"></label>
@@ -163,352 +171,338 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <div id="ordList"></div>
   <div class="btnrow">
     <button class="btn pri" onclick="copyOrder()">复制医嘱</button>
-    <button class="btn pri" onclick="saveImg()">生成医嘱长图</button>
+    <button class="btn pri" onclick="makeImg()">黑白长图</button>
     <button class="btn sec" onclick="window.print()">打印/PDF</button>
     <span class="copied" id="copied"></span>
   </div>
   <details class="ref"><summary>🖼 长图预览（长按保存/转发）</summary><div class="ref-body" id="imgBox"><img id="imgPrev" style="display:none"></div></details>
   <details class="ref"><summary>📄 复制文本预览</summary><div class="ref-body"><textarea id="ordTxt"></textarea></div></details>
-  <div class="foot">每药两框：上=医嘱框（录入HIS+配液做法），下=核对框（计算过程/用量/维持时间）。须上级医师核对后录入。</div>
+  <div class="foot">每药：上框=医嘱（第一行录入HIS，下两行=24小时总量），下框=核对（剂量/液体）。须上级医师核对后录入。</div>
 </div>
-
 </div>
 
 <script>
 'use strict';
-/* ============ 数据：rate=泵速系数(剂量×系数=ml/h，按体重配液所以与体重无关，系数=2025+库内反推) ============ */
-const DRUGS = {
-  dopamine:{ name:'多巴胺', en:'Dopamine', spec:'重酒石酸2mg/1ml（＝碱基1mg）', spec:'20mg/2ml（10mg/ml）', cat:'v', unit:'μg/kg/min',
-    def:5, step:'0.5', utd:'持续IV 2–20μg/kg/min，常从5起（难治个案至50）；效应分档1–5=DA、5–15=β1、>15=α（Lexicomp新生儿）', hosp:'本院既往 2.5–10μg/kg/min（最常5、3）',
-    ind:'新生儿休克液体复苏后最常用的一线升压药（UpToDate：晶体10–20ml/kg复苏后仍低灌注即启动）；亦用于窒息后低血压、PDA结扎术后低心排。早产儿交感末梢储备不足，升压反应偏弱；新生儿研究提示脓毒症休克时其升压失败率高于肾上腺素/去甲肾上腺素。',
-    pharm:'内源性儿茶酚胺，受体效应呈剂量依赖：<5μg/kg/min以DA1/DA2为主（肾、肠系膜血管扩张——但新生儿不存在「肾剂量」，5μg/kg/min已有明显α效应）；中剂量激动β1（正性肌力、加速传导）；>10μg/kg/min以α1缩血管为主。间接作用=促进交感末梢囊泡释放去甲肾上腺素：早产儿末梢发育不全、储存少→效应减弱，且24–72小时内快速耐药。血浆半衰期约2–11分钟，持续泵入即可、无需负荷。经肝COMT/MAO代谢。',
-    adverse:'① 外渗致皮肤缺血坏死（头皮/肢体均可发生）：停泵回抽＋酚妥拉明0.5–1mg局部多点浸润；② 窦性心动过速、房室性心律失常；③ α效应增加后负荷——心源性休克大剂量反降心排；④ 长程使用抑制垂体TSH/催乳素分泌；⑤ 快速耐药：升压不佳先想耐药与储备，而非无限加量。',
-    rate:d=>d/30,
-    stockLabel:'20mg/2ml原液', stockMlPerMg:0.1, mgPerKg:90, to:50,
-    hb:'2–20 μg/kg/min', conv:'0.1ml/h＝3μg/kg/min',
-    compat:'NS、5%GS均可；与碳酸氢钠/氨茶碱等碱性液同管即失活；呋塞米同管配伍禁忌（浑浊）；建议独立泵腔、独立通路；外渗处理：酚妥拉明0.5–1mg＋NS稀释至1–2ml局部多点浸润（越早越好）。',
-    ord:(R,D)=>`多巴胺${R}ml/h=${D}ug/kg/min,维持24小时`},
-  dobutamine:{ name:'多巴酚丁胺', en:'Dobutamine', spec:'20mg/2ml（10mg/ml）', cat:'v', unit:'μg/kg/min',
-    def:5, step:'0.5', utd:'2–25μg/kg/min持续IV，常从5起、10–20分钟滴定（Lexicomp/Starship新生儿一致）', hosp:'本院既往 2.5–10μg/kg/min（最常5、3）',
-    ind:'心源性低灌注的首选直接正性肌力药：窒息后心肌功能不全、脓毒症心肌抑制、动脉导管结扎术后低心排；PPHN合并体循环灌注不足时与降肺压措施联用。评估疗效看乳酸/尿量/灌注而非单看MAP（升流量不强升压）。',
-    pharm:'消旋混合物：(−)异构体激动β1/β2、(+)异构体为弱α1拮抗，净效应=直接β1正性肌力为主＋β2轻度扩血管降后负荷。不依赖交感末梢储存——早产儿效应可靠；持续输注>72小时可经β受体下调出现耐受。起效约10分钟，血浆半衰期约2分钟，经肝代谢。',
-    adverse:'① 剂量限制性窦性心动过速、室性心律失常；② β2扩血管在低血容量者可加重低血压（先补足前负荷）；③ 外渗坏死风险同其他儿茶酚胺；④ 升高心肌耗氧——流出道梗阻/肥厚型心肌病慎用；⑤ 「MAP不升但乳酸降、尿量增」=有效，勿盲目加量。',
-    rate:d=>d/30,
-    stockLabel:'20mg/2ml原液', stockMlPerMg:0.1, mgPerKg:90, to:50,
-    hb:'2–25 μg/kg/min', conv:'0.1ml/h＝3μg/kg/min',
-    compat:'NS、5%GS均可；碱性液（碳酸氢钠）失活；外渗处理同多巴胺（酚妥拉明局部浸润）；独立泵腔。',
-    ord:(R,D)=>`多巴酚丁胺${R}ml/hr=${D}ug/kg/min,维持24小时`},
-  epi:{ name:'肾上腺素', en:'Epinephrine', spec:'1mg/1ml', cat:'v', unit:'μg/kg/min',
-    def:0.1, step:'0.01', utd:'维持0.05–0.5μg/kg/min（可至1），从0.05起、按0.02递增；复苏1:10000 0.01–0.03mg/kg q3–5min（Lexicomp/各新生儿指南一致）', hosp:'本院既往 泵入0.05–0.5μg/kg/min（最常0.1/0.2/0.3）',
-    ind:'① 心肺复苏一线（NRP：充分正压通气+胸外按压后HR<60 → 1:10000，0.01–0.03mg/kg IV/IO q3–5min；无静脉通路时气管内0.05–0.1mg/kg并尽快建静脉）；② 冷休克/心肌功能不全为主的升压；③ 脓毒症休克心肌抑制明显者优先；④ 支气管痉挛（β2）。',
-    pharm:'α1+β1+β2全谱激动：低剂量以β效应为主（强心＋β2扩血管），上调剂量α缩血管渐占优。起效即刻、半衰期2–3分钟，必须持续泵入。经肝COMT/MAO代谢＋硫酸结合（新生儿硫酸结合通路活跃），清除率随日龄与成熟度上升。',
-    adverse:'① 室性心律失常/心动过速；② 血糖升高（β2糖酵解，常见一过性，需监测）；③ 低钾；④ 乳酸一过性升高（β2介导）——勿单凭乳酸判读灌注恶化；⑤ 血压骤升在早产儿有IVH风险（避免快速大幅上调）；⑥ 外渗坏死；⑦ 气管内途径吸收不稳定。',
-    rate:d=>d,
-    stockLabel:'1mg/1ml原液', stockMlPerMg:1, mgPerKg:3, to:50, amp:{mg:1,label:'1mg/1ml',stockMl:1},
-    hb:'维持0.1–1 μg/kg/min；复苏1:10000 0.1–0.3ml/kg静推、气管内0.5–1ml/kg（50–100μg/kg）', conv:'泵速(ml/h)＝剂量(μg/kg/min)',
-    compat:'NS、5%GS均可；碱性液失活；1:10000现配现用并标注时间；复苏推注与维持泵分开通路；外渗→酚妥拉明局部浸润。',
-    bolus:{label:'复苏静推 1:10000（0.1–0.3ml/kg＝0.01–0.03mg/kg，q3–5min）', def:0.2, unit:'ml/kg', outUnit:'ml',
-      hint:'配液：1mg+NS9ml→10ml；无静脉通路时气管内0.5–1ml/kg（0.05–0.1mg/kg）',
-      ord:(d)=>[`1:10000肾上腺素${f2(d*W)}ml 静推 st`,`${Math.round(d*100)}μg/kg · q3–5min可重复`]},
-    ord:(R,D)=>`肾上腺素${R}ml/h=${D}ug/kg/min,维持24小时`},
-  ne:{ name:'去甲肾上腺素', en:'Norepinephrine', cat:'v', unit:'μg/kg/min',
-    def:0.1, step:'0.01', utd:'0.05–0.4μg/kg/min（PDR常规范围），从0.05–0.1起，难治性休克可在指导下用至2', hosp:'本院既往 0.05–0.4μg/kg/min（最常0.1、0.2）',
-    ind:'血管扩张型（暖）休克与儿茶酚胺抵抗性脓毒症休克的血管收缩首选之一（新生儿多中心RCT提示升压成功率优于多巴胺）；PPHN合并体循环低血压；亦用于维持舒张压、NEC术后血管麻痹。',
-    pharm:'α1收缩外周血管与静脉容量血管（升SVR＋升前负荷），β1作用弱；α2除突触前负反馈外，血管内皮α2→NO→肺血管扩张——治疗PPHN的机制。压力反射可致反射性心动过缓（而非过速）。起效即刻，经肝COMT/MAO代谢，半衰期短需持续泵。',
-    adverse:'① 外渗皮肤坏死：儿茶酚胺中风险最高，尽量中心静脉或粗大外周静脉；② 肢端/皮肤苍白缺血（立即停药查灌注）；③ α收缩肾入球小动脉→监测尿量；④ 反射性心动过缓；⑤ 血糖升高。',
-    rate:d=>d,
-    stockLabel:'重酒石酸2mg/1ml原液', stockMlPerMg:2, mgPerKg:3, to:50, baseUnit:'mg(碱基)', amp:{mg:1,label:'重酒石酸2mg/1ml(=碱基1mg)',stockMl:1},
-    hb:'0.2–2 μg/kg/min（备注GA>35周）——⚠手册下限/上限均明显高于UpToDate与本院用法', conv:'泵速(ml/h)＝剂量(μg/kg/min，按碱基)',
-    compat:'NS、5%GS均可；碱性液失活；不与含碱性药物共管；单泵独立通路；剂量按碱基、抽药按重酒石酸盐×2（2mg盐≈1mg碱基）。',
-    note:'⚠ 剂量按碱基、抽药按重酒石酸盐×2（2mg盐≈1mg碱基）',
-    ord:(R,D)=>`去甲肾上腺素${R}ml/h=${D}ug/kg/min,维持24小时`},
-  milrinone:{ name:'米力农', en:'Milrinone', spec:'5mg/5ml（1mg/ml，鲁南力康）', cat:'v', unit:'μg/kg/min',
-    def:0.25, step:'0.05', utd:'负荷50μg/kg×60min（或免负荷），维持0.25–0.75μg/kg/min（Starship/ANMF一致）；肾损减50–75%', hosp:'本院既往 0.1–0.5μg/kg/min（最常0.1/0.2/0.25）',
-    ind:'PPHN辅助治疗（降低PVR、改善右室输出，血压可耐受时）；心脏术后低心排综合征；脓毒症心肌病辅助。预防性使用证据有限（早产儿RCT未见明确获益），起效30–60分钟——不能当急救药，低血压时禁负荷。',
-    pharm:'双吡啶类PDE3抑制剂→心肌与血管平滑肌cAMP升高→正性肌力＋正性舒张＋血管扩张；不经β受体，β受体下调时仍有效。新生儿分布容积大、经肾清除，半衰期显著长于成人（早产儿更长）→负荷后效应持续，肾功能不全需减量。',
-    adverse:'① 低血压最常见（血管扩张）——血压边缘者免负荷、直接维持；② 室性心律失常少见；③ 长程停药有肺高压反跳个案；④ 肾功能差者蓄积、延长低血压。',
-    rate:d=>d,
-    stockLabel:'5mg/5ml原液(鲁南力康)', stockMlPerMg:1, mgPerKg:3, to:50, amp:{mg:5,label:'5mg/5ml',stockMl:5},
-    hb:'0.25–0.75 μg/kg/min（使用时保证足够血容量）——与UpToDate完全一致', conv:'泵速(ml/h)＝剂量(μg/kg/min)',
-    compat:'NS、5%GS均可；呋塞米同管配伍禁忌；负荷量25–50μg/kg需30–60分钟缓给或免负荷。',
-    ord:(R,D)=>`米力农${R}ml/h=${D}ug/kg/min,维持24小时`},
-  terli:{ name:'特利加压素', en:'Terlipressin', spec:'注射用粉针 1mg/支', cat:'v', unit:'μg/kg/h',
-    def:10, step:'1', utd:'未收录新生儿专篇；文献：负荷20μg/kg＋持续4–20μg/kg/h（Rodríguez-Núñez 2010等系列/短程RCT）', hosp:'本院既往 持续2–10μg/kg/h（主用10，12h袋）',
-    ind:'儿茶酚胺抵抗性（难治性）分布型休克抢救：EPI/NE＋激素仍不稳定的低SVR休克。新生儿证据=小样本系列研究/短程RCT，全部为超说明书使用，需上级签核+知情。本院惯例：首剂（20μg/kg缓推）后半小时接12h维持袋。',
-    pharm:'赖氨酸加压素前体，体内缓慢水解释放活性加压素→V1受体→血管平滑肌收缩（SVR↑）；有效半衰期约6小时，适合12小时匀速泵入；对心率、肺循环几乎无影响；治疗剂量下V2抗利尿作用弱但存在。文献剂量：负荷20μg/kg、持续4–20μg/kg/h（本院主用10）。',
-    adverse:'① 低钠血症（抗利尿样效应，每日监测血钠）；② 肢端/内脏缺血；③ 血压过冲；④ 超说明书——须记录知情同意与上级签核。',
-    rate:()=>1, dynamic:true, to:12,
-    hb:'未收录', conv:'1ml/h固定泵速，剂量由配液总量决定（12h袋弃余量）',
-    compat:'NS、5%GS均可；12h袋弃余量换新；与常用抢救药无明确配伍禁忌报道。',
-    ord:(R,D,M)=>`特利加压素${M}mg,入0.9%氯化钠12ml,维持12小时，弃余量`},
-  fentanyl:{ name:'芬太尼', en:'Fentanyl', spec:'0.1mg/2ml（50μg/ml）', cat:'s', unit:'μg/kg/h',
-    def:0.5, step:'0.1', utd:'持续0.5–5μg/kg/h（常用1起）；单次0.5–4μg/kg缓推（AAP：1–2μg/kg后0.5–1μg/kg/h滴定）', hosp:'本院既往 0.2–2μg/kg/h（最常0.5、1）',
-    ind:'新生儿中重度疼痛与操作镇痛一线（插管、中心置管、腰穿、伤口处理）及机械通气镇静主力（UpToDate新生儿疼痛管理）；HFOV/NO治疗时阻断疼痛应激。输注>5天需计划性减停，防医源性撤药。',
-    pharm:'合成阿片μ受体激动，高脂溶性，效价≈吗啡100倍；起效1–2分钟、单次作用30–60分钟；不释放组胺，血流动力学较吗啡稳定。经肝CYP3A4代谢，早产儿清除慢（半衰期6–32小时）＋分布容积大→蓄积与耐受随日龄显现。',
-    adverse:'① 呼吸抑制（剂量依赖，泵入者备气囊）；② 胸壁僵硬：快速推注（≥1–2μg/kg于数秒内）即刻发生——缓推≥3分钟预防，发生时正压通气±肌松解除；③ 心动过缓；④ 尿潴留、胃肠动力下降；⑤ 耐受与撤药综合征（>5天每24–48h减10–25%）；⑥ 长期暴露的远期神经发育顾虑——按需短程原则。',
-    rate:d=>d/5,
-    stockLabel:'0.1mg/2ml原液(50μg/ml)', stockMlPerMg:20, mgPerKg:0.25, to:50, amp:{mg:0.1,label:'0.1mg/2ml',stockMl:2},
-    hb:'镇痛0.5–2 μg/kg/h；镇静1–5 μg/kg/h（尿潴留；>5天撤药）', conv:'0.1ml/h＝0.5μg/kg/h',
-    compat:'NS、5%GS均可；与咪达唑仑Y型兼容；与肌松药无配伍禁忌。',
-    bolus:{label:'操作/插管静推（1–2μg/kg）', def:2, unit:'μg/kg', outUnit:'μg',
-      hint:'缓推≥3min；备通气；胸壁僵硬→肌松/气囊通气',
-      ord:(d)=>[`芬太尼 ${f2(d*W)}μg 静推 st`,`＝${d}μg/kg · 缓推≥3min · 备通气`]},
-    ord:(R,D)=>`芬太尼${R}ml/h=${D}ug/kg/hr,维持24小时`},
-  midazolam:{ name:'咪达唑仑', en:'Midazolam', spec:'10mg/2ml（5mg/ml，力月西）', cat:'s', unit:'μg/kg/min',
-    def:1, step:'0.5', utd:'持续0.5μg/kg/min（<32周，0.03mg/kg/h）/1μg/kg/min（≥32周，0.06mg/kg/h）；单次0.05–0.1mg/kg缓推；UpToDate不作新生儿常规一线镇静', hosp:'本院既往 0.5–3μg/kg/min（最常1、2）',
-    ind:'抗惊厥二线、操作前镇静/抗焦虑；机械通气镇静仅在充分镇痛基础上短程使用。UpToDate不推荐作新生儿常规一线镇静——通气早产儿RCT提示常规输注与死亡/重度IVH/NEC风险升高相关；需上级同意并尽快降档。',
-    pharm:'苯二氮卓类，GABA-A受体变构增强抑制性传递；水溶性、起效2–5分钟；经肝CYP3A4/5代谢为活性产物α-羟基咪达唑仑（肾排）——早产儿CYP3A不成熟，半衰期可>20小时，明显蓄积；红霉素/唑类抗真菌药抑制其代谢。',
-    adverse:'① 低血压（快速推注尤著）；② 呼吸抑制；③ 长程后撤药综合征；④ 远期神经发育顾虑——按需短程；⑤ 早产儿偶见惊厥样肌阵挛（勿与真性惊厥混淆，必要时EEG鉴别）。',
-    rate:d=>d/5,
-    stockLabel:'5mg/ml原液(力月西)', stockMlPerMg:0.2, mgPerKg:15, to:50, amp:{mg:10,label:'10mg/2ml',stockMl:2},
-    hb:'镇静0.17–1μg/kg/min（原文10–60μg/kg/h）；抗惊厥负荷0.15mg/kg（≤2mg/min）；维持1–6.7μg/kg/min（原文60–400μg/kg/h）', conv:'0.2ml/h＝1μg/kg/min（2025口径）',
-    compat:'NS、5%GS均可；碱性液内沉淀；与芬太尼Y型兼容；避免与CYP3A抑制剂（红霉素、氟康唑）长程同用。',
-    bolus:{label:'静推（操作/惊厥，0.05–0.1mg/kg）', def:0.1, unit:'mg/kg', outUnit:'mg',
-      hint:'缓推≥2min，监测BP；备复苏气囊',
-      ord:(d)=>[`咪达唑仑 ${f2(d*W)}mg 静推 st`,`＝${d}mg/kg · 缓推≥2min · 监测BP`]},
-    ord:(R,D)=>`咪达唑仑${R}ml/h=${D}ug/kg.min,维持24小时`},
-  vecuronium:{ name:'维库溴铵', en:'Vecuronium', spec:'注射用 4mg/支（复溶4ml＝1mg/ml，仙林）', cat:'m', unit:'μg/kg/min',
-    def:2, step:'0.5', utd:'首剂80–100μg/kg（0.08–0.1mg/kg）；持续0.8–1.7μg/kg/min（原文0.05–0.1mg/kg/h，ASHP/FDA一致）', hosp:'本院既往 0.5–2.5μg/kg/min（最常2、1）',
-    ind:'高频振荡通气人机对抗、PPHN需「封堵」自主呼吸、亚低温期间防寒战（寒战升高氧耗与肺血管阻力）。绝对前提：插管＋呼吸机＋充分镇痛镇静，且为最后的手段。',
-    pharm:'氨基甾体类非去极化肌松药，竞争性阻断神经肌肉接头nAChR；中效（单次约30–45分钟）；肝内代谢为有活性的3-去乙酰维库溴铵（肾脏排泄）→肾功能不全者作用延长；组胺释放少、血流动力学较稳。',
-    adverse:'① 自主呼吸与咳嗽消失——绝不用于未插管/清醒患儿（「清醒麻痹」是严重精神创伤，严禁）；② 眼睑闭合不全→暴露性角膜炎（眼膏/湿敷护理）；③ 长时间输注±糖皮质激素→ICU获得性肌病；④ 肾功能不全活性代谢物蓄积、作用延长。',
-    rate:d=>d/5,
-    stockLabel:'4mg/支复溶液(仙林，1mg/ml)', stockMlPerMg:1, mgPerKg:15, to:50, amp:{mg:4,label:'4mg/支复溶4ml',stockMl:4},
-    hb:'未收录（全册无肌松药章节）', conv:'0.4ml/h＝2μg/kg/min',
-    compat:'NS、5%GS均可；不与碱性液/其他药共管；复溶后24小时内使用；输注期间角膜护理。',
-    bolus:{label:'首剂/单次（0.08–0.1mg/kg）', def:0.1, unit:'mg/kg', outUnit:'mg',
-      hint:'镇静确保后缓推；给药前确认气囊在手',
-      ord:(d)=>[`维库溴铵 ${f2(d*W)}mg 静推 st`,`＝${d}mg/kg · 镇静后在位 · 呼吸机下用`]},
-    ord:(R,D)=>`维库溴铵${R}ml/h=${D}ug/kg/min,维持12小时`},
+const DRUGS={"dopamine": {"name": "多巴胺", "en": "Dopamine", "unit": "μg/kg/min", "step": "0.5", "utd": "持续IV 2–20μg/kg/min，常从5起（难治个案至50）；效应分档1–5=DA、5–15=β1、>15=α（Lexicomp新生儿）", "hosp": "本院既往 2.5–10μg/kg/min（最常5、3）", "ind": "新生儿休克液体复苏后最常用的一线升压药（UpToDate：晶体10–20ml/kg复苏后仍低灌注即启动）；亦用于窒息后低血压、PDA结扎术后低心排。早产儿交感末梢储备不足，升压反应偏弱；新生儿研究提示脓毒症休克时其升压失败率高于肾上腺素/去甲肾上腺素。", "spec": "20mg/2ml（10mg/ml）", "hb": "2–20 μg/kg/min", "pharm": "内源性儿茶酚胺，受体效应呈剂量依赖：<5μg/kg/min以DA1/DA2为主（肾、肠系膜血管扩张——但新生儿不存在「肾剂量」，5μg/kg/min已有明显α效应）；中剂量激动β1（正性肌力、加速传导）；>10μg/kg/min以α1缩血管为主。间接作用=促进交感末梢囊泡释放去甲肾上腺素：早产儿末梢发育不全、储存少→效应减弱，且24–72小时内快速耐药。血浆半衰期约2–11分钟，持续泵入即可、无需负荷。经肝COMT/MAO代谢。", "adverse": "① 外渗致皮肤缺血坏死（头皮/肢体均可发生）：停泵回抽＋酚妥拉明0.5–1mg局部多点浸润；② 窦性心动过速、房室性心律失常；③ α效应增加后负荷——心源性休克大剂量反降心排；④ 长程使用抑制垂体TSH/催乳素分泌；⑤ 快速耐药：升压不佳先想耐药与储备，而非无限加量。", "compat": "NS、5%GS均可；与碳酸氢钠/氨茶碱等碱性液同管即失活；呋塞米同管配伍禁忌（浑浊）；建议独立泵腔、独立通路；外渗处理：酚妥拉明0.5–1mg＋NS稀释至1–2ml局部多点浸润（越早越好）。", "mgPerKg": 90.0, "to": 50, "stockLabel": "20mg/2ml原液", "stockMlPerMg": 0.1, "rateDiv": 30, "dynamic": false, "baseUnit": "", "def": 5.0, "specMg": 20, "stockConc": 10, "group": "vaso"}, "dobutamine": {"name": "多巴酚丁胺", "en": "Dobutamine", "unit": "μg/kg/min", "step": "0.5", "utd": "2–25μg/kg/min持续IV，常从5起、10–20分钟滴定（Lexicomp/Starship新生儿一致）", "hosp": "本院既往 2.5–10μg/kg/min（最常5、3）", "ind": "心源性低灌注的首选直接正性肌力药：窒息后心肌功能不全、脓毒症心肌抑制、动脉导管结扎术后低心排；PPHN合并体循环灌注不足时与降肺压措施联用。评估疗效看乳酸/尿量/灌注而非单看MAP（升流量不强升压）。", "spec": "20mg/2ml（10mg/ml）", "hb": "2–25 μg/kg/min", "pharm": "消旋混合物：(−)异构体激动β1/β2、(+)异构体为弱α1拮抗，净效应=直接β1正性肌力为主＋β2轻度扩血管降后负荷。不依赖交感末梢储存——早产儿效应可靠；持续输注>72小时可经β受体下调出现耐受。起效约10分钟，血浆半衰期约2分钟，经肝代谢。", "adverse": "① 剂量限制性窦性心动过速、室性心律失常；② β2扩血管在低血容量者可加重低血压（先补足前负荷）；③ 外渗坏死风险同其他儿茶酚胺；④ 升高心肌耗氧——流出道梗阻/肥厚型心肌病慎用；⑤ 「MAP不升但乳酸降、尿量增」=有效，勿盲目加量。", "compat": "NS、5%GS均可；碱性液（碳酸氢钠）失活；外渗处理同多巴胺（酚妥拉明局部浸润）；独立泵腔。", "mgPerKg": 90.0, "to": 50, "stockLabel": "20mg/2ml原液", "stockMlPerMg": 0.1, "rateDiv": 30, "dynamic": false, "baseUnit": "", "def": 5.0, "specMg": 20, "stockConc": 10, "group": "ino"}, "epi": {"name": "肾上腺素", "en": "Epinephrine", "unit": "μg/kg/min", "step": "0.01", "utd": "维持0.05–0.5μg/kg/min（可至1），从0.05起、按0.02递增；复苏1:10000 0.01–0.03mg/kg q3–5min（Lexicomp/各新生儿指南一致）", "hosp": "本院既往 泵入0.05–0.5μg/kg/min（最常0.1/0.2/0.3）", "ind": "① 心肺复苏一线（NRP：充分正压通气+胸外按压后HR<60 → 1:10000，0.01–0.03mg/kg IV/IO q3–5min；无静脉通路时气管内0.05–0.1mg/kg并尽快建静脉）；② 冷休克/心肌功能不全为主的升压；③ 脓毒症休克心肌抑制明显者优先；④ 支气管痉挛（β2）。", "spec": "1mg/1ml", "hb": "维持0.1–1 μg/kg/min；复苏1:10000 0.1–0.3ml/kg静推、气管内0.5–1ml/kg（50–100μg/kg）", "pharm": "α1+β1+β2全谱激动：低剂量以β效应为主（强心＋β2扩血管），上调剂量α缩血管渐占优。起效即刻、半衰期2–3分钟，必须持续泵入。经肝COMT/MAO代谢＋硫酸结合（新生儿硫酸结合通路活跃），清除率随日龄与成熟度上升。", "adverse": "① 室性心律失常/心动过速；② 血糖升高（β2糖酵解，常见一过性，需监测）；③ 低钾；④ 乳酸一过性升高（β2介导）——勿单凭乳酸判读灌注恶化；⑤ 血压骤升在早产儿有IVH风险（避免快速大幅上调）；⑥ 外渗坏死；⑦ 气管内途径吸收不稳定。", "compat": "NS、5%GS均可；碱性液失活；1:10000现配现用并标注时间；复苏推注与维持泵分开通路；外渗→酚妥拉明局部浸润。", "mgPerKg": 3.0, "to": 50, "stockLabel": "1mg/1ml原液", "stockMlPerMg": 1.0, "rateDiv": 1, "dynamic": false, "baseUnit": "", "def": 0.1, "specMg": 1, "stockConc": 1, "group": "vaso"}, "ne": {"name": "去甲肾上腺素", "en": "Norepinephrine", "unit": "μg/kg/min", "step": "0.01", "utd": "0.05–0.4μg/kg/min（PDR常规范围），从0.05–0.1起，难治性休克可在指导下用至2", "hosp": "本院既往 0.05–0.4μg/kg/min（最常0.1、0.2）", "ind": "血管扩张型（暖）休克与儿茶酚胺抵抗性脓毒症休克的血管收缩首选之一（新生儿多中心RCT提示升压成功率优于多巴胺）；PPHN合并体循环低血压；亦用于维持舒张压、NEC术后血管麻痹。", "spec": "重酒石酸2mg/1ml（＝碱基1mg）", "hb": "0.2–2 μg/kg/min（备注GA>35周）——⚠手册下限/上限均明显高于UpToDate与本院用法", "pharm": "α1收缩外周血管与静脉容量血管（升SVR＋升前负荷），β1作用弱；α2除突触前负反馈外，血管内皮α2→NO→肺血管扩张——治疗PPHN的机制。压力反射可致反射性心动过缓（而非过速）。起效即刻，经肝COMT/MAO代谢，半衰期短需持续泵。", "adverse": "① 外渗皮肤坏死：儿茶酚胺中风险最高，尽量中心静脉或粗大外周静脉；② 肢端/皮肤苍白缺血（立即停药查灌注）；③ α收缩肾入球小动脉→监测尿量；④ 反射性心动过缓；⑤ 血糖升高。", "compat": "NS、5%GS均可；碱性液失活；不与含碱性药物共管；单泵独立通路；剂量按碱基、抽药按重酒石酸盐×2（2mg盐≈1mg碱基）。", "mgPerKg": 3.0, "to": 50, "stockLabel": "重酒石酸2mg/1ml原液", "stockMlPerMg": 2.0, "rateDiv": 1, "dynamic": false, "baseUnit": "mg(碱基)", "def": 0.1, "specMg": 1, "stockConc": 2, "group": "vaso"}, "milrinone": {"name": "米力农", "en": "Milrinone", "unit": "μg/kg/min", "step": "0.05", "utd": "负荷50μg/kg×60min（或免负荷），维持0.25–0.75μg/kg/min（Starship/ANMF一致）；肾损减50–75%", "hosp": "本院既往 0.1–0.5μg/kg/min（最常0.1/0.2/0.25）", "ind": "PPHN辅助治疗（降低PVR、改善右室输出，血压可耐受时）；心脏术后低心排综合征；脓毒症心肌病辅助。预防性使用证据有限（早产儿RCT未见明确获益），起效30–60分钟——不能当急救药，低血压时禁负荷。", "spec": "5mg/5ml（1mg/ml，鲁南力康）", "hb": "0.25–0.75 μg/kg/min（使用时保证足够血容量）——与UpToDate完全一致", "pharm": "双吡啶类PDE3抑制剂→心肌与血管平滑肌cAMP升高→正性肌力＋正性舒张＋血管扩张；不经β受体，β受体下调时仍有效。新生儿分布容积大、经肾清除，半衰期显著长于成人（早产儿更长）→负荷后效应持续，肾功能不全需减量。", "adverse": "① 低血压最常见（血管扩张）——血压边缘者免负荷、直接维持；② 室性心律失常少见；③ 长程停药有肺高压反跳个案；④ 肾功能差者蓄积、延长低血压。", "compat": "NS、5%GS均可；呋塞米同管配伍禁忌；负荷量25–50μg/kg需30–60分钟缓给或免负荷。", "mgPerKg": 3.0, "to": 50, "stockLabel": "5mg/5ml原液(鲁南力康)", "stockMlPerMg": 1.0, "rateDiv": 1, "dynamic": false, "baseUnit": "", "def": 0.25, "specMg": 5, "stockConc": 1, "group": "ino"}, "terli": {"name": "特利加压素", "en": "Terlipressin", "unit": "μg/kg/h", "step": "1", "utd": "未收录新生儿专篇；文献：负荷20μg/kg＋持续4–20μg/kg/h（Rodríguez-Núñez 2010等系列/短程RCT）", "hosp": "本院既往 持续2–10μg/kg/h（主用10，12h袋）", "ind": "儿茶酚胺抵抗性（难治性）分布型休克抢救：EPI/NE＋激素仍不稳定的低SVR休克。新生儿证据=小样本系列研究/短程RCT，全部为超说明书使用，需上级签核+知情。本院惯例：首剂（20μg/kg缓推）后半小时接12h维持袋。", "spec": "注射用粉针 1mg/支", "hb": "未收录", "pharm": "赖氨酸加压素前体，体内缓慢水解释放活性加压素→V1受体→血管平滑肌收缩（SVR↑）；有效半衰期约6小时，适合12小时匀速泵入；对心率、肺循环几乎无影响；治疗剂量下V2抗利尿作用弱但存在。文献剂量：负荷20μg/kg、持续4–20μg/kg/h（本院主用10）。", "adverse": "① 低钠血症（抗利尿样效应，每日监测血钠）；② 肢端/内脏缺血；③ 血压过冲；④ 超说明书——须记录知情同意与上级签核。", "compat": "NS、5%GS均可；12h袋弃余量换新；与常用抢救药无明确配伍禁忌报道。", "mgPerKg": 1, "to": 12, "stockLabel": "", "stockMlPerMg": 1, "rateDiv": 1, "dynamic": true, "baseUnit": "", "def": 10.0, "specMg": 1, "stockConc": null, "group": "vas"}, "fentanyl": {"name": "芬太尼", "en": "Fentanyl", "unit": "μg/kg/h", "step": "0.1", "utd": "持续0.5–5μg/kg/h（常用1起）；单次0.5–4μg/kg缓推（AAP：1–2μg/kg后0.5–1μg/kg/h滴定）", "hosp": "本院既往 0.2–2μg/kg/h（最常0.5、1）", "ind": "新生儿中重度疼痛与操作镇痛一线（插管、中心置管、腰穿、伤口处理）及机械通气镇静主力（UpToDate新生儿疼痛管理）；HFOV/NO治疗时阻断疼痛应激。输注>5天需计划性减停，防医源性撤药。", "spec": "0.1mg/2ml（50μg/ml）", "hb": "镇痛0.5–2 μg/kg/h；镇静1–5 μg/kg/h（尿潴留；>5天撤药）", "pharm": "合成阿片μ受体激动，高脂溶性，效价≈吗啡100倍；起效1–2分钟、单次作用30–60分钟；不释放组胺，血流动力学较吗啡稳定。经肝CYP3A4代谢，早产儿清除慢（半衰期6–32小时）＋分布容积大→蓄积与耐受随日龄显现。", "adverse": "① 呼吸抑制（剂量依赖，泵入者备气囊）；② 胸壁僵硬：快速推注（≥1–2μg/kg于数秒内）即刻发生——缓推≥3分钟预防，发生时正压通气±肌松解除；③ 心动过缓；④ 尿潴留、胃肠动力下降；⑤ 耐受与撤药综合征（>5天每24–48h减10–25%）；⑥ 长期暴露的远期神经发育顾虑——按需短程原则。", "compat": "NS、5%GS均可；与咪达唑仑Y型兼容；与肌松药无配伍禁忌。", "mgPerKg": 0.25, "to": 50, "stockLabel": "0.1mg/2ml原液(50μg/ml)", "stockMlPerMg": 20.0, "rateDiv": 5, "dynamic": false, "baseUnit": "", "def": 0.5, "specMg": 0.1, "stockConc": 0.05, "group": "ana"}, "midazolam": {"name": "咪达唑仑", "en": "Midazolam", "unit": "μg/kg/min", "step": "0.5", "utd": "持续0.5μg/kg/min（<32周，0.03mg/kg/h）/1μg/kg/min（≥32周，0.06mg/kg/h）；单次0.05–0.1mg/kg缓推；UpToDate不作新生儿常规一线镇静", "hosp": "本院既往 0.5–3μg/kg/min（最常1、2）", "ind": "抗惊厥二线、操作前镇静/抗焦虑；机械通气镇静仅在充分镇痛基础上短程使用。UpToDate不推荐作新生儿常规一线镇静——通气早产儿RCT提示常规输注与死亡/重度IVH/NEC风险升高相关；需上级同意并尽快降档。", "spec": "10mg/2ml（5mg/ml，力月西）", "hb": "镇静0.17–1μg/kg/min（原文10–60μg/kg/h）；抗惊厥负荷0.15mg/kg（≤2mg/min）；维持1–6.7μg/kg/min（原文60–400μg/kg/h）", "pharm": "苯二氮卓类，GABA-A受体变构增强抑制性传递；水溶性、起效2–5分钟；经肝CYP3A4/5代谢为活性产物α-羟基咪达唑仑（肾排）——早产儿CYP3A不成熟，半衰期可>20小时，明显蓄积；红霉素/唑类抗真菌药抑制其代谢。", "adverse": "① 低血压（快速推注尤著）；② 呼吸抑制；③ 长程后撤药综合征；④ 远期神经发育顾虑——按需短程；⑤ 早产儿偶见惊厥样肌阵挛（勿与真性惊厥混淆，必要时EEG鉴别）。", "compat": "NS、5%GS均可；碱性液内沉淀；与芬太尼Y型兼容；避免与CYP3A抑制剂（红霉素、氟康唑）长程同用。", "mgPerKg": 15.0, "to": 50, "stockLabel": "5mg/ml原液(力月西)", "stockMlPerMg": 0.2, "rateDiv": 5, "dynamic": false, "baseUnit": "", "def": 1.0, "specMg": 10, "stockConc": 5, "group": "sed"}, "vecuronium": {"name": "维库溴铵", "en": "Vecuronium", "unit": "μg/kg/min", "step": "0.5", "utd": "首剂80–100μg/kg（0.08–0.1mg/kg）；持续0.8–1.7μg/kg/min（原文0.05–0.1mg/kg/h，ASHP/FDA一致）", "hosp": "本院既往 0.5–2.5μg/kg/min（最常2、1）", "ind": "高频振荡通气人机对抗、PPHN需「封堵」自主呼吸、亚低温期间防寒战（寒战升高氧耗与肺血管阻力）。绝对前提：插管＋呼吸机＋充分镇痛镇静，且为最后的手段。", "spec": "注射用 4mg/支（复溶4ml＝1mg/ml，仙林）", "hb": "未收录（全册无肌松药章节）", "pharm": "氨基甾体类非去极化肌松药，竞争性阻断神经肌肉接头nAChR；中效（单次约30–45分钟）；肝内代谢为有活性的3-去乙酰维库溴铵（肾脏排泄）→肾功能不全者作用延长；组胺释放少、血流动力学较稳。", "adverse": "① 自主呼吸与咳嗽消失——绝不用于未插管/清醒患儿（「清醒麻痹」是严重精神创伤，严禁）；② 眼睑闭合不全→暴露性角膜炎（眼膏/湿敷护理）；③ 长时间输注±糖皮质激素→ICU获得性肌病；④ 肾功能不全活性代谢物蓄积、作用延长。", "compat": "NS、5%GS均可；不与碱性液/其他药共管；复溶后24小时内使用；输注期间角膜护理。", "mgPerKg": 15.0, "to": 50, "stockLabel": "4mg/支复溶液(仙林，1mg/ml)", "stockMlPerMg": 1.0, "rateDiv": 5, "dynamic": false, "baseUnit": "", "def": 2.0, "specMg": 4, "stockConc": 1, "group": "blk"}};
+/* ⚠ 重建本文件时必须保留以下两段运行时挂载 */
+Object.keys(DRUGS).forEach(k=>{const g=DRUGS[k]; g.rate=g.dynamic? ()=>1 : (d=>d/g.rateDiv);});
+const ORDT={dopamine:(R,D)=>`多巴胺${R}ml/h=${D}ug/kg/min,维持24小时`,
+ dobutamine:(R,D)=>`多巴酚丁胺${R}ml/hr=${D}ug/kg/min,维持24小时`,
+ epi:(R,D)=>`肾上腺素${R}ml/h=${D}ug/kg/min,维持24小时`,
+ ne:(R,D)=>`去甲肾上腺素${R}ml/h=${D}ug/kg/min,维持24小时`,
+ milrinone:(R,D)=>`米力农${R}ml/h=${D}ug/kg/min,维持24小时`,
+ fentanyl:(R,D)=>`芬太尼${R}ml/h=${D}ug/kg/hr,维持24小时`,
+ midazolam:(R,D)=>`咪达唑仑${R}ml/h=${D}ug/kg.min,维持24小时`,
+ vecuronium:(R,D)=>`维库溴铵${R}ml/h=${D}ug/kg/min,维持12小时`};
+Object.keys(ORDT).forEach(k=>{DRUGS[k].ord=ORDT[k];});
+const GROUPS={
+ 0:[{id:'vaso',n:'血管升压药',ds:['dopamine','ne','epi']},
+    {id:'ino',n:'正性肌力药',ds:['dobutamine','milrinone']},
+    {id:'vas',n:'血管加压素类',ds:['terli']}],
+ 1:[{id:'ana',n:'阿片镇痛',ds:['fentanyl']},
+    {id:'sed',n:'镇静',ds:['midazolam']},
+    {id:'blk',n:'肌松',ds:['vecuronium']}]
 };
-const CATNAME={v:'升压·强心',s:'镇静·镇痛',m:'肌松'}, CATCLS={v:'v',s:'s',m:'m'};
+const P0ORDER=['vaso','ino','vas'], P1ORDER=['ana','sed','blk'];
 let W=1.5, basket={};
-/* 患儿信息（全部选填） */
-const META={bed:'',name:'',hosp:'',gaw:'',gad:'',dol:''};
-function updCga(){
-  const gaw=parseFloat(META.gaw), gad=parseFloat(META.gad)||0, dol=parseFloat(META.dol);
-  const el=$('m_cga'); if(!el)return;
-  if(isFinite(gaw)&&gaw>0&&isFinite(dol)&&META.dol!==''){
-    const tot=gaw*7+(isFinite(gad)?gad:0)+dol;
-    el.textContent='CGA '+Math.floor(tot/7)+'周+'+(tot%7)+'天';
-  } else el.textContent='CGA —';
-}
-function metaSummary(){
-  const gaw=parseFloat(META.gaw), gad=parseFloat(META.gad)||0, dol=parseFloat(META.dol);
-  const ga=(isFinite(gaw)&&gaw>0)? gaw+'周+'+(isFinite(gad)?gad:0)+'天' : '';
-  const cga=(isFinite(gaw)&&gaw>0&&isFinite(dol)&&dol>=0)? (()=>{const tot=gaw*7+gad+dol; return Math.floor(tot/7)+'周+'+(tot%7)+'天';})() : '';
-  const parts=[];
-  if(META.bed)parts.push('床号 '+META.bed);
-  if(META.name)parts.push('姓名 '+META.name);
-  if(META.hosp)parts.push('住院号 '+META.hosp);
-  if(ga)parts.push('GA '+ga);
-  if(isFinite(dol)&&META.dol!=='')parts.push('日龄 '+dol+'天');
-  if(cga)parts.push('纠正胎龄 '+cga);
-  return parts;
-}
 const $=id=>document.getElementById(id);
 function f(x,n=2){let s=Number(x).toFixed(n); if(s.indexOf('.')>-1)s=s.replace(/0+$/,'').replace(/\.$/,''); return s;}
 function f2(x){return f(x,2);}
-function r05(x){return Math.max(0.05, Math.round(x*20)/20);} /* 0.05档 */
-function niceRate(x){ /* 取整到0.05档：向下超过5%则升一档（宁多勿少） */
-  var n=Math.round(x*20)/20;
-  if(n<x && (x-n)/x>0.05) n=(Math.round(n*20)+1)/20;
-  return Math.max(0.05,n);
-}
+function niceRate(x){var n=Math.round(x*20)/20; if(n<x&&(x-n)/x>0.05)n=(Math.round(n*20)+1)/20; return Math.max(0.05,n);}
 
-/* 配液：总量mg / 原液ml / NS加量ml / 终体积 */
+/* ===== 基础计算 ===== */
+function isPerMin(g){return g.unit.indexOf('min')>-1;}
+function rateOf(g,d){return (g.dynamic?1:d/g.rateDiv);}
 function prepOf(id,dose){
   const g=DRUGS[id];
   if(g.dynamic){
     const mg=dose*W*12/1000;
-    return {mg, mgTxt:f(mg,3)+'mg', stockMl:0, nsMl:null, to:12, C:null,
-      line:`特利加压素${f(mg,3)}mg,入0.9%氯化钠12ml,维持12小时，弃余量`,
-      unit:g.baseUnit||'mg'};
+    return {mg, stockMl:0, nsMl:0, to:12, C:mg*1000/12, unit:'mg'};
   }
-  const mg=g.mgPerKg*W, stockMl=mg*g.stockMlPerMg;
-  const to=stockMl<=45?50:60;
-  const nsMl=Math.max(0,to-stockMl);
-  return {mg, stockMl, nsMl, to, C:mg*1000/to, unit:g.baseUnit||'mg'};
+  const mg=g.mgPerKg*W, stockMl=mg*g.stockMlPerMg, to=stockMl<=45?50:60;
+  return {mg, stockMl, nsMl:Math.max(0,to-stockMl), to, C:mg*1000/to, unit:g.baseUnit||'mg'};
 }
-function prepLines(id,dose,R){
+/* ===== 医嘱行 / 24小时总量 / 核对 ===== */
+function ordText(id,dose,R){
   const g=DRUGS[id];
-  const perMin=g.unit.indexOf('min')>-1;
-  const mg24=dose*W*(perMin?1440:24)/1000;          /* 24小时药量 */
-  const ns24=(g.dynamic?1:(R||niceRate(g.rate(dose))))*24; /* 24小时入液=实际泵速×24 */
-  const dmg = mg24>=1? f(mg24,2)+'mg' : f(mg24*1000,1)+'μg';
-  if(g.dynamic) return [`${g.name} ${dmg}/24h`, `0.9%氯化钠 24ml/24h（12ml×2袋）`];
-  return [`${g.name} ${dmg}/24h`, `0.9%氯化钠 ${f2(ns24)}ml/24h`];
+  R=(R!==undefined&&isFinite(R))?R:niceRate(g.rate(dose));
+  if(g.dynamic) return `特利加压素${f(dose*W*12/1000,3)}mg,入0.9%氯化钠12ml,维持12小时，弃余量`;
+  return g.ord(f2(R),dose);
 }
-/* 第一行：库格式医嘱（泵速取0.1整档，无"滴速"） */
-function ordText(id,dose){
-  const g=DRUGS[id];
-  if(g.dynamic) return g.ord(null,dose,f(dose*W*12/1000,3));
-  return g.ord(f2(g.rateVal||niceRate(g.rate(dose))),dose);
+function prep24(id,dose,R){
+  const g=DRUGS[id], perMin=isPerMin(g);
+  const mg24=dose*W*(perMin?1.44:24);
+  const ns=R*24;
+  const dmg=mg24>=1? f(mg24,2)+'mg' : f(mg24*1000,1)+'μg';
+  if(g.dynamic) return [`${g.name} ${dmg}/24h（0.216mg×2袋样式：每12h重配）`, `0.9%氯化钠 24ml/24h`];
+  return [`${g.name} ${dmg}/24h`, `0.9%氯化钠或5%葡萄糖 ${f2(ns)}ml/24h`];
 }
-/* 核对框各行 */
-function ckLines(id,dose){
-  const g=DRUGS[id], p=prepOf(id,dose);
-  const perMin=g.unit.indexOf('min')>-1; // μg/kg/min vs μg/kg/h
-  const L=[];
-  if(g.dynamic){
-    const mcgH=dose*W, mg24=dose*W*24/1000;
-    L.push([`① 目标 ${dose} ${g.unit}`,false]);
-    L.push([`② 每小时 ${dose}×${W.toFixed(2)}＝${f(mcgH,0)}μg`,false]);
-    L.push([`③ 24小时开：特利加压素${f(mg24,2)}mg＝${f(dose*W*12/1000,3)}mg×2袋`,false]);
-    L.push([`④ 泵速 1ml/h`,false]);
-    L.push([`调剂量 每±1μg/kg/h＝每袋±${f(0.012*W,3)}mg`,false]);
-    return L;
-  }
-  const exact=g.rate(dose);
-  const Cug=p.C; // μg/ml
+function ck24(id,dose,R){
+  const g=DRUGS[id], perMin=isPerMin(g);
+  const mg24=dose*W*(perMin?1.44:24);
   const mcgH=dose*W*(perMin?60:1);
-  const mg24=dose*W*(perMin?1440:24)/1000;
-  const R=g.rateVal||niceRate(exact);
-  const act=R*Cug/(perMin?60:1)/W;
-  const dev=Math.abs(act-dose)/dose;
-  L.push([`① 目标 ${dose} ${g.unit}`,false]);
-  L.push([`② 每小时 ${dose}×${W.toFixed(2)}${perMin?'×60':''}＝${f(mcgH,0)}μg`,false]);
-  L.push([`③ 24小时 ${g.name} ${mg24>=1? f(mg24,2)+'mg' : f(mg24*1000,1)+'μg'}，入液${f2(R*24)}ml`,false]);
-  let line4=`④ 泵速 ${f2(R)}ml/h`;
-  if(g.rateTouched && dev>0.005) line4+=`（实际${f(act,2)}${g.unit}）`;
-  if(g.rateTouched && dev>0.25) line4+=`｜目标${dose} ⚠`;
-  L.push([line4, g.rateTouched && dev>0.25]);
-  L.push([`调剂量 每±0.1ml/h＝±${f(0.1*Cug/(perMin?60:1)/W,2)}${g.unit}`,false]);
+  const L=[];
+  L.push([`剂量核对 ${dose}${g.unit}×${W.toFixed(2)}kg${perMin?'×60':''}×24h＝${mg24>=1? f(mg24,2)+'mg':f(mg24*1000,1)+'μg'}/24h（${f(mcgH,0)}μg/h）`,false]);
+  L.push([`液体核对 ${f2(R)}ml/h；24小时 ${f2(R*24)}ml`,false]);
   return L;
 }
-function bolusText(id,dose){ return DRUGS[id].bolus.ord(dose); }
+/* ===== 单支模式 ===== */
+function ampOf(id){
+  const g=DRUGS[id];
+  return {M:g.ampM||g.specMg, V:g.ampV||(g.dynamic?12:50), R:g.ampR||g.rateVal||niceRate(g.rate(g.dose||g.def))};
+}
+function ampOrd(id){
+  const g=DRUGS[id], a=ampOf(id);
+  const C=a.M*1000/a.V, perMin=isPerMin(g);
+  const act=a.R*C/(perMin?60:1)/W;
+  if(g.dynamic) return `特利加压素${f(a.M,2)}mg,入0.9%氯化钠至${f(a.V,0)}ml,维持至用完（约${f(a.V/a.R,0)}h）`;
+  return g.ord(f2(a.R),f(act,2)).replace(',维持24小时',',维持至用完').replace(',维持12小时',',维持至用完');
+}
+function ampPrep(id){
+  const g=DRUGS[id], a=ampOf(id);
+  const stock=g.dynamic? 0 : a.M/g.stockMlPerMg;
+  const water=Math.max(0,a.V-stock);
+  if(g.dynamic) return [`特利加压素 ${f(a.M,2)}mg（1支）`, `0.9%氯化钠或5%葡萄糖 ${f(a.V-stock,0)}ml`];
+  return [`${g.name} ${f(a.M,2)}mg`, `0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(a.V,0)}ml`];
+}
+function ampCk(id){
+  const g=DRUGS[id], a=ampOf(id);
+  const perMin=isPerMin(g);
+  const C=a.M*1000/a.V;
+  const act=a.R*C/(perMin?60:1)/W;
+  const mg24=act*W*(perMin?1.44:24);
+  const dur=a.V/a.R;
+  const L=[];
+  L.push([`剂量核对 ${f2(a.R)}ml/h×${f2(C)}mg/ml×24h＝${mg24>=1? f(mg24,2)+'mg':f(mg24*1000,1)+'μg'}/24h（＝${f(act,2)}${g.unit}）`,false]);
+  L.push([`液体核对 ${f2(a.R)}ml/h；24小时 ${f2(a.R*24)}ml；本管 ${f(a.V,0)}ml 可维持 ${f(dur,0)}h（${f(dur/24,1)}天）`,false]);
+  return L;
+}
 
-/* ============ 药卡 ============ */
+/* ===== 药卡渲染 ===== */
 function cardHtml(id){
   const g=DRUGS[id];
-  let h=`<div class="card" id="card_${id}">
+  return `<div class="card" id="card_${id}">
     <h3>${g.name} <span class="en">${g.en}</span></h3>
     <div class="spec">一支规格：${g.spec}</div>
-    <div class="labeq">剂量 <input id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}
-      ｜ 泵速 <input id="rin_${id}" type="number" inputmode="decimal" step="0.1" min="0" placeholder="1" value="" ${g.dynamic?'disabled title="1ml/h固定"':''}> ml/h</div>
-    <div class="ordbox" id="ord_${id}"></div>
-    <div class="ckbox" id="ck_${id}"><div class="t">核对（体重 <span id="ckw_${id}"></span>kg）</div><div id="ckr_${id}"></div></div>
-    <div class="ckbox dosebox"><div class="t">剂量说明 · 三源对照（单位：${g.unit}）</div>
-      <div class="r"><b>规格</b>：每支 ${g.spec}</div>
-      <div class="r"><b>UpToDate英文版</b>：${g.utd}</div>
-      <div class="r"><b>手册第六版</b>：${g.hb}</div>
-      <div class="r"><b>本院医嘱库既往</b>：${g.hosp.replace('本院既往','')}</div>
-    </div>`;
-  if(g.bolus){
-    const b=g.bolus;
-    h+=`<div class="bolusbox${id==='epi'?' redbox':''}" id="bol_${id}">
-      <div class="labeq">${b.label.split('（')[0]} <input id="bin_${id}" type="number" inputmode="decimal" step="${b.def<0.5?'0.01':'0.5'}" min="0" value="${b.def}"> ${b.unit}
-        → <span id="bout_${id}" style="font-family:var(--mono);font-weight:800"></span></div>
-      <div class="note" id="bnote_${id}" style="font-size:11px;color:var(--ink2);margin-top:3px"></div>
-      <div class="btnrow"><button class="btn pri" id="addBol_${id}" onclick="toggleBasketBol('${id}')">＋ ${id==='epi'?'复苏静推加医嘱':'静推加医嘱'}</button></div>
-    </div>`;
-  }
-  h+=`<div class="btnrow"><button class="btn pri" id="add_${id}" onclick="toggleBasket('${id}')">＋ 加医嘱</button></div>
-    <details class="more"><summary>参考范围 · 药理 · 不良反应 ▾</summary>
+    <div class="modetabs"><button id="mt_h24_${id}" class="on" onclick="setMode('${id}','h24')">按 24 小时</button><button id="mt_amp_${id}" onclick="setMode('${id}','amp')">按单支药</button></div>
+    <div id="sec_h24_${id}">
+      <div class="labeq">剂量 <input id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}
+        ｜ 泵速 <input id="rin_${id}" type="number" inputmode="decimal" step="0.1" min="0" placeholder="1" ${g.dynamic?'disabled title="1ml/h固定"':''}> ml/h</div>
+      <div class="ordbox" id="ord_${id}"></div>
+      <div class="ckbox" id="ck_${id}"><div class="t">核对（体重 <span id="ckw_${id}"></span>kg）</div><div id="ckr_${id}"></div></div>
+    </div>
+    <div id="sec_amp_${id}" style="display:none">
+      <div class="labeq">药量 <input id="amin_${id}" type="number" inputmode="decimal" step="${g.specMg<1?0.1:1}" min="0" value="${g.specMg}"> mg
+        ｜ 稀释至 <input id="vin_${id}" type="number" inputmode="decimal" step="5" min="5" value="${g.dynamic?12:50}"> ml
+        ｜ 泵速 <input id="rin2_${id}" type="number" inputmode="decimal" step="0.1" min="0.05" value="0.5"> ml/h</div>
+      <div class="ordbox" id="aord_${id}"></div>
+      <div class="ckbox" id="ack_${id}"><div class="t">核对（体重 <span id="ackw_${id}"></span>kg）</div><div id="ackr_${id}"></div></div>
+    </div>
+    <div class="btnrow"><button class="btn pri" id="add_${id}" onclick="toggleBasket('${id}')">＋ 加医嘱</button></div>
+    <details class="more"><summary>应用场景 · 药理 · 不良反应 ▾</summary>
       <div class="mrow"><b>应用场景</b>：${g.ind}</div>
       <div class="mrow"><b>药理</b>：${g.pharm}</div>
       <div class="mrow warn"><b>不良反应</b>：${g.adverse}</div>
       <div class="mrow cmp"><b>配伍</b>：${g.compat}</div>
     </details>
   </div>`;
-  return h;
 }
-$('p0').innerHTML = ['dopamine','dobutamine','epi','ne','milrinone','terli'].map(cardHtml).join('');
-$('p1').innerHTML = ['fentanyl','midazolam','vecuronium'].map(cardHtml).join('');
+function mountCard(pageIdx,id){
+  $('holder'+pageIdx).innerHTML=cardHtml(id);
+  ['din_'+id,'rin_'+id,'amin_'+id,'vin_'+id,'rin2_'+id].forEach(x=>{
+    const e=$(x); if(e) e.addEventListener('input',()=>updateDrug(id));
+  });
+  updateDrug(id);
+}
+function setMode(id,m){ DRUGS[id].mode=m; renderCardMode(id); }
+function renderCardMode(id){
+  const g=DRUGS[id], amp=g.mode==='amp';
+  $('sec_h24_'+id).style.display=amp?'none':'block';
+  $('sec_amp_'+id).style.display=amp?'block':'none';
+  $('mt_h24_'+id).classList.toggle('on',!amp);
+  $('mt_amp_'+id).classList.toggle('on',amp);
+}
+function activeMode(id){ return DRUGS[id].mode||'h24'; }
 
-function renderDrug(id){
-  const g=DRUGS[id], d=g.dose;
-  const pl=prepLines(id,d,g.rateVal||niceRate(g.rate(d)));
-  const o2html=Array.isArray(pl)? pl.join('<br>') : '';
-  $('ord_'+id).innerHTML=`<div class="o1">${ordText(id,d)}</div>`+(o2html?`<div class="o2">${o2html}</div>`:'');
-  $('ckw_'+id).textContent=W.toFixed(2);
-  $('ckr_'+id).innerHTML=ckLines(id,d).map(r=>`<div class="r${r[1]?' bad':''}">${r[1]?'⚠ ':''}${r[0]}</div>`).join('');
-  if(g.bolus) updBolus(id);
-  renderDrugsBtn(id); renderBasket();
-}
-function updFromDose(id){ /* 改剂量 → 泵速自动（0.05档宁多勿少） */
+/* ===== 更新与渲染 ===== */
+function updFromDose(id){
   const g=DRUGS[id];
   const d=parseFloat($('din_'+id).value);
   if(!isFinite(d)||d<=0){ ['ord_','ck_'].forEach(px=>{const e=$(px+id); if(e)e.innerHTML='';}); return; }
   g.dose=d;
-  if(!g.rateTouched){ /* 泵速只在未手动改过时给建议值 */
-    g.rateVal=g.dynamic?1:niceRate(g.rate(d));
+  if(!g.rateTouched){
+    g.rateVal=niceRate(g.rate(d));
     if(!g.dynamic) $('rin_'+id).value=f2(g.rateVal);
   }
   renderDrug(id);
 }
-function updFromRate(id){ /* 改泵速：剂量目标不动，核对按实际泵速算 */
+function updFromRate(id){
   const g=DRUGS[id];
   const r=parseFloat($('rin_'+id).value);
   if(!isFinite(r)||r<=0) return;
   g.rateVal=r; g.rateTouched=true;
   renderDrug(id);
 }
-function updBolus(id){
-  const g=DRUGS[id], b=g.bolus;
-  let d=parseFloat($('bin_'+id).value);
-  if(!isFinite(d)||d<=0){ g.bolusDose=undefined; return; }
-  g.bolusDose=d;
-  $('bout_'+id).textContent=`${f2(d*W)} ${b.outUnit}`;
-  const [t1,t2]=bolusText(id,d);
-  $('bnote_'+id).innerHTML=`${b.hint}<div class="ordbox" style="margin-top:5px"><div class="o1">${t1}</div><div class="o2">${t2}</div></div>`;
-  renderDrugsBtn(id);
+function updateDrug(id){
+  const g=DRUGS[id];
+  if(g.dose===undefined){ const d=parseFloat($('din_'+id).value); if(isFinite(d)&&d>0){g.dose=d;} else return; }
+  if(g.rateVal===undefined) g.rateVal=niceRate(g.rate(g.dose));
+  if(!g.rateTouched) g.rateVal=niceRate(g.rate(g.dose));
+  const amp=g.ampM!==undefined;
+  renderDrug(id);
 }
-function renderDrugsBtn(id){
-  const b=$('add_'+id);
-  if(b){ const on=!!basket[keyOf(id,'pump')];
-    b.className='btn pri'+(on?' added':''); /* 显式赋值，杜绝残留 */
-    b.textContent=on?'✓ 已加医嘱':'＋ 加医嘱'; }
-  const bb=$('addBol_'+id);
-  if(bb){ const onB=!!basket[keyOf(id,'bolus')];
-    bb.className='btn pri'+(onB?' added':'');
-    bb.textContent=onB?(id==='epi'?'✓ 复苏静推已加':'✓ 静推已加'):(id==='epi'?'＋ 复苏静推加医嘱':'＋ 静推加医嘱'); }
+function renderDrug(id){
+  const g=DRUGS[id], d=g.dose;
+  const R=g.rateVal||niceRate(g.rate(d));
+  const perMin=isPerMin(g);
+  /* 24h 模式 */
+  const pl=prep24(id,d,R);
+  $('ord_'+id).innerHTML=`<div class="o1">${ordText(id,d,R)}</div><div class="o2">${pl.join('<br>')}</div>`;
+  $('ckw_'+id).textContent=W.toFixed(2);
+  $('ckr_'+id).innerHTML=ck24(id,d,R).map(r=>`<div class="r${r[1]?' bad':''}">${r[0]}</div>`).join('');
+  /* 单支模式 */
+  const a=ampOf(id);
+  const C=a.M*1000/a.V;
+  const act=a.R*C/(perMin?60:1)/W;
+  const mg24=act*W*(perMin?1.44:24);
+  const dur=a.V/a.R;
+  $('aord_'+id).innerHTML=`<div class="o1">${ampOrd(id)}</div><div class="o2">${ampPrep(id).join('<br>')}</div>`;
+  $('ackw_'+id).textContent=W.toFixed(2);
+  $('ackr_'+id).innerHTML=[
+    `剂量核对 ${f2(a.R)}ml/h×${f2(C)}mg/ml×24h＝${mg24>=1? f(mg24,2)+'mg':f(mg24*1000,1)+'μg'}/24h（＝${f(act,2)}${g.unit}）`,
+    `液体核对 ${f2(a.R)}ml/h；24小时 ${f2(a.R*24)}ml；本管 ${f(a.V,0)}ml 可维持 ${f(dur,0)}h（${f(dur/24,1)}天）`
+  ].map(s=>`<div class="r">${s}</div>`).join('');
+  if(g.bolus) updBolus(id);
+  renderDrugsBtn(id); renderBasket();
+}
+function updBolus(id){ /* 保留接口：静推医嘱由复苏模块/静推盒处理 */ }
+
+/* ===== 子菜单导航 ===== */
+const CUR={0:{g:'vaso',d:'dopamine'},1:{g:'ana',d:'fentanyl'}};
+function buildSubnav(){
+  [0,1].forEach(p=>{
+    $('sub'+p).innerHTML=GROUPS[p].map(gr=>`<button onclick="pickGroup(${p},'${gr.id}')" id="sg_${p}_${gr.id}">${gr.n}</button>`).join('');
+  });
+  pickGroup(0,CUR[0].g); pickGroup(1,CUR[1].g);
+}
+function pickGroup(p,gid){
+  CUR[p].g=gid;
+  const gr=GROUPS[p].find(x=>x.id===gid);
+  GROUPS[p].forEach(x=>$('sg_'+p+'_'+x.id).classList.toggle('on',x.id===gid));
+  $('dn'+p).innerHTML=gr.ds.map(d=>`<button onclick="pickDrug(${p},'${d}')" id="dn_${p}_${d}">${DRUGS[d].name}</button>`).join('');
+  pickDrug(p, CUR[p].d&&gr.ds.includes(CUR[p].d)?CUR[p].d:gr.ds[0]);
+}
+function pickDrug(p,did){
+  CUR[p].d=did;
+  GROUPS[p].forEach(gr=>gr.ds.forEach(d=>{const el=$('dn_'+p+'_'+d); if(el)el.classList.toggle('on',d===did);}));
+  mountCard(p,did);
+  const init=DRUGS[did];
+  if(init.dose===undefined){ const d=parseFloat($('din_'+did).value); if(isFinite(d)&&d>0){init.dose=d; init.rateVal=niceRate(init.rate(d)); if(!init.dynamic)$('rin_'+did).value=f2(init.rateVal);} }
+  updateDrug(did);
 }
 
-/* ============ 医嘱篮 ============ */
-function keyOf(id,mode){ return id+'@'+mode; } /* 实时：剂量随输入框走 */
-function toggleBasket(id){ /* 泵入医嘱 加/取消 */
-  const g=DRUGS[id], k=keyOf(id,'pump');
-  if(k in basket) delete basket[k];
-  else{ if(g.dose===undefined) updFromDose(id);
-    if(g.dose!==undefined) basket[k]={id,mode:'pump'}; }
-  renderBasket(); renderDrugsBtn(id);
+/* ===== 肾上腺素复苏模块 ===== */
+const RES={iv:{mlkg:0.2}, et:{mlkg:0.75}};
+function resusHtml(){
+  return `<div class="card" style="border:1.5px solid var(--red)">
+  <h3 style="color:var(--red)">⚠ 肾上腺素复苏</h3>
+  <div class="redbox" style="border:1.5px solid var(--red); background:#fdecec; border-radius:10px; padding:8px 10px; margin-top:7px">
+    <div class="labeq" style="color:#7f1d1d">静推（IV/IO）剂量 <input id="r_iv" type="number" inputmode="decimal" step="0.05" min="0.05" max="0.3" value="0.2"> ml/kg（0.1–0.3，＝0.01–0.03mg/kg）</div>
+    <div class="ordbox" id="resiv_ord"></div>
+    <div class="note" style="font-size:11.5px;color:#7f1d1d">q3–5min 可重复；正压通气＋胸外按压下给药；外渗→酚妥拉明局部浸润</div>
+    <div class="btnrow"><button class="btn red" id="add_epi_iv" onclick="toggleRes('epi_iv')">＋ 复苏静推加医嘱</button></div>
+  </div>
+  <div class="redbox" style="border:1.5px solid var(--red); background:#fdecec; border-radius:10px; padding:8px 10px; margin-top:7px">
+    <div class="labeq" style="color:#7f1d1d">气管内（ET）剂量 <input id="r_et" type="number" inputmode="decimal" step="0.05" min="0.5" max="1" value="0.75"> ml/kg（0.5–1，＝0.05–0.1mg/kg）</div>
+    <div class="ordbox" id="reset_ord"></div>
+    <div class="note" style="font-size:11.5px;color:#7f1d1d">无静脉通路时用；给药后气囊加压数次促吸收；吸收不稳定→尽快建立静脉；同一配液</div>
+    <div class="btnrow"><button class="btn red" id="add_epi_et" onclick="toggleRes('epi_et')">＋ 气管内加医嘱</button></div>
+  </div>
+  <div class="note" style="font-size:11.5px;color:var(--ink2);margin-top:6px">配液：1:10000＝1mg＋NS 9ml→10ml（现配现用、标注时间）。心率<60持续→重复给药并持续按压。</div>
+  </div>`;
 }
-function toggleBasketBol(id){ /* 静推医嘱 加/取消 */
-  const g=DRUGS[id];
-  if(g.bolusDose===undefined) updBolus(id);
-  const k=keyOf(id,'bolus');
+function resLine(route){
+  const v=RES[route].mlkg, ml=v*W, mg=ml*0.1;
+  if(route==='iv') return [`1:10000肾上腺素 ${f2(ml)}ml 静推 st`,`${Math.round(v*100)}μg/kg＝${f2(mg)}mg · q3–5min可重复 · 推注≥1分钟`];
+  return [`1:10000肾上腺素 ${f2(ml)}ml 气管内滴入 st`,`${Math.round(v*10)/10}ml/kg＝${f2(mg)}mg（0.05–0.1mg/kg）· 滴入后气囊加压数次 · 尽快建立静脉`];
+}
+function resCk(route){
+  const v=RES[route].mlkg, ml=v*W, mg=ml*0.1;
+  return [`剂量核对 ${v}ml/kg×${W.toFixed(2)}kg＝${f2(ml)}ml＝${f2(mg)}mg（${Math.round(v*100)}μg/kg）`,false];
+}
+function renderResus(){
+  if(!$('resiv_ord')){ $('resus').innerHTML=resusHtml();
+    ['r_iv','r_et'].forEach(x=>$(x).addEventListener('input',renderResus));
+  }
+  $('resiv_ord').innerHTML=`<div class="o1">${resLine('iv')[0]}</div><div class="o2">${resLine('iv')[1]}</div>`;
+  $('reset_ord').innerHTML=`<div class="o1">${resLine('et')[0]}</div><div class="o2">${resLine('et')[1]}</div>`;
+  renderDrugsBtn('epi_iv'); renderDrugsBtn('epi_et');
+}
+function toggleRes(key){
+  if(basket[key]) delete basket[key]; else basket[key]={res:key};
+  renderBasket(); renderDrugsBtn(key);
+}
+
+/* ===== 医嘱篮 ===== */
+function keyOf(id,mode){ return id+'@'+mode; }
+function toggleBasket(id){
+  const g=DRUGS[id], m=activeMode(id), k=m+'@'+id;
   if(k in basket) delete basket[k];
-  else{ if(g.bolusDose!==undefined) basket[k]={id,mode:'bolus'}; }
+  else{
+    if(m==='h24'){ if(g.dose===undefined) updFromDose(id); if(g.dose===undefined)return; }
+    else{ readAmp(id); if(!(g.ampM>0&&g.ampR>0))return; }
+    basket[k]={id,m};
+  }
   renderBasket(); renderDrugsBtn(id);
 }
 function linesOf(k){
-  const [id,mode]=k.split('@');
-  const g=DRUGS[id];
-  const dose= mode==='bolus'? g.bolusDose : g.dose;
-  if(mode==='bolus') return {t1:bolusText(id,dose)[0], prep:null, ck:null};
-  const R=g.rateVal||niceRate(g.rate(dose));
-  const pp=prepLines(id,dose,R);
-  return {t1:ordText(id,dose), prep:Array.isArray(pp)?pp:null, ck:ckLines(id,dose)};
+  if(k.indexOf('epi_')===0){ const route=k.slice(4);
+    return {t1:resLine(route)[0], prep:[resLine(route)[1]], ck:[resCk(route)], tag:route==='iv'?'复苏静推':'气管内'};
+  }
+  const [mode,id]=k.split('@'); const g=DRUGS[id];
+  if(mode==='h24'){
+    const d=g.dose, R=g.rateVal||niceRate(g.rate(d));
+    return {t1:ordText(id,d,R), prep:prep24(id,d,R), ck:ck24(id,d,R)};
+  }
+  const a=ampOf(id); const C=a.M*1000/a.V; const perMin=isPerMin(g);
+  const act=a.R*C/(perMin?60:1)/W;
+  const t1=g.dynamic? `特利加压素${f(a.M,2)}mg,入0.9%氯化钠至${f(a.V,0)}ml,维持至用完（约${f(a.V/a.R,0)}h）`
+    : g.ord(f2(a.R),f(act,2)).replace(',维持24小时',',维持至用完').replace(',维持12小时',',维持至用完');
+  return {t1:t1, prep:ampPrep(id), ck:ampCk(id)};
+}
+function renderDrugsBtn(key){
+  if(key==='epi_iv'||key==='epi_et'){
+    const b=$(key==='epi_iv'?'add_epi_iv':'add_epi_et'); if(!b)return;
+    const on=!!basket[key];
+    b.className='btn '+(on?'added':'red');
+    b.textContent=on?'✓ 已加医嘱':(key==='epi_iv'?'＋ 复苏静推加医嘱':'＋ 气管内加医嘱');
+    return;
+  }
+  const id=key; const g=DRUGS[id];
+  ['h24','amp'].forEach(m=>{
+    const k=m+'@'+id; const el=$( (m==='h24'?'add_':'addamp_')+id ); if(!el)return;
+    const on=!!basket[k];
+    el.className='btn pri'+(on?' added':'');
+    el.textContent=on?'✓ 已加医嘱（'+(m==='h24'?'24小时':'单支')+'）':'＋ 加医嘱（'+(m==='h24'?'24小时':'单支')+'）';
+  });
 }
 function renderBasket(){
   const ks=Object.keys(basket);
   $('bkCnt').textContent=ks.length?`(${ks.length})`:'';
-  $('ordDate')&&($('ordDate').textContent=new Date().toLocaleDateString('zh-CN'));
-  $('ordWt')&&($('ordWt').textContent=W.toFixed(2));
   const ms=metaSummary();
   $('ordMeta').innerHTML=(ms.length? ms.join(' · ')+' · ':'')+'体重 <b style="font-family:var(--mono)">'+W.toFixed(2)+'</b> kg · '+new Date().toLocaleDateString('zh-CN');
-  $('ordList').innerHTML = ks.length? ks.map((k,i)=>{
+  $('ordList').innerHTML= ks.length? ks.map((k,i)=>{
     const L=linesOf(k);
-    const ck=L.ck? `<div class="ckbox"><div class="t">核对（体重 ${W.toFixed(2)}kg）</div>${L.ck.map(r=>`<div class="r${r[1]?' bad':''}">${r[1]?'⚠ ':''}${r[0]}</div>`).join('')}</div>`:'';
+    const ck=L.ck? `<div class="ckbox"><div class="t">核对（体重 ${W.toFixed(2)}kg）</div>${L.ck.map(r=>`<div class="r">${r}</div>`).join('')}</div>`:'';
     return `<div class="ordbox" style="position:relative"><button class="del" onclick="delItem('${k}')" style="position:absolute;top:6px;right:8px;border:none;background:none;color:#b91c1c;font-size:15px;font-weight:900">✕</button>
       <div class="o1">${i+1}. ${L.t1}</div>${L.prep?`<div class="o2">${L.prep.join('<br>')}</div>`:''}</div>${ck}`;
-  }).join('') : `<div style="text-align:center;color:var(--ink2);padding:22px 0;font-size:13px">（空）—— 到①②页输剂量后点【医嘱入篮】</div>`;
-  const txt=ks.map(k=>{const L=linesOf(k); return [L.t1].concat(L.prep||[]).join('\n');}).join('\n');
-  $('ordTxt').value=`【新生儿临时医嘱】体重${W.toFixed(2)}kg ${new Date().toLocaleDateString('zh-CN')}\n`+txt+`\n（须上级医师核对后录入）`;
-  Object.keys(DRUGS).forEach(renderDrugsBtn);
+  }).join('') : `<div style="text-align:center;color:var(--ink2);padding:22px 0;font-size:13px">（空）—— 选药输剂量后点【加医嘱】</div>`;
+  $('ordTxt').value=`【新生儿临时医嘱】${ms.length?ms.join(' '):'体重'+W.toFixed(2)+'kg'} ${new Date().toLocaleDateString('zh-CN')}\n`+
+    ks.map(k=>{const L=linesOf(k); return [L.t1].concat(L.prep||[]).join('\n');}).join('\n')+'\n（须上级医师核对后录入）';
 }
-function delItem(k){ delete basket[k]; renderBasket(); }
+function delItem(k){ delete basket[k]; renderBasket();
+  if(k.indexOf('epi_')===0) renderDrugsBtn(k); else { const [m,id]=k.split('@'); renderDrugsBtn(id); }
+}
 function copyOrder(){
   const t=$('ordTxt').value;
   (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(
@@ -516,147 +510,183 @@ function copyOrder(){
     ()=>{const ta=$('ordTxt'); ta.select(); document.execCommand('copy'); $('copied').textContent='✓ 已复制';});
   setTimeout(()=>$('copied').textContent='',2500);
 }
-
-/* ============ 医嘱长图（复刻 PN处方台 buildOrderCanvas：780宽黑白简框 + toBlob分享/下载） ============ */
-function buildOrderCanvas(){
-  var W_=780, pad=44, innerW=W_-2*pad-24;
-  var items=Object.keys(basket).map(function(k){return {k:k, L:linesOf(k)};});
+/* ===== 黑白长图（PN式） ===== */
+function makeImg(){
+  const ks=Object.keys(basket), Wc=780, pad=44, innerW=Wc-2*pad-24;
+  const items=ks.map(k=>({k:k, L:linesOf(k)}));
   function render(H){
-    var cv=document.createElement('canvas'); cv.width=W_; cv.height=H;
-    var x=cv.getContext('2d');
-    function line(a,b,c2,d,w){ x.lineWidth=w||1; x.beginPath(); x.moveTo(a,b); x.lineTo(c2,d); x.stroke(); }
-    function wrap(txt,xx,yy,maxw,lh,font){
-      x.font=font; var lt='';
-      for(var i=0;i<txt.length;i++){ var t2=lt+txt[i];
-        if(x.measureText(t2).width>maxw){ x.fillText(lt,xx,yy); lt=txt[i]; yy+=lh; } else lt=t2; }
-      if(lt)x.fillText(lt,xx,yy); return yy+lh;
-    }
-    function estLines(txt,font){ x.font=font; var w=x.measureText('0').width; return Math.max(1,Math.ceil(txt.length*w/innerW)); }
-    x.fillStyle='#ffffff'; x.fillRect(0,0,W_,H);
-    x.strokeStyle='#000'; x.lineWidth=3; x.strokeRect(14,14,W_-28,H-28);
-    x.fillStyle='#000'; x.font='bold 30px -apple-system,sans-serif';
-    x.fillText('临时医嘱（血管活性药）', pad, 70);
-    x.font='20px -apple-system,sans-serif';
-    x.fillText(new Date().toLocaleDateString('zh-CN'), W_-pad-150, 68);
-    /* 患者行（PN式） */
-    x.font='bold 24px -apple-system,sans-serif';
-    var mx=pad;
-    const ms0=metaSummary(), bedm=META.bed?('床号 '+META.bed):'', namem=META.name?('姓名 '+META.name):'', hospm=META.hosp?('住院号 '+META.hosp):'';
-    x.fillStyle='#000';
-    if(bedm){ x.fillText(bedm,mx,104); mx+=x.measureText(bedm).width+26; }
-    if(namem){ x.fillText(namem,mx,104); mx+=x.measureText(namem).width+26; }
-    if(hospm){ x.fillStyle='#444'; x.font='18px -apple-system,sans-serif'; x.fillText(hospm,mx,102); }
-    line(pad, 118, W_-pad, 118, 1.5);
-    /* 四格信息卡：GA/DOL/纠正胎龄/体重 */
-    function bcard(cx,cy,cw,label,val){
-      x.strokeStyle='#000'; x.lineWidth=1.5; x.strokeRect(cx,cy,cw,60);
-      x.fillStyle='#444'; x.font='13px -apple-system,sans-serif'; x.fillText(label,cx+12,cy+22);
-      x.fillStyle='#000'; x.font='bold 20px -apple-system,sans-serif'; x.fillText(val,cx+12,cy+48);
-    }
+    const cv=document.createElement('canvas'); cv.width=Wc; cv.height=H;
+    const x=cv.getContext('2d');
+    function line(a,b,c2,d,w){x.lineWidth=w||1;x.beginPath();x.moveTo(a,b);x.lineTo(c2,d);x.stroke();}
+    function wrap(txt,xx,yy,maxw,lh,font){x.font=font;var lt='';for(var i=0;i<txt.length;i++){var t2=lt+txt[i];if(x.measureText(t2).width>maxw){x.fillText(lt,xx,yy);lt=txt[i];yy+=lh;}else lt=t2;}if(lt)x.fillText(lt,xx,yy);return yy+lh;}
+    x.fillStyle='#fff'; x.fillRect(0,0,Wc,H);
+    x.strokeStyle='#000'; x.lineWidth=3; x.strokeRect(14,14,Wc-28,H-28);
+    x.fillStyle='#000'; x.font='bold 30px sans-serif'; x.fillText('临时医嘱（药物计算）',pad,64);
+    x.font='20px sans-serif'; x.fillText(new Date().toLocaleDateString('zh-CN'),Wc-pad-150,62);
+    line(pad,78,Wc-pad,78,1.5);
+    var yy=96;
+    const ms=metaSummary();
+    x.font='bold 22px sans-serif'; var mx=pad;
+    if(META.bed){x.fillText('床号 '+META.bed,mx,yy);mx+=x.measureText('床号 '+META.bed).width+24;}
+    if(META.name){x.fillText('姓名 '+META.name,mx,yy);mx+=x.measureText('姓名 '+META.name).width+24;}
+    if(META.hosp){x.fillStyle='#444';x.font='18px sans-serif';x.fillText('住院号 '+META.hosp,mx,yy-2);}
+    yy+=18; line(pad,yy-8,Wc-pad,yy-8,1);
+    function bcard(cx,cy,cw,label,val){x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(cx,cy,cw,58);x.fillStyle='#444';x.font='13px sans-serif';x.fillText(label,cx+12,cy+21);x.fillStyle='#000';x.font='bold 20px sans-serif';x.fillText(val,cx+12,cy+47);}
     const gaw=parseFloat(META.gaw), gad=parseFloat(META.gad)||0, dol=parseFloat(META.dol);
-    const gaTxt=(isFinite(gaw)&&gaw>0)? gaw+'周+'+(isFinite(gad)?gad:0)+'天':'—';
-    const dolTxt=(isFinite(dol)&&META.dol!=='')? dol+'天':'—';
-    const cgaTxt=(isFinite(gaw)&&gaw>0&&isFinite(dol)&&META.dol!=='')? (()=>{const tot=gaw*7+gad+dol; return Math.floor(tot/7)+'周+'+(tot%7)+'天';})():'—';
-    const gw=(W_-2*pad-3*12)/4;
-    bcard(pad, 134, gw, 'GA(出生胎龄)', gaTxt);
-    bcard(pad+gw+12, 134, gw, 'DOL(日龄)', dolTxt);
-    bcard(pad+2*(gw+12), 134, gw, '纠正胎龄', cgaTxt);
-    bcard(pad+3*(gw+12), 134, gw, '体重', W.toFixed(2)+' kg');
-    var yy=214;
-    if(!items.length){ x.fillStyle='#666'; x.font='22px sans-serif'; x.fillText('（未选药物）',pad,yy); yy+=46; }
-    items.forEach(function(it,i){
-      /* 医嘱框 */
-      var boxTop=yy;
+    const gw=(Wc-2*pad-3*12)/4;
+    bcard(pad,yy,gw,'GA(出生胎龄)',(isFinite(gaw)&&gaw>0)?gaw+'周+'+(isFinite(gad)?gad:0)+'天':'—');
+    bcard(pad+gw+12,yy,gw,'DOL(日龄)',(isFinite(dol)&&META.dol!=='')?dol+'天':'—');
+    bcard(pad+2*(gw+12),yy,gw,'纠正胎龄',(isFinite(gaw)&&gaw>0&&isFinite(dol)&&META.dol!=='')?(()=>{const tt=gaw*7+gad+dol;return Math.floor(tt/7)+'周+'+(tt%7)+'天';})():'—');
+    bcard(pad+3*(gw+12),yy,gw,'体重',W.toFixed(2)+' kg');
+    yy+=82;
+    if(!items.length){x.fillStyle='#666';x.font='22px sans-serif';x.fillText('（未选药物）',pad,yy);yy+=40;}
+    items.forEach((it,i)=>{
+      var yc=yy;
       x.fillStyle='#000'; x.font='bold 20px monospace';
-      var yc=wrap((i+1)+'. '+it.L.t1, pad+12, boxTop+30, innerW, 30, 'bold 20px monospace');
-      if(it.L.prep){ x.fillStyle='#333';
-        it.L.prep.forEach(function(pl){ yc=wrap(pl, pad+12, yc, innerW, 24, '16px monospace'); }); }
-      var boxH=yc-boxTop+8;
-      x.strokeStyle='#000'; x.lineWidth=1.5; x.strokeRect(pad, boxTop, W_-2*pad, boxH);
-      yy=boxTop+boxH+8;
-      /* 核对框 */
-      if(it.L.ck && it.L.ck.length){
-        var ckTop=yy;
-        x.fillStyle='#555'; x.font='bold 13px -apple-system,sans-serif';
-        x.fillText('核对（体重 '+W.toFixed(2)+' kg）', pad+12, ckTop+20);
-        yc=ckTop+42;
-        it.L.ck.forEach(function(r){
-          x.fillStyle=r[1]?'#b91c1c':'#222'; x.font='14px monospace';
-          yc=wrap((r[1]?'⚠ ':'')+r[0], pad+12, yc, innerW, 23, '14px monospace');
-        });
-        var ckH=yc-ckTop+8;
-        x.strokeStyle='#888'; x.lineWidth=1; x.setLineDash([5,4]);
-        x.strokeRect(pad, ckTop, W_-2*pad, ckH); x.setLineDash([]);
-        yy=ckTop+ckH+14;
+      yc=wrap((i+1)+'. '+it.L.t1,pad+12,yc+26,innerW,28,'bold 20px monospace');
+      if(it.L.prep){x.fillStyle='#333';it.L.prep.forEach(pl=>{yc=wrap(pl,pad+12,yc+4,innerW,24,'16px monospace');});}
+      var bh=yc-yy+10;
+      x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(pad,yy,Wc-2*pad,bh);
+      yy=yy+bh+8;
+      if(it.L.ck&&it.L.ck.length){
+        x.fillStyle='#555';x.font='bold 13px sans-serif';x.fillText('核对（体重 '+W.toFixed(2)+' kg）',pad+12,yy+16);
+        yc=yy+36;
+        it.L.ck.forEach(r=>{x.fillStyle='#222';x.font='14px monospace';yc=wrap(r,pad+12,yc,innerW,22,'14px monospace');});
+        var ch=yc-yy+8;
+        x.strokeStyle='#888';x.lineWidth=1;x.setLineDash([5,4]);x.strokeRect(pad,yy,Wc-2*pad,ch);x.setLineDash([]);
+        yy=yy+ch+10;
       }
     });
-    return {cv:cv, yyEnd:yy};
+    return {cv,yyEnd:yy};
   }
-  var pass1=render(3000);
-  var H=Math.max(600, pass1.yyEnd+66);
-  var cv=render(H).cv;
-  var x=cv.getContext('2d');
-  x.fillStyle='#777'; x.font='13px -apple-system,sans-serif';
-  x.fillText('生成于 '+new Date().toLocaleString('zh-CN')+' · 框1=医嘱+配液 框2=核对 · 须上级医师核对后录入HIS', pad, H-32);
-  return cv;
-}
-function saveImg(){
-  var cv=buildOrderCanvas();
+  const p1=render(3000);
+  const H=Math.max(600,p1.yyEnd+66);
+  const cv=render(H).cv;
+  const x=cv.getContext('2d');
+  x.fillStyle='#555';x.font='13px sans-serif';
+  x.fillText('生成于 '+new Date().toLocaleString('zh-CN')+' · 上框=医嘱+24小时量 下框=核对 · 须上级医师核对后录入HIS',pad,H-30);
   $('imgPrev').src=cv.toDataURL('image/png'); $('imgPrev').style.display='block';
-  var fname='血管活性药医嘱_'+W.toFixed(2)+'kg_'+new Date().toLocaleDateString('zh-CN').replace(/\//g,'')+'.png';
-  function note(t){ var cp=$('copied'); cp.textContent=t; setTimeout(function(){cp.textContent='';},2500); }
   cv.toBlob(function(blob){
-    if(!blob){ note('生成失败,请重试'); return; }
-    var file=null;
-    try{ file=new File([blob], fname, {type:'image/png'}); }catch(e){}
-    if(file && navigator.canShare && navigator.canShare({files:[file]})){
-      navigator.share({files:[file], title:'血管活性药医嘱'}).then(function(){ note('✓ 已通过分享面板保存'); })
-        .catch(function(err){ if(err && err.name!=='AbortError') note('分享取消'); });
-      return;
+    if(!blob)return;
+    var file=null; try{file=new File([blob],'医嘱_'+W.toFixed(2)+'kg.png',{type:'image/png'});}catch(e){}
+    if(file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'医嘱'}).catch(function(){});return;}
+    var a=document.createElement('a'); a.download='医嘱_'+W.toFixed(2)+'kg.png'; a.href=URL.createObjectURL(blob);
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(a.href);},3000);
+  },'image/png');
+}
+/* ===== 患儿信息 ===== */
+const META={bed:'',name:'',hosp:'',gaw:'',gad:'',dol:''};
+function updCga(){
+  const gaw=parseFloat(META.gaw), gad=parseFloat(META.gad)||0, dol=parseFloat(META.dol);
+  const el=$('m_cga'); if(!el)return;
+  if(isFinite(gaw)&&gaw>0&&isFinite(dol)&&META.dol!==''){
+    const tot=gaw*7+gad+dol; el.textContent='CGA '+Math.floor(tot/7)+'周+'+(tot%7)+'天';
+  } else el.textContent='CGA —';
+}
+function metaSummary(){
+  const gaw=parseFloat(META.gaw), gad=parseFloat(META.gad)||0, dol=parseFloat(META.dol);
+  const parts=[];
+  if(META.bed)parts.push('床号 '+META.bed);
+  if(META.name)parts.push('姓名 '+META.name);
+  if(META.hosp)parts.push('住院号 '+META.hosp);
+  if(isFinite(gaw)&&gaw>0)parts.push('GA '+gaw+'周+'+(isFinite(gad)?gad:0)+'天');
+  if(isFinite(dol)&&META.dol!=='')parts.push('日龄 '+dol+'天');
+  if(isFinite(gaw)&&gaw>0&&isFinite(dol)&&META.dol!==''){const tt=gaw*7+gad+dol;parts.push('纠正胎龄 '+Math.floor(tt/7)+'周+'+(tt%7)+'天');}
+  return parts;
+}
+/* ===== 全局 ===== */
+function updAll(){
+  Object.keys(DRUGS).forEach(id=>{
+    const holder=$('holder'+ (DRUGS[id].group==='vaso'||DRUGS[id].group==='ino'||DRUGS[id].group==='vas' ?0:1));
+    if(holder&&$('din_'+id)){ const g=DRUGS[id];
+      if(!g.rateTouched){ g.rateVal=niceRate(g.rate(g.dose!==undefined?g.dose:g.def)); const r=$('rin_'+id); if(r&&g.dose!==undefined)r.value=f2(g.rateVal); }
     }
-    var a=document.createElement('a');
-    a.download=fname; a.href=URL.createObjectURL(blob);
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
-    note(navigator.userAgent.indexOf('iPhone')>=0 ? '已展开长图预览:长按图片→存储图像' : '✓ 长图已生成，可长按预览图保存');
-  }, 'image/png');
+  });
+  renderDrug(CUR[0].d); renderDrug(CUR[1].d);
+  renderResus(); renderBasket();
 }
-
-/* ============ 体重与初始化 ============ */
-function onW(){
-  const v=parseFloat($('wt').value);
-  if(!isFinite(v)){$('wtNow').textContent='输入体重'; return;}
-  W=Math.min(6,Math.max(0.4,v)); if(W!==v)$('wt').value=W;
-  $('wtNow').textContent=`泵速按 ${W.toFixed(2)}kg`;
-  Object.keys(DRUGS).forEach(updFromDose); /* 体重变→重给建议泵速 */
-  localStorage.setItem('vasoW',W);
+function renderDrug(id){
+  if($('holder0')&&$('card_'+id)===null){}
+  const holder=$('card_'+id)?null:null;
+  const on0=(CUR[0].d===id&&$('card_'+id)), on1=(CUR[1].d===id&&$('card_'+id));
+  if($('ord_'+id)) updOut(id);
 }
+function updOut(id){
+  renderDrugOutputs(id);
+}
+function renderDrugOutputs(id){ renderDrugBody(id); }
+function renderDrugBody(id){
+  const g=DRUGS[id], d=g.dose;
+  const R=g.rateVal||niceRate(g.rate(d));
+  const perMin=isPerMin(g);
+  const pl=prep24(id,d,R);
+  const ob=$('ord_'+id); if(ob)ob.innerHTML=`<div class="o1">${ordText(id,d,R)}</div><div class="o2">${pl.join('<br>')}</div>`;
+  const ckr=$('ckr_'+id);
+  if(ckr){ const mg24=d*W*(perMin?1.44:24);
+    ckr.innerHTML=[
+      `剂量核对 ${d}${g.unit}×${W.toFixed(2)}kg${perMin?'×60':''}×24h＝${mg24>=1? f(mg24,2)+'mg':f(mg24*1000,1)+'μg'}/24h（${f(d*W*(perMin?60:1),0)}μg/h）`,
+      `液体核对 ${f2(R)}ml/h；24小时 ${f2(R*24)}ml`
+    ].map(s=>`<div class="r">${s}</div>`).join('');
+    const cw=$('ckw_'+id); if(cw)cw.textContent=W.toFixed(2);
+  }
+  const a=ampOf(id);
+  const C=a.M*1000/a.V;
+  const act=a.R*C/(perMin?60:1)/W;
+  const amg24=act*W*(perMin?1.44:24);
+  const dur=a.V/a.R;
+  const ao=$('aord_'+id); if(ao)ao.innerHTML=`<div class="o1">${ampOrd(id)}</div><div class="o2">${ampPrep(id).join('<br>')}</div>`;
+  const akr=$('ackr_'+id);
+  if(akr){ akr.innerHTML=[
+      `剂量核对 ${f2(a.R)}ml/h×${f2(C)}mg/ml×24h＝${amg24>=1? f(amg24,2)+'mg':f(amg24*1000,1)+'μg'}/24h（＝${f(act,2)}${g.unit}）`,
+      `液体核对 ${f2(a.R)}ml/h；24小时 ${f2(a.R*24)}ml；本管 ${f(a.V,0)}ml 可维持 ${f(dur,0)}h（${f(dur/24,1)}天）`
+    ].map(s=>`<div class="r">${s}</div>`).join('');
+    const aw=$('ackw_'+id); if(aw)aw.textContent=W.toFixed(2);
+  }
+  renderBasket();
+}
+/* 统一入口：剂量输入 */
+function updFromDose(id){ /* 提升 */
+  const g=DRUGS[id];
+  const d=parseFloat($('din_'+id).value);
+  if(!isFinite(d)||d<=0){g.dose=undefined;renderDrugBody(id);return;}
+  g.dose=d;
+  if(!g.rateTouched){ g.rateVal=niceRate(g.rate(d)); if(!g.dynamic)$('rin_'+id).value=f2(g.rateVal); }
+  renderDrugBody(id);
+}
+function updFromRate(id){
+  const g=DRUGS[id];
+  const r=parseFloat($('rin_'+id).value);
+  if(!isFinite(r)||r<=0)return;
+  g.rateVal=r; g.rateTouched=true;
+  renderDrugBody(id);
+}
+function readAmp(id){
+  const g=DRUGS[id];
+  const M=parseFloat($('amin_'+id).value), V=parseFloat($('vin_'+id).value), R=parseFloat($('rin2_'+id).value);
+  if(isFinite(M)&&M>0)g.ampM=M; if(isFinite(V)&&V>0)g.ampV=V; if(isFinite(R)&&R>0)g.ampR=R;
+}
+/* ===== 导航 ===== */
 function go(n){
   document.querySelectorAll('nav button').forEach((b,i)=>b.classList.toggle('on',i===n));
   document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('on',i===n));
   window.scrollTo(0,0);
 }
+/* ===== 启动 ===== */
 window.addEventListener('load',()=>{
   const s=parseFloat(localStorage.getItem('vasoW')); if(isFinite(s))$('wt').value=s;
-  onW();
-  Object.keys(DRUGS).forEach(id=>{
-    $('din_'+id).addEventListener('input',()=>updFromDose(id));
-    $('rin_'+id).addEventListener('input',()=>updFromRate(id));
-    if(DRUGS[id].bolus) $('bin_'+id).addEventListener('input',()=>{updBolus(id); renderBasket();});
-  });
-  try{
-    const sv=JSON.parse(localStorage.getItem('vasoMeta')||'{}');
-    Object.keys(META).forEach(k=>{ if(sv[k])META[k]=sv[k]; });
-  }catch(e){}
-  Object.keys(META).forEach(k=>{
-    const el=$('m_'+k); if(el) el.value=META[k];
-    if(el) el.addEventListener('input',()=>{ META[k]=el.value;
-      try{localStorage.setItem('vasoMeta',JSON.stringify(META));}catch(e){}
-      updCga(); renderBasket(); });
-  });
+  buildSubnav(); renderResus();
+  $('wt').addEventListener('input',()=>{const v=parseFloat($('wt').value); if(!isFinite(v))return;
+    W=Math.min(6,Math.max(0.4,v)); if(W!==v)$('wt').value=v;
+    $('wtNow').textContent='泵速按 '+W.toFixed(2)+'kg';
+    updAll();});
+  try{const sv=JSON.parse(localStorage.getItem('vasoMeta')||'{}');Object.keys(META).forEach(k=>{if(sv[k])META[k]=sv[k];});}catch(e){}
+  Object.keys(META).forEach(k=>{const el=$('m_'+k); if(el){el.value=META[k];
+    el.addEventListener('input',()=>{META[k]=el.value; try{localStorage.setItem('vasoMeta',JSON.stringify(META));}catch(e){} updCga(); renderBasket();});}});
+  $('wt').dispatchEvent(new Event('input'));
   updCga();
 });
-$('wt').addEventListener('input',onW);
+$('wt').addEventListener('input',()=>{});
 </script>
 </body>
 </html>
