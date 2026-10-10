@@ -70,10 +70,10 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .gbody .card{margin:9px 0; box-shadow:none;}
 .card{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px 0;
   box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden;}
-.chead{display:flex; align-items:baseline; gap:8px; padding:15px 14px; min-height:48px; cursor:pointer; user-select:none;}
+.chead{display:flex; align-items:baseline; gap:8px; padding:10px 14px; min-height:38px; cursor:pointer; user-select:none;}
 .chead:active{background:#eef3fb;}
-.card{scroll-margin-top:128px;}
-.chead .csum{margin-left:auto; font-family:var(--mono); font-size:11.5px; color:var(--navy2); font-weight:700;
+.card{scroll-margin-top:150px;}
+.chead .csum{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--navy2); font-weight:700;
   text-align:right; white-space:nowrap;}
 .card.open .csum{display:none;}
 .card:not(.open) .cspec{display:none;}
@@ -95,6 +95,11 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
   border:1.5px solid var(--line); border-radius:10px; padding:5px 6px; background:#fff; color:var(--ink);}
 .labeq input:focus{outline:none; border-color:var(--navy2);}
 .modetabs{display:flex; margin-top:10px; border:1.5px solid var(--navy2); border-radius:11px; overflow:hidden;}
+.modetabs.formtabs{border-color:#b98a2d; margin-top:12px;}
+.modetabs.formtabs button{color:#8a6a1d; background:#fffdf6;}
+.modetabs.formtabs button.on{background:#b98a2d; color:#fff;}
+.modetabs.formtabs button{border-right:1px solid #ead9b0;}
+.modetabs.formtabs button:last-child{border-right:none;}
 .modetabs button{flex:1; border:none; background:#fff; color:var(--navy2); padding:8px 0; font-size:13.5px; font-weight:800; cursor:pointer;}
 .modetabs button.on{background:var(--navy2); color:#fff;}
 .ordbox{border:2px solid #14161a; border-radius:12px; padding:11px 13px; margin-top:9px; background:#fff;
@@ -307,38 +312,36 @@ const DRUGS={
   adverse:"① 自主呼吸与咳嗽消失——绝不用于未插管/清醒患儿（「清醒麻痹」是严重精神创伤，严禁）；② 眼睑闭合不全→暴露性角膜炎（眼膏/湿敷护理）；③ 长时间输注±糖皮质激素→ICU获得性肌病；④ 肾功能不全活性代谢物蓄积、作用延长。",
   compat:"NS、5%GS均可；不与碱性液/其他药共管；复溶后24小时内使用；输注期间角膜护理。"},
 };
-/* 十三卡：两大类分页；linesOf 一律用 c.drug 查 DRUGS */
-const CARDS=[
- {id:'dopamine',page:0,title:'多巴胺',kind:'maint',drug:'dopamine'},
- {id:'dobutamine',page:0,title:'多巴酚丁胺',kind:'maint',drug:'dobutamine'},
- {id:'epi_maint',page:0,title:'肾上腺素维持',kind:'maint',drug:'epi'},
- {id:'ne',page:0,title:'去甲肾上腺素',kind:'maint',drug:'ne'},
- {id:'epi_resus',page:0,title:'肾上腺素复苏',kind:'resus',drug:'epi',red:true},
- {id:'milrinone',page:0,title:'米力农',kind:'maint',drug:'milrinone'},
- {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli'},
- {id:'fentanyl_maint',page:1,title:'芬太尼维持',kind:'maint',drug:'fentanyl'},
- {id:'fentanyl_push',page:1,title:'芬太尼静推',kind:'push',drug:'fentanyl'},
- {id:'midazolam_maint',page:1,title:'咪达唑仑维持',kind:'maint',drug:'midazolam'},
- {id:'midazolam_push',page:1,title:'咪达唑仑静推',kind:'push',drug:'midazolam'},
- {id:'vecuronium_maint',page:1,title:'维库溴铵维持',kind:'maint',drug:'vecuronium'},
- {id:'vecuronium_push',page:1,title:'维库溴铵首剂',kind:'push',drug:'vecuronium'},
+/* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
+const DRUGCARDS=[
+ {id:'dopamine',page:0,forms:['maint']},
+ {id:'dobutamine',page:0,forms:['maint']},
+ {id:'epi',page:0,forms:['maint','resus']},
+ {id:'ne',page:0,forms:['maint']},
+ {id:'milrinone',page:0,forms:['maint']},
+ {id:'terli',page:0,forms:['maint']},
+ {id:'fentanyl',page:1,forms:['maint','push']},
+ {id:'midazolam',page:1,forms:['maint','push']},
+ {id:'vecuronium',page:1,forms:['maint','push']},
 ];
+const DFORM={maint:'维持泵入',push:'静推',resus:'复苏'};
+/* 分类容器 */
+const GROUPS=[
+ {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
+ {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli']},
+ {page:1,title:'阿片镇痛',cards:['fentanyl']},
+ {page:1,title:'镇静',cards:['midazolam']},
+ {page:1,title:'肌松',cards:['vecuronium']},
+];
+
 /* 搜索别名（临床俗名/商品名） */
 const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne:'去甲 肾上腺',
  milrinone:'米力 鲁南力康',terli:'特利 加压素',fentanyl:'芬太尼 杜冷丁',
  midazolam:'咪达 唑仑 力月西',vecuronium:'维库 溴铵 仙林 肌松'};
-/* 组内小标题（inset 分组列表） */
-const GROUPS=[
- {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi_maint','ne','epi_resus']},
- {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli']},
- {page:1,title:'阿片镇痛',cards:['fentanyl_maint','fentanyl_push']},
- {page:1,title:'镇静',cards:['midazolam_maint','midazolam_push']},
- {page:1,title:'肌松',cards:['vecuronium_maint','vecuronium_push']},
-];
 
 /* ================= 状态 ================= */
 var W=1.5;
-const S={}; CARDS.forEach(c=>S[c.id]={mode:'h24'});
+const S={}; DRUGCARDS.forEach(c=>S[c.id]={form:c.forms[0], mode:'h24'});
 const basket={};
 const RES={iv:0.2, et:0.75};
 const META={bed:'',name:'',hosp:'',gaw:'',gad:'',dol:''};
@@ -354,9 +357,9 @@ function amt(mg){return mg>=1? f(mg,2)+'mg' : f(mg*1000,1)+'μg';}
 function unitTail(g){return g.unit==='μg/kg/h'?'hr':'min';}
 
 /* 维持·按24小时配（特利=12h袋） */
-function calcH24(c){
-  const g=DRUGS[c.drug], s=S[c.id], pm=isPerMin(g);
-  const dEl=parseFloat($('din_'+c.id).value);
+function calcH24(id){
+  const g=DRUGS[id], s=S[id], pm=isPerMin(g);
+  const dEl=parseFloat($('din_'+id).value);
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
   if(g.dynamic){
     const bagMg=dose*W*12/1000;
@@ -365,7 +368,7 @@ function calcH24(c){
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(bagMg,2)}mg</b>（12h袋）`,
           `液体核对：泵速<b>1ml/h</b>；12小时入液<b>12ml</b>`], R:1, dose};
   }
-  const rEl=parseFloat($('rin_'+c.id).value);
+  const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
   const mg24=dose*W*(pm?1.44:24/1000), mcgH=dose*W;
   const ck1=pm
@@ -376,11 +379,11 @@ function calcH24(c){
     ck:[ck1,`液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`], R, dose};
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
-function calcAmp(c){
-  const g=DRUGS[c.drug], pm=isPerMin(g);
-  const dEl=parseFloat($('din_'+c.id).value);
+function calcAmp(id){
+  const g=DRUGS[id], pm=isPerMin(g);
+  const dEl=parseFloat($('din_'+id).value);
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
-  const rEl=parseFloat($('arin_'+c.id).value);
+  const rEl=parseFloat($('arin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
   const M=g.specMg;
   const Cneed=dose*W*(pm?60:1)/(R*1000);          /* mg/ml */
@@ -398,20 +401,20 @@ function calcAmp(c){
     ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b>；可维持${f(dur,0)}h`,
         `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml`], R, dose};
 }
-/* 静推/首剂/复苏 */
-function calcPush(c){
-  const g=DRUGS[c.drug];
-  if(c.drug==='fentanyl'){
-    const dEl=parseFloat($('din_'+c.id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:2, a=dose*W;
+/* 静推/首剂（剂量框 dinp_ 与维持分开） */
+function calcPush(id){
+  const g=DRUGS[id];
+  if(id==='fentanyl'){
+    const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:2, a=dose*W;
     return {t1:`芬太尼 ${f2(a)}μg 静推 st`,t2:`＝${dose}μg/kg · 缓推≥3min · 备气囊`,
       ck:[`剂量核对：${dose}μg/kg×${W.toFixed(2)}kg＝<b>${f2(a)}μg</b>`], dose};
   }
-  if(c.drug==='midazolam'){
-    const dEl=parseFloat($('din_'+c.id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:0.1, a=dose*W;
+  if(id==='midazolam'){
+    const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:0.1, a=dose*W;
     return {t1:`咪达唑仑 ${f2(a)}mg 静推 st`,t2:`＝${dose}mg/kg · 缓推≥2min · 监测血压`,
       ck:[`剂量核对：${dose}mg/kg×${W.toFixed(2)}kg＝<b>${f2(a)}mg</b>`], dose};
   }
-  const dEl=parseFloat($('din_'+c.id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:0.1, a=dose*W;
+  const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:0.1, a=dose*W;
   return {t1:`维库溴铵 ${f2(a)}mg 静推 st`,t2:`＝${dose}mg/kg · 镇静确保后给 · 呼吸机下`,
     ck:[`剂量核对：${dose}mg/kg×${W.toFixed(2)}kg＝<b>${f2(a)}mg</b>`], dose};
 }
@@ -424,15 +427,12 @@ function calcResus(rt){
   return {t1,t2,ck:[`剂量核对：${d}ml/kg×${W.toFixed(2)}kg＝<b>${f2(ml)}ml</b>＝${f2(mg)}mg`]};
 }
 
-/* 医嘱篮取行：按卡当前模式（唯一入口，医嘱单/长图/复制共用） */
+/* 医嘱篮取行：key=id@form[@route]（唯一入口，医嘱单/长图/复制共用） */
 function linesOf(key){
-  if(key.indexOf('@')>-1){
-    const [cid,rt]=key.split('@');
-    if(cid==='epi_resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  }
-  const c=CARDS.find(x=>x.id===key); if(!c)return null;
-  if(c.kind==='push'){const L=calcPush(c); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  return S[c.id].mode==='amp'? calcAmp(c) : calcH24(c);
+  const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
+  if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
 
 /* ================= RENDER ================= */
@@ -452,97 +452,90 @@ function doseInfoHtml(g){
     <div class="r"><b>本院医嘱库</b>：${g.hosp}</div>
   </div>`;
 }
-function maintHtml(c){
-  const g=DRUGS[c.drug];
+/* 药卡：chead 收起行 + cbody(子形式tabs + 各form区 + 说明 + 知识) */
+function cardHtml(id){
+  const g=DRUGS[id], c=S[id], dc=DRUGCARDS.find(x=>x.id===id);
   const defR=f2(niceRate(rateOf(g.def,g)));
-  const tab1=g.dynamic?'按12小时袋配':'按24小时配';
-  return `<div class="card" id="card_${c.id}">
-    <div class="chead" data-act="cap" data-card="${c.id}">
-      <span class="tri" id="tri_${c.id}">▸</span>
-      <span class="ct">${c.title}</span><span class="en">${g.en}</span>
-      <span class="cspec">${g.spec}</span>
-      <span class="csum" id="sum_${c.id}"></span>
-    </div>
-    <div class="cbody" id="body_${c.id}" style="display:none">
-      <div class="labeq">剂量 <input data-act="dose" data-card="${c.id}" id="din_${c.id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}</div>
-      <div class="modetabs" id="mt_${c.id}">
-        <button data-act="mode" data-card="${c.id}" data-mode="h24" class="on">${tab1}</button>
-        <button data-act="mode" data-card="${c.id}" data-mode="amp">按整支配</button>
+  const multi=dc.forms.length>1;
+  const formTabs=multi?`<div class="modetabs formtabs" id="ft_${id}">`+dc.forms.map(fm=>`<button data-act="form" data-card="${id}" data-form="${fm}" class="${c.form===fm?'on':''}">${DFORM[fm]}</button>`).join('')+`</div>`:'';
+  /* 维持区 */
+  let maintSec='';
+  if(dc.forms.includes('maint')){
+    const tab1=g.dynamic?'按12小时袋配':'按24小时配';
+    maintSec=`<div id="sec_maint_${id}">
+      <div class="labeq">剂量 <input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}</div>
+      <div class="modetabs" id="mt_${id}">
+        <button data-act="mode" data-card="${id}" data-mode="h24" class="on">${tab1}</button>
+        <button data-act="mode" data-card="${id}" data-mode="amp">按整支配</button>
       </div>
-      <div id="sec_h24_${c.id}">
-        ${g.dynamic?'':`<div class="labeq">泵速 <input data-act="rate" data-card="${c.id}" id="rin_${c.id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
-        <div class="ordbox" id="ord_${c.id}"></div>
-        <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${c.id}">—</span>kg）</div><div id="ckr_${c.id}"></div></div>
+      <div id="sec_h24_${id}">
+        ${g.dynamic?'':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
+        <div class="ordbox" id="ord_${id}"></div>
+        <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       </div>
-      <div id="sec_amp_${c.id}" style="display:none">
-        <div class="labeq">泵速 <input data-act="amprate" data-card="${c.id}" id="arin_${c.id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>
-        <div class="ordbox" id="aord_${c.id}"></div>
-        <div class="ckbox"><div class="t">核对（体重 <span class="ckw2_${c.id}">—</span>kg）</div><div id="ackr_${c.id}"></div></div>
+      <div id="sec_amp_${id}" style="display:none">
+        <div class="labeq">泵速 <input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>
+        <div class="ordbox" id="aord_${id}"></div>
+        <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
       </div>
-      ${doseInfoHtml(g)}
-      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${c.id}" id="add_${c.id}">＋ 加医嘱</button></div>
-      ${moreHtml(g)}
-    </div>
-  </div>`;
-}
-function pushHtml(c){
-  const g=DRUGS[c.drug];
-  const u=c.drug==='fentanyl'?'μg/kg':'mg/kg';
-  const def=c.drug==='fentanyl'?2:0.1;
-  const step=c.drug==='fentanyl'?0.5:0.05;
-  return `<div class="card" id="card_${c.id}">
-    <div class="chead" data-act="cap" data-card="${c.id}">
-      <span class="tri" id="tri_${c.id}">▸</span>
-      <span class="ct">${c.title}</span><span class="en">${g.en}</span>
-      <span class="cspec">${g.spec}</span>
-      <span class="csum" id="sum_${c.id}"></span>
-    </div>
-    <div class="cbody" id="body_${c.id}" style="display:none">
-      <div class="labeq">剂量 <input data-act="dose" data-card="${c.id}" id="din_${c.id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"> ${u}</div>
-      <div class="ordbox" id="ord_${c.id}"></div>
-      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${c.id}">—</span>kg）</div><div id="ckr_${c.id}"></div></div>
-      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${c.id}" id="add_${c.id}">＋ 加医嘱</button></div>
-      ${moreHtml(g)}
-    </div>
-  </div>`;
-}
-function resusHtml(c){
-  return `<div class="card redcard" id="card_${c.id}">
-    <div class="chead" data-act="cap" data-card="${c.id}">
-      <span class="tri" id="tri_${c.id}">▸</span>
-      <span class="ct">${c.title}</span><span class="en">Epinephrine</span>
-      <span class="cspec">1mg/1ml</span>
-      <span class="csum" id="sum_epi_resus"></span>
-    </div>
-    <div class="cbody" id="body_${c.id}" style="display:none">
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@maint" id="add_${id}_maint">＋ 加医嘱</button></div>
+    </div>`;
+  }
+  /* 静推区 */
+  let pushSec='';
+  if(dc.forms.includes('push')){
+    const u=id==='fentanyl'?'μg/kg':'mg/kg';
+    const def=id==='fentanyl'?2:0.1, step=id==='fentanyl'?0.5:0.05;
+    pushSec=`<div id="sec_push_${id}" style="display:none">
+      <div class="labeq">剂量 <input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"> ${u}</div>
+      <div class="ordbox" id="ordp_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button></div>
+    </div>`;
+  }
+  /* 复苏区 */
+  let resusSec='';
+  if(dc.forms.includes('resus')){
+    resusSec=`<div id="sec_resus_${id}" style="display:none">
       <div class="spec">配液：<b>1mg＋NS 9ml→10ml</b>（1:10000，现配现用、标注时间）</div>
       <div class="redsec">
         <div class="redsec_t">① 静推（IV/IO）</div>
-        <div class="labeq">剂量 <input data-act="resus" data-rt="iv" id="din_${c.id}_iv" type="number" inputmode="decimal" step="0.05" min="0.05" max="0.3" value="0.2"> ml/kg（0.1–0.3＝0.01–0.03mg/kg）</div>
-        <div class="ordbox" id="ord_${c.id}_iv"></div>
-        <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${c.id}_iv">—</span>kg）</div><div id="ckr_${c.id}_iv"></div></div>
-        <div class="btnrow"><button class="btn red" data-act="add" data-key="${c.id}@iv" id="add_${c.id}_iv">＋ 复苏静推加医嘱</button></div>
+        <div class="labeq">剂量 <input data-act="resus" data-rt="iv" id="din_${id}_iv" type="number" inputmode="decimal" step="0.05" min="0.05" max="0.3" value="0.2"> ml/kg（0.1–0.3＝0.01–0.03mg/kg）</div>
+        <div class="ordbox" id="ord_${id}_iv"></div>
+        <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${id}_iv">—</span>kg）</div><div id="ckr_${id}_iv"></div></div>
+        <div class="btnrow"><button class="btn red" data-act="add" data-key="${id}@resus@iv" id="add_${id}_iv">＋ 复苏静推加医嘱</button></div>
         <div class="note">q3–5min 可重复；正压通气＋胸外按压下给药；推注≥1分钟；外渗→酚妥拉明局部浸润</div>
       </div>
       <div class="redsec">
         <div class="redsec_t">② 气管内（ET）—— 无静脉通路时</div>
-        <div class="labeq">剂量 <input data-act="resus" data-rt="et" id="din_${c.id}_et" type="number" inputmode="decimal" step="0.05" min="0.5" max="1" value="0.75"> ml/kg（0.5–1＝0.05–0.1mg/kg）</div>
-        <div class="ordbox" id="ord_${c.id}_et"></div>
-        <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${c.id}_et">—</span>kg）</div><div id="ckr_${c.id}_et"></div></div>
-        <div class="btnrow"><button class="btn pri" data-act="add" data-key="${c.id}@et" id="add_${c.id}_et">＋ 气管内加医嘱</button></div>
+        <div class="labeq">剂量 <input data-act="resus" data-rt="et" id="din_${id}_et" type="number" inputmode="decimal" step="0.05" min="0.5" max="1" value="0.75"> ml/kg（0.5–1＝0.05–0.1mg/kg）</div>
+        <div class="ordbox" id="ord_${id}_et"></div>
+        <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${id}_et">—</span>kg）</div><div id="ckr_${id}_et"></div></div>
+        <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@resus@et" id="add_${id}_et">＋ 气管内加医嘱</button></div>
         <div class="note">滴入后气囊加压数次促吸收；吸收不稳定→尽快建立静脉/骨髓腔通路</div>
       </div>
+    </div>`;
+  }
+  return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+      <span class="csum" id="sum_${id}"></span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      ${formTabs}
+      ${maintSec}${pushSec}${resusSec}
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
     </div>
   </div>`;
 }
 function renderCards(){
   const pages={0:'',1:''};
   GROUPS.forEach((gr,gi)=>{
-    const names=gr.cards.map(id=>CARDS.find(x=>x.id===id).title).join(' · ');
-    const body=gr.cards.map(id=>{
-      const c=CARDS.find(x=>x.id===id);
-      return c.kind==='resus'?resusHtml(c):(c.kind==='push'?pushHtml(c):maintHtml(c));
-    }).join('');
+    const names=gr.cards.map(id=>DRUGS[id].name).join(' · ');
+    const body=gr.cards.map(id=>cardHtml(id)).join('');
     pages[gr.page]+=`<div class="group" id="grp_${gi}">
       <div class="ghead" data-act="gcap" data-grp="${gi}">
         <span class="gtri" id="gtri_${gi}">▸</span>
@@ -555,71 +548,44 @@ function renderCards(){
   $('holder0').innerHTML=pages[0];
   $('holder1').innerHTML=pages[1];
 }
-/* 分类容器开合 */
+/* 分类容器开合（互斥手风琴） */
+var openGrp=null;
 function toggleGrp(gi){
   const b=$('gbody_'+gi); if(!b)return;
   const open=b.style.display==='none';
+  if(openGrp!==null&&openGrp!==String(gi)){
+    const ob=$('gbody_'+openGrp);
+    if(ob){ob.style.display='none'; $('gtri_'+openGrp).textContent='▸'; $('grp_'+openGrp).className='group';}
+  }
   b.style.display=open?'block':'none';
   $('gtri_'+gi).textContent=open?'▾':'▸';
   $('grp_'+gi).className='group'+(open?' open':'');
+  openGrp=open?String(gi):null;
 }
 
-/* ================= 搜索（跨两页聚合，DOM 移动保留输入状态） ================= */
-var searching=false, curPage=0;
-function applySearch(qraw){
-  const q=(qraw||'').trim();
-  if(!q){exitSearch(); return;}
-  searching=true;
-  rehome();  /* 上一轮移入 holderS 的卡先归位，防止下方清空 holderS 时误删 */
-  const words=q.toLowerCase().split(/\s+/);
-  const hits=CARDS.filter(c=>{
-    const g=DRUGS[c.drug];
-    const hay=(c.title+' '+g.en+' '+(ALIAS[c.drug]||'')).toLowerCase();
-    return words.every(w=>hay.indexOf(w)>-1);
-  });
-  $('holderS').innerHTML='';
-  hits.forEach(c=>{
-    const el=$('card_'+c.id);
-    if(el){
-      if($('body_'+c.id).style.display==='none')toggleCap(c.id,false); /* 搜索命中自动展开，不滚动 */
-      el.style.display='block';
-      $('holderS').appendChild(el);
-    }
-  });
-  $('sEmpty').style.display=hits.length?'none':'block';
-  ['nav0','nav1','nav2'].forEach((k,i)=>{$(k).className=i===curPage?'on':'';});
-  ['p0','p1','p2'].forEach(k=>{$(k).className='page';});
-  $('pS').className='page on';
-}
-function rehome(){
-  GROUPS.forEach((gr,gi)=>{
-    const gb=$('gbody_'+gi); if(!gb)return;
-    gr.cards.forEach(id=>{const el=$('card_'+id); if(el){el.style.display=''; gb.appendChild(el);}});
-  });
-  $('holderS').innerHTML='';
-}
-function exitSearch(){
-  if(!searching)return;
-  searching=false;
-  $('q').value='';
-  rehome();
-  go(curPage);
-}
-
-/* 单卡刷新：按 kind 分流，calc 函数只在拥有对应输入框的卡上调用 */
+/* 单卡刷新：按 S[id].form 所在区刷新 + 摘要 */
 function updCard(id){
-  const c=CARDS.find(x=>x.id===id); if(!c)return;
-  const g=DRUGS[c.drug];
-  if(c.kind==='push'){
-    const L=calcPush(c);
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
-    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
-    const u=c.drug==='fentanyl'?'μg/kg':'mg/kg';
-    $('sum_'+id).textContent=f(L.dose,2).replace(/\.0+$/,'')+' '+u;
-    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
-    return;
+  if(!S[id])return;
+  const g=DRUGS[id];
+  /* 维持区（h24 与 amp 两块都算） */
+  if($('ord_'+id)){
+    const h24=calcH24(id), amp=calcAmp(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${h24.t1}</div><div class="o2">${h24.prep.join('<br>')}</div>`;
+    $('ckr_'+id).innerHTML=h24.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    $('aord_'+id).innerHTML=`<div class="o1">${amp.t1}</div><div class="o2">${amp.prep.join('<br>')}</div>`;
+    $('ackr_'+id).innerHTML=amp.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    var h24R=h24.R, h24D=h24.dose, ampR=amp.R, ampD=amp.dose;
   }
-  if(c.kind==='resus'){
+  /* 静推区 */
+  let pushDose=null;
+  if($('ordp_'+id)){
+    const L=calcPush(id);
+    $('ordp_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
+    $('ckrp_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    pushDose=L.dose;
+  }
+  /* 复苏区 */
+  if($('ord_'+id+'_iv')){
     ['iv','et'].forEach(rt=>{
       const inp=$('din_'+id+'_'+rt);
       if(inp&&isFinite(parseFloat(inp.value))&&parseFloat(inp.value)>0)RES[rt]=parseFloat(inp.value);
@@ -628,48 +594,75 @@ function updCard(id){
       $('ckr_'+id+'_'+rt).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
       const cw=$('ckw_'+id+'_'+rt); if(cw)cw.textContent=W.toFixed(2);
     });
-    $('sum_'+id).textContent='IV '+f(RES.iv,2)+' · ET '+f(RES.et,2)+' ml/kg';
-    return;
   }
-  /* maint：h24 与 amp 两块都算，各显示各的 */
-  const h24=calcH24(c), amp=calcAmp(c);
-  $('ord_'+id).innerHTML=`<div class="o1">${h24.t1}</div><div class="o2">${h24.prep.join('<br>')}</div>`;
-  $('ckr_'+id).innerHTML=h24.ck.map(r=>`<div class="r">${r}</div>`).join('');
-  $('aord_'+id).innerHTML=`<div class="o1">${amp.t1}</div><div class="o2">${amp.prep.join('<br>')}</div>`;
-  $('ackr_'+id).innerHTML=amp.ck.map(r=>`<div class="r">${r}</div>`).join('');
-  const cur=S[id].mode==='amp'?amp:h24;
-  $('sum_'+id).textContent=f(cur.dose,2)+' '+g.unit+' · '+f2(cur.R)+'ml/h';
+  /* 摘要（按当前形式） */
+  const sumEl=$('sum_'+id);
+  if(sumEl){
+    const form=S[id].form;
+    if(form==='maint'&&$('ord_'+id)){
+      const pm=isPerMin(g);
+      const dEl=parseFloat($('din_'+id).value);
+      const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
+      const rEl=parseFloat($('rin_'+id).value);
+      const R=g.dynamic?1:((isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g)));
+      sumEl.textContent=f(dose,2)+' '+g.unit+' · '+f2(R)+'ml/h';
+    }else if(form==='push'&&pushDose!==null){
+      sumEl.textContent=f(pushDose,2).replace(/\.0+$/,'')+' '+(id==='fentanyl'?'μg/kg':'mg/kg');
+    }else if(form==='resus'){
+      sumEl.textContent='IV '+f(RES.iv,2)+' · ET '+f(RES.et,2)+' ml/kg';
+    }
+  }
   document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
 }
-function updateAll(){CARDS.forEach(c=>updCard(c.id)); renderBasket();}
+function updateAll(){DRUGCARDS.forEach(c=>updCard(c.id)); renderBasket();}
 
 function setMode(id,m){
   S[id].mode=m;
   $('sec_h24_'+id).style.display=m==='h24'?'block':'none';
   $('sec_amp_'+id).style.display=m==='amp'?'block':'none';
-  const btns=$('mt_'+id).querySelectorAll('button');
-  btns.forEach(b=>b.className=b.dataset.mode===m?'on':'');
+  $('mt_'+id).querySelectorAll('button').forEach(b=>b.className=b.dataset.mode===m?'on':'');
   updCard(id);
 }
-function toggleCap(id,scroll){
-  const c=CARDS.find(x=>x.id===id); if(!c)return;
-  const body=$('body_'+id), open=body.style.display==='none';
+function setForm(id,f){
+  S[id].form=f;
+  ['maint','push','resus'].forEach(fm=>{
+    const sec=$('sec_'+fm+'_'+id);
+    if(sec)sec.style.display=f===fm?'block':'none';
+  });
+  const ft=$('ft_'+id);
+  if(ft)ft.querySelectorAll('button').forEach(b=>b.className=b.dataset.form===f?'on':'');
+  updCard(id);
+}
+/* 手风琴互斥：同时只展开一张药卡 */
+var openCap=null;
+function setCap(id,open){
+  const body=$('body_'+id); if(!body)return;
   body.style.display=open?'block':'none';
   $('tri_'+id).textContent=open?'▾':'▸';
-  $('card_'+id).className='card'+(c.red?' redcard':'')+(open?' open':'');
-  if(open){updCard(id); if(scroll!==false)$('card_'+id).scrollIntoView({block:'start'});}
+  $('card_'+id).className='card'+(open?' open':'');
+  if(open){updCard(id); if(openCap===id||!openCap)void 0;}
+}
+function toggleCap(id,scroll){
+  const isOpen=$('body_'+id).style.display!=='none';
+  if(isOpen){ setCap(id,false); if(openCap===id)openCap=null; }
+  else{
+    if(openCap&&openCap!==id)setCap(openCap,false);
+    setCap(id,true); openCap=id;
+    updCard(id);
+    if(scroll!==false)$('card_'+id).scrollIntoView({block:'start'});
+  }
 }
 
 /* ================= 医嘱篮 ================= */
 function toggleBasket(key){
   if(basket[key])delete basket[key];
   else{
-    const [cid,rt]=key.indexOf('@')>-1?key.split('@'):[key,null];
-    if(rt){ if(!(RES[rt]>0))return; }
+    const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
+    if(form==='resus'){ if(!(RES[rt]>0))return; }
     else{
-      const c=CARDS.find(x=>x.id===cid); if(!c)return;
-      const el=$('din_'+cid); const v=el?parseFloat(el.value):NaN;
-      if(c.kind!=='resus'&&(!isFinite(v)||v<=0))return;
+      const box=$('din_'+id)||$('dinp_'+id);
+      const v=box?parseFloat(box.value):NaN;
+      if(!isFinite(v)||v<=0)return;
     }
     basket[key]=1;
   }
@@ -677,20 +670,22 @@ function toggleBasket(key){
 }
 function delItem(k){delete basket[k]; renderBasket(); renderAddBtns();}
 function renderAddBtns(){
-  CARDS.forEach(c=>{
-    if(c.kind==='resus'){
-      ['iv','et'].forEach(rt=>{
-        const b=$('add_'+c.id+'_'+rt); if(!b)return;
-        const on=!!basket[c.id+'@'+rt];
-        b.className='btn '+(rt==='iv'?'red':'pri')+(on?' added':'');
-        b.textContent=on?'✓ 已加医嘱':(rt==='iv'?'＋ 复苏静推加医嘱':'＋ 气管内加医嘱');
-      });
-      return;
-    }
-    const b=$('add_'+c.id); if(!b)return;
-    const on=!!basket[c.id];
-    b.className='btn pri'+(on?' added':'');
-    b.textContent=on?'✓ 已加医嘱':'＋ 加医嘱';
+  DRUGCARDS.forEach(c=>{
+    c.forms.forEach(fm=>{
+      if(fm==='resus'){
+        ['iv','et'].forEach(rt=>{
+          const b=$('add_'+c.id+'_'+rt); if(!b)return;
+          const on=!!basket[c.id+'@resus@'+rt];
+          b.className='btn '+(rt==='iv'?'red':'pri')+(on?' added':'');
+          b.textContent=on?'✓ 已加医嘱':(rt==='iv'?'＋ 复苏静推加医嘱':'＋ 气管内加医嘱');
+        });
+        return;
+      }
+      const b=$('add_'+c.id+'_'+fm); if(!b)return;
+      const on=!!basket[c.id+'@'+fm];
+      b.className='btn pri'+(on?' added':'');
+      b.textContent=on?'✓ 已加医嘱':'＋ 加医嘱';
+    });
   });
 }
 function metaSummary(){
@@ -815,13 +810,14 @@ document.addEventListener('input',e=>{
   }
   const a=t.dataset.act;
   if(a==='dose'||a==='rate'||a==='amprate'){updCard(t.dataset.card);}
-  else if(a==='resus'){updCard('epi_resus');}
+  else if(a==='resus'){updCard('epi');}
 });
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]'); if(!b)return;
   switch(b.dataset.act){
     case 'cap': toggleCap(b.dataset.card); break;
     case 'gcap': toggleGrp(b.dataset.grp); break;
+    case 'form': setForm(b.dataset.card,b.dataset.form); break;
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
     case 'add': toggleBasket(b.dataset.key); break;
     case 'del': delItem(b.dataset.key); break;
