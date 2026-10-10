@@ -383,13 +383,14 @@ function calcH24(id){
   const dEl=parseFloat($('din_'+id).value);
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
   if(g.dynamic){
-    const bagMg=0.12*W;   /* 标准袋：0.12mg/kg→50ml（=10μg/kg/h×12h），剂量变化靠液速 */
+    const bagMg=0.12*W;   /* 本院口径：0.12mg/kg→12ml（浓度10μg/kg/ml），液速数值=剂量数值 */
     const rEl=parseFloat($('rin_'+id).value);
-    const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(dose/2.4);
+    const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(dose/10);
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
-      prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
+      prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至12ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
-          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`], R, dose};
+          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`,
+          `调液速：0.1ml/h＝<b>1 μg/kg/h</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
@@ -492,7 +493,7 @@ function cardHtml(id){
         <button data-act="mode" data-card="${id}" data-mode="amp">按整支配</button>
       </div>
       <div id="sec_h24_${id}">
-        ${g.dynamic?`<div class="labeq">液速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="4.17"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h · 50ml／12h袋</div>`:`<div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h</div>`}
+        ${g.dynamic?`<div class="labeq">液速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="1.00"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h · 12ml／12h袋</div>`:`<div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       </div>
@@ -650,7 +651,7 @@ function updCard(id){
     const dEl=parseFloat($('din_'+id).value);
     const defD=(isFinite(dEl)&&dEl>0)?dEl:g.def;
     if(!S[id].rateTouched){
-      const sug=g.dynamic? niceRate(defD/2.4) : niceRate(rateOf(defD,g));
+      const sug=g.dynamic? niceRate(defD/10) : niceRate(rateOf(defD,g));
       const rin=$('rin_'+id);
       if(rin && parseFloat(rin.value)!==sug) rin.value=String(sug);
     }
