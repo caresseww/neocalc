@@ -162,8 +162,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 .ref-body{border:1px solid var(--line); border-radius:10px; padding:8px; margin-top:6px; background:#fff;}
 .del{position:absolute; top:6px; right:8px; border:none; background:none; color:var(--red);
   font-size:15px; font-weight:900; padding:2px 4px; cursor:pointer;}
-.edit{position:absolute; top:7px; right:32px; border:none; background:none; color:var(--navy2);
-  font-size:12px; font-weight:800; padding:2px 4px; cursor:pointer;}
+.ordops{margin-top:6px;}
 @media(max-width:430px){
   .chead .en{display:none;}
   .chead .csum{font-size:10.5px;}
@@ -830,8 +829,9 @@ function renderBasket(){
   $('ordList').innerHTML=ks.length?ks.map((k,i)=>{
     const L=linesOf(k);
     const ck=L.ck&&L.ck.length?`<div class="ckbox"><div class="t">核对（体重 ${W.toFixed(2)}kg）</div>${L.ck.map(r=>`<div class="r">${r}</div>`).join('')}</div>`:'';
-    return `<div class="ordbox" style="position:relative"><button class="del" data-act="del" data-key="${k}">✕</button><button class="edit" data-act="editdrug" data-key="${k}">改药 ›</button>
-      <div class="o1">${i+1}. ${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div></div>${ck}`;
+    return `<div class="ordbox" style="position:relative"><button class="del" data-act="del" data-key="${k}">✕</button>
+      <div class="o1">${i+1}. ${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div></div>${ck}
+      <div class="ordops"><button class="linklike" data-act="editdrug" data-key="${k}">✎ 改药 ›</button></div>`;
   }).join(''):`<div style="text-align:center;color:var(--ink2);padding:22px 0;font-size:13px">（空）—— 展开药物输剂量后点【＋加医嘱】</div>`;
   $('ordTxt').value=`【新生儿临时医嘱】${ms.length?ms.join(' '):'体重'+W.toFixed(2)+'kg'} ${new Date().toLocaleDateString('zh-CN')}\n`+
     ks.map(k=>{const L=linesOf(k); return [L.t1].concat(L.prep||[]).join('\n');}).join('\n')+'\n（须上级医师核对后录入）';
