@@ -381,16 +381,17 @@ function calcH24(id){
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
   if(g.dynamic){
     const bagMg=dose*W*12/1000;
-    return {t1:`特利加压素1ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
-      prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至12ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
+    const R=50/12;
+    return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
+      prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(bagMg,2)}mg</b>（12h袋）`,
-          `液体核对：泵速<b>1ml/h</b>；12小时入液<b>12ml</b>`], R:1, dose};
+          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>50ml</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
   const mg24=dose*W*(pm?1.44:24/1000), mcgH=dose*W;
   const ck1=pm
-    ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60分钟×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,0)}μg/h）`
+    ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60min×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,0)}μg/h）`
     : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,2)}μg/h）`;
   return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/${unitTail(g)}，维持24小时`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
@@ -440,7 +441,7 @@ function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
   const ml=d*W, mg=ml*0.1;
   const t1= rt==='iv'? `1:10000肾上腺素 ${f2(ml)}ml 静推 st` : `1:10000肾上腺素 ${f2(ml)}ml 气管内滴入 st`;
-  const t2= rt==='iv'? `${Math.round(d*100)}μg/kg＝${f2(mg)}mg · q3–5min可重复 · 推注≥1分钟`
+  const t2= rt==='iv'? `${Math.round(d*100)}μg/kg＝${f2(mg)}mg · q3–5min可重复 · 推注≥1min`
                      : `${f(d,2)}ml/kg＝${f2(mg)}mg · 0.05–0.1mg/kg · 滴后气囊加压数次 · 尽快建立静脉`;
   return {t1,t2,ck:[`剂量核对：${d}ml/kg×${W.toFixed(2)}kg＝<b>${f2(ml)}ml</b>＝${f2(mg)}mg`]};
 }
@@ -487,7 +488,7 @@ function cardHtml(id){
         <button data-act="mode" data-card="${id}" data-mode="amp">按整支配</button>
       </div>
       <div id="sec_h24_${id}">
-        ${g.dynamic?'<div class="labeq">泵速 <b>1</b> ml/h · 12h袋匀速</div>':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
+        ${g.dynamic?'<div class="labeq">泵速 <b>4.17</b> ml/h · 50ml／12h袋匀速</div>':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       </div>
@@ -525,7 +526,7 @@ function cardHtml(id){
         <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${id}_iv">—</span>kg）</div><div id="ckr_${id}_iv"></div></div>
         <div class="btnrow"><button class="btn red" data-act="add" data-key="${id}@resus@iv" id="add_${id}_iv">＋ 复苏静推加医嘱</button>
           <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
-        <div class="note">q3–5min 可重复；正压通气＋胸外按压下给药；推注≥1分钟；外渗→酚妥拉明局部浸润</div>
+        <div class="note">q3–5min 可重复；正压通气＋胸外按压下给药；推注≥1min；外渗→酚妥拉明局部浸润</div>
       </div>
       <div class="redsec">
         <div class="redsec_t">② 气管内（ET）—— 无静脉通路时</div>
