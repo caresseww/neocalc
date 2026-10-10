@@ -161,6 +161,8 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 .ref-body{border:1px solid var(--line); border-radius:10px; padding:8px; margin-top:6px; background:#fff;}
 .del{position:absolute; top:6px; right:8px; border:none; background:none; color:var(--red);
   font-size:15px; font-weight:900; padding:2px 4px; cursor:pointer;}
+.edit{position:absolute; top:7px; right:32px; border:none; background:none; color:var(--navy2);
+  font-size:12px; font-weight:800; padding:2px 4px; cursor:pointer;}
 @media(max-width:430px){
   .chead .en{display:none;}
   .chead .csum{font-size:10.5px;}
@@ -743,6 +745,16 @@ function toggleBasket(key){
   renderBasket(); renderAddBtns();
 }
 function delItem(k){delete basket[k]; renderBasket(); renderAddBtns();}
+/* 从医嘱单跳回对应药物的详情页（自动切到该形式） */
+function gotoDrug(key){
+  const parts=key.split('@'), id=parts[0], form=parts[1];
+  const dc=DRUGCARDS.find(x=>x.id===id); if(!dc)return;
+  const gi=GROUPS.findIndex(g=>g.cards.includes(id)); if(gi<0)return;
+  if(dc.forms.includes(form))S[id].form=form;
+  go(dc.page);
+  openCat(gi);
+  enterDrug(id);
+}
 function renderAddBtns(){
   DRUGCARDS.forEach(c=>{
     c.forms.forEach(fm=>{
@@ -788,7 +800,7 @@ function renderBasket(){
   $('ordList').innerHTML=ks.length?ks.map((k,i)=>{
     const L=linesOf(k);
     const ck=L.ck&&L.ck.length?`<div class="ckbox"><div class="t">核对（体重 ${W.toFixed(2)}kg）</div>${L.ck.map(r=>`<div class="r">${r}</div>`).join('')}</div>`:'';
-    return `<div class="ordbox" style="position:relative"><button class="del" data-act="del" data-key="${k}">✕</button>
+    return `<div class="ordbox" style="position:relative"><button class="del" data-act="del" data-key="${k}">✕</button><button class="edit" data-act="editdrug" data-key="${k}">改药 ›</button>
       <div class="o1">${i+1}. ${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div></div>${ck}`;
   }).join(''):`<div style="text-align:center;color:var(--ink2);padding:22px 0;font-size:13px">（空）—— 展开药物输剂量后点【＋加医嘱】</div>`;
   $('ordTxt').value=`【新生儿临时医嘱】${ms.length?ms.join(' '):'体重'+W.toFixed(2)+'kg'} ${new Date().toLocaleDateString('zh-CN')}\n`+
@@ -905,6 +917,7 @@ document.addEventListener('click',e=>{
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
     case 'add': toggleBasket(b.dataset.key); break;
     case 'del': delItem(b.dataset.key); break;
+    case 'editdrug': gotoDrug(b.dataset.key); break;
     case 'go': go(parseInt(b.dataset.page,10)); break;
     case 'copy': copyOrder(); break;
     case 'img': makeImg(); break;
