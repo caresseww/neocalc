@@ -56,7 +56,11 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .searchrow input:focus{outline:none; background:#fff;}
 .searchrow input::-webkit-search-cancel-button{-webkit-appearance:none;}
 .group{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px 0;
-  box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden;}
+  box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden; cursor:pointer;}
+.group:active{background:#f4f7fc;}
+.backrow{display:flex; align-items:center; gap:4px; padding:9px 4px 7px; color:var(--navy2);
+  font-size:13.5px; font-weight:800; cursor:pointer; user-select:none;}
+.backrow:active{opacity:.55;}
 .ghead{display:flex; align-items:center; gap:11px; padding:14px 15px; min-height:50px; cursor:pointer; user-select:none;}
 .ghead:active{background:#eef3fb;}
 .gtri{color:var(--navy2); font-size:13px; width:13px; flex:0 0 auto;}
@@ -66,8 +70,7 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .gcnt{margin-left:auto; font-family:var(--mono); font-size:12px; color:#fff; background:var(--navy2);
   border-radius:12px; padding:2px 9px; font-weight:800; flex:0 0 auto;}
 .group.open .ghead{border-bottom:1px dashed var(--line);}
-.gbody{padding:4px 10px 8px;}
-.gbody .card{margin:9px 0; box-shadow:none;}
+#lbody_0 .card, #lbody_1 .card, #lbody_2 .card, #lbody_3 .card, #lbody_4 .card{margin:9px 0;}
 .card{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px 0;
   box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden;}
 .chead{display:flex; align-items:baseline; gap:8px; padding:10px 14px; min-height:38px; cursor:pointer; user-select:none;}
@@ -95,16 +98,16 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
   border:1.5px solid var(--line); border-radius:10px; padding:5px 6px; background:#fff; color:var(--ink);}
 .labeq input:focus{outline:none; border-color:var(--navy2);}
 .modetabs{display:flex; margin-top:10px; border:1.5px solid var(--navy2); border-radius:11px; overflow:hidden;}
-.modetabs.formtabs{border-color:#b98a2d; margin-top:12px;}
-.modetabs.formtabs button{color:#8a6a1d; background:#fffdf6;}
-.modetabs.formtabs button.on{background:#b98a2d; color:#fff;}
-.modetabs.formtabs button{border-right:1px solid #ead9b0;}
-.modetabs.formtabs button:last-child{border-right:none;}
+.modetabs.formtabs{border:none; gap:8px; margin-top:12px; background:none;}
+.modetabs.formtabs button{border:1.5px solid #d9c48a; background:#fffdf6; color:#8a6a1d;
+  border-radius:12px; padding:10px 0; font-size:14px; font-weight:800;}
+.modetabs.formtabs button.on{background:#b98a2d; border-color:#b98a2d; color:#fff;
+  box-shadow:0 1px 4px rgba(120,90,20,.3);}
 .modetabs button{flex:1; border:none; background:#fff; color:var(--navy2); padding:8px 0; font-size:13.5px; font-weight:800; cursor:pointer;}
 .modetabs button.on{background:var(--navy2); color:#fff;}
 .ordbox{border:2px solid #14161a; border-radius:12px; padding:11px 13px; margin-top:9px; background:#fff;
   box-shadow:0 1px 5px rgba(10,15,25,.07);}
-.ordbox .o1{font-family:var(--mono); font-size:14.5px; font-weight:900; word-break:break-all; line-height:1.5;}
+.ordbox .o1{font-family:var(--mono); font-size:13px; font-weight:900; word-break:break-all; line-height:1.5;}
 .ordbox .o2{font-family:var(--mono); font-size:14px; font-weight:700; color:#14161a; margin-top:5px; word-break:break-all;
   border-top:1px dashed var(--line); padding-top:5px; line-height:1.5;}
 .ckbox{border:1px dashed #8a8a90; border-radius:11px; padding:8px 11px; margin-top:7px; background:#fafaf7;
@@ -181,10 +184,12 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 
 <div class="wrap">
 <div class="page on" id="p0">
-  <div id="holder0"></div>
+  <div id="cats0"></div>
+  <div id="list0"></div>
 </div>
 <div class="page" id="p1">
-  <div id="holder1"></div>
+  <div id="cats1"></div>
+  <div id="list1"></div>
 </div>
 <div class="page" id="pS">
   <div id="holderS"></div>
@@ -532,35 +537,61 @@ function cardHtml(id){
   </div>`;
 }
 function renderCards(){
-  const pages={0:'',1:''};
+  const cats={0:'',1:''}, lists={0:'',1:''};
   GROUPS.forEach((gr,gi)=>{
     const names=gr.cards.map(id=>DRUGS[id].name).join(' · ');
-    const body=gr.cards.map(id=>cardHtml(id)).join('');
-    pages[gr.page]+=`<div class="group" id="grp_${gi}">
-      <div class="ghead" data-act="gcap" data-grp="${gi}">
-        <span class="gtri" id="gtri_${gi}">▸</span>
+    cats[gr.page]+=`<div class="group" data-act="cat" data-grp="${gi}">
+      <div class="ghead">
+        <span class="gtri">▸</span>
         <div class="gmain"><div class="gtitle2">${gr.title}</div><div class="gsub">${names}</div></div>
         <span class="gcnt">${gr.cards.length}</span>
       </div>
-      <div class="gbody" id="gbody_${gi}" style="display:none">${body}</div>
+    </div>`;
+    lists[gr.page]+=`<div id="lwrap_${gi}" style="display:none">
+      <div class="backrow" data-act="backcat" data-grp="${gi}">‹ 分类</div>
+      <div class="backrow" data-act="backlist" data-grp="${gi}" id="backdrug_${gi}" style="display:none">‹ 返回列表</div>
+      <div id="lbody_${gi}">${gr.cards.map(id=>cardHtml(id)).join('')}</div>
     </div>`;
   });
-  $('holder0').innerHTML=pages[0];
-  $('holder1').innerHTML=pages[1];
+  $('cats0').innerHTML=cats[0]; $('list0').innerHTML=lists[0];
+  $('cats1').innerHTML=cats[1]; $('list1').innerHTML=lists[1];
 }
-/* 分类容器开合（互斥手风琴） */
-var openGrp=null;
-function toggleGrp(gi){
-  const b=$('gbody_'+gi); if(!b)return;
-  const open=b.style.display==='none';
-  if(openGrp!==null&&openGrp!==String(gi)){
-    const ob=$('gbody_'+openGrp);
-    if(ob){ob.style.display='none'; $('gtri_'+openGrp).textContent='▸'; $('grp_'+openGrp).className='group';}
+/* drill-down 视图：分类 → 药列表 → 单药详情（切换+退出，不原地展开） */
+var view={grp:null, drug:null, page:null};
+function openCat(gi){
+  const gr=GROUPS[gi];
+  view={grp:gi, drug:null, page:gr.page};
+  $('cats'+gr.page).style.display='none';
+  $('lwrap_'+gi).style.display='block';
+}
+function resetView(){
+  if(view.drug)exitDrugSilent();
+  if(view.grp!==null){
+    $('lwrap_'+view.grp).style.display='none';
+    $('cats'+view.page).style.display='block';
   }
-  b.style.display=open?'block':'none';
-  $('gtri_'+gi).textContent=open?'▾':'▸';
-  $('grp_'+gi).className='group'+(open?' open':'');
-  openGrp=open?String(gi):null;
+  view={grp:null, drug:null, page:null};
+}
+function enterDrug(id){
+  view.drug=id;
+  const lb=$('lbody_'+view.grp);
+  lb.querySelectorAll(':scope > .card').forEach(el=>el.style.display=el.id==='card_'+id?'block':'none');
+  $('backdrug_'+view.grp).style.display='flex';
+  setCap(id,true);
+  openCap=id;
+}
+function exitDrugSilent(){
+  const id=view.drug, gi=view.grp;
+  const body=$('body_'+id);
+  if(body){body.style.display='none'; $('tri_'+id).textContent='▸'; $('card_'+id).className='card';}
+  $('lbody_'+gi).querySelectorAll(':scope > .card').forEach(el=>el.style.display='block');
+  $('backdrug_'+gi).style.display='none';
+  openCap=null;
+  view.drug=null;
+}
+function exitDrug(){
+  exitDrugSilent();
+  updCard&&null;
 }
 
 /* 单卡刷新：按 S[id].form 所在区刷新 + 摘要 */
@@ -784,6 +815,7 @@ function copyOrder(){
 }
 function go(n){
   curPage=n;
+  resetView();
   if(searching){searching=false; $('q').value=''; rehome();}
   ['nav0','nav1','nav2'].forEach((k,i)=>{$(k).className=n===i?'on':'';});
   ['p0','p1','p2','pS'].forEach((k,i)=>{$(k).className='page'+(n===i?' on':'');});
@@ -815,8 +847,16 @@ document.addEventListener('input',e=>{
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]'); if(!b)return;
   switch(b.dataset.act){
-    case 'cap': toggleCap(b.dataset.card); break;
-    case 'gcap': toggleGrp(b.dataset.grp); break;
+    case 'cap': {
+      const id=b.dataset.card;
+      if($('card_'+id).parentElement.id==='holderS'){ toggleCap(id); } /* 搜索视图内仍为手风琴 */
+      else if(view.drug===id){ exitDrugSilent(); }
+      else if(view.grp!==null){ enterDrug(id); }
+      break;
+    }
+    case 'cat': openCat(parseInt(b.dataset.grp,10)); break;
+    case 'backcat': resetView(); break;
+    case 'backlist': exitDrugSilent(); break;
     case 'form': setForm(b.dataset.card,b.dataset.form); break;
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
     case 'add': toggleBasket(b.dataset.key); break;
