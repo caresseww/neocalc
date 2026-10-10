@@ -380,7 +380,7 @@ function calcH24(id){
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
       prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
-          `实际剂量：液速<b>${f2(R)}ml/h</b>＝<b>${f2(R*2.4)} μg/kg/h</b> · 每0.1ml/h≈0.24`,
+          `实际剂量：液速<b>${f2(R)}ml/h</b>＝<b>${f2(R*2.4)} μg/kg/h</b> · 每0.1ml/h≈${f2(dose/R/10)}`,
           `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
@@ -392,7 +392,7 @@ function calcH24(id){
   return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/${unitTail(g)}，维持24小时`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
     ck:[ck1,
-        `实际剂量：泵速<b>${f2(R)}ml/h</b>＝<b>${f2(R*g.rateDiv)} ${g.unit}</b> · 每0.1ml/h≈${f(g.rateDiv/10,2)}`,
+        `实际剂量：泵速<b>${f2(R)}ml/h</b>＝<b>${f2(R*g.rateDiv)} ${g.unit}</b> · 每0.1ml/h≈${f2(dose/R/10)}`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`], R, dose};
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
