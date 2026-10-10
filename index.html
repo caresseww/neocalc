@@ -429,7 +429,8 @@ function calcAmp(id){
   return {t1,
     prep:[drugLine,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
     ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b>`,
-        `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml；可维持${f(dur,0)}h`], R, dose};
+        `1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':''})＝<b>${f(dur,0)}h</b>`,
+        `液体核对：泵速${f2(R)}ml/h×${f(dur,0)}h＝<b>${f(V,1)}ml</b>`], R, dose};
 }
 /* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
 function calcLoad(id){
