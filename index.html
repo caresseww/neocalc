@@ -491,11 +491,13 @@ function cardHtml(id){
         ${g.dynamic?'<div class="labeq">泵速 <b>4.17</b> ml/h · 50ml／12h袋匀速</div>':`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
+        ${g.dynamic?'':'<div class="note">剂量与泵速独立填写；调剂量后请同步核对泵速</div>'}
       </div>
       <div id="sec_amp_${id}" style="display:none">
         <div class="labeq">泵速 <input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>
         <div class="ordbox" id="aord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
+        <div class="note">剂量与泵速独立填写；调剂量后请同步核对泵速</div>
       </div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@maint" id="add_${id}_maint">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
