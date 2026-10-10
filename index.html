@@ -386,7 +386,8 @@ function calcH24(id){
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
       prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至50ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
-          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`], R, dose};
+          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`,
+          `调液速：1ml/h＝<b>2.4 μg/kg/h</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
@@ -396,7 +397,8 @@ function calcH24(id){
     : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,2)}μg/h）`;
   return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/${unitTail(g)}，维持24小时`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
-    ck:[ck1,`液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`], R, dose};
+    ck:[ck1,`液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`,
+        `调液速：1ml/h＝<b>${g.rateDiv} ${g.unit}</b>`], R, dose};
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
 function calcAmp(id){
@@ -419,7 +421,8 @@ function calcAmp(id){
   return {t1,
     prep:[`${g.name} ${f(M,2)}mg`,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
     ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b>；可维持${f(dur,0)}h`,
-        `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml`], R, dose};
+        `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml`,
+        `调液速：1ml/h＝<b>${f(act/R,2)} ${g.unit}</b>`], R, dose};
 }
 /* 静推/首剂（剂量框 dinp_ 与维持分开） */
 function calcPush(id){
@@ -492,13 +495,11 @@ function cardHtml(id){
         ${g.dynamic?`<div class="labeq">液速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="4.17"> ml/h · 50ml／12h袋</div>`:`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
-        <div class="note">剂量与液速独立填写；调剂量后请同步核对液速</div>
       </div>
       <div id="sec_amp_${id}" style="display:none">
         <div class="labeq">泵速 <input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>
         <div class="ordbox" id="aord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
-        <div class="note">剂量与泵速独立填写；调剂量后请同步核对泵速</div>
       </div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@maint" id="add_${id}_maint">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
