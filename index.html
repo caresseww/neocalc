@@ -107,6 +107,12 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .redsec{border:1px solid #ecc8c8; background:#fdf6f6; border-radius:11px; padding:8px 10px; margin-top:8px;}
 .redsec_t{font-size:13px; font-weight:800; color:var(--red); margin-bottom:4px;}
 .labeq{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:8px 0 5px; font-size:13.5px; font-weight:700; white-space:nowrap;}
+.stepwrap{display:inline-flex; align-items:center; gap:5px;}
+.stp{width:34px; height:34px; border:1.5px solid var(--line); background:#fff; color:var(--navy2);
+  border-radius:9px; font-size:17px; font-weight:800; line-height:1; cursor:pointer; padding:0; flex:0 0 auto;
+  -webkit-user-select:none; user-select:none; touch-action:manipulation;}
+.stp:active{background:var(--navybg); border-color:var(--navy2);}
+.stepwrap input{width:64px;}
 .labeq input{width:74px; font-size:16px; font-weight:800; text-align:center; font-family:var(--mono);
   border:1.5px solid var(--line); border-radius:9px; padding:4px 6px; background:#fff; color:var(--ink);}
 .labeq input:focus{outline:none; border-color:var(--navy2);}
@@ -186,7 +192,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <div class="hmini">新生儿药物计算器</div>
   <div class="wtrow">
     <label>体重</label>
-    <input id="wt" type="number" inputmode="decimal" step="0.05" min="0.4" max="6" value="1.5"><span class="unit">kg</span>
+    <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="wt" data-dir="-1">−</button><input id="wt" type="number" inputmode="decimal" step="0.05" min="0.4" max="6" value="1.5"><button type="button" class="stp" data-act="step" data-t="wt" data-dir="1">＋</button></div><span class="unit">kg</span>
     <span class="wtnow" id="wtNow"></span>
     <span class="brand" style="margin-left:auto">CHFU-NeoAI</span><span class="t2">To make your life easier</span>
   </div>
@@ -484,18 +490,18 @@ function cardHtml(id){
   if(dc.forms.includes('maint')){
     const tab1=g.dynamic?'按12小时袋配':'按24小时配';
     maintSec=`<div id="sec_maint_${id}">
-      <div class="labeq">剂量 <input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"> ${g.unit}</div>
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
       <div class="modetabs" id="mt_${id}">
         <button data-act="mode" data-card="${id}" data-mode="h24" class="on">${tab1}</button>
         <button data-act="mode" data-card="${id}" data-mode="amp">按整支配</button>
       </div>
       <div id="sec_h24_${id}">
-        ${g.dynamic?`<div class="labeq">液速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="4.17"> ml/h · 50ml／12h袋</div>`:`<div class="labeq">泵速 <input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>`}
+        ${g.dynamic?`<div class="labeq">液速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="4.17"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h · 50ml／12h袋</div>`:`<div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h</div>`}
         <div class="ordbox" id="ord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       </div>
       <div id="sec_amp_${id}" style="display:none">
-        <div class="labeq">泵速 <input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"> ml/h</div>
+        <div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="-1">−</button><input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="1">＋</button></div> ml/h</div>
         <div class="ordbox" id="aord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
       </div>
@@ -509,7 +515,7 @@ function cardHtml(id){
     const u=id==='fentanyl'?'μg/kg':'mg/kg';
     const def=id==='fentanyl'?2:0.1, step=id==='fentanyl'?0.5:0.05;
     pushSec=`<div id="sec_push_${id}" style="display:none">
-      <div class="labeq">剂量 <input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"> ${u}</div>
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="1">＋</button></div> ${u}</div>
       <div class="ordbox" id="ordp_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button>
@@ -523,7 +529,7 @@ function cardHtml(id){
       <div class="spec">配液：<b>1mg＋NS 9ml→10ml</b>（1:10000，现配现用、标注时间）</div>
       <div class="redsec">
         <div class="redsec_t">① 静推（IV/IO）</div>
-        <div class="labeq">剂量 <input data-act="resus" data-rt="iv" id="din_${id}_iv" type="number" inputmode="decimal" step="0.05" min="0.05" max="0.3" value="0.2"> ml/kg（0.1–0.3＝0.01–0.03mg/kg）</div>
+        <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}_iv" data-dir="-1">−</button><input data-act="resus" data-rt="iv" id="din_${id}_iv" type="number" inputmode="decimal" step="0.05" min="0.05" max="0.3" value="0.2"><button type="button" class="stp" data-act="step" data-t="din_${id}_iv" data-dir="1">＋</button></div> ml/kg（0.1–0.3＝0.01–0.03mg/kg）</div>
         <div class="ordbox" id="ord_${id}_iv"></div>
         <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${id}_iv">—</span>kg）</div><div id="ckr_${id}_iv"></div></div>
         <div class="btnrow"><button class="btn red" data-act="add" data-key="${id}@resus@iv" id="add_${id}_iv">＋ 复苏静推加医嘱</button>
@@ -532,7 +538,7 @@ function cardHtml(id){
       </div>
       <div class="redsec">
         <div class="redsec_t">② 气管内（ET）—— 无静脉通路时</div>
-        <div class="labeq">剂量 <input data-act="resus" data-rt="et" id="din_${id}_et" type="number" inputmode="decimal" step="0.05" min="0.5" max="1" value="0.75"> ml/kg（0.5–1＝0.05–0.1mg/kg）</div>
+        <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}_et" data-dir="-1">−</button><input data-act="resus" data-rt="et" id="din_${id}_et" type="number" inputmode="decimal" step="0.05" min="0.5" max="1" value="0.75"><button type="button" class="stp" data-act="step" data-t="din_${id}_et" data-dir="1">＋</button></div> ml/kg（0.5–1＝0.05–0.1mg/kg）</div>
         <div class="ordbox" id="ord_${id}_et"></div>
         <div class="ckbox"><div class="t">核对（体重 <span id="ckw_${id}_et">—</span>kg）</div><div id="ckr_${id}_et"></div></div>
         <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@resus@et" id="add_${id}_et">＋ 气管内加医嘱</button></div>
@@ -919,6 +925,27 @@ function go(n){
   window.scrollTo(0,0);
 }
 
+/* ================= 步进按钮（−/+,长按连续） ================= */
+var stepTimer=null, stepIv=null, stepLong=false;
+function doStep(b){
+  const t=document.getElementById(b.dataset.t); if(!t)return;
+  const step=parseFloat(t.step)||1, min=parseFloat(t.min)||0;
+  const cur=parseFloat(t.value);
+  let v=(isFinite(cur)?cur:0)+step*parseInt(b.dataset.dir,10);
+  v=Math.max(min,Math.round(v/step)*step);
+  v=parseFloat(v.toFixed(4));
+  if(t.max!==undefined&&v>parseFloat(t.max))v=parseFloat(t.max);
+  t.value=String(v);
+  t.dispatchEvent(new Event('input',{bubbles:true}));
+}
+document.addEventListener('pointerdown',e=>{
+  const b=e.target.closest('[data-act="step"]'); if(!b)return;
+  stepLong=false;
+  stepTimer=setTimeout(()=>{ stepLong=true; stepIv=setInterval(()=>doStep(b),110); },380);
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>document.addEventListener(ev,()=>{
+  clearTimeout(stepTimer); if(stepIv){clearInterval(stepIv); stepIv=null;}
+}));
 /* ================= 事件委托（document 级，无逐元素监听） ================= */
 document.addEventListener('input',e=>{
   const t=e.target;
@@ -963,6 +990,7 @@ document.addEventListener('click',e=>{
     case 'add': toggleBasket(b.dataset.key); break;
     case 'del': delItem(b.dataset.key); break;
     case 'editdrug': gotoDrug(b.dataset.key); break;
+    case 'step': if(stepLong){stepLong=false; break;} doStep(b); break;
     case 'go': go(parseInt(b.dataset.page,10)); break;
     case 'copy': copyOrder(); break;
     case 'img': makeImg(); break;
