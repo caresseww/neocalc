@@ -297,7 +297,7 @@ const DRUGS={
   spec:"注射用粉针 1mg/支",specMg:1,stockConc:1,dynamic:true,
   utd:"未收录新生儿专篇；文献：负荷20μg/kg＋持续4–20μg/kg/h（Rodríguez-Núñez 2010等系列/短程RCT）",
   hb:"未收录",
-  hosp:"持续2–10μg/kg/h（主用10，12h袋）",
+  hosp:"维持1–10μg/kg/h（液速0.1–1ml/h，数值相同；主用10μg/kg/h＝1ml/h）。首剂0.02–0.05mg（≈20μg/kg）静推，半小时后接12h维持袋",
   ind:"儿茶酚胺抵抗性（难治性）分布型休克抢救：EPI/NE＋激素仍不稳定的低SVR休克。新生儿证据=小样本系列研究/短程RCT，全部为超说明书使用，需上级签核+知情。本院惯例：首剂（20μg/kg缓推）后半小时接12h维持袋。",
   pharm:"赖氨酸加压素前体，体内缓慢水解释放活性加压素→V1受体→血管平滑肌收缩（SVR↑）；有效半衰期约6小时，适合12小时匀速泵入；对心率、肺循环几乎无影响；治疗剂量下V2抗利尿作用弱但存在。文献剂量：负荷20μg/kg、持续4–20μg/kg/h（本院主用10）。",
   adverse:"① 低钠血症（抗利尿样效应，每日监测血钠）；② 肢端/内脏缺血；③ 血压过冲；④ 超说明书——须记录知情同意与上级签核。",
@@ -340,12 +340,12 @@ const DRUGCARDS=[
  {id:'epi',page:0,forms:['maint','resus']},
  {id:'ne',page:0,forms:['maint']},
  {id:'milrinone',page:0,forms:['maint']},
- {id:'terli',page:0,forms:['maint']},
+  {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['maint','load']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
-const DFORM={maint:'维持泵入',push:'静推',resus:'复苏'};
+const DFORM={maint:'维持泵入',push:'静推',load:'首剂',resus:'复苏'};
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
@@ -389,8 +389,7 @@ function calcH24(id){
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
       prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至12ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
-          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`,
-          `调液速：0.1ml/h＝<b>1 μg/kg/h</b>`], R, dose};
+          `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`], R, dose};
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
@@ -426,6 +425,15 @@ function calcAmp(id){
     ck:[`剂量核对：泵速<b>${f2(R)}ml/h</b>＝<b>${f(act,2)} ${g.unit}</b>`,
         `液体核对：泵速${f2(R)}ml/h；24小时入液${f2(R*24)}ml；可维持${f(dur,0)}h`], R, dose};
 }
+/* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
+function calcLoad(id){
+  const dEl=parseFloat($('dinl_'+id).value);
+  const dose=(isFinite(dEl)&&dEl>0)?dEl:20;
+  const mg=dose*W/1000;
+  return {t1:`注射用特利加压素 ${f2(mg)}mg 静推 st`,
+    t2:`＝${f(dose,0)}μg/kg · 首剂；半小时后接12h维持泵`,
+    ck:[`剂量核对：${f(dose,0)} μg/kg×${W.toFixed(2)}kg＝<b>${f2(mg)}mg</b>`], dose};
+}
 /* 静推/首剂（剂量框 dinp_ 与维持分开） */
 function calcPush(id){
   const g=DRUGS[id];
@@ -457,6 +465,7 @@ function linesOf(key){
   const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
 
@@ -519,6 +528,17 @@ function cardHtml(id){
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
     </div>`;
   }
+  /* 首剂区 */
+  let loadSec='';
+  if(dc.forms.includes('load')){
+    loadSec=`<div id="sec_load_${id}" style="display:none">
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinl_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinl_${id}" type="number" inputmode="decimal" step="5" min="0" value="20"><button type="button" class="stp" data-act="step" data-t="dinl_${id}" data-dir="1">＋</button></div> μg/kg（首剂，20μg/kg）</div>
+      <div class="ordbox" id="ordl_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrl_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@load" id="add_${id}_load">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+    </div>`;
+  }
   /* 复苏区 */
   let resusSec='';
   if(dc.forms.includes('resus')){
@@ -552,7 +572,7 @@ function cardHtml(id){
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       ${formTabs}
-      ${maintSec}${pushSec}${resusSec}
+      ${maintSec}${pushSec}${loadSec||''}${resusSec}
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
     </div>
@@ -648,19 +668,20 @@ function updCard(id){
   const g=DRUGS[id];
   /* 维持区：未手动改过泵速时,泵速框随剂量自动更新为建议值;手动改过则保持独立 */
   if($('ord_'+id)){
-    const dEl=parseFloat($('din_'+id).value);
-    const defD=(isFinite(dEl)&&dEl>0)?dEl:g.def;
-    if(!S[id].rateTouched){
-      const sug=g.dynamic? niceRate(defD/10) : niceRate(rateOf(defD,g));
-      const rin=$('rin_'+id);
-      if(rin && parseFloat(rin.value)!==sug) rin.value=String(sug);
-    }
     const h24=calcH24(id), amp=calcAmp(id);
     $('ord_'+id).innerHTML=`<div class="o1">${h24.t1}</div><div class="o2">${h24.prep.join('<br>')}</div>`;
     $('ckr_'+id).innerHTML=h24.ck.map(r=>`<div class="r">${r}</div>`).join('');
     $('aord_'+id).innerHTML=`<div class="o1">${amp.t1}</div><div class="o2">${amp.prep.join('<br>')}</div>`;
     $('ackr_'+id).innerHTML=amp.ck.map(r=>`<div class="r">${r}</div>`).join('');
     var h24R=h24.R, h24D=h24.dose, ampR=amp.R, ampD=amp.dose;
+  }
+  /* 首剂区 */
+  let loadDose=null;
+  if($('ordl_'+id)){
+    const L=calcLoad(id);
+    $('ordl_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
+    $('ckrl_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    loadDose=L.dose;
   }
   /* 静推区 */
   let pushDose=null;
@@ -775,7 +796,7 @@ function toggleBasket(key){
     const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
     if(form==='resus'){ if(!(RES[rt]>0))return; }
     else{
-      const box=$('din_'+id)||$('dinp_'+id);
+      const box=$('din_'+id)||$('dinp_'+id)||$('dinl_'+id);
       const v=box?parseFloat(box.value):NaN;
       if(!isFinite(v)||v<=0)return;
     }
@@ -962,7 +983,18 @@ document.addEventListener('input',e=>{
   }
   const a=t.dataset.act;
   if(a==='dose'||a==='rate'||a==='amprate'){
-    if(a==='rate')S[t.dataset.card].rateTouched=true;
+    if(a==='rate'||a==='amprate')S[t.dataset.card].rateTouched=true;
+    const isLoad=t.id.indexOf('dinl_')===0;
+    if(a==='dose'&&!isLoad&&!S[t.dataset.card].rateTouched){
+      /* 单向联动：调剂量→液速自动更新为建议值；手动改过液速则尊重手动值 */
+      const id=t.dataset.card, g=DRUGS[id], d=parseFloat(t.value);
+      if(isFinite(d)&&d>0){
+        if(g.dynamic){ const r=$('rin_'+id); if(r)r.value=f2(d/10); }
+        else{ const sug=f2(niceRate(rateOf(d,g)));
+          const r=$('rin_'+id); if(r)r.value=sug;
+          const ar=$('arin_'+id); if(ar)ar.value=sug; }
+      }
+    }
     updCard(t.dataset.card);
   }
   else if(a==='resus'){updCard('epi');}
