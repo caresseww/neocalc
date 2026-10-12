@@ -1084,8 +1084,7 @@ function gotoDrug(key){
   const parts=key.split('@'), id=parts[0], form=parts[1];
   const dc=DRUGCARDS.find(x=>x.id===id); if(!dc)return;
   const gi=GROUPS.findIndex(g=>g.cards.includes(id)); if(gi<0)return;
-  go(dc.page);
-  view.l1=dc.page;
+  go(0);  /* 🔴 固定回药物浏览页——go()的页号(pMain/p2)与分类page号(0/1/2)是两套语义，go(dc.page)会让常用治疗药跳进医嘱单、page1白屏 */
   openCat(gi);
   enterDrug(id);
   if(dc.forms.includes(form))setForm(id,form);  /* 同步sec显示——只改S.form会停在上次的区块 */
