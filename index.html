@@ -875,7 +875,7 @@ function show(a,b,c){
 function openL1(x){
   view={l1:x, grp:null, drug:null};
   show(false,true,false);
-  [0,1].forEach(p=>{$('l2g_'+p).style.display=p===x?'block':'none';});
+  [0,1,2].forEach(p=>{$('l2g_'+p).style.display=p===x?'block':'none';});  /* 三大类——[0,1]是两大类时代的残留,常用治疗药页曾空白 */
   window.scrollTo(0,0);
 }
 function backL1(){
@@ -899,7 +899,7 @@ function openCat(gi){
 function backCat(){
   view.grp=null;
   show(false,true,false);
-  [0,1].forEach(p=>{$('l2g_'+p).style.display=p===view.l1?'block':'none';});
+  [0,1,2].forEach(p=>{$('l2g_'+p).style.display=p===view.l1?'block':'none';});
   window.scrollTo(0,0);
 }
 function enterDrug(id){
