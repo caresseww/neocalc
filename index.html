@@ -348,6 +348,7 @@ const DRUGS={
   rateDiv:5,mgPerKg:0,to:50,stockMlPerMg:2,stockLabel:"凯时 10μg/2ml原液",
   spec:"凯时 10μg/2ml",specMg:0.01,stockConc:0.005,
   utd:"PDA依赖性先心维持导管开放：起始5–20ng/kg/min，按需上调至10–30ng/kg/min（Starship/文献）；维持有效最小剂量",
+  hb:"未收录",
   hosp:"本院1–3ml/h（凯时稀释后约5–30ng/kg/min），浓度未标准化、按需现配",
   ind:"PDA依赖性先天性心脏病（肺动脉闭锁、大动脉转位、左心发育不良等）维持动脉导管开放等待手术；亦用于新生儿转运的导管保护。",
   pharm:"前列腺素E1，扩张动脉导管平滑肌并抑制其收缩；同时扩张全身血管、抑制血小板聚集。肺内首过消除快，需持续泵入。停药后作用迅速消退。",
@@ -444,16 +445,14 @@ function calcAmp(id){
   const actUg=R*C1*1000/(W*(pm?60:1));
   const act=isNg?actUg*1000:actUg;  /* 换回显示单位 */
   const dur=V/R;
-  const t1=g.dynamic
-    ? `特利加压素${f(M,2)}mg，入0.9%氯化钠至${f(V,0)}ml，${f2(R)}ml/h`
-    : `${g.name}${f2(R)}ml/h=${f(act,2)}ug/kg/${unitTail(g)}`;
+  const t1=`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`;
   const drugLine = id==='ne'
     ? `重酒石酸去甲肾上腺素 ${f(M*2,2)}mg（去甲肾${f(M,2)}mg，原液1ml）`
     : `${g.name} ${f(M,2)}mg`;
   return {t1,
     prep:[drugLine,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
-    ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':''})＝<b>${f(dur,0)}h</b>`,
-        `液体核对：泵速${f2(R)}ml/h×${f(dur,0)}h＝<b>${f(V,1)}ml</b>`], R, dose};
+    ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':''})＝<b>${f(dur,1)}h</b>`,
+        `液体核对：泵速${f2(R)}ml/h×${f(dur,1)}h＝<b>${f(V,1)}ml</b>`], R, dose};
 }
 /* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
 function calcLoad(id){
