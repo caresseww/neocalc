@@ -377,7 +377,7 @@ function f2(x){return f(x,2);}
 function isPerMin(g){return g.unit.indexOf('min')>-1;}
 function niceRate(x){if(!(x>0))return 0.05; let n=Math.round(x*20)/20; if(n<x&&(x-n)/x>0.05)n=(Math.round(n*20)+1)/20; return Math.max(0.05,n);}
 function rateOf(dose,g){return g.dynamic?1:dose/g.rateDiv;}
-function amt(mg){return mg>=1? f(mg,2)+'mg' : f(mg*1000,1)+'μg';}
+function amt(mg){return mg>=0.1? f(mg,2)+'mg' : f(mg*1000,1)+'μg';}
 function unitTail(g){return g.unit==='μg/kg/h'?'hr':'min';}
 
 /* 维持·按24小时配（特利=12h袋） */
@@ -398,8 +398,8 @@ function calcH24(id){
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
   const mg24=dose*W*(pm?1.44:24/1000), mcgH=dose*W;
   const ck1=pm
-    ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60min×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,0)}μg/h）`
-    : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>（${f(mcgH,2)}μg/h）`;
+    ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60min×24h＝<b>${amt(mg24)}/24h</b>`
+    : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>`;
   return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/${unitTail(g)}，维持24小时`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
     ck:[ck1,
@@ -977,7 +977,6 @@ document.addEventListener('input',e=>{
   if(t.id==='wt'){
     const v=parseFloat(t.value); if(!isFinite(v))return;
     W=Math.min(6,Math.max(0.4,v));
-    if(W!==v)$('wt').value=String(W);
     $('wtNow').textContent='按 '+W.toFixed(2)+'kg 计算';
     try{localStorage.setItem('vasoW',String(W));}catch(err){}
     updateAll(); return;
@@ -1004,6 +1003,9 @@ document.addEventListener('input',e=>{
     updCard(t.dataset.card);
   }
   else if(a==='resus'){updCard('epi');}
+});
+document.addEventListener('focusout',e=>{
+  if(e.target.id==='wt')$('wt').value=String(W); /* 失焦时框值归一为实际计算体重 */
 });
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]'); if(!b)return;
