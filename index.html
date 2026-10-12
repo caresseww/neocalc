@@ -1239,7 +1239,7 @@ document.addEventListener('pointerdown',e=>{
   clearTimeout(stepTimer); if(stepIv){clearInterval(stepIv); stepIv=null;}
 }));
 /* ================= 事件委托（document 级，无逐元素监听） ================= */
-document.addEventListener('input',e=>{
+function onInputLinkage(e){
   const t=e.target;
   if(t.id==='q'){applySearch(t.value); return;}
   if(t.id==='wt'){
@@ -1257,8 +1257,8 @@ document.addEventListener('input',e=>{
   const a=t.dataset.act;
   if(a==='dose'||a==='rate'||a==='amprate'){
     if(a==='rate'||a==='amprate')S[t.dataset.card].rateTouched=true;
-    const isLoad=t.id.indexOf('dinl_')===0;
-    if(a==='dose'&&!isLoad&&!S[t.dataset.card].rateTouched){
+    const isMaintDose=t.id.indexOf('din_')===0;  /* 仅维持剂量框触发联动；dinp_(静推/负荷)/dinl_(首剂)不得改泵速 */
+    if(a==='dose'&&isMaintDose&&!S[t.dataset.card].rateTouched){
       /* 单向联动：调剂量→液速自动更新为建议值；手动改过液速则尊重手动值 */
       const id=t.dataset.card, g=DRUGS[id], d=parseFloat(t.value);
       if(isFinite(d)&&d>0){
@@ -1271,7 +1271,8 @@ document.addEventListener('input',e=>{
     updCard(t.dataset.card);
   }
   else if(a==='resus'){updCard('epi');}
-});
+}
+document.addEventListener('input',onInputLinkage);
 document.addEventListener('focusout',e=>{
   if(e.target.id==='wt')$('wt').value=String(W); /* 失焦时框值归一为实际计算体重 */
 });
