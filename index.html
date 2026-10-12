@@ -363,17 +363,16 @@ const DRUGCARDS=[
  {id:'ne',page:0,forms:['maint']},
  {id:'milrinone',page:0,forms:['maint']},
   {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['load','maint']},
- {id:'nitroglycerin',page:0,title:'硝酸甘油',kind:'maint',drug:'nitroglycerin',forms:['maint','amp']},
  {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['amp']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
-const DFORM={maint:'维持泵入',push:'静推',load:'首剂',resus:'复苏'};
+const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏'};
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
- {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','nitroglycerin','alprostadil']},
+ {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil']},
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
