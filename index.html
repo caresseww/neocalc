@@ -335,6 +335,24 @@ const DRUGS={
   pharm:"氨基甾体类非去极化肌松药，竞争性阻断神经肌肉接头nAChR；中效（单次约30–45分钟）；肝内代谢为有活性的3-去乙酰维库溴铵（肾脏排泄）→肾功能不全者作用延长；组胺释放少、血流动力学较稳。",
   adverse:"① 自主呼吸与咳嗽消失——绝不用于未插管/清醒患儿（「清醒麻痹」是严重精神创伤，严禁）；② 眼睑闭合不全→暴露性角膜炎（眼膏/湿敷护理）；③ 长时间输注±糖皮质激素→ICU获得性肌病；④ 肾功能不全活性代谢物蓄积、作用延长。",
   compat:"NS、5%GS均可；不与碱性液/其他药共管；复溶后24小时内使用；输注期间角膜护理。"},
+ nitroglycerin:{name:"硝酸甘油",en:"Nitroglycerin",unit:"μg/kg/min",def:0.5,step:"0.1",
+  rateDiv:0.5,mgPerKg:1.5,to:50,stockMlPerMg:1,stockLabel:"1mg/1ml原液",
+  spec:"1mg/1ml",specMg:1,stockConc:1,
+  utd:"高血压/肺高压：0.5–5μg/kg/min 持续泵入，从0.5起、按0.5–1递增（Starship/PDR）；原液1mg/ml",
+  hosp:"本院泵入口径未标准化（库内多为外涂/换药），泵入剂量以文献为准",
+  ind:"新生儿高血压的一线血管扩张剂；亦用于肺高压降压、肛门直肠术后镇痛辅助。活动性低血压/颅内压增高禁用。",
+  pharm:"硝酸酯类，经酶促释放NO→cGMP↑→血管平滑肌松弛；扩张静脉容量血管为主，大剂量扩张动脉。起效数分钟、半衰期短（1–4分钟），需持续泵入。",
+  adverse:"低血压（剂量限制性，需持续监测血压）、反射性心动过速、头痛；大剂量/长程可致高铁血红蛋白血症；持续输注24–48h产生耐受（间歇给药可恢复）。",
+  compat:"NS、5%GS均可；原液1mg/ml直接稀释；避免与含肝素液体共用管路。"},
+ alprostadil:{name:"前列地尔",en:"Alprostadil (PGE1)",unit:"ng/kg/min",def:20,step:"5",
+  rateDiv:5,mgPerKg:0,to:50,stockMlPerMg:2,stockLabel:"凯时 10μg/2ml原液",
+  spec:"凯时 10μg/2ml",specMg:0.01,stockConc:0.005,
+  utd:"PDA依赖性先心维持导管开放：起始5–20ng/kg/min，按需上调至10–30ng/kg/min（Starship/文献）；维持有效最小剂量",
+  hosp:"本院1–3ml/h（凯时稀释后约5–30ng/kg/min），浓度未标准化、按需现配",
+  ind:"PDA依赖性先天性心脏病（肺动脉闭锁、大动脉转位、左心发育不良等）维持动脉导管开放等待手术；亦用于新生儿转运的导管保护。",
+  pharm:"前列腺素E1，扩张动脉导管平滑肌并抑制其收缩；同时扩张全身血管、抑制血小板聚集。肺内首过消除快，需持续泵入。停药后作用迅速消退。",
+  adverse:"呼吸暂停（约10–15%，需备插管）、低血压、发热、皮肤潮红/水肿；长程（>120h）可致胃幽门增生、骨皮质增生。凯时为脂质微球制剂，偶见过敏。",
+  compat:"NS、5%GS均可稀释；脂质微球现配现用，避免与高渗液体直接混合。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -344,6 +362,8 @@ const DRUGCARDS=[
  {id:'ne',page:0,forms:['maint']},
  {id:'milrinone',page:0,forms:['maint']},
   {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['load','maint']},
+ {id:'nitroglycerin',page:0,title:'硝酸甘油',kind:'maint',drug:'nitroglycerin',forms:['maint','amp']},
+ {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['amp']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
@@ -352,7 +372,7 @@ const DFORM={maint:'维持泵入',push:'静推',load:'首剂',resus:'复苏'};
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
- {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli']},
+ {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','nitroglycerin','alprostadil']},
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
@@ -408,8 +428,11 @@ function calcH24(id){
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
 function calcAmp(id){
   const g=DRUGS[id], pm=isPerMin(g);
-  const dEl=parseFloat($('din_'+id).value);
-  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
+  const isNg=g.unit.indexOf('ng')>-1;
+  const dinEl=$('din_'+id);
+  const dEl=dinEl?parseFloat(dinEl.value):NaN;
+  const doseRaw=(isFinite(dEl)&&dEl>0)?dEl:g.def;
+  const dose=isNg?doseRaw/1000:doseRaw;  /* 统一到μg域 */
   const rEl=parseFloat($('arin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
   const M=g.specMg;
@@ -418,7 +441,8 @@ function calcAmp(id){
   const stockMl=M/g.stockConc;
   const water=Math.max(0,V-stockMl);
   const C1=M/V;
-  const act=R*C1*1000/(W*(pm?60:1));
+  const actUg=R*C1*1000/(W*(pm?60:1));
+  const act=isNg?actUg*1000:actUg;  /* 换回显示单位 */
   const dur=V/R;
   const t1=g.dynamic
     ? `特利加压素${f(M,2)}mg，入0.9%氯化钠至${f(V,0)}ml，${f2(R)}ml/h`
@@ -496,6 +520,25 @@ function cardHtml(id){
   const g=DRUGS[id], c=S[id], dc=DRUGCARDS.find(x=>x.id===id);
   const defR=f2(niceRate(rateOf(g.def,g)));
   const multi=dc.forms.length>1;
+  if(dc.forms.length===1&&dc.forms[0]==='amp'){
+    return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+      <span class="csum">每支 ${f(g.specMg*1000,1)}μg</span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      <div class="labeq">液速 <div class="stepwrap"><button type="button" class="stp" data-act="amprate" data-card="${id}" data-dir="-1">−</button><input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.1" min="0" value="${defR}"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="1">＋</button></div> ml/h</div>
+      <div class="ordbox" id="aord_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@amp" id="add_${id}_amp">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
+    </div>
+  </div>`;
+  }
   const formTabs=multi?`<div class="modetabs formtabs" id="ft_${id}">`+dc.forms.map(fm=>`<button data-act="form" data-card="${id}" data-form="${fm}" class="${c.form===fm?'on':''}">${DFORM[fm]}</button>`).join('')+`</div>`:'';
   /* 维持区 */
   let maintSec='';
@@ -688,6 +731,13 @@ function updCard(id){
     $('ordl_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
     $('ckrl_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     loadDose=L.dose;
+  }
+  /* 单amp药(前列地尔) */
+  if($('aord_'+id)&&!$('ord_'+id)){
+    const amp=calcAmp(id);
+    $('aord_'+id).innerHTML=`<div class="o1">${amp.t1}</div><div class="o2">${amp.prep.join('<br>')}</div>`;
+    $('ackr_'+id).innerHTML=amp.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
   }
   /* 静推区 */
   let pushDose=null;
