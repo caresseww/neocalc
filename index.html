@@ -723,7 +723,7 @@ function cardHtml(id){
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
-      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@${dc.forms[0]}" id="add_${id}_ins">＋ 加医嘱</button>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@${dc.forms[0]}" id="add_${id}_${dc.forms[0]}">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
@@ -1084,11 +1084,11 @@ function gotoDrug(key){
   const parts=key.split('@'), id=parts[0], form=parts[1];
   const dc=DRUGCARDS.find(x=>x.id===id); if(!dc)return;
   const gi=GROUPS.findIndex(g=>g.cards.includes(id)); if(gi<0)return;
-  if(dc.forms.includes(form))S[id].form=form;
   go(dc.page);
   view.l1=dc.page;
   openCat(gi);
   enterDrug(id);
+  if(dc.forms.includes(form))setForm(id,form);  /* 同步sec显示——只改S.form会停在上次的区块 */
 }
 function renderAddBtns(){
   DRUGCARDS.forEach(c=>{
