@@ -354,6 +354,51 @@ const DRUGS={
   pharm:"前列腺素E1，扩张动脉导管平滑肌并抑制其收缩；同时扩张全身血管、抑制血小板聚集。肺内首过消除快，需持续泵入。停药后作用迅速消退。",
   adverse:"呼吸暂停（约10–15%，需备插管）、低血压、发热、皮肤潮红/水肿；长程（>120h）可致胃幽门增生、骨皮质增生。凯时为脂质微球制剂，偶见过敏。",
   compat:"NS、5%GS均可稀释；脂质微球现配现用，避免与高渗液体直接混合。"},
+ hydrocortisone:{name:"琥珀酸氢化可的松",en:"Hydrocortisone",unit:"mg/kg",def:0.5,step:"0.1",
+  spec:"琥珀酸钠 135mg/支（≈氢考100mg）",specMg:135,stockConc:135,
+  utd:"升压辅助（儿茶酚胺抵抗性休克）：应激剂量0.5–1mg/kg q8h 静推；或持续1–2mg/kg/d（文献/ENDO）",
+  hosp:"库内单次0.2–4mg（按体重）q8h 常见；持续泵0.5ml/h 偶见（不冲管）",
+  ind:"儿茶酚胺抵抗性休克的激素辅助（可疑肾上腺功能不全、超低出生体重儿升压难治）；止痉、BPD 激素撤机另案。",
+  pharm:"糖皮质激素琥珀酸钠酯，水溶性可静推；补充应激剂量纠正相对肾上腺功能不全，降低血管张力、恢复儿茶酚胺敏感性。q8h 给药维持血药浓度。",
+  adverse:"高血糖（监测）、免疫抑制（长程）、胃肠道穿孔风险（超低体重儿长程）、生长抑制；短程应激剂量（≤7天）安全性良好。",
+  compat:"NS、5%GS均可；建议独立通路；现配现用。"},
+ insulin:{name:"胰岛素",en:"Insulin",unit:"IU/kg/h",def:0.03,step:"0.01",
+  spec:"原液稀释 0.1IU/ml",specMg:1,stockConc:1,
+  utd:"新生儿高血糖：0.01–0.1IU/kg/h 持续泵入，从0.03–0.05起，血糖每1–2mmol/L 下调一档（uPIC/文献）",
+  hb:"未收录",
+  hosp:"0.3ml/h=0.03iu/h 常见（0.1iu/ml 稀释液）",
+  ind:"新生儿糖尿病/持续高血糖（血糖>10–14mmol/L 且液体治疗无效）。须每1–2h 监测血糖防低血糖。",
+  pharm:"外源性人胰岛素，促进葡萄糖转运与糖原合成；新生儿清除个体差异大，稀释与泵速误差是低血糖主因。",
+  adverse:"低血糖（最高危：0.1iu/ml 稀释、独立通路、泵速双人核对）；低钾血症。",
+  compat:"NS稀释；原液易吸附管壁——用稀释液预充管路；禁与其他药共用通路。"},
+ furosemide:{name:"呋塞米",en:"Furosemide",unit:"mg/kg/d",def:1,step:"0.1",
+  spec:"20mg/2ml",specMg:20,stockConc:10,
+  utd:"持续利尿 0.5–2mg/kg/d 泵入（稀释后0.05–0.2ml/h）；单次1mg/kg q6–24h（NeoFax/手册）",
+  hb:"未收录",
+  hosp:"0.1ml/h=1mg/kg.d（本院主流）；0.2ml/h=2mg/kg.d",
+  ind:"液体超负荷/BPD 肺水肿的持续利尿；心力衰竭辅助。每日记尿量与体重，监测电解质。",
+  pharm:"袢利尿剂，抑制髓袢升支 Na-K-2Cl 同向转运；持续泵入利尿更平稳、电解质波动小于间断推注。",
+  adverse:"低钾/低氯性碱中毒、低钠；耳毒性（快速推注风险高，持续泵入可降）；长程肾钙质沉着。每日查电解质。",
+  compat:"NS、5%GS均可；pH>8 时与酸性药物沉淀；独立泵腔。"},
+ octreotide:{name:"奥曲肽",en:"Octreotide",unit:"μg/kg/h",def:4,step:"1",
+  rateDiv:3,mgPerKg:0.15,to:50,stockMlPerMg:1,stockLabel:"善宁 0.1mg/1ml原液",
+  spec:"善宁 0.1mg/1ml",specMg:0.1,stockConc:0.1,
+  utd:"乳糜胸/消化道出血：1–10μg/kg/h 持续泵入，从1–4起、每12–24h上调（文献）；静脉曲张出血另案",
+  hb:"未收录",
+  hosp:"本院0.1–0.44ml/h（0.5–9μg/kg/h），稀释浓度各异",
+  ind:"乳糜胸（减少淋巴回流）、应激性消化道出血、高胰岛素血症低血糖的辅助。",
+  pharm:"生长抑素类似物，抑制生长激素/胰岛素/胰液分泌，降低内脏血流与淋巴生成。半衰期约2h，需持续泵入。",
+  adverse:"高血糖或低血糖、脂肪泻、长程胆石症、甲状腺功能抑制；局部注射反应。监测血糖。",
+  compat:"NS、5%GS均可；独立泵腔。"},
+ caffeine:{name:"枸橼酸咖啡因",en:"Caffeine citrate",unit:"mg/kg",def:20,step:"5",
+  spec:"60mg/3ml（20mg/ml）",specMg:60,stockConc:20,
+  utd:"早产儿呼吸暂停：负荷20mg/kg（以枸橼酸咖啡因计），24h后维持5–10mg/kg q24h（NeoFax/Starship）",
+  hb:"未收录",
+  hosp:"库内负荷10–28mg 单次静推/口服；维持5mg/kg q24h 常见",
+  ind:"早产儿呼吸暂停（AOP）一线治疗；拔管后防呼吸暂停。治疗窗监测（谷浓度10–20μg/ml 不常规）。",
+  pharm:"甲基黄嘌呤类，兴奋呼吸中枢、提高膈肌收缩力与化学感受器敏感性；口服吸收完全（与静推等效）。半衰期早产儿40–100h，故每日一次。",
+  adverse:"心动过速、喂养不耐受/呕吐、烦躁；血浓度>50μg/ml 可致惊厥。纠正低氧与酸中毒后疗效更佳。",
+  compat:"NS、5%GS均可；可静推或口服；不与茶碱叠加使用。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -363,16 +408,27 @@ const DRUGCARDS=[
  {id:'ne',page:0,forms:['maint']},
  {id:'milrinone',page:0,forms:['maint']},
   {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['load','maint']},
- {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['amp']},
+ {id:'nitroglycerin',page:0,title:'硝酸甘油',kind:'maint',drug:'nitroglycerin',forms:['maint','amp']},
+ {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['maint','amp']},
+ {id:'hydrocortisone',page:2,title:'琥珀氢考',kind:'maint',drug:'hydrocortisone',forms:['push']},
+ {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['ins']},
+ {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['drip']},
+ {id:'octreotide',page:2,title:'奥曲肽',kind:'maint',drug:'octreotide',forms:['maint','amp']},
+ {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏'};
+const DFORM_OV={alprostadil:{maint:'按浓度配',amp:'按整支配'}};
+const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
  {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil']},
+ {page:2,title:'激素·内分泌',cards:['hydrocortisone','insulin']},
+ {page:2,title:'利尿·消化道',cards:['furosemide','octreotide']},
+ {page:2,title:'呼吸兴奋',cards:['caffeine']},
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
@@ -416,11 +472,11 @@ function calcH24(id){
   }
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
-  const mg24=dose*W*(pm?1.44:24/1000), mcgH=dose*W;
+  const mg24=dose*W*(pm?1.44:24/1000)*(g.unit.indexOf('ng')>-1?0.001:1), mcgH=dose*W;
   const ck1=pm
     ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60min×24h＝<b>${amt(mg24)}/24h</b>`
     : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>`;
-  return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/${unitTail(g)}，维持24小时`,
+  return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}${g.unit}，维持24小时`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
     ck:[ck1,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`], R, dose};
@@ -434,7 +490,7 @@ function calcAmp(id){
   const doseRaw=(isFinite(dEl)&&dEl>0)?dEl:g.def;
   const dose=isNg?doseRaw/1000:doseRaw;  /* 统一到μg域 */
   const rEl=parseFloat($('arin_'+id).value);
-  const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(dose,g));
+  const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(doseRaw,g));  /* 建议值用原始单位剂量 */
   const M=g.specMg;
   const Cneed=dose*W*(pm?60:1)/(R*1000);          /* mg/ml */
   let V=M/Cneed; V=Math.max(2,Math.ceil(V*2)/2);  /* 0.5ml取整，宁多勿少 */
@@ -444,7 +500,7 @@ function calcAmp(id){
   const actUg=R*C1*1000/(W*(pm?60:1));
   const act=isNg?actUg*1000:actUg;  /* 换回显示单位 */
   const dur=V/R;
-  const t1=`${g.name}${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`;
+  const t1=`${g.name}${f2(R)}ml/h=${f(act,2)}${g.unit}`;
   const drugLine = id==='ne'
     ? `重酒石酸去甲肾上腺素 ${f(M*2,2)}mg（去甲肾${f(M,2)}mg，原液1ml）`
     : `${g.name} ${f(M,2)}mg`;
@@ -452,6 +508,37 @@ function calcAmp(id){
     prep:[drugLine,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
     ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':''})＝<b>${f(dur,1)}h</b>`,
         `液体核对：泵速${f2(R)}ml/h×${f(dur,1)}h＝<b>${f(V,1)}ml</b>`], R, dose};
+}
+/* push 单次药配置表 */
+const PUSHCFG={
+ fentanyl:{def:2,step:0.5,unit:'μg/kg',out:'μg',note:'缓推≥3min · 备气囊'},
+ midazolam:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',note:'缓推≥2min · 监测血压'},
+ vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',note:'镇静确保后给 · 呼吸机下'},
+ hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',note:'升压辅助 · q8h · 监测血压血糖'},
+ caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；24h后维持5–10mg/kg q24h'}};
+/* 胰岛素（0.1IU/ml 稀释液持续泵） */
+function calcInsulin(id){
+  const g=DRUGS[id];
+  const dinEl=$('din_'+id);
+  const dEl=dinEl?parseFloat(dinEl.value):NaN;
+  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* IU/kg/h */
+  const iuH=dose*W, R=iuH/0.1, vol=R*24;
+  return {t1:`胰岛素${f2(R)}ml/h＝${f2(iuH)}iu/h（0.1iu/ml），维持24小时`,
+    t2:`＝${f2(dose,2)} iu/kg/h · 每1–2h监测血糖`,
+    ck:[`剂量核对：${f2(dose,2)} iu/kg/h×${W.toFixed(2)}kg＝<b>${f2(iuH)}iu/h</b>`,
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
+}
+/* 呋塞米持续泵（0.1ml/h=1mg/kg/d 本院口径） */
+function calcDrip(id){
+  const g=DRUGS[id];
+  const dinEl=$('din_'+id);
+  const dEl=dinEl?parseFloat(dinEl.value):NaN;
+  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* mg/kg/d */
+  const R=dose*0.1, vol=R*24, mgDay=dose*W;
+  return {t1:`呋塞米${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
+    t2:`＝${f2(mgDay,2)}mg/d · 监测电解质与尿量`,
+    ck:[`剂量核对：${f2(dose,2)} mg/kg/d×${W.toFixed(2)}kg＝<b>${f2(mgDay,2)}mg/d</b>`,
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
 }
 /* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
 function calcLoad(id){
@@ -464,20 +551,11 @@ function calcLoad(id){
 }
 /* 静推/首剂（剂量框 dinp_ 与维持分开） */
 function calcPush(id){
-  const g=DRUGS[id];
-  if(id==='fentanyl'){
-    const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:2, a=dose*W;
-    return {t1:`芬太尼 ${f2(a)}μg 静推 st`,t2:`＝${dose}μg/kg · 缓推≥3min · 备气囊`,
-      ck:[`剂量核对：${dose}μg/kg×${W.toFixed(2)}kg＝<b>${f2(a)}μg</b>`], dose};
-  }
-  if(id==='midazolam'){
-    const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:0.1, a=dose*W;
-    return {t1:`咪达唑仑 ${f2(a)}mg 静推 st`,t2:`＝${dose}mg/kg · 缓推≥2min · 监测血压`,
-      ck:[`剂量核对：${dose}mg/kg×${W.toFixed(2)}kg＝<b>${f2(a)}mg</b>`], dose};
-  }
-  const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:0.1, a=dose*W;
-  return {t1:`维库溴铵 ${f2(a)}mg 静推 st`,t2:`＝${dose}mg/kg · 镇静确保后给 · 呼吸机下`,
-    ck:[`剂量核对：${dose}mg/kg×${W.toFixed(2)}kg＝<b>${f2(a)}mg</b>`], dose};
+  const g=DRUGS[id], cfg=PUSHCFG[id];
+  const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
+  return {t1:`${g.name} ${f2(a)}${cfg.out} 静推 st`,
+    t2:`＝${f(dose,2)}${cfg.unit} · ${cfg.note}`,
+    ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
 }
 function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
@@ -494,6 +572,8 @@ function linesOf(key){
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='ins'){const L=calcInsulin(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
 
@@ -518,6 +598,24 @@ function cardHtml(id){
   const g=DRUGS[id], c=S[id], dc=DRUGCARDS.find(x=>x.id===id);
   const defR=f2(niceRate(rateOf(g.def,g)));
   const multi=dc.forms.length>1;
+  if(dc.forms.length===1&&(dc.forms[0]==='ins'||dc.forms[0]==='drip')){
+    return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
+      <div class="ordbox" id="ord_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@${dc.forms[0]}" id="add_${id}_ins">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
+    </div>
+  </div>`;
+  }
   if(dc.forms.length===1&&dc.forms[0]==='amp'){
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
@@ -537,7 +635,7 @@ function cardHtml(id){
     </div>
   </div>`;
   }
-  const formTabs=multi?`<div class="modetabs formtabs" id="ft_${id}">`+dc.forms.map(fm=>`<button data-act="form" data-card="${id}" data-form="${fm}" class="${c.form===fm?'on':''}">${DFORM[fm]}</button>`).join('')+`</div>`:'';
+  const formTabs=multi?`<div class="modetabs formtabs" id="ft_${id}">`+dc.forms.map(fm=>`<button data-act="form" data-card="${id}" data-form="${fm}" class="${c.form===fm?'on':''}">${formName(id,fm)}</button>`).join('')+`</div>`:'';
   /* 维持区 */
   let maintSec='';
   if(dc.forms.includes('maint')){
@@ -565,8 +663,7 @@ function cardHtml(id){
   /* 静推区 */
   let pushSec='';
   if(dc.forms.includes('push')){
-    const u=id==='fentanyl'?'μg/kg':'mg/kg';
-    const def=id==='fentanyl'?2:0.1, step=id==='fentanyl'?0.5:0.05;
+    const u=PUSHCFG[id].unit, def=PUSHCFG[id].def, step=PUSHCFG[id].step;
     pushSec=`<div id="sec_push_${id}" style="display:${c.form==='push'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="1">＋</button></div> ${u}</div>
       <div class="ordbox" id="ordp_${id}"></div>
@@ -627,7 +724,7 @@ function cardHtml(id){
 }
 function renderCards(){
   /* L1: 两大类框 */
-  const l1meta=[{p:0,name:'血管活性药物',icon:'🫀'},{p:1,name:'镇静镇痛药',icon:'😴'}];
+  const l1meta=[{p:0,name:'血管活性药物',icon:'🫀'},{p:1,name:'镇静镇痛药',icon:'😴'},{p:2,name:'常用治疗药',icon:'⚕'}];
   $('viewL1').innerHTML=l1meta.map(m=>{
     const grps=GROUPS.filter(g=>g.page===m.p);
     const n=grps.reduce((a,g)=>a+g.cards.length,0);
@@ -640,7 +737,7 @@ function renderCards(){
   }).join('');
   /* L2: 分类框(按大类容器), L3: 药列表 */
   $('viewL2').innerHTML=`<div class="backrow" data-act="backl1">‹ 返回</div>`+
-    [0,1].map(p=>`<div id="l2g_${p}" style="display:none">`+
+    [0,1,2].map(p=>`<div id="l2g_${p}" style="display:none">`+
       GROUPS.map((gr,gi)=>gr.page===p?`<div class="group" data-act="cat" data-grp="${gi}">
         <div class="ghead">
           <span class="gtri">▸</span>
@@ -713,6 +810,15 @@ function exitDrugSilent(){
 function updCard(id){
   if(!S[id])return;
   const g=DRUGS[id];
+  /* 单形式药(胰岛素/呋塞米) */
+  const dcU=DRUGCARDS.find(x=>x.id===id);
+  if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='ins'||dcU.forms[0]==='drip')){
+    const L=dcU.forms[0]==='ins'?calcInsulin(id):calcDrip(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
+    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
+    return;
+  }
   /* 维持区：未手动改过泵速时,泵速框随剂量自动更新为建议值;手动改过则保持独立 */
   if($('ord_'+id)){
     const h24=calcH24(id), amp=calcAmp(id);
@@ -731,7 +837,7 @@ function updCard(id){
     loadDose=L.dose;
   }
   /* 单amp药(前列地尔) */
-  if($('aord_'+id)&&!$('ord_'+id)){
+  if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='amp'){
     const amp=calcAmp(id);
     $('aord_'+id).innerHTML=`<div class="o1">${amp.t1}</div><div class="o2">${amp.prep.join('<br>')}</div>`;
     $('ackr_'+id).innerHTML=amp.ck.map(r=>`<div class="r">${r}</div>`).join('');
@@ -739,14 +845,14 @@ function updCard(id){
   }
   /* 静推区 */
   let pushDose=null;
-  if($('ordp_'+id)){
+  if(dcU&&dcU.forms.includes('push')){
     const L=calcPush(id);
     $('ordp_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
     $('ckrp_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     pushDose=L.dose;
   }
   /* 复苏区 */
-  if($('ord_'+id+'_iv')){
+  if(dcU&&dcU.forms.includes('resus')){
     ['iv','et'].forEach(rt=>{
       const inp=$('din_'+id+'_'+rt);
       if(inp&&isFinite(parseFloat(inp.value))&&parseFloat(inp.value)>0)RES[rt]=parseFloat(inp.value);
