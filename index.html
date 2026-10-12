@@ -339,6 +339,7 @@ const DRUGS={
   rateDiv:0.5,mgPerKg:1.5,to:50,stockMlPerMg:1,stockLabel:"1mg/1ml原液",
   spec:"1mg/1ml",specMg:1,stockConc:1,
   utd:"高血压/肺高压：0.5–5μg/kg/min 持续泵入，从0.5起、按0.5–1递增（Starship/PDR）；原液1mg/ml",
+  hb:"未收录",
   hosp:"本院泵入口径未标准化（库内多为外涂/换药），泵入剂量以文献为准",
   ind:"新生儿高血压的一线血管扩张剂；亦用于肺高压降压、肛门直肠术后镇痛辅助。活动性低血压/颅内压增高禁用。",
   pharm:"硝酸酯类，经酶促释放NO→cGMP↑→血管平滑肌松弛；扩张静脉容量血管为主，大剂量扩张动脉。起效数分钟、半衰期短（1–4分钟），需持续泵入。",
@@ -355,7 +356,7 @@ const DRUGS={
   adverse:"呼吸暂停（约10–15%，需备插管）、低血压、发热、皮肤潮红/水肿；长程（>120h）可致胃幽门增生、骨皮质增生。凯时为脂质微球制剂，偶见过敏。",
   compat:"NS、5%GS均可稀释；脂质微球现配现用，避免与高渗液体直接混合。"},
  amiodarone:{name:"胺碘酮",en:"Amiodarone",unit:"μg/kg/min",def:5,step:"1",
-  rateDiv:10,mgPerKg:30,to:50,stockMlPerMg:0.02,stockLabel:"150mg/3ml原液",
+  rateDiv:10,mgPerKg:30,to:50,stockMlPerMg:0.02,stockLabel:"150mg/3ml原液",diluent:"5%葡萄糖",
   spec:"150mg/3ml（50mg/ml）",specMg:150,stockConc:50,
   utd:"SVT/VT：负荷5mg/kg 缓泵≥1h；维持5–15μg/kg/min 按反应滴定（NeoFax/Starship）",
   hb:"未收录",
@@ -377,6 +378,7 @@ const DRUGS={
  hydrocortisone:{name:"琥珀酸氢化可的松",en:"Hydrocortisone",unit:"mg/kg",def:0.5,step:"0.1",
   spec:"琥珀酸钠 135mg/支（≈氢考100mg）",specMg:135,stockConc:135,
   utd:"升压辅助（儿茶酚胺抵抗性休克）：应激剂量0.5–1mg/kg q8h 静推；或持续1–2mg/kg/d（文献/ENDO）",
+  hb:"未收录",
   hosp:"库内单次0.2–4mg（按体重）q8h 常见；持续泵0.5ml/h 偶见（不冲管）",
   ind:"儿茶酚胺抵抗性休克的激素辅助（可疑肾上腺功能不全、超低出生体重儿升压难治）；止痉、BPD 激素撤机另案。",
   pharm:"糖皮质激素琥珀酸钠酯，水溶性可静推；补充应激剂量纠正相对肾上腺功能不全，降低血管张力、恢复儿茶酚胺敏感性。q8h 给药维持血药浓度。",
@@ -422,7 +424,7 @@ const DRUGS={
   spec:"泽通 10mg/2ml",specMg:10,stockConc:5,
   utd:"持续利尿 0.5–2mg/kg/d 泵入（与呋塞米同口径）；单次0.5–1mg/kg qd（文献）",
   hb:"未收录",
-  hosp:"0.1ml/h=1mg/kg.d（与呋塞米完全同口径；库内原文0.1/0.2ml/h=1/2mg/kg.d）",
+  hosp:"0.1ml/h=1mg/kg.d 主流（R=剂量×0.1）；库内亦见0.1ml/h=2mg/kg.d 记录，浓度未完全统一",
   ind:"液体超负荷/BPD 利尿——呋塞米耳毒性顾虑或利尿效果不佳时的替代袢利尿剂；心衰辅助。监测电解质与尿量同呋塞米。",
   pharm:"袢利尿剂，抑制髓袢升支 Na-K-2Cl 同向转运；半衰期较呋塞米长、利尿更平稳；部分经肝代谢，耳毒性报道少于呋塞米。",
   adverse:"低钾/低氯性碱中毒、低钠；尿量过多致脱水/低血压；长程肾钙质沉着同袢类。每日查电解质。",
@@ -502,7 +504,7 @@ const DRUGCARDS=[
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏'};
-const DFORM_OV={};
+const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
@@ -570,7 +572,7 @@ function calcH24(id){
     ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60min×24h＝<b>${amt(mg24)}/24h</b>`
     : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>`;
   return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}${g.unit}，维持24小时`,
-    prep:[`${g.name} ${amt(mg24)}/24h`,`0.9%氯化钠或5%葡萄糖 ${f2(R*24)}ml/24h`],
+    prep:[`${g.name} ${amt(mg24)}/24h`,`${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(R*24)}ml/24h`],
     ck:[ck1,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`], R, dose};
 }
@@ -598,7 +600,7 @@ function calcAmp(id){
     ? `重酒石酸去甲肾上腺素 ${f(M*2,2)}mg（去甲肾${f(M,2)}mg，原液1ml）`
     : `${g.name} ${f(M,2)}mg`;
   return {t1,
-    prep:[drugLine,`0.9%氯化钠或5%葡萄糖 ${f(water,1)}ml → 共 ${f(V,1)}ml`],
+    prep:[drugLine,`${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f(water,1)}ml → 共 ${f(V,1)}ml`],
     ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':''})＝<b>${f(dur,1)}h</b>`,
         `液体核对：泵速${f2(R)}ml/h×${f(dur,1)}h＝<b>${f(V,1)}ml</b>`], R, dose};
 }
