@@ -354,6 +354,26 @@ const DRUGS={
   pharm:"前列腺素E1，扩张动脉导管平滑肌并抑制其收缩；同时扩张全身血管、抑制血小板聚集。肺内首过消除快，需持续泵入。停药后作用迅速消退。",
   adverse:"呼吸暂停（约10–15%，需备插管）、低血压、发热、皮肤潮红/水肿；长程（>120h）可致胃幽门增生、骨皮质增生。凯时为脂质微球制剂，偶见过敏。",
   compat:"NS、5%GS均可稀释；脂质微球现配现用，避免与高渗液体直接混合。"},
+ amiodarone:{name:"胺碘酮",en:"Amiodarone",unit:"μg/kg/min",def:5,step:"1",
+  rateDiv:10,mgPerKg:30,to:50,stockMlPerMg:0.02,stockLabel:"150mg/3ml原液",
+  spec:"150mg/3ml（50mg/ml）",specMg:150,stockConc:50,
+  utd:"SVT/VT：负荷5mg/kg 缓泵≥1h；维持5–15μg/kg/min 按反应滴定（NeoFax/Starship）；口服负荷与维持另案",
+  hb:"未收录",
+  hosp:"库内维持0.2–1.25ml/h＝1–12.5μg/kg/min（1ml/h=10μg/kg/min 口径袋最常见）；负荷5–24mg 缓泵（滴速17ml/h）",
+  ind:"室上性/室性心动过速的药物复律与维持窦律、电复律后巩固；对其他抗心律失常药无效或不宜时的一线选择。甲状腺疾病、严重肝损害慎用。",
+  pharm:"III类抗心律失常药（钾通道为主，兼钠/钙通道与β阻断）；起效慢、半衰期极长（数天至数周），蓄积明显；新生儿经肝CYP代谢慢，随访甲状腺功能。",
+  adverse:"心动过缓、低血压（负荷期）；长程：甲减/甲亢、肝酶升高、角膜色素沉着、肺纤维化（罕见）；外周静脉易静脉炎，宜中心静脉。",
+  compat:"仅用5%GS稀释（NS中易浑浊）；独立通路，负荷期持续心电监护；不与其他静推药共管。"},
+ propafenone:{name:"普罗帕酮",en:"Propafenone",unit:"μg/kg/min",def:4,step:"1",
+  rateDiv:8,mgPerKg:24,to:50,stockMlPerMg:0.29,stockLabel:"35mg/10ml原液",
+  spec:"35mg/10ml（3.5mg/ml）",specMg:35,stockConc:3.5,
+  utd:"SVT：静推1mg/kg 缓推（≥1h缓泵更稳）；口服维持5–7mg/kg·次 q8h；持续泵入1–6.4μg/kg/min",
+  hb:"未收录",
+  hosp:"库内缓泵19–24mg（滴速17ml/h）；泵入0.5–0.8ml/h＝4–6.4μg/kg/min；口服19–28mg（相当于5–7mg/kg·次）",
+  ind:"室上性心动过速复律与预防复发（无器质性心脏病者）、WPW综合征；口服用于序贯维持。器质性心脏病/心衰/传导阻滞禁用。",
+  pharm:"Ic类抗心律失常药，阻断快钠通道减慢心内传导，兼轻β阻断作用；肝首过效应强（口服生物利用度个体差异大），新生儿清除慢注意蓄积。",
+  adverse:"低血压、心动过缓、传导阻滞；促心律失常作用；加重心衰；口干、头晕、味觉异常。",
+  compat:"NS、5%GS均可；独立通路缓泵；与地高辛/β阻断剂/胺碘酮合用需减量并监护。"},
  hydrocortisone:{name:"琥珀酸氢化可的松",en:"Hydrocortisone",unit:"mg/kg",def:0.5,step:"0.1",
   spec:"琥珀酸钠 135mg/支（≈氢考100mg）",specMg:135,stockConc:135,
   utd:"升压辅助（儿茶酚胺抵抗性休克）：应激剂量0.5–1mg/kg q8h 静推；或持续1–2mg/kg/d（文献/ENDO）",
@@ -362,6 +382,15 @@ const DRUGS={
   pharm:"糖皮质激素琥珀酸钠酯，水溶性可静推；补充应激剂量纠正相对肾上腺功能不全，降低血管张力、恢复儿茶酚胺敏感性。q8h 给药维持血药浓度。",
   adverse:"高血糖（监测）、免疫抑制（长程）、胃肠道穿孔风险（超低体重儿长程）、生长抑制；短程应激剂量（≤7天）安全性良好。",
   compat:"NS、5%GS均可；建议独立通路；现配现用。"},
+ dexamethasone:{name:"地塞米松",en:"Dexamethasone",unit:"mg/kg",def:0.25,step:"0.05",
+  spec:"5mg/1ml",specMg:5,stockConc:5,
+  utd:"拔管后喉水肿预防：0.25mg/kg q12h×2–4剂（首剂拔管前≥6h，NeoFax）；BPD 低剂量方案0.05–0.15mg/kg/d 另案",
+  hb:"未收录",
+  hosp:"库内单次0.03–2mg（p50 0.5mg≈0.25mg/kg）；鞘注/雾化医嘱另有用途不入本卡",
+  ind:"拔管后喉水肿的预防与治疗；BPD 激素撤退方案的组成；重症休克的激素辅助（升压难治时与氢考同用）。感染未控制时权衡使用。",
+  pharm:"长效糖皮质激素，生物半衰期36–54h，无盐皮质激素活性；抑制炎症介质与气道水肿；血浆半衰期短但药效持久，q12h即可。",
+  adverse:"高血糖、高血压、感染风险↑、消化道出血（长程）；生长抑制（长程）；内生肌酐清除延迟一过性肥厚性心肌病（长程BPD方案需心超随访）；短程拔管预防剂量安全性良好。",
+  compat:"NS、5%GS均可；不与碱性液混配；短程用完即停，勿骤停长程用药。"},
  insulin:{name:"胰岛素",en:"Insulin",unit:"IU/kg/h",def:0.03,step:"0.01",
   spec:"原液稀释 0.1IU/ml",specMg:1,stockConc:1,
   utd:"新生儿高血糖：0.01–0.1IU/kg/h 持续泵入，从0.03–0.05起，血糖每1–2mmol/L 下调一档（uPIC/文献）",
@@ -371,6 +400,15 @@ const DRUGS={
   pharm:"外源性人胰岛素，促进葡萄糖转运与糖原合成；新生儿清除个体差异大，稀释与泵速误差是低血糖主因。",
   adverse:"低血糖（最高危：0.1iu/ml 稀释、独立通路、泵速双人核对）；低钾血症。",
   compat:"NS稀释；原液易吸附管壁——用稀释液预充管路；禁与其他药共用通路。"},
+ glucagon:{name:"人高血糖素",en:"Glucagon",unit:"μg/kg/h",def:10,step:"2",
+  spec:"诺和生 1mg/1ml",specMg:1,stockConc:1,
+  utd:"顽固性/反复性低血糖（高胰岛素性）：5–20μg/kg/h 持续泵入，从10起按血糖滴定（儿科内分泌文献）",
+  hb:"未收录",
+  hosp:"库内固定袋：0.65mg 入5%GS至24ml；0.1–1ml/h＝2–20μg/kg/h 逐档调（1ml/h≈16–20μg/kg/h 视体重）",
+  ind:"持续性/反复性低血糖的辅助（高胰岛素血症、贝-维综合征等），糖速不足以维持血糖时加用，为升糖「桥」治疗——为争取病因检查与手术（如局灶性胰岛素瘤切除）争取时间；须在充足葡萄糖输注基础上使用。",
+  pharm:"拮抗胰岛素的升糖激素：促进肝糖原分解与糖异生；起效快（静注数分钟）、半衰期短（8–18min）故需持续泵入；效果依赖肝糖原储备，营养不良/糖原贮积症效果差。",
+  adverse:"恶心呕吐、低钾；血糖过高；长程泵入皮疹、钠潴留；停药后反跳性低血糖——先减糖速再撤药。",
+  compat:"5%GS配制输注（库内固定袋口径）；独立通路；配后24h内用完。"},
  furosemide:{name:"呋塞米",en:"Furosemide",unit:"mg/kg/d",def:1,step:"0.1",
   spec:"20mg/2ml",specMg:20,stockConc:10,
   utd:"持续利尿 0.5–2mg/kg/d 泵入（稀释后0.05–0.2ml/h）；单次1mg/kg q6–24h（NeoFax/手册）",
@@ -380,6 +418,15 @@ const DRUGS={
   pharm:"袢利尿剂，抑制髓袢升支 Na-K-2Cl 同向转运；持续泵入利尿更平稳、电解质波动小于间断推注。",
   adverse:"低钾/低氯性碱中毒、低钠；耳毒性（快速推注风险高，持续泵入可降）；长程肾钙质沉着。每日查电解质。",
   compat:"NS、5%GS均可；pH>8 时与酸性药物沉淀；独立泵腔。"},
+ torasemide:{name:"托拉塞米",en:"Torasemide",unit:"mg/kg/d",def:1,step:"0.1",
+  spec:"泽通 10mg/2ml",specMg:10,stockConc:5,
+  utd:"持续利尿 0.5–2mg/kg/d 泵入（与呋塞米同口径）；单次0.5–1mg/kg qd（文献）",
+  hb:"未收录",
+  hosp:"0.1ml/h=1mg/kg.d（与呋塞米完全同口径；库内原文0.1/0.2ml/h=1/2mg/kg.d）",
+  ind:"液体超负荷/BPD 利尿——呋塞米耳毒性顾虑或利尿效果不佳时的替代袢利尿剂；心衰辅助。监测电解质与尿量同呋塞米。",
+  pharm:"袢利尿剂，抑制髓袢升支 Na-K-2Cl 同向转运；半衰期较呋塞米长、利尿更平稳；部分经肝代谢，耳毒性报道少于呋塞米。",
+  adverse:"低钾/低氯性碱中毒、低钠；尿量过多致脱水/低血压；长程肾钙质沉着同袢类。每日查电解质。",
+  compat:"NS、5%GS均可；独立泵腔；不与酸性药物同管。"},
  octreotide:{name:"奥曲肽",en:"Octreotide",unit:"μg/kg/h",def:4,step:"1",
   rateDiv:3,mgPerKg:0.15,to:50,stockMlPerMg:1,stockLabel:"善宁 0.1mg/1ml原液",
   spec:"善宁 0.1mg/1ml",specMg:0.1,stockConc:0.1,
@@ -390,6 +437,15 @@ const DRUGS={
   pharm:"生长抑素类似物，抑制生长激素/胰岛素/胰液分泌，降低内脏血流与淋巴生成。半衰期约2h，需持续泵入。",
   adverse:"高血糖或低血糖、脂肪泻、长程胆石症、甲状腺功能抑制；局部注射反应。监测血糖。",
   compat:"NS、5%GS均可；独立泵腔。"},
+ omeprazole:{name:"奥美拉唑",en:"Omeprazole",unit:"mg/kg",def:1,step:"0.5",
+  spec:"洛赛克 40mg/支",specMg:40,stockConc:40,
+  utd:"应激性溃疡/反流性食管炎：0.5–1mg/kg qd 静推或鼻饲（NeoFax/文献）；缓推≥20min",
+  hb:"未收录",
+  hosp:"库内静推1–3mg（p50 1.6mg≈1mg/kg）qd；口服/鼻饲1.5–3mg 片剂研磨",
+  ind:"应激性溃疡预防（重症、机械通气、颅压高）、上消化道出血抑酸、反流性食管炎。普通溢奶/喂养不耐受不常规使用。",
+  pharm:"质子泵抑制剂，不可逆阻断胃壁细胞H+/K+-ATP酶；起效需数小时、单剂抑酸持续>24h；肝CYP2C19代谢，新生儿清除慢、长程注意蓄积。",
+  adverse:"头痛、腹泻、皮疹；长程：感染（NEC/肺炎）风险↑、骨代谢与低镁顾虑；鼻饲片剂需研磨防堵管。",
+  compat:"仅用NS或5%GS稀释，配后2h内用完；pH敏感，不与其他药共管。"},
  caffeine:{name:"枸橼酸咖啡因",en:"Caffeine citrate",unit:"mg/kg",def:20,step:"5",
   spec:"60mg/3ml（20mg/ml）",specMg:60,stockConc:20,
   utd:"早产儿呼吸暂停：负荷20mg/kg（以枸橼酸咖啡因计），24h后维持5–10mg/kg q24h（NeoFax/Starship）",
@@ -399,6 +455,24 @@ const DRUGS={
   pharm:"甲基黄嘌呤类，兴奋呼吸中枢、提高膈肌收缩力与化学感受器敏感性；口服吸收完全（与静推等效）。半衰期早产儿40–100h，故每日一次。",
   adverse:"心动过速、喂养不耐受/呕吐、烦躁；血浓度>50μg/ml 可致惊厥。纠正低氧与酸中毒后疗效更佳。",
   compat:"NS、5%GS均可；可静推或口服；不与茶碱叠加使用。"},
+ phenobarb:{name:"苯巴比妥",en:"Phenobarbital",unit:"mg/kg",def:20,step:"5",
+  spec:"苯巴比妥钠 100mg/1ml",specMg:100,stockConc:100,
+  utd:"惊厥：负荷20mg/kg 缓推（≤1mg/kg/min），维持5mg/kg q12h（NeoFax/APLS）；谷浓度目标20–40μg/ml",
+  hb:"未收录",
+  hosp:"库内单次10–29mg（p50 13mg≈5mg/kg·次）静推/肌注为主，全库2687人最大品种",
+  ind:"新生儿惊厥一线（缺氧后、感染性、代谢性）；癫痫持续状态。负荷后需呼吸监护，维持按谷浓度精简。",
+  pharm:"长效巴比妥类，增强GABA-A介导的抑制、限制钠通道重复放电；肝代谢，早产儿半衰期可达100h以上→负荷后维持间隔长、蓄积明显。",
+  adverse:"呼吸抑制（负荷期备通气设备）、低血压、镇静延长、喂养不耐受；皮疹（少见，出现即停）；长程暴露的神经发育顾虑——按谷浓度避免过度维持。",
+  compat:"NS、5%GS均可；缓推≤1mg/kg/min；与苯妥英/丙戊酸/咪达唑仑相互作用，监测谷浓度。"},
+ ps:{name:"肺表面活性物质",en:"Pulmonary surfactant (固尔苏)",unit:"mg/kg",def:100,step:"50",
+  spec:"固尔苏 猪肺磷脂 240mg/1.5ml",specMg:240,stockConc:160,
+  utd:"RDS：首剂100–200mg/kg 气管内注入，需要时 q12h 重复（最多3–4剂）（欧洲RDS管理指南）",
+  hb:"未收录",
+  hosp:"库内单次0.12g（半支）/0.24g（整支）气道内给入，全库687人",
+  ind:"RDS（早产儿肺透明膜病）一线治疗；胎粪吸入综合征、肺出血重症的抢救性给入。给入后立即下调呼吸机峰压防压力伤，并防一过性气道阻塞。",
+  pharm:"天然猪肺磷脂制剂，降低肺泡表面张力、防止呼气末肺泡塌陷；经气管导管分体位注入，分布依赖注药手法与体位变换；起效数分钟（氧合迅速改善）。",
+  adverse:"注药时一过性SpO₂下降/心动过缓（暂停注药即恢复）、急性气道阻塞；肺出血（极早产儿风险↑）；注后呼吸机参数需即刻重调。",
+  compat:"复温摇匀后抽吸（禁剧烈振荡）；双人核对剂量；单次气道内给入，注后1h内免吸痰。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -408,27 +482,38 @@ const DRUGCARDS=[
  {id:'ne',page:0,forms:['maint']},
  {id:'milrinone',page:0,forms:['maint']},
   {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['load','maint']},
- {id:'nitroglycerin',page:0,title:'硝酸甘油',kind:'maint',drug:'nitroglycerin',forms:['maint','amp']},
- {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['maint','amp']},
+ {id:'nitroglycerin',page:0,title:'硝酸甘油',kind:'maint',drug:'nitroglycerin',forms:['maint']},
+ {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['maint']},
+ {id:'amiodarone',page:0,forms:['maint','push']},
+ {id:'propafenone',page:0,forms:['maint','push']},
  {id:'hydrocortisone',page:2,title:'琥珀氢考',kind:'maint',drug:'hydrocortisone',forms:['push']},
+ {id:'dexamethasone',page:2,forms:['push']},
  {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['ins']},
+ {id:'glucagon',page:2,forms:['glu']},
+ {id:'phenobarb',page:2,forms:['push']},
  {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['drip']},
- {id:'octreotide',page:2,title:'奥曲肽',kind:'maint',drug:'octreotide',forms:['maint','amp']},
+ {id:'torasemide',page:2,forms:['drip']},
+ {id:'octreotide',page:2,title:'奥曲肽',kind:'maint',drug:'octreotide',forms:['maint']},
+ {id:'omeprazole',page:2,forms:['push']},
  {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push']},
+ {id:'ps',page:2,forms:['push']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏'};
-const DFORM_OV={alprostadil:{maint:'按浓度配',amp:'按整支配'}};
+const DFORM_OV={};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
  {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil']},
- {page:2,title:'激素·内分泌',cards:['hydrocortisone','insulin']},
- {page:2,title:'利尿·消化道',cards:['furosemide','octreotide']},
- {page:2,title:'呼吸兴奋',cards:['caffeine']},
+ {page:0,title:'抗心律失常',cards:['amiodarone','propafenone']},
+ {page:2,title:'激素·内分泌',cards:['hydrocortisone','dexamethasone','insulin','glucagon']},
+ {page:2,title:'抗惊厥',cards:['phenobarb']},
+ {page:2,title:'利尿',cards:['furosemide','torasemide']},
+ {page:2,title:'消化道',cards:['octreotide','omeprazole']},
+ {page:2,title:'呼吸系统',cards:['caffeine','ps']},
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
@@ -437,7 +522,15 @@ const GROUPS=[
 /* 搜索别名（临床俗名/商品名） */
 const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne:'去甲 肾上腺',
  milrinone:'米力 鲁南力康',terli:'特利 加压素',fentanyl:'芬太尼 杜冷丁',
- midazolam:'咪达 唑仑 力月西',vecuronium:'维库 溴铵 仙林 肌松'};
+ midazolam:'咪达 唑仑 力月西',vecuronium:'维库 溴铵 仙林 肌松',
+ amiodarone:'可达龙 胺碘除颤 抗心律失常',propafenone:'心律平 心律失常',
+ alprostadil:'凯时 前列腺 导管',nitroglycerin:'硝酸甘油 降压',
+ dexamethasone:'地米 地塞米松 激素 喉水肿',hydrocortisone:'氢考 氢化可的松 激素',
+ insulin:'胰岛素 低血糖 高血糖',glucagon:'诺和生 高血糖素 低血糖',
+ phenobarb:'鲁米那 苯巴比妥 惊厥 抽搐 抗惊厥',ps:'固尔苏 猪肺磷脂 肺表面 RDS',
+ torasemide:'泽通 托拉塞米 利尿',furosemide:'呋塞米 速尿 利尿 泽通',
+ omeprazole:'洛赛克 奥美拉唑 抑酸 消化道',octreotide:'善宁 奥曲肽',
+ caffeine:'咖啡因 呼吸暂停'};
 
 /* ================= 状态 ================= */
 var W=1.5;
@@ -515,7 +608,13 @@ const PUSHCFG={
  midazolam:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',note:'缓推≥2min · 监测血压'},
  vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',note:'镇静确保后给 · 呼吸机下'},
  hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',note:'升压辅助 · q8h · 监测血压血糖'},
- caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；24h后维持5–10mg/kg q24h'}};
+ caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；24h后维持5–10mg/kg q24h'},
+ amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',note:'负荷 · 缓泵≥1h · 监测心率血压'},
+ propafenone:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'缓推；口服维持5–7mg/kg·次 q8h'},
+ dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',note:'拔管后喉水肿/BPD · q12h · 监测血糖'},
+ omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'应激性溃疡/消化道出血 · qd · 缓推'},
+ phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
+ ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',note:'复温摇匀 · 注后1h免吸痰 · 100–200mg/kg'}};
 /* 胰岛素（0.1IU/ml 稀释液持续泵） */
 function calcInsulin(id){
   const g=DRUGS[id];
@@ -535,9 +634,21 @@ function calcDrip(id){
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* mg/kg/d */
   const R=dose*0.1, vol=R*24, mgDay=dose*W;
-  return {t1:`呋塞米${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
+  return {t1:`${g.name}${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
     t2:`＝${f2(mgDay,2)}mg/d · 监测电解质与尿量`,
     ck:[`剂量核对：${f2(dose,2)} mg/kg/d×${W.toFixed(2)}kg＝<b>${f2(mgDay,2)}mg/d</b>`,
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
+}
+/* 人高血糖素持续泵（库内固定袋：0.65mg 入5%GS至24ml，1ml/h≈27μg/h） */
+function calcGlucagon(id){
+  const g=DRUGS[id];
+  const dinEl=$('din_'+id);
+  const dEl=dinEl?parseFloat(dinEl.value):NaN;
+  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* μg/kg/h */
+  const ugH=dose*W, R=ugH*24/650, vol=R*24;
+  return {t1:`人高血糖素${f2(R)}ml/h＝${f2(dose,2)}μg/kg/h（0.65mg/24ml袋），维持24小时`,
+    t2:`＝${f2(ugH)}μg/h · 每1–2h监测血糖`,
+    ck:[`剂量核对：${f2(dose,2)} μg/kg/h×${W.toFixed(2)}kg＝<b>${f2(ugH)}μg/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
 }
 /* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
@@ -553,7 +664,7 @@ function calcLoad(id){
 function calcPush(id){
   const g=DRUGS[id], cfg=PUSHCFG[id];
   const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
-  return {t1:`${g.name} ${f2(a)}${cfg.out} 静推 st`,
+  return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} st`,
     t2:`＝${f(dose,2)}${cfg.unit} · ${cfg.note}`,
     ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
 }
@@ -574,6 +685,7 @@ function linesOf(key){
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='ins'){const L=calcInsulin(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
 
@@ -598,7 +710,7 @@ function cardHtml(id){
   const g=DRUGS[id], c=S[id], dc=DRUGCARDS.find(x=>x.id===id);
   const defR=f2(niceRate(rateOf(g.def,g)));
   const multi=dc.forms.length>1;
-  if(dc.forms.length===1&&(dc.forms[0]==='ins'||dc.forms[0]==='drip')){
+  if(dc.forms.length===1&&(dc.forms[0]==='ins'||dc.forms[0]==='drip'||dc.forms[0]==='glu')){
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
       <span class="tri" id="tri_${id}">▸</span>
@@ -812,8 +924,8 @@ function updCard(id){
   const g=DRUGS[id];
   /* 单形式药(胰岛素/呋塞米) */
   const dcU=DRUGCARDS.find(x=>x.id===id);
-  if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='ins'||dcU.forms[0]==='drip')){
-    const L=dcU.forms[0]==='ins'?calcInsulin(id):calcDrip(id);
+  if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='ins'||dcU.forms[0]==='drip'||dcU.forms[0]==='glu')){
+    const L=dcU.forms[0]==='ins'?calcInsulin(id):dcU.forms[0]==='drip'?calcDrip(id):calcGlucagon(id);
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
