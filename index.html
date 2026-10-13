@@ -847,13 +847,12 @@ function cardHtml(id){
 }
 /* 首页 7 框：两大类(血管活性/镇静镇痛,带子分类层) + 其余按系统直接一级（2026-10-13 用户拍板撤销"常用治疗药"大筐） */
 const L1META=[
-  {name:'血管活性药物',icon:'🫀',grps:[0,1,2]},
-  {name:'镇静镇痛药',icon:'😴',grps:[8,9,10]},
-  {name:'激素·内分泌',grps:[3]},
-  {name:'抗惊厥',grps:[4]},
-  {name:'利尿',grps:[5]},
-  {name:'消化道',grps:[6]},
-  {name:'呼吸系统',grps:[7]},
+  {name:'心血管活性药',icon:'🫀',grps:[0,1,2]},
+  {name:'神经系统药',icon:'🧠',grps:[8,9,10,4]},
+  {name:'利尿·体液',icon:'💧',grps:[5]},
+  {name:'呼吸系统',icon:'🫁',grps:[7]},
+  {name:'消化系统',icon:'🍼',grps:[6]},
+  {name:'内分泌·代谢',icon:'💉',grps:[3]},
 ];
 function renderCards(){
   $('viewL1').innerHTML=L1META.map((m,mi)=>{
