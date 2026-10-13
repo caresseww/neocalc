@@ -374,6 +374,16 @@ const DRUGS={
   pharm:"Ic类抗心律失常药，阻断快钠通道减慢心内传导，兼轻β阻断作用；肝首过效应强（口服生物利用度个体差异大），新生儿清除慢注意蓄积。",
   adverse:"低血压、心动过缓、传导阻滞；促心律失常作用；加重心衰；口干、头晕、味觉异常。",
   compat:"NS、5%GS均可；独立通路缓泵；与地高辛/β阻断剂/胺碘酮合用需减量并监护。"},
+ isoprenaline:{name:"异丙肾上腺素",en:"Isoprenaline",unit:"μg/kg/min",def:0.1,step:"0.05",
+  rateDiv:0.5,mgPerKg:1.5,to:50,stockMlPerMg:2,stockLabel:"1mg/2ml原液",
+  spec:"1mg/2ml（0.5mg/ml）",specMg:1,stockConc:0.5,
+  utd:"症状性心动过缓/房室传导阻滞：0.05–2μg/kg/min 持续泵入，从0.05–0.1起按心率滴定（NeoFax/PDR）；仅为放置临时起搏争取时间的过渡措施",
+  hb:"未收录",
+  hosp:"库内 33行/7人：标化写法 0.1ml/h=0.05μg/kg/min 维持24小时（＝1ml/h=0.5μg/kg/min，即 1.5×W mg→50ml 管配方），上调记录至 0.2–0.3μg/kg/min；干包备用单次 0.03–0.26mg；个别袋按 3×W mg 配（1ml/h=1μg/kg/min）本卡取标化口径",
+  ind:"症状性心动过缓（窒息复苏后、房室传导阻滞、β阻断剂过量）的过渡治疗：争取放置临时起搏器的时间；仅在持续心电监护下使用。非心跳骤停复苏用药（复苏用肾上腺素）。",
+  pharm:"纯β受体激动剂：β1正性频率＋正性肌力（心率↑、房室传导加速），β2扩张外周与肺血管（SVR↓）。起效即刻、半衰期数分钟，需持续泵入按心率滴定；经肝COMT/MAO代谢。",
+  adverse:"① 心动过速、室性心律失常（剂量限制性，滴定看心率）；② β2扩血管致低血压、冠脉灌注压下降；③ 心肌耗氧增加——流出道梗阻禁用；④ 外渗皮肤坏死同其他儿茶酚胺；⑤ 快速耐受。不以血压为唯一滴定指标。",
+  compat:"NS、5%GS均可；碱性液失活；独立泵腔独立通路；持续心电监护，同步准备临时起搏条件。"},
  hydrocortisone:{name:"琥珀酸氢化可的松",en:"Hydrocortisone",unit:"mg/kg",def:0.5,step:"0.1",
   spec:"琥珀酸钠 135mg/支（≈氢考100mg）",specMg:135,stockConc:135,
   utd:"升压辅助（儿茶酚胺抵抗性休克）：应激剂量0.5–1mg/kg q8h 静推；或持续1–2mg/kg/d（文献/ENDO）",
@@ -474,6 +484,24 @@ const DRUGS={
   pharm:"天然猪肺磷脂制剂，降低肺泡表面张力、防止呼气末肺泡塌陷；经气管导管分体位注入，分布依赖注药手法与体位变换；起效数分钟（氧合迅速改善）。",
   adverse:"注药时一过性SpO₂下降/心动过缓（暂停注药即恢复）、急性气道阻塞；肺出血（极早产儿风险↑）；注后呼吸机参数需即刻重调。",
   compat:"复温摇匀后抽吸（禁剧烈振荡）；双人核对剂量；单次气道内给入，给药后禁吸痰6小时（库内护理配套口径）。"},
+ etamsylate:{name:"止血敏",en:"Etamsylate",unit:"mg/kg",def:10,step:"5",
+  spec:"酚磺乙胺注射液 500mg/2ml",specMg:500,stockConc:250,
+  utd:"出血倾向辅助止血 5–10mg/kg IV qd–bid（文献/药物手册）；预防早产儿IVH的常规使用获益证据不足（Cochrane）",
+  hb:"未收录（手册无酚磺乙胺专篇）",
+  hosp:"库内 127条/86人：qd 为主（58条，另 once 24条）；静滴伴滴速 5–18ml/h；小体重按体重 5–15mg/kg（6–50mg），大体重固定写法 125/250mg（1/4支、半支）",
+  ind:"出血倾向的辅助止血（穿刺/术后渗血、消化道出血辅助、早产儿出血倾向）；不替代维生素K纠正、病因治疗与成分输血。",
+  pharm:"促凝血药：增强血小板黏附与聚集、促进血小板凝血活性物质释放、降低毛细血管通透性（不作用于纤溶系统）；起效快，主要经肾排泄。",
+  adverse:"① 恶心、胃部不适、皮疹；② 一过性低血压/面色潮红（快速给药时）；③ 高剂量的血栓风险顾虑——有血栓形成倾向者慎用；④ 新生儿证据以小样本与本院库内经验为主。",
+  compat:"NS、5%GS均可稀释；库内以微量泵单独成组泵入（浓度未标准化，伴滴速5–18ml/h）；避免与碱性液同管。"},
+ hemocoag:{name:"巴曲亭",en:"Hemocoagulase（矛头蝮蛇血凝酶）",unit:"iu",def:0.5,step:"0.05",
+  spec:"注射用矛头蝮蛇血凝酶 1iu/支",specMg:1,stockConc:1,
+  utd:"未收录新生儿专篇；说明书：成人1–2iu/次，儿童0.25–0.5iu/次，静推/肌注/局部给药；用前询问过敏史",
+  hb:"未收录",
+  hosp:"库内 102条/65人：once 占94/102，静推为主；0.25–1iu（p50 0.5iu＝半支）；另见气管插管内滴入/胃管内注入局部给药（0.5iu）与「半支静推＋半支气管内」组合",
+  ind:"渗血/出血时间延长的辅助止血（穿刺后渗血、消化道出血辅助、术后创面渗血）；可静推，亦可气管内/胃管内局部给药（库内原文先例）。不替代手术止血、压迫与成分输血。",
+  pharm:"矛头蝮蛇血凝酶（巴西矛头蝮蛇毒提纯）：类凝血酶活性在出血部位促进纤维蛋白原形成纤维蛋白、类凝血激酶促进凝血酶生成；静推约5–10分钟起效；正常血管内无血小板聚集处不激活凝血。",
+  adverse:"① 过敏反应（蛇毒蛋白，罕见但可严重——用药前询问过敏史、备抗过敏抢救）；② 高剂量/长程的血栓风险顾虑；③ 新生儿证据以本院库内经验与小样本为主；④ DIC等凝血底物耗竭性出血单用无效——先纠正凝血底物。",
+  compat:"原液直推无需稀释（库内「干包 滴速:0」直推先例）；不与其他药共推注；局部给药按需用原液。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -487,6 +515,7 @@ const DRUGCARDS=[
  {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['maint']},
  {id:'amiodarone',page:0,forms:['pump']},
  {id:'propafenone',page:0,forms:['pump']},
+ {id:'isoprenaline',page:0,forms:['maint']},
  {id:'hydrocortisone',page:2,title:'琥珀氢考',kind:'maint',drug:'hydrocortisone',forms:['push']},
  {id:'dexamethasone',page:2,forms:['push']},
  {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['maint']},
@@ -498,16 +527,18 @@ const DRUGCARDS=[
  {id:'omeprazole',page:2,forms:['push']},
  {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push','qd']},
  {id:'ps',page:2,forms:['push']},
+ {id:'etamsylate',page:2,forms:['push']},
+ {id:'hemocoag',page:2,forms:['push']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持'};
-const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'}};
+const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
- {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne']},
+ {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne','isoprenaline']},
  {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil']},
  {page:0,title:'抗心律失常',cards:['amiodarone','propafenone']},
  {page:2,title:'激素·内分泌',cards:['hydrocortisone','dexamethasone','insulin','glucagon']},
@@ -518,6 +549,7 @@ const GROUPS=[
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
+ {page:2,title:'止血药',cards:['etamsylate','hemocoag']},
 ];
 
 /* 搜索别名（临床俗名/商品名） */
@@ -531,7 +563,10 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  phenobarb:'鲁米那 苯巴比妥 惊厥 抽搐 抗惊厥',ps:'固尔苏 猪肺磷脂 肺表面 RDS',
  torasemide:'泽通 托拉塞米 利尿',furosemide:'呋塞米 速尿 利尿 泽通',
  omeprazole:'洛赛克 奥美拉唑 抑酸 消化道',octreotide:'善宁 奥曲肽',
- caffeine:'咖啡因 呼吸暂停'};
+ caffeine:'咖啡因 呼吸暂停',
+ isoprenaline:'异丙肾 异丙 提心率 传导阻滞 心动过缓',
+ etamsylate:'止血敏 酚磺乙胺 止血 出血',
+ hemocoag:'巴曲亭 血凝酶 蛇毒 止血 出血'};
 
 /* ================= 状态 ================= */
 var W=1.5;
@@ -619,7 +654,9 @@ const PUSHCFG={
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
- ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',freq:'st',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
+ ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',freq:'st',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'},
+ etamsylate:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'静滴',note:'出血倾向辅助 · 库内静滴伴滴速5–18ml/h · 大体重固定写法125/250mg'},
+ hemocoag:{def:0.5,step:0.05,unit:'iu',out:'iu',freq:'st',abs:true,note:'静推为主 · 可气管内/胃管内局部 · 0.25–1iu · 不替代成分输血'}};
 /* 分频次维持形式（长嘱式：药 剂量 途径 频次） */
 const QDCFG={
  caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'}};
@@ -717,7 +754,8 @@ function calcLoad(id){
 /* 静推/首剂（剂量框 dinp_ 与维持分开） */
 function calcPush(id){
   const g=DRUGS[id], cfg=PUSHCFG[id];
-  const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
+  const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def;
+  const a=cfg.abs?dose:dose*W;   /* abs=true＝绝对剂量（如巴曲亭 iu），不乘体重 */
   if(cfg.perMl){
     const R=a*(cfg.perMl+cfg.gsPerMg);
     return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h${cfg.freq?' '+cfg.freq:''}`,
@@ -725,9 +763,12 @@ function calcPush(id){
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
   const rt=(cfg.route&&cfg.route!=='静推')?' '+cfg.route:'';
+  const ck=cfg.abs
+    ? `剂量核对：绝对剂量 <b>${f2(a)}${cfg.out}</b>（库内 0.25–1iu，once 为主）`
+    : `剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`;
   return {t1:`${g.name} ${f2(a)}${cfg.out}${rt} ${cfg.freq||'st'}`,
     prep:[],
-    ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
+    ck:[ck], dose};
 }
 function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
@@ -916,6 +957,7 @@ const L1META=[
   {name:'呼吸系统',icon:'🫁',grps:[7]},
   {name:'消化系统',icon:'🍼',grps:[6]},
   {name:'内分泌·代谢',icon:'💉',grps:[3]},
+  {name:'止血·血液',icon:'🩸',grps:[11]},
 ];
 function renderCards(){
   $('viewL1').innerHTML=L1META.map((m,mi)=>{
