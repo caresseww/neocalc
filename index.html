@@ -511,6 +511,69 @@ const DRUGS={
   pharm:"去白细胞悬浮红细胞 Hct约60–70%，补充携氧容量；新生儿血容量约80ml/kg；实测提升低于理论值（继续失血、稀释、采样变异）——以本院配对实测为准而非理论换算。",
   adverse:"①循环过负荷（小婴儿慢速输注，必要时利尿——本院「输一半时速尿」配套）；②输血反应/急性溶血（双人床头核对）；③经血传播感染（去白+核酸筛查后极低）；④早产儿输血相关 NEC 顾虑（证据不一）；⑤多次输注的铁过载与迟发贫血（促红素抑制）。",
   compat:"输注限4小时（库内原文）；专用输血器，禁与其他药同管；输一半时速尿静推为本院固定配套（独立医嘱，不入本行）。"},
+ ffp:{name:"冰冻血浆",en:"Fresh frozen plasma",unit:"ml/kg",
+  spec:"病毒灭活/新鲜冰冻血浆（0.5U、1U 或毫升开法）",
+  utd:"10–15ml/kg 可提升凝血因子约15–20%；适应=INR>1.5 且活动性出血/侵入性操作前（NeoFax/UPSTATE）；不推荐作扩容或营养补充",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内血浆3,049条：0.5U/1U 或 50/100ml 开法，伴「输一半时速尿静推」与4小时内入；本院实测（n=17对）：13ml/kg 中位 INR −0.4、FIB +0.3g/L",
+  ind:"凝血因子缺乏的活动性出血或操作前纠正（INR>1.5）；血栓性微血管病血浆置换用另案。无出血/无操作的单纯 PT/APTT 延长不常规输。",
+  pharm:"血浆制品，含全部凝血因子（V/VIII 不稳定，普通冰冻血浆中活性低）；输注后即时提升血浆凝血活性，半衰期以小时计。",
+  adverse:"①循环过负荷（输一半时速尿配套）；②过敏反应；③输血相关急性肺损伤（TRALI，血浆制品最主要风险）；④经血传播感染（病毒灭活后极低）。",
+  compat:"输注限4小时；专用输血器；禁与其他药同管；ABO 相容；输一半时速尿静推为库内固定配套（独立医嘱）。"},
+ plt:{name:"单采血小板",en:"Apheresis platelets",unit:"ml/kg",
+  spec:"单采血小板 1U≈280ml（库内整袋）",
+  utd:"10–15ml/kg（≈+50~100×10⁹/L，峰在1h、24h回落）；稳定早产儿阈值 <25×10⁹/L（PlaNeT 2019：50 vs 25 无获益差）；出血/NEC/侵袭性操作 50×10⁹/L",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内血小板282条：0.5U/1U 备输为主，整袋280ml亦见；本院 +1~+4 天窗配对（n=34）未捕获净升——消耗性减少背景下须输后 1h/24h 复查评估",
+  ind:"阈值性/出血性血小板减少：稳定儿 <25×10⁹/L、出血或 NEC/操作 50×10⁹/L 起输（结合临床）；免疫性血小板减少慎输（无效消耗）。",
+  pharm:"单采浓缩血小板，1 个治疗量约含 ≥2.5×10¹¹ 个血小板；输注后 1 小时达峰，随消耗回落；发热/感染/NEC 时纠正幅度显著打折。",
+  adverse:"①输血反应（发热/过敏）；②输血相关循环过负荷；③经血传播感染（细菌污染为血小板特有风险）；④反复输注的 HLA 同种免疫失效；⑤CMV 风险（去白后极低）。",
+  compat:"输注限4小时（库内同规）；专用输血器；禁与其他药同管；轻摇防聚集；输后 1h/24h 复查计数。"},
+ cryo:{name:"冷沉淀",en:"Cryoprecipitate",unit:"U",
+  spec:"冷沉淀凝血因子 1U≈26ml（库内系列）",
+  utd:"低纤维蛋白原血症（<1g/L）伴出血/弥漫性血管内凝血时用；剂量参考 1U/10kg（≈10–15ml/kg），输后复查 FIB（NeoFax/欧洲指南）",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内冷沉淀72条：1U/2U 备输为主，毫升开法 26–45ml；「输X型+冷沉淀凝血因子26毫升(2小时入)」——2小时内入为库内时限",
+  ind:"低纤维蛋白原血症（FIB<1g/L）伴活动性出血或 DIC；亦用于血管性血友病/获得性FVIII缺乏的替代（本院少用）。冷沉淀不提供全部凝血因子，DIC 须综合处理。",
+  pharm:"由血浆冷沉淀制备，富集纤维蛋白原、FVIII、vWF、XIII 与纤溶结合蛋白；1U 纤维蛋白原含量约 80–100mg（国产口径）；输后即时提升血浆 FIB。",
+  adverse:"①输血反应/过敏；②循环过负荷；③经血传播感染；④血栓风险（FIB 过量）——输后须复查 FIB 防过量。",
+  compat:"输注限2小时（库内原文「2小时入」）；专用输血器；ABO 相容；快速解冻后常温输注，不可冷藏复融。"},
+ alb:{name:"人血白蛋白",en:"Human albumin",unit:"g/kg",
+  spec:"20%人血白蛋白（1g=5ml）",
+  utd:"低白蛋白血症伴水肿/低灌注：0.5–1g/kg/次 输注（文献）；扩容 0.5–1g/kg；不作为营养补充（UpToDate：肠外营养不应含白蛋白）",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内白蛋白2,028条：1.2g/2.5g/5g 按克开法，「输白蛋白1.8g(4小时内入),输一半时速尿静推」为固定配套；本院实测（n=35对）：1g/kg（=20%制剂5ml/kg）≈ 血白蛋白 +2.4~3.4g/L",
+  ind:"低白蛋白血症（显著水肿、胶体渗透压不足）辅助；联合利尿剂提升利尿效果；大量放腹水后扩容。不作为营养指标追逐——先评估蛋白丢失（肠/肾）病因。",
+  pharm:"20% 制剂胶体渗透压约为血浆 4–5 倍，输后把组织间液拉入血管内（自身扩容效应）；仅约 1/3 停留血管内，血清白蛋白实际升幅远低于理论（本院实测 +2.4~3.4g/L per g/kg）。",
+  adverse:"①循环过负荷（自身扩容效应，输一半时速尿配套）；②过敏（罕见）；③快速输注致高钠/稀释性改变；④血白蛋白值本身不是预后指标——勿为数值而输。",
+  compat:"输注限4小时（库内原文）；独立通路；禁与其他药（尤其含蛋白沉淀剂）同管；输一半时速尿静推为库内配套（独立医嘱）。"},
+ ivig:{name:"丙种球蛋白",en:"IVIG",unit:"g/kg",
+  spec:"静注人免疫球蛋白 1g/25ml、2.5g/50ml",
+  utd:"感染辅助/免疫缺陷替代 0.4–0.6g/kg；自身免疫性血小板减少 1–2g/kg；川崎病急性期 2g/kg 单剂（AHA/文献）",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内IVIG 1,678条：1g/2.5g 按克开法，「输人免疫球蛋白1.1g(4小时内入)」——4小时内入为库内时限",
+  ind:"重症感染的免疫辅助（抗体缺乏）、免疫性血小板减少、川崎病急性期（2g/kg 单剂，另案）、原发免疫缺陷替代。不作常规「增强免疫」使用。",
+  pharm:"人 IgG 制剂，提供被动免疫抗体；半衰期约 3–4 周；输注早期即可提升血 IgG 峰值，效应随适应症而异。",
+  adverse:"①输注相关反应（发热/寒战/背痛，减速可缓解）；②过敏/罕见溶血（血型抗体携带）；③血栓风险（高浓度快速输注）；④肾功能影响（蔗糖制剂，新生儿少用）；⑤容量过负荷。",
+  compat:"输注限4小时（库内原文）；独立通路，禁与其他药同管；输前室温放置；备抗过敏抢救。"},
+ fibg:{name:"纤维蛋白原",en:"Fibrinogen concentrate",unit:"g",
+  spec:"人纤维蛋白原 0.5g/支（库内 0.25g/次）",
+  utd:"低纤维蛋白原血症伴出血：50–100mg/kg 或按 FIB 目标（>1g/L）补充（文献）；冷沉淀为等效替代",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内纤维蛋白原12条：0.25g/次 主流，缓慢静推/2小时内入——体量小，以说明书与输后 FIB 复查为准",
+  ind:"先天性/获得性（DIC 消耗）低纤维蛋白原血症伴出血，冷沉淀的浓缩替代；输后复查 FIB 维持 >1g/L。无出血的单纯 FIB 偏低不常规补。",
+  pharm:"血浆来源浓缩纤维蛋白原，直接补充凝血底物；即输即效，半衰期约 3–5 天；DIC 时会被持续消耗，须动态复查。",
+  adverse:"①血栓风险（过量）；②过敏；③经血传播感染（巴氏灭菌后极低）；④DIC 未控制时补充=火上浇油，须同时抗凝/病因治疗。",
+  compat:"配制后缓慢输注（专配溶媒）；独立通路；禁与盐水直接混合（沉淀）；输后复查 FIB。"},
+ pcc:{name:"凝血酶原复合物",en:"PCC",unit:"iu",
+  spec:"人凝血酶原复合物（100/200/300iu 规格）",
+  utd:"含 II/VII/IX/X 因子；华法林类拮抗或获得性维生素K缺乏出血：15–50iu/kg（说明书/文献）；新生儿应用经验有限",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内凝血酶原复合物29条：15–300iu/次，「15单位(2小时内入)」——2小时内入为库内时限；体量小，按说明书剂量",
+  ind:"维生素K依赖因子（II/VII/IX/X）缺乏的出血：华法林过量、获得性维生素K缺乏（肝病/抗生素相关）、血友病类出血的替代（本院少用，体量小）。",
+  pharm:"血浆来源四因子浓缩物，即输即效纠正 PT/INR；起效快于 FFP 且容量负荷小；不含 V 与纤维蛋白原——DIC/肝病复杂缺乏仍需血浆/冷沉淀配合。",
+  adverse:"①血栓栓塞（最主要风险，含促凝血复合物）；②过敏；③经血传播感染；④DIC 患者禁忌或极慎用。",
+  compat:"输注限2小时（库内原文）；专配溶媒溶解；独立通路；输后复查 PT/INR。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -539,6 +602,13 @@ const DRUGCARDS=[
  {id:'etamsylate',page:2,forms:['push']},
  {id:'hemocoag',page:2,forms:['push']},
  {id:'rbc',page:2,title:'红细胞输血',kind:'maint',drug:'rbc',forms:['rbc']},
+ {id:'ffp',page:2,title:'冰冻血浆',kind:'maint',drug:'ffp',forms:['prod']},
+ {id:'plt',page:2,title:'单采血小板',kind:'maint',drug:'plt',forms:['prod']},
+ {id:'cryo',page:2,title:'冷沉淀',kind:'maint',drug:'cryo',forms:['prod']},
+ {id:'alb',page:2,title:'人血白蛋白',kind:'maint',drug:'alb',forms:['prod']},
+ {id:'ivig',page:2,title:'丙种球蛋白',kind:'maint',drug:'ivig',forms:['prod']},
+ {id:'fibg',page:2,title:'纤维蛋白原',kind:'maint',drug:'fibg',forms:['prod']},
+ {id:'pcc',page:2,title:'凝血酶原复合物',kind:'maint',drug:'pcc',forms:['prod']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
@@ -559,7 +629,8 @@ const GROUPS=[
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
- {page:2,title:'止血·输血',cards:['rbc','etamsylate','hemocoag']},
+ {page:2,title:'止血药',cards:['etamsylate','hemocoag']},
+ {page:2,title:'血制品',cards:['rbc','ffp','plt','cryo','alb','ivig','fibg','pcc']},
 ];
 
 /* 搜索别名（临床俗名/商品名） */
@@ -577,7 +648,14 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  rbc:'输血 红细胞 悬浮 贫血 血色素 输血反应',
  isoprenaline:'异丙肾 异丙 提心率 传导阻滞 心动过缓',
  etamsylate:'止血敏 酚磺乙胺 止血 出血',
- hemocoag:'巴曲亭 血凝酶 蛇毒 止血 出血'};
+ hemocoag:'巴曲亭 血凝酶 蛇毒 止血 出血',
+ ffp:'血浆 冰冻 新鲜冰冻 输血浆 FFP',
+ plt:'血小板 单采 输血小板',
+ cryo:'冷沉淀 凝血因子 输冷沉淀',
+ alb:'白蛋白 人血白蛋白 胶体 水肿',
+ ivig:'丙种球蛋白 丙球 免疫球蛋白 IVIG',
+ fibg:'纤维蛋白原 人纤维蛋白原',
+ pcc:'凝血酶原复合物 PCC 凝血酶原'};
 
 /* ================= 状态 ================= */
 var W=1.5;
@@ -794,6 +872,39 @@ function calcRbc(id){
         `容量核对：${f2(v)}ml/kg × ${W.toFixed(2)}kg ＝ ${vR}ml（0.5U≈67.5ml，1U≈135ml）`,
         `额度：${f2(v)}/20ml/kg——每日 top-up 上限，填入超 20 按 20 计`], dose:v};
 }
+/* 血制品目标制配置表（通用 prod 形式：计划量→容量/可达值；max=每日上限封顶） */
+const PRODCFG={
+ ffp:{label:'计划输注',unit:'ml/kg',def:13,step:1,max:15,kind:'mlkg',out:'冰冻血浆',csum:'10–15ml/kg/次',
+   ck:(v,ml)=>[`预期：10–15ml/kg 可降 INR 约0.3~0.5（本院实测 n=17：13ml/kg 中位 −0.4）`,`输注时限：4小时内入（库内）；输一半时速尿静推为配套`,`适应：INR>1.5 且活动性出血/操作前——不作扩容或营养补充`]},
+ plt:{label:'计划输注',unit:'ml/kg',def:10,step:5,max:15,kind:'mlkg',out:'单采血小板',csum:'1U≈280ml（库内整袋）',
+   ck:(v,ml)=>[`预期：+50~100×10⁹/L（文献口径，峰在1h）——输后 1h/24h 复查血常规`,`阈值参考：稳定儿 <25×10⁹/L 起输（PlaNeT）；出血/NEC/操作 50`,`库内 0.5U/1U 备输（1U≈280ml）`]},
+ cryo:{label:'计划输注',unit:'U',def:2,step:1,max:10,kind:'abs',out:'冷沉淀凝血因子',csum:'1U≈26ml（库内）',
+   ck:(v)=>[`容量：约 ${f2(v*26,1)}ml（1U≈26ml，库内系列）；剂量参考 1U/10kg`,`输注时限：2小时内入（库内原文）`,`输后复查 FIB 维持 >1g/L；DIC 须病因同治`]},
+ alb:{label:'计划输注',unit:'g/kg',def:1,step:0.5,max:2,kind:'gkg',out:'人血白蛋白',csum:'20%制剂 1g=5ml',
+   ck:(v,g)=>[`可达血白蛋白：约 +${f2(v*2.4)}~${f2(v*3.4)}g/L（本院实测 n=35：1g/kg≈+2.4~3.4g/L）`,`20%人血白蛋白 ${f2(g*5,1)}ml；输一半时速尿静推（库内配套）`,`输注时限：4小时内入（库内）；不为数值而输，先查丢失病因`]},
+ ivig:{label:'计划输注',unit:'g/kg',def:1,step:0.5,max:2,kind:'gkg',out:'静注人免疫球蛋白',csum:'0.5–1g/kg · 川崎2g/kg另案',
+   ck:(v,g)=>[`输注时限：4小时内入（库内原文）`,`川崎病急性期 2g/kg 单剂另案；替代治疗 0.4–0.6g/kg/月（文献）`]},
+ fibg:{label:'计划剂量',unit:'g',def:0.25,step:0.25,max:2,kind:'abs',out:'人纤维蛋白原',csum:'库内 0.25g/次',
+   ck:(v)=>[`库内 0.25g/次 主流（n=12），缓慢输注`,`输后复查 FIB 维持 >1g/L；DIC 未控制时禁单用`]},
+ pcc:{label:'计划剂量',unit:'iu',def:30,step:5,max:600,kind:'abs',out:'人凝血酶原复合物',csum:'库内 15–300iu/次',
+   ck:(v)=>[`输注时限：2小时内入（库内原文）`,`含 II/VII/IX/X——血栓风险为主要顾虑；输后复查 PT/INR`]},
+};
+function calcProd(id){
+  const c=PRODCFG[id];
+  const el=parseFloat($('din_'+id).value);
+  let v=(isFinite(el)&&el>0)?el:c.def;
+  if(c.max)v=Math.min(v,c.max);
+  if(c.kind==='mlkg'){
+    const ml=Math.round(v*W);
+    return {t1:`输${c.out} ${ml}ml（${f2(v)}ml/kg）`, ck:c.ck(v,ml), dose:v};
+  }
+  if(c.kind==='gkg'){
+    const gm=Math.round(v*W*100)/100;
+    return {t1:`输${c.out} ${f2(gm)}g（${f2(v)}g/kg）`, ck:c.ck(v,gm), dose:v};
+  }
+  const tail=id==='pcc'?'（2小时内入）':'';
+  return {t1:`输${c.out} ${f2(v)}${c.unit}${tail}`, ck:c.ck(v), dose:v};
+}
 function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
   const ml=d*W, mg=ml*0.1;
@@ -811,6 +922,7 @@ function linesOf(key){
   if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:[],ck:L.ck};}
+  if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
@@ -871,6 +983,26 @@ function cardHtml(id){
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@rbc" id="add_${id}_rbc">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
+    </div>
+  </div>`;
+  }
+  if(dc.forms.length===1&&dc.forms[0]==='prod'){
+    const c=PRODCFG[id];
+    return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+      <span class="csum">${c.csum}</span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      <div class="labeq">${c.label} <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${c.step}" min="0" max="${c.max}" value="${c.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${c.unit}${c.max?`（≤${c.max}）`:''}</div>
+      <div class="ordbox" id="ord_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@prod" id="add_${id}_prod">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
@@ -1003,7 +1135,8 @@ const L1META=[
   {name:'呼吸系统',icon:'🫁',grps:[7]},
   {name:'消化系统',icon:'🍼',grps:[6]},
   {name:'内分泌·代谢',icon:'💉',grps:[3]},
-  {name:'止血·血液',icon:'🩸',grps:[11]},
+  {name:'止血药',icon:'🩹',grps:[11]},
+  {name:'血制品',icon:'🩸',grps:[12]},
 ];
 function renderCards(){
   $('viewL1').innerHTML=L1META.map((m,mi)=>{
@@ -1101,6 +1234,14 @@ function updCard(id){
   /* 红细胞输血单形式卡 */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='rbc'){
     const L=calcRbc(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
+    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
+    return;
+  }
+  /* 血制品通用单形式卡 */
+  if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='prod'){
+    const L=calcProd(id);
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
