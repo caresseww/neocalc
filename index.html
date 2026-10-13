@@ -867,26 +867,29 @@ function calcRbc(id){
   const plEl=parseFloat($('dinm_'+id).value);
   const v=Math.min((isFinite(plEl)&&plEl>0)?plEl:10,20);
   const vR=Math.round(v*W);
-  return {t1:`输悬浮红细胞 ${vR}ml（${f2(v)}ml/kg）`,
+  const fEl=parseFloat($('dinf_'+id).value);
+  const fd=(isFinite(fEl)&&fEl>0)?fEl:0.5;
+  return {t1:`输悬浮红细胞 ${vR}ml（${f2(v)}ml/kg，4小时内入）`,
+    prep:[`呋塞米针 ${f2(fd*W)}mg（${f2(fd)}mg/kg）静推 once（输一半时）`],
     ck:[`可达 Hb：当前${f2(hb)} ＋ ${f2(v*0.1)} ≈ <b>${f2(hb+v*0.1)}g/dL</b>（本院实测每1ml/kg≈+1g/L；15–20ml/kg段中位+1.8~1.9g/dL）`,
         `容量核对：${f2(v)}ml/kg × ${W.toFixed(2)}kg ＝ ${vR}ml（0.5U≈67.5ml，1U≈135ml）`,
         `额度：${f2(v)}/20ml/kg——每日 top-up 上限，填入超 20 按 20 计`], dose:v};
 }
 /* 血制品目标制配置表（通用 prod 形式：计划量→容量/可达值；max=每日上限封顶） */
 const PRODCFG={
- ffp:{label:'计划输注',unit:'ml/kg',def:13,step:1,max:15,kind:'mlkg',out:'冰冻血浆',csum:'10–15ml/kg/次',
+ ffp:{label:'计划输注',unit:'ml/kg',hours:4, def:13,step:1,max:15,kind:'mlkg',out:'冰冻血浆',csum:'10–15ml/kg/次',
    ck:(v,ml)=>[`预期：10–15ml/kg 可降 INR 约0.3~0.5（本院实测 n=17：13ml/kg 中位 −0.4）`,`输注时限：4小时内入（库内）；输一半时速尿静推为配套`,`适应：INR>1.5 且活动性出血/操作前——不作扩容或营养补充`]},
- plt:{label:'计划输注',unit:'ml/kg',def:10,step:5,max:15,kind:'mlkg',out:'单采血小板',csum:'1U≈280ml（库内整袋）',
+ plt:{label:'计划输注',unit:'ml/kg',hours:4, def:10,step:5,max:15,kind:'mlkg',out:'单采血小板',csum:'1U≈280ml（库内整袋）',
    ck:(v,ml)=>[`预期：+50~100×10⁹/L（文献口径，峰在1h）——输后 1h/24h 复查血常规`,`阈值参考：稳定儿 <25×10⁹/L 起输（PlaNeT）；出血/NEC/操作 50`,`库内 0.5U/1U 备输（1U≈280ml）`]},
- cryo:{label:'计划输注',unit:'U',def:2,step:1,max:10,kind:'abs',out:'冷沉淀凝血因子',csum:'1U≈26ml（库内）',
+ cryo:{label:'计划输注',unit:'U',hours:2, def:2,step:1,max:10,kind:'abs',out:'冷沉淀凝血因子',csum:'1U≈26ml（库内）',
    ck:(v)=>[`容量：约 ${f2(v*26,1)}ml（1U≈26ml，库内系列）；剂量参考 1U/10kg`,`输注时限：2小时内入（库内原文）`,`输后复查 FIB 维持 >1g/L；DIC 须病因同治`]},
- alb:{label:'计划输注',unit:'g/kg',def:1,step:0.5,max:2,kind:'gkg',out:'人血白蛋白',csum:'20%制剂 1g=5ml',
+ alb:{label:'计划输注',unit:'g/kg',hours:4, def:1,step:0.5,max:2,kind:'gkg',out:'人血白蛋白',csum:'20%制剂 1g=5ml',
    ck:(v,g)=>[`可达血白蛋白：约 +${f2(v*2.4)}~${f2(v*3.4)}g/L（本院实测 n=35：1g/kg≈+2.4~3.4g/L）`,`20%人血白蛋白 ${f2(g*5,1)}ml；输一半时速尿静推（库内配套）`,`输注时限：4小时内入（库内）；不为数值而输，先查丢失病因`]},
- ivig:{label:'计划输注',unit:'g/kg',def:1,step:0.5,max:2,kind:'gkg',out:'静注人免疫球蛋白',csum:'0.5–1g/kg · 川崎2g/kg另案',
+ ivig:{label:'计划输注',unit:'g/kg',hours:4, def:1,step:0.5,max:2,kind:'gkg',out:'静注人免疫球蛋白',csum:'0.5–1g/kg · 川崎2g/kg另案',
    ck:(v,g)=>[`输注时限：4小时内入（库内原文）`,`川崎病急性期 2g/kg 单剂另案；替代治疗 0.4–0.6g/kg/月（文献）`]},
  fibg:{label:'计划剂量',unit:'g',def:0.25,step:0.25,max:2,kind:'abs',out:'人纤维蛋白原',csum:'库内 0.25g/次',
    ck:(v)=>[`库内 0.25g/次 主流（n=12），缓慢输注`,`输后复查 FIB 维持 >1g/L；DIC 未控制时禁单用`]},
- pcc:{label:'计划剂量',unit:'iu',def:30,step:5,max:600,kind:'abs',out:'人凝血酶原复合物',csum:'库内 15–300iu/次',
+ pcc:{label:'计划剂量',unit:'iu',hours:2, def:30,step:5,max:600,kind:'abs',out:'人凝血酶原复合物',csum:'库内 15–300iu/次',
    ck:(v)=>[`输注时限：2小时内入（库内原文）`,`含 II/VII/IX/X——血栓风险为主要顾虑；输后复查 PT/INR`]},
 };
 function calcProd(id){
@@ -894,16 +897,20 @@ function calcProd(id){
   const el=parseFloat($('din_'+id).value);
   let v=(isFinite(el)&&el>0)?el:c.def;
   if(c.max)v=Math.min(v,c.max);
+  const fEl=parseFloat($('dinf_'+id).value);
+  const fd=(isFinite(fEl)&&fEl>0)?fEl:0.5;
+  const furo=[`呋塞米针 ${f2(fd*W)}mg（${f2(fd)}mg/kg）静推 once（输一半时）`];
+  const lim=c.hours?`，${c.hours}小时内入`:'';
   if(c.kind==='mlkg'){
     const ml=Math.round(v*W);
-    return {t1:`输${c.out} ${ml}ml（${f2(v)}ml/kg）`, ck:c.ck(v,ml), dose:v};
+    return {t1:`输${c.out} ${ml}ml（${f2(v)}ml/kg${lim}）`, prep:furo, ck:c.ck(v,ml), dose:v};
   }
   if(c.kind==='gkg'){
     const gm=Math.round(v*W*100)/100;
-    return {t1:`输${c.out} ${f2(gm)}g（${f2(v)}g/kg）`, ck:c.ck(v,gm), dose:v};
+    return {t1:`输${c.out} ${f2(gm)}g（${f2(v)}g/kg${lim}）`, prep:furo, ck:c.ck(v,gm), dose:v};
   }
-  const tail=id==='pcc'?'（2小时内入）':'';
-  return {t1:`输${c.out} ${f2(v)}${c.unit}${tail}`, ck:c.ck(v), dose:v};
+  const tail=c.hours?`（${c.hours}小时内入）`:'';
+  return {t1:`输${c.out} ${f2(v)}${c.unit}${tail}`, prep:furo, ck:c.ck(v), dose:v};
 }
 function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
@@ -921,8 +928,8 @@ function linesOf(key){
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
-  if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:[],ck:L.ck};}
-  if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:[],ck:L.ck};}
+  if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
+  if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
@@ -980,6 +987,7 @@ function cardHtml(id){
       <div class="spec">输血阈值（限制性策略·IPT/PINT/Cochrane）：机械通气·休克·活动性失血 <b>Hb&lt;8.5</b> ｜ 氧疗 <b>&lt;8.0</b> ｜ 稳定儿 <b>&lt;7.0</b> g/dL —— 结合症状（呼吸暂停/心动过速/生长迟缓）与上级决策</div>
       <div class="labeq">当前 Hb <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="0.5" min="0" value="8"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> g/dL</div>
       <div class="labeq">计划输注 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinm_${id}" type="number" inputmode="decimal" step="5" min="0" max="20" value="10"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="1">＋</button></div> ml/kg（≤20）</div>
+      <div class="labeq">输一半时速尿 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinf_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinf_${id}" type="number" inputmode="decimal" step="0.25" min="0" max="2" value="0.5"><button type="button" class="stp" data-act="step" data-t="dinf_${id}" data-dir="1">＋</button></div> mg/kg</div>
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@rbc" id="add_${id}_rbc">＋ 加医嘱</button>
@@ -1000,6 +1008,7 @@ function cardHtml(id){
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       <div class="labeq">${c.label} <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${c.step}" min="0" max="${c.max}" value="${c.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${c.unit}${c.max?`（≤${c.max}）`:''}</div>
+      <div class="labeq">输一半时速尿 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinf_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinf_${id}" type="number" inputmode="decimal" step="0.25" min="0" max="2" value="0.5"><button type="button" class="stp" data-act="step" data-t="dinf_${id}" data-dir="1">＋</button></div> mg/kg</div>
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@prod" id="add_${id}_prod">＋ 加医嘱</button>
@@ -1234,7 +1243,7 @@ function updCard(id){
   /* 红细胞输血单形式卡 */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='rbc'){
     const L=calcRbc(id);
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
@@ -1242,7 +1251,7 @@ function updCard(id){
   /* 血制品通用单形式卡 */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='prod'){
     const L=calcProd(id);
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
