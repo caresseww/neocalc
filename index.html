@@ -64,6 +64,11 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .searchrow input::placeholder{color:#8a97ab;}
 .searchrow input:focus{outline:none; background:#fff;}
 .searchrow input::-webkit-search-cancel-button{-webkit-appearance:none;}
+.dualwrap{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:4px 0;}
+.dualmod{border:1px solid #e3eaf5; border-radius:12px; padding:8px; background:#fafcff;}
+.dualt{font-size:12px; font-weight:700; color:var(--navy2); margin-bottom:4px;}
+.dualord .o1{font-size:12px;}
+.dualck{font-size:11px; color:#5b6b85; margin-top:4px; line-height:1.5;}
 .group{background:var(--card); border:none; border-radius:18px; margin:10px 0;
   box-shadow:0 4px 16px rgba(15,35,70,.07); overflow:hidden; cursor:pointer;}
 .group:active{background:#f4f7fc;}
@@ -354,22 +359,22 @@ const DRUGS={
   pharm:"前列腺素E1，扩张动脉导管平滑肌并抑制其收缩；同时扩张全身血管、抑制血小板聚集。肺内首过消除快，需持续泵入。停药后作用迅速消退。",
   adverse:"呼吸暂停（约10–15%，需备插管）、低血压、发热、皮肤潮红/水肿；长程（>120h）可致胃幽门增生、骨皮质增生。凯时为脂质微球制剂，偶见过敏。",
   compat:"NS、5%GS均可稀释；脂质微球现配现用，避免与高渗液体直接混合。"},
- amiodarone:{name:"胺碘酮",en:"Amiodarone",unit:"μg/kg/min",def:5,step:"1",noDur:true,
+ amiodarone:{name:"胺碘酮",en:"Amiodarone",unit:"μg/kg/min",def:5,step:"1",noDur:true,loadGsMl:12,
   rateDiv:10,mgPerKg:30,to:50,stockMlPerMg:0.02,stockLabel:"150mg/3ml原液",diluent:"5%葡萄糖",
   spec:"150mg/3ml（50mg/ml）",specMg:150,stockConc:50,
   utd:"SVT/VT：负荷5mg/kg 缓泵≥1h；维持5–15μg/kg/min 按反应滴定（NeoFax/Starship）",
   hb:"未收录",
-  hosp:"库内负荷 5–60mg 按比例伴 5%葡萄糖（0.2ml/mg：60mg→12ml、24mg→4.8ml），滴速 17ml/h 固定写法；本卡按同比例计算：糖水=负荷量×0.2ml，液速=配成总体积÷1小时，1小时匀速泵完负荷后续同管转维持慢速",
+  hosp:"库内=两条医嘱分开写（477952连续两周）：①负荷干包 药+5%葡萄糖12ml（24mg/60mg 均固定12ml）滴速17ml/h 固定写法＋②维持独立泵速线 0.5ml/h=12.5μg/kg/min（0.2–1.25ml/h 逐档调），每日弃余重配；本卡糖水取库内固定12ml，滴速=总体积÷1小时真计算，维持自动 copy 同一管出泵速",
   ind:"室上性/室性心动过速的药物复律与维持窦律、电复律后巩固；对其他抗心律失常药无效或不宜时的一线选择。甲状腺疾病、严重肝损害慎用。",
   pharm:"III类抗心律失常药（钾通道为主，兼钠/钙通道与β阻断）；起效慢、半衰期极长（数天至数周），蓄积明显；新生儿经肝CYP代谢慢，随访甲状腺功能。",
   adverse:"心动过缓、低血压（负荷期）；长程：甲减/甲亢、肝酶升高、角膜色素沉着、肺纤维化（罕见）；外周静脉易静脉炎，宜中心静脉。",
   compat:"仅用5%GS稀释（NS中易浑浊）；独立通路，负荷期持续心电监护；不与其他静推药共管。"},
- propafenone:{name:"普罗帕酮",en:"Propafenone",unit:"μg/kg/min",def:4,step:"1",noDur:true,
+ propafenone:{name:"普罗帕酮",en:"Propafenone",unit:"μg/kg/min",def:4,step:"1",noDur:true,loadGsMl:12,
   rateDiv:8,mgPerKg:24,to:50,stockMlPerMg:0.29,stockLabel:"35mg/10ml原液",
   spec:"35mg/10ml（3.5mg/ml）",specMg:35,stockConc:3.5,
   utd:"SVT：负荷5mg/kg 缓泵≥1h；维持泵入4–6.4μg/kg/min（文献/库内系列）",
   hb:"未收录",
-  hosp:"库内负荷 19–24mg 按比例伴 5%葡萄糖（0.6ml/mg：19mg→12ml、24mg→14.4ml），滴速 17ml/h（恰为 19mg 配成总体积÷1小时）；本卡按同比例计算：糖水=负荷量×0.6ml，液速=总体积÷1小时，1小时匀速泵完负荷后续同管转维持慢速",
+  hosp:"库内（477952）：负荷干包 19mg＋5%葡萄糖12ml 滴速17ml/h once（＝17.5ml÷1小时，与17吻合）＋维持 0.5ml/h=4μg/kg/min，两条医嘱分开写；本卡糖水固定12ml，滴速与维持泵速真计算，维持自动 copy 同一管",
   ind:"室上性心动过速复律与预防复发（无器质性心脏病者）、WPW综合征。器质性心脏病/心衰/传导阻滞禁用。",
   pharm:"Ic类抗心律失常药，阻断快钠通道减慢心内传导，兼轻β阻断作用；肝首过效应强（口服生物利用度个体差异大），新生儿清除慢注意蓄积。",
   adverse:"低血压、心动过缓、传导阻滞；促心律失常作用；加重心衰；口干、头晕、味觉异常。",
@@ -585,8 +590,8 @@ const DRUGCARDS=[
   {id:'terli',page:0,title:'特利加压素',kind:'maint',drug:'terli',forms:['load','maint']},
  {id:'nitroglycerin',page:0,title:'硝酸甘油',kind:'maint',drug:'nitroglycerin',forms:['maint']},
  {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['maint']},
- {id:'amiodarone',page:0,forms:['pump']},
- {id:'propafenone',page:0,forms:['pump']},
+ {id:'amiodarone',page:0,forms:['push','maint']},
+ {id:'propafenone',page:0,forms:['push','maint']},
  {id:'isoprenaline',page:0,forms:['maint']},
  {id:'hydrocortisone',page:2,title:'琥珀氢考',kind:'maint',drug:'hydrocortisone',forms:['push']},
  {id:'dexamethasone',page:2,forms:['push']},
@@ -614,7 +619,7 @@ const DRUGCARDS=[
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血'};
-const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'}};
+const DFORM_OV={amiodarone:{push:'负荷',maint:'维持'},propafenone:{push:'负荷',maint:'维持'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
@@ -740,6 +745,8 @@ const PUSHCFG={
  vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'镇静确保后给 · 呼吸机下'},
  hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',dilPerMg:1,diluent:'5%葡萄糖',note:'升压辅助 · 配5%葡萄糖1:1两行式泵入（库内382对实测） · 监测血压血糖'},
  caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',load:true,perMl:0.05,gsPerMg:0.2,note:'负荷稀释泵入1小时 · 24h后转维持形式 qd'},
+ amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',freq:'once',pumpLoad:true,note:'负荷干包 · 5%葡萄糖12ml固定（库内） · 滴速=总体积÷1小时 · 次日弃余重配'},
+ propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',freq:'once',pumpLoad:true,note:'负荷干包 · 5%葡萄糖12ml固定（库内） · 滴速=总体积÷1小时 · 次日弃余重配'},
 
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
@@ -763,7 +770,7 @@ function calcQd(id){
     prep:[],
     ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
 }
-/* 胺碘酮/心律平统一泵（库内"续上组"模式：一管配好，负荷段快、维持段慢，次日弃余重配） */
+/* 胺碘酮/心律平双模块（10-14用户定稿）：负荷左/维持右，配比相同自动copy同一管；库内=负荷干包+维持独立泵速两条医嘱分开写，每日弃余重配 */
 function calcPump(id){
   const g=DRUGS[id];
   const dlEl=parseFloat($('din_'+id).value);
@@ -771,15 +778,22 @@ function calcPump(id){
   const dmEl=$('dinm_'+id);
   const dmV=parseFloat(dmEl.value);
   const dm=(isFinite(dmV)&&dmV>0)?dmV:g.def;  /* 维持 μg/kg/min */
-  const tube=(dl+1.44*dm)*W;                  /* 管内药量=负荷量+24h维持量，配至50ml */
-  const R1=50*dl/(dl+1.44*dm);                /* 负荷段液速：1小时泵完负荷量 */
-  const R2=3*dm/(dl+1.44*dm);                 /* 维持段液速：续同管 */
-  return {t1:`${g.name} ${f2(dl*W)}mg 滴速${f2(R1)}ml/h 静推 once`,
-    prep:[`${g.name}${f2(R2)}ml/h=${f2(dm,2)}μg/kg/min，续上组`,
-      `${g.name} ${f2(tube,2)}mg（原液 ${f2(tube*g.stockMlPerMg,2)}ml）`,
-      `5%葡萄糖 至 50ml`],
-    ck:[`负荷核对：滴速${f2(R1)}ml/h×1小时＝<b>${f2(5*W)}mg</b>（5mg/kg）`,
-        `维持核对：滴速<b>${f2(R2)}ml/h</b>＝${f2(dm,2)}μg/kg/min（续上组转慢速）`], dose:dm};
+  const mg=dl*W, stock=mg*g.stockMlPerMg, gs=12, V=stock+gs;   /* 库内铁律：负荷干包固定伴5%葡萄糖12ml（24mg/60mg/19mg均12ml） */
+  const R=dm/g.rateDiv;                        /* 维持独立组液：库内标化 1ml/h=10(胺碘酮)/8(心律平)μg/kg/min */
+  const mg24=dm*W*1.44;                        /* 维持24小时药量 */
+  const t1=`${g.name} ${f2(mg)}mg 滴速${f2(V)}ml/h 静推 once`;
+  return {t1,
+    prep:[`${g.name} ${f2(mg)}mg（原液 ${f2(stock,2)}ml）`,
+      `5%葡萄糖 12ml`,
+      `${g.name}${f2(R)}ml/h=${f2(dm,2)}μg/kg/min，维持24小时`,
+      `${g.name} ${amt(mg24)}/24h`,
+      `${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(R*24)}ml/24h`],
+    ck:[`负荷核对：滴速${f2(V)}ml/h×1小时＝<b>${f2(mg)}mg</b>（${f2(dl,1)}mg/kg）——干包单独一条`,
+        `维持核对：独立组液泵速<b>${f2(R)}ml/h</b>＝${f2(dm,2)}μg/kg/min（${amt(mg24)}/24h）——两条医嘱分开写`], dose:dm,
+    load:{t1:`① 负荷　${g.name} ${f2(mg)}mg 滴速${f2(V)}ml/h 静推 once`,
+      ck:`配液：原液 ${f2(stock,2)}ml ＋ 5%葡萄糖 12ml（库内固定）＝ ${f2(V,1)}ml，滴速＝总体积÷1小时`},
+    maint:{t1:`② 维持　${g.name}${f2(R)}ml/h=${f2(dm,2)}μg/kg/min，维持24小时`,
+      ck:`独立组液：${amt(mg24)}/24h ＋ 溶媒 ${f2(R*24)}ml/24h——库内负荷干包与维持是两条医嘱、两套液体`}};
 }
 /* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配；停胰岛素连葡萄糖组同停） */
 function calcInsulinH24(id){
@@ -846,6 +860,12 @@ function calcPush(id){
   const g=DRUGS[id], cfg=PUSHCFG[id];
   const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def;
   const a=cfg.abs?dose:dose*W;   /* abs=true＝绝对剂量（如巴曲亭 iu），不乘体重 */
+  if(cfg.pumpLoad){
+    const V=a*g.stockMlPerMg+12;   /* 库内干包：5%葡萄糖固定12ml */
+    return {t1:`${g.name} ${f2(a)}mg 滴速${f2(V)}ml/h 静推 once`,
+      prep:[`${g.name} ${f2(a)}mg（原液 ${f2(a*g.stockMlPerMg,2)}ml）`, `5%葡萄糖 12ml`],
+      ck:[`负荷核对：滴速${f2(V)}ml/h×1小时＝<b>${f2(a)}mg</b>（${f2(dose,1)}mg/kg；库内固定12ml糖水，次日弃余重配）`], dose};
+  }
   if(cfg.perMl){
     const R=a*(cfg.perMl+cfg.gsPerMg);
     return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h${cfg.freq?' '+cfg.freq:''}`,
@@ -935,7 +955,7 @@ function linesOf(key){
   const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
-  if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
+  if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck,load:L.load,maint:L.maint};}
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
@@ -972,8 +992,20 @@ function cardHtml(id){
       <span class="cspec">${g.spec}</span>
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
-      <div class="labeq">负荷剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="1" min="0" value="5"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> mg/kg</div>
-      <div class="labeq">维持剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinm_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
+      <div class="dualwrap">
+        <div class="dualmod">
+          <div class="dualt">① 负荷</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="1" min="0" value="5"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> mg/kg</div>
+          <div class="ordbox dualord" id="ordl2_${id}"></div>
+          <div class="dualck" id="ckl2_${id}"></div>
+        </div>
+        <div class="dualmod">
+          <div class="dualt">② 维持</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinm_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
+          <div class="ordbox dualord" id="ordm2_${id}"></div>
+          <div class="dualck" id="ckm2_${id}"></div>
+        </div>
+      </div>
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@pump" id="add_${id}_pump">＋ 加医嘱</button>
@@ -1250,6 +1282,10 @@ function updCard(id){
   const dcU=DRUGCARDS.find(x=>x.id===id);
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='pump'){
     const L=calcPump(id);
+    $('ordl2_'+id).innerHTML=`<div class="o1">${L.load.t1}</div>`;
+    $('ckl2_'+id).textContent=L.load.ck;
+    $('ordm2_'+id).innerHTML=`<div class="o1">${L.maint.t1}</div>`;
+    $('ckm2_'+id).textContent=L.maint.ck;
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
