@@ -607,17 +607,17 @@ function calcAmp(id){
 }
 /* push 单次药配置表 */
 const PUSHCFG={
- fentanyl:{def:2,step:0.5,unit:'μg/kg',out:'μg',note:'缓推≥3min · 备气囊'},
- midazolam:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',note:'缓推≥2min · 监测血压'},
- vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',note:'镇静确保后给 · 呼吸机下'},
- hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',note:'升压辅助 · q8h · 监测血压血糖'},
- caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；24h后维持5–10mg/kg q24h'},
- amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',note:'缓泵≥1h（滴速17ml/h）· 监测心率血压'},
- propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',note:'缓泵≥1h（滴速17ml/h）· 监测心率'},
- dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',note:'拔管后喉水肿/BPD · q12h · 监测血糖'},
- omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'应激性溃疡/消化道出血 · qd · NS/GS溶解缓推（库内无标化体积）'},
- phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
- ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
+ fentanyl:{def:2,step:0.5,unit:'μg/kg',out:'μg',freq:'st',note:'缓推≥3min · 备气囊'},
+ midazolam:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'缓推≥2min · 监测血压'},
+ vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'镇静确保后给 · 呼吸机下'},
+ hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',note:'升压辅助 · 监测血压血糖'},
+ caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；24h后维持5–10mg/kg q24h'},
+ amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',freq:'st',note:'缓泵≥1h（滴速17ml/h）· 监测心率血压'},
+ propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',freq:'st',note:'缓泵≥1h（滴速17ml/h）· 监测心率'},
+ dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
+ omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
+ phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
+ ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',freq:'st',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
 /* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配；停胰岛素连葡萄糖组同停） */
 function calcInsulinH24(id){
   const g=DRUGS[id];
@@ -627,7 +627,7 @@ function calcInsulinH24(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*10, iuH=dose*W;
   return {t1:`胰岛素${f2(R)}ml/h=${f2(dose,2)}iu/kg/h，维持24小时`,
-    prep:[`胰岛素 ${f2(iuH*24,2)}iu＋葡萄糖 ${f2(iuH*96,2)}g（1iu:4g糖）入10%葡萄糖，24小时匀速 · 每4小时弃液重配`],
+    prep:[`胰岛素 ${f2(iuH*24,2)}iu＋10%葡萄糖 ${f2(iuH*960,1)}ml`],
     ck:[`剂量核对：${f2(dose,2)} iu/kg/h×${W.toFixed(2)}kg＝<b>${f2(iuH)}iu/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>（0.1ml/h=0.01iu/kg/h）`], R, dose};
 }
@@ -637,11 +637,11 @@ function calcInsulinAmp(id){
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* iu/kg/h */
   const rEl=parseFloat($('arin_'+id).value);
-  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*4, act=R*0.25/W;  /* 组液 1iu/4ml=0.25iu/ml */
-  return {t1:`胰岛素${f2(R)}ml/h=${f2(act,2)}iu/kg/h（1iu:4g糖组）`,
-    prep:[`胰岛素 1iu＋葡萄糖 4g，4小时匀速入 · 弃液重配`],
+  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*4, act=R*0.25/W;  /* 组液 1iu＋10%葡萄糖 40ml（1iu:4g糖） */
+  return {t1:`胰岛素${f2(R)}ml/h=${f2(act,2)}iu/kg/h，维持4小时`,
+    prep:[`胰岛素 1iu＋10%葡萄糖 40ml`],
     ck:[`剂量核对：泵速${f2(R)}ml/h×0.25iu/ml÷${W.toFixed(2)}kg＝<b>${f2(act,2)}iu/kg/h</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>；4小时入液<b>${f2(R*4)}ml</b>`], R, dose:act};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；4小时入液<b>${f2(R*4)}ml</b>（每4小时弃液重配）`], R, dose:act};
 }
 /* 呋塞米/托拉塞米持续泵（0.1ml/h=1mg/kg/d 本院口径，24小时匀速入） */
 function calcDrip(id){
@@ -682,8 +682,8 @@ function calcLoad(id){
 function calcPush(id){
   const g=DRUGS[id], cfg=PUSHCFG[id];
   const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
-  return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} st`,
-    t2:`＝${f(dose,2)}${cfg.unit} · ${cfg.note}`,
+  return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} ${cfg.freq||'st'}`,
+    t2:`＝${f(dose,2)}${cfg.unit}`,
     ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
 }
 function calcResus(rt){
@@ -699,7 +699,7 @@ function calcResus(rt){
 function linesOf(key){
   const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
