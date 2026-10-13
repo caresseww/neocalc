@@ -64,12 +64,12 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .searchrow input::placeholder{color:#8a97ab;}
 .searchrow input:focus{outline:none; background:#fff;}
 .searchrow input::-webkit-search-cancel-button{-webkit-appearance:none;}
-.abinfo{border-left:3px solid var(--primary2); background:#f4f8fd; padding:6px 9px; border-radius:0 6px 6px 0; margin:5px 0; font-size:12.5px; line-height:1.55;}
-.abinfo .abt{font-weight:700; color:var(--primary); margin-bottom:2px;}
-.abinfo.warnb{border-color:var(--warn); background:#fef9ef;}
-.abinfo.warnb .abt{color:#b9770e;}
-.abinfo.badb{border-color:var(--accent); background:#fdf1f0;}
-.abinfo.badb .abt{color:var(--accent);}
+.abinfo{background:#f0f0f0; color:var(--ink); padding:7px 10px; border-radius:8px; margin:5px 0; font-size:12.5px; line-height:1.55;}
+.abinfo .abt{font-weight:700; color:var(--ink); margin-bottom:2px;}
+.abinfo.warnb{background:#f0f0f0;}
+.abinfo.warnb .abt{color:var(--ink);}
+.abinfo.badb{background:#f0f0f0;}
+.abinfo.badb .abt{color:var(--ink);}
 .dualwrap{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:4px 0;}
 .dualmod{border:1px solid #e3eaf5; border-radius:12px; padding:8px; background:#fafcff;}
 .dualt{font-size:12px; font-weight:700; color:var(--navy2); margin-bottom:4px;}
@@ -697,7 +697,7 @@ const DRUGS={
   spec:"注射用氨苄西林钠舒巴坦钠 0.75g/支",
   utd:"氨苄西林 100–200mg/kg/d 分q8–12h（舒巴坦不超过其1/2）；脑膜炎加大剂量（UpToDate）",
   hb:"一般/脑膜炎剂量同青霉素（间隔随日龄调整）",
-  hosp:"库内最大品种 3,202人：q12h（2,891条）与q8h（1,386条）静滴为主；每支0.75g含钠2.39mmol",
+  hosp:"库内最大品种 3,202人：q12h（2,891条）与q8h（1,386条）静滴为主；每支0.75g含钠2.39mmol; 配液：库内伴随实测 14/15 为5%葡萄糖，干包10–12ml至50ml泵袋均见（配液量未标准化）",
   ind:"早发败血症一线（GBS/李斯特菌覆盖）、敏感菌呼吸道/泌尿道感染；与氨基糖苷类联用为本院早发败血症经典组合。",
   pharm:"氨苄西林（广谱β内酰胺）＋舒巴坦（酶抑制剂）；脑膜炎时CSF穿透良好；新生儿按日龄调间隔。",
   adverse:"①皮疹（氨苄西林特征性，传染性单核细胞增多症高发）；②高钠负荷；③腹泻；④过敏（皮试）。",
@@ -742,7 +742,7 @@ const DRUGS={
   spec:"注射用美罗培南",
   utd:"20mg/kg/次 q8h；化脑/铜绿 40mg/kg/次；静滴>30分钟、脑膜炎>1小时（UpToDate/NeoFax）",
   hb:"一般20；化脑/绿脓40；静滴>30min，脑膜炎>1h",
-  hosp:"库内 908人：静滴为主，q8h 常见；重症革兰阴性耐药菌的主力",
+  hosp:"库内 908人：静滴为主，q8h 常见；重症革兰阴性耐药菌的主力; 配液：库内伴随 5%葡萄糖 13/21、盐水 8/21，常用 50ml 泵袋",
   ind:"碳青霉烯：产超广谱酶（ESBL）革兰阴性菌、化脓性脑膜炎、重症感染降阶梯后目标治疗；不作为一线。",
   pharm:"碳青霉烯类，超广谱（G+/G−，对 ESBL 稳定）；CSF穿透好；癫痫风险低于亚胺培南。",
   adverse:"①腹泻/菌群紊乱（筛选耐药菌）；②中枢反应（抽搐，罕见）；③血小板嗜酸细胞变化；④二重感染（真菌）。",
@@ -751,7 +751,7 @@ const DRUGS={
   spec:"注射用盐酸万古霉素(稳可信) 0.5g/支",
   utd:"15mg/kg/次，间隔按日龄与肾功能；目标谷浓度 10–20μg/ml（UpToDate/NeoFax/ASHP 一致）",
   hb:"未收录（按血药谷浓度滴定）",
-  hosp:"库内 364人：静滴；MRSA/凝固酶阴性葡萄球菌（导管相关）主力；谷浓度监测为本院常规",
+  hosp:"库内 364人：静滴；MRSA/凝固酶阴性葡萄球菌（导管相关）主力；谷浓度监测为本院常规; 配液：库内伴随 5%葡萄糖为主，常用 50ml 泵袋",
   ind:"MRSA、凝固酶阴性葡萄球菌（导管相关血流感染）、青霉素过敏的革兰阳性感染；与头孢吡肟联用为重症经验覆盖。",
   pharm:"糖肽类，抑制细胞壁合成；治疗窗窄——谷浓度过低无效、过高肾毒；新生儿按 GA 与肌酐个体化间隔。",
   adverse:"①肾毒性（谷浓度>20 或合用肾毒药）；②红人综合征（输注过快——输注≥60分钟）；③耳毒性（罕见）；④血小板减少。",
@@ -814,7 +814,7 @@ const DRUGS={
   spec:"氟康唑注射液/胶囊",
   utd:"侵袭性念珠菌 6–12mg/kg/d；预防 3mg/kg biw（ELBW ICU 预防——UpToDate/文献）",
   hb:"首剂12–25；维持6–12；预防3；qd或biw",
-  hosp:"库内 1,974人：biw（1,496条，ELBW 预防）与qd；静滴/口服",
+  hosp:"库内 1,974人：biw（1,496条，ELBW 预防）与qd；静滴/口服; 配液：库内伴随 5%葡萄糖 20/23，50ml 泵袋为主",
   ind:"侵袭性念珠菌病治疗与 ELBW 预防（本院 biw 预防方案量大）；维持剂量按感染部位（尿/CSF）调整。",
   pharm:"三唑类，真菌 CYP51 抑制；CSF/尿液穿透好；肾排 80%（原形）；新生儿清除慢（半衰期 30–70h）→ qd–q48h。",
   adverse:"①肝酶升高/胃肠反应；②QT 延长（与延长 QT 药合用心电）；③药物相互作用多（CYP 抑制——与咪达唑仑/激素合用注意）；④长程警惕耐药。",
@@ -1239,12 +1239,17 @@ const ABCFG={
   caution:'用前青霉素皮试（本院常规）；80万U/支含钠1.35mmol——长程注意钠负荷；脑膜炎大剂量方案缓慢输注防神经刺激。',
   pk:'半衰期随日龄缩短（≤7天约3–4小时，之后1–2小时）——7天内q12h、之后加密q8h/q6h；肾排泄为主；脑膜炎时CSF穿透随炎症增加。',
   adverse:'过敏（皮试筛查）；大剂量神经刺激（肌阵挛）；高钠负荷。'},
- ampicillin:{sites:['外周感染','中枢感染'],unit:'mg/kg',out:'mg',step:5,csum:'0.75g/支（钠2.39mmol）',solvent:'糖水/盐水',ageDep:true,
-  schemes:{'外周感染':[{max:7,dose:50,freq:'q12h'},{min:8,dose:50,freq:'q8h'}],'中枢感染':[{max:7,dose:75,freq:'q8h'},{min:8,dose:75,freq:'q6h'}]},
-  doseTableHtml:'<table style="width:100%;font-size:12px;margin:6px 0;border-collapse:collapse;"><tr style="background:#eaf2f8;"><td style="border:1px solid #d8e2f0;padding:4px;">体重＼日龄</td><td style="border:1px solid #d8e2f0;padding:4px;">≤7天</td><td style="border:1px solid #d8e2f0;padding:4px;">8–28天</td><td style="border:1px solid #d8e2f0;padding:4px;">>28天</td></tr><tr><td style="border:1px solid #d8e2f0;padding:4px;">≤2000g</td><td style="border:1px solid #d8e2f0;padding:4px;">100mg/kg/d q12h</td><td style="border:1px solid #d8e2f0;padding:4px;">150mg/kg/d q8h</td><td style="border:1px solid #d8e2f0;padding:4px;">150mg/kg/d q6h</td></tr><tr><td style="border:1px solid #d8e2f0;padding:4px;">>2000g</td><td style="border:1px solid #d8e2f0;padding:4px;">150mg/kg/d q8h</td><td style="border:1px solid #d8e2f0;padding:4px;">200mg/kg/d q8h</td><td style="border:1px solid #d8e2f0;padding:4px;">200mg/kg/d q6h</td></tr></table>',
-  specS:'GBS、李斯特菌（天然敏感——早发败血症必覆盖）、肠球菌、部分肠杆菌。',
+ ampicillin:{sites:['败血症（无中枢累及）','中枢感染'],unit:'mg/kg',out:'mg',step:25,csum:'优立新 氨苄:舒巴坦2:1 0.75g/支',solvent:'糖水/盐水',ageDep:true,gaDep:true,
+  schemes:{'败血症（无中枢累及）':[
+    {gaMax:34,max:7,dose:75,freq:'q12h'},{gaMax:34,min:8,max:28,dose:75,freq:'q8h'},{gaMax:34,min:29,dose:75,freq:'q6h'},
+    {gaMin:35,max:7,dose:75,freq:'q8h'},{gaMin:35,min:8,max:28,dose:75,freq:'q8h'},{gaMin:35,min:29,dose:75,freq:'q6h'}],
+   '中枢感染':[
+    {gaMax:34,max:7,dose:150,freq:'q8h'},{gaMax:34,min:8,max:28,dose:112.5,freq:'q6h'},{gaMax:34,min:29,dose:112.5,freq:'q6h'},
+    {gaMin:35,max:7,dose:150,freq:'q8h'},{gaMin:35,min:8,max:28,dose:112.5,freq:'q6h'},{gaMin:35,min:29,dose:150,freq:'q6h'}]},
+  doseTableHtml:'<div class="spec" style="margin:6px 0;">以下为优立新（氨苄西林:舒巴坦 2:1）剂量，可直接乘以体重后开具医嘱</div><table style="width:100%;font-size:11.5px;margin:4px 0;border-collapse:collapse;"><tr style="background:#eef4fc;"><td style="border:1px solid var(--line);padding:4px;">氨苄:舒巴坦 2:1</td><td style="border:1px solid var(--line);padding:4px;" colspan="3">出生胎龄≤34周</td><td style="border:1px solid var(--line);padding:4px;" colspan="3">出生胎龄>34周</td></tr><tr style="background:#eef4fc;"><td style="border:1px solid var(--line);padding:4px;">日龄</td><td style="border:1px solid var(--line);padding:4px;">≤7天</td><td style="border:1px solid var(--line);padding:4px;">8–28天</td><td style="border:1px solid var(--line);padding:4px;">>28天</td><td style="border:1px solid var(--line);padding:4px;">≤7天</td><td style="border:1px solid var(--line);padding:4px;">8–28天</td><td style="border:1px solid var(--line);padding:4px;">>28天</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">疑似/确诊败血症（无中枢累及）</td><td style="border:1px solid var(--line);padding:4px;">75mg/kg/次<br>q12h</td><td style="border:1px solid var(--line);padding:4px;">75mg/kg/次<br>q8h</td><td style="border:1px solid var(--line);padding:4px;">75mg/kg/次<br>q6h</td><td style="border:1px solid var(--line);padding:4px;">75mg/kg/次<br>q8h</td><td style="border:1px solid var(--line);padding:4px;">75mg/kg/次<br>q8h</td><td style="border:1px solid var(--line);padding:4px;">75mg/kg/次<br>q6h</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">中枢感染</td><td style="border:1px solid var(--line);padding:4px;">150mg/kg/次<br>q8h</td><td style="border:1px solid var(--line);padding:4px;">112.5mg/kg/次<br>q6h</td><td style="border:1px solid var(--line);padding:4px;">112.5mg/kg/次<br>q6h</td><td style="border:1px solid var(--line);padding:4px;">150mg/kg/次<br>q8h</td><td style="border:1px solid var(--line);padding:4px;">112.5mg/kg/次<br>q6h</td><td style="border:1px solid var(--line);padding:4px;">150mg/kg/次<br>q6h</td></tr></table><div class="tip" style="font-size:12px;">使用中枢感染剂量指征：①明确诊断的中枢感染；②怀疑中枢感染（中枢或全身重症表现——发热、惊厥等神经系统表现、全身感染症状显著，CRP显著增高/白细胞降低等不能用局灶解释）；③主要针对GBS、李斯特菌、粪肠球菌、敏感金葡等阳性菌造成的中枢感染；④不能除外时可先用中枢剂量，明确排除后酌情降量或停用。参考：Redbook 2021（氨苄西林词条）、Nelson（按优立新氨苄西林比例计算）。</div>',
+  specS:'GBS、李斯特菌（天然敏感——早发败血症必覆盖）、粪肠球菌、敏感金葡等阳性菌（中枢感染主要针对菌种）。',
   specR:'产TEM-1酶的克雷伯菌/肠杆菌属、MRS、铜绿假单胞菌（天然耐药）。',
-  caution:'舒巴坦不超过氨苄成分1/2（本院固定复方）；每支0.75g含钠2.39mmol；用前皮试；常见剂量调整表见上（按体重与日龄分档）。',
+  caution:'中枢剂量指征（NICU抗生素合理使用项目）：明确的中枢感染；怀疑中枢感染（神经表现+CRP显著增高/白细胞降低等不能用局灶解释）；不能除外时可先用中枢剂量，明确排除后酌情降量或停用。每支0.75g含钠2.39mmol；用前皮试。参考：Redbook 2021、Nelson（按优立新氨苄西林比例计算）。',
   pk:'半衰期随日龄缩短（≤7天q12h→之后q8h）；肾排泄为主；中枢感染时CSF穿透随炎症增加——中枢档加量。',
   adverse:'皮疹（氨苄特征性）、腹泻、高钠负荷。'},
  amoxiclav:{sites:['感染治疗','尿感预防'],unit:'mg/kg',out:'mg',step:5,route:'口服/鼻饲',csum:'以阿莫西林计',ageDep:true,
@@ -2139,7 +2144,7 @@ function updCard(id){
   /* 抗感染专属卡 */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='ab'){
     const L=calcAb(id);
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
