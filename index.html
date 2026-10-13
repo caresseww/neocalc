@@ -489,7 +489,7 @@ const DRUGCARDS=[
  {id:'propafenone',page:0,forms:['maint','push']},
  {id:'hydrocortisone',page:2,title:'琥珀氢考',kind:'maint',drug:'hydrocortisone',forms:['push']},
  {id:'dexamethasone',page:2,forms:['push']},
- {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['ins']},
+ {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['maint']},
  {id:'glucagon',page:2,forms:['glu']},
  {id:'phenobarb',page:2,forms:['push']},
  {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['drip']},
@@ -552,6 +552,7 @@ function unitTail(g){return g.unit==='μg/kg/h'?'hr':'min';}
 
 /* 维持·按24小时配（特利=12h袋） */
 function calcH24(id){
+  if(id==='insulin')return calcInsulinH24(id);
   const g=DRUGS[id], s=S[id], pm=isPerMin(g);
   const dEl=parseFloat($('din_'+id).value);
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
@@ -577,6 +578,7 @@ function calcH24(id){
 }
 /* 维持·按整支配（固定整支药量，泵速→稀释体积反算） */
 function calcAmp(id){
+  if(id==='insulin')return calcInsulinAmp(id);
   const g=DRUGS[id], pm=isPerMin(g);
   const isNg=g.unit.indexOf('ng')>-1;
   const dinEl=$('din_'+id);
@@ -616,20 +618,30 @@ const PUSHCFG={
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'应激性溃疡/消化道出血 · qd · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
  ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
-/* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配） */
-function calcInsulin(id){
+/* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配；停胰岛素连葡萄糖组同停） */
+function calcInsulinH24(id){
   const g=DRUGS[id];
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* iu/kg/h */
   const rEl=parseFloat($('rin_'+id).value);
-  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*10, iuH=dose*W, iu4=iuH*4;
+  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*10, iuH=dose*W;
   return {t1:`胰岛素${f2(R)}ml/h=${f2(dose,2)}iu/kg/h，维持24小时`,
-    t2:`＝${f2(iuH)}iu/h · 每1–2h监测血糖`,
-    prep:[`胰岛素 ${f2(iu4)}iu/4h 入10%葡萄糖组（配比 1iu胰岛素:4g糖）`,
-      `每4小时弃液重配 · 停胰岛素须连葡萄糖组同停`],
+    prep:[`胰岛素 ${f2(iuH*24,2)}iu＋葡萄糖 ${f2(iuH*96,2)}g（1iu:4g糖）入10%葡萄糖，24小时匀速 · 每4小时弃液重配`],
     ck:[`剂量核对：${f2(dose,2)} iu/kg/h×${W.toFixed(2)}kg＝<b>${f2(iuH)}iu/h</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>（0.1ml/h=0.01iu/kg/h）`], dose};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>（0.1ml/h=0.01iu/kg/h）`], R, dose};
+}
+function calcInsulinAmp(id){
+  const g=DRUGS[id];
+  const dinEl=$('din_'+id);
+  const dEl=dinEl?parseFloat(dinEl.value):NaN;
+  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* iu/kg/h */
+  const rEl=parseFloat($('arin_'+id).value);
+  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*4, act=R*0.25/W;  /* 组液 1iu/4ml=0.25iu/ml */
+  return {t1:`胰岛素${f2(R)}ml/h=${f2(act,2)}iu/kg/h（1iu:4g糖组）`,
+    prep:[`胰岛素 1iu＋葡萄糖 4g，4小时匀速入 · 弃液重配`],
+    ck:[`剂量核对：泵速${f2(R)}ml/h×0.25iu/ml÷${W.toFixed(2)}kg＝<b>${f2(act,2)}iu/kg/h</b>`,
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；4小时入液<b>${f2(R*4)}ml</b>`], R, dose:act};
 }
 /* 呋塞米/托拉塞米持续泵（0.1ml/h=1mg/kg/d 本院口径，24小时匀速入） */
 function calcDrip(id){
@@ -640,9 +652,7 @@ function calcDrip(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*0.1, vol=R*24, mgDay=dose*W;
   return {t1:`${g.name}${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
-    t2:`＝${f2(mgDay,2)}mg/d · 监测电解质与尿量`,
-    prep:[`${g.name} ${f2(mgDay,2)}mg/24h`,
-      `${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(vol)}ml/24h 匀速入`],
+    prep:[`${g.name} ${f2(mgDay,2)}mg/24h 入${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(vol)}ml，24小时匀速`],
     ck:[`剂量核对：${f2(dose,2)} mg/kg/d×${W.toFixed(2)}kg＝<b>${f2(mgDay,2)}mg/d</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
 }
@@ -655,7 +665,6 @@ function calcGlucagon(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*16.8/1000, ugH=dose*W;
   return {t1:`人高血糖素${f2(R)}ml/h=${f2(dose,2)}μg/kg/h，维持24小时`,
-    t2:`＝${f2(ugH)}μg/h · 每1–2h监测血糖`,
     prep:[`人高血糖素 1mg（诺和生 1ml）入5%葡萄糖 16.8ml 成组`],
     ck:[`剂量核对：${f2(dose,2)} μg/kg/h×${W.toFixed(2)}kg＝<b>${f2(ugH)}μg/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>（库内走速0.7–8ml/h=6–14μg/kg/h）`], dose};
@@ -692,9 +701,8 @@ function linesOf(key){
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='ins'){const L=calcInsulin(id); return {t1:L.t1,prep:[L.t2].concat(L.prep||[]),ck:L.ck};}
-  if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:[L.t2].concat(L.prep||[]),ck:L.ck};}
-  if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:[L.t2].concat(L.prep||[]),ck:L.ck};}
+  if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
+  if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
 
@@ -719,7 +727,7 @@ function cardHtml(id){
   const g=DRUGS[id], c=S[id], dc=DRUGCARDS.find(x=>x.id===id);
   const defR=f2(niceRate(rateOf(g.def,g)));
   const multi=dc.forms.length>1;
-  if(dc.forms.length===1&&(dc.forms[0]==='ins'||dc.forms[0]==='drip'||dc.forms[0]==='glu')){
+  if(dc.forms.length===1&&(dc.forms[0]==='drip'||dc.forms[0]==='glu')){
     const defR2=dc.forms[0]==='glu'?f2(niceRate(g.def*W*16.8/1000)):defR;
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
@@ -775,7 +783,7 @@ function cardHtml(id){
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       </div>
       <div id="sec_amp_${id}" style="display:none">
-        <div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="-1">−</button><input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR}"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="1">＋</button></div> ml/h</div>
+        <div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="-1">−</button><input data-act="amprate" data-card="${id}" id="arin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${id==='insulin'?f2(niceRate(g.def*W*4)):defR}"><button type="button" class="stp" data-act="step" data-t="arin_${id}" data-dir="1">＋</button></div> ml/h</div>
         <div class="ordbox" id="aord_${id}"></div>
         <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ackr_${id}"></div></div>
       </div>
@@ -940,9 +948,9 @@ function updCard(id){
   const g=DRUGS[id];
   /* 单形式药(胰岛素/呋塞米) */
   const dcU=DRUGCARDS.find(x=>x.id===id);
-  if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='ins'||dcU.forms[0]==='drip'||dcU.forms[0]==='glu')){
-    const L=dcU.forms[0]==='ins'?calcInsulin(id):dcU.forms[0]==='drip'?calcDrip(id):calcGlucagon(id);
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${[L.t2].concat(L.prep||[]).join('<br>')}</div>`;
+  if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='drip'||dcU.forms[0]==='glu')){
+    const L=dcU.forms[0]==='drip'?calcDrip(id):calcGlucagon(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
