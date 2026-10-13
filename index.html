@@ -492,8 +492,8 @@ const DRUGCARDS=[
  {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['maint']},
  {id:'glucagon',page:2,forms:['glu']},
  {id:'phenobarb',page:2,forms:['push']},
- {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['drip']},
- {id:'torasemide',page:2,forms:['drip']},
+ {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['maint']},
+ {id:'torasemide',page:2,forms:['maint']},
  {id:'octreotide',page:2,title:'奥曲肽',kind:'maint',drug:'octreotide',forms:['maint']},
  {id:'omeprazole',page:2,forms:['push']},
  {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push']},
@@ -553,6 +553,7 @@ function unitTail(g){return g.unit==='μg/kg/h'?'hr':'min';}
 /* 维持·按24小时配（特利=12h袋） */
 function calcH24(id){
   if(id==='insulin')return calcInsulinH24(id);
+  if(id==='furosemide'||id==='torasemide')return calcDrip(id);
   const g=DRUGS[id], s=S[id], pm=isPerMin(g);
   const dEl=parseFloat($('din_'+id).value);
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;
@@ -580,6 +581,7 @@ function calcH24(id){
 function calcAmp(id){
   if(id==='insulin')return calcInsulinAmp(id);
   const g=DRUGS[id], pm=isPerMin(g);
+  const isPerDay=g.unit.indexOf('kg/d')>-1;
   const isNg=g.unit.indexOf('ng')>-1;
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
@@ -588,12 +590,12 @@ function calcAmp(id){
   const rEl=parseFloat($('arin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(rateOf(doseRaw,g));  /* 建议值用原始单位剂量 */
   const M=g.specMg;
-  const Cneed=dose*W*(pm?60:1)/(R*1000);          /* mg/ml */
-  let V=M/Cneed; V=Math.max(2,Math.ceil(V*2)/2);  /* 0.5ml取整，宁多勿少 */
+  const Cneed=isPerDay?dose*W/(24*R):dose*W*(pm?60:1)/(R*1000);          /* mg/ml */
+  let V=M/Cneed; V=Math.max(2,Math.ceil(V*2-1e-9)/2);  /* 0.5ml取整，宁多勿少 */
   const stockMl=M/g.stockConc;
   const water=Math.max(0,V-stockMl);
   const C1=M/V;
-  const actUg=R*C1*1000/(W*(pm?60:1));
+  const actUg=isPerDay?R*C1*24/W:R*C1*1000/(W*(pm?60:1));
   const act=isNg?actUg*1000:actUg;  /* 换回显示单位 */
   const dur=V/R;
   const t1=`${g.name}${f2(R)}ml/h=${f(act,2)}${g.unit}`;
@@ -602,7 +604,7 @@ function calcAmp(id){
     : `${g.name} ${f(M,2)}mg`;
   return {t1,
     prep:[drugLine,`${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f(water,1)}ml → 共 ${f(V,1)}ml`],
-    ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':''})＝<b>${f(dur,1)}h</b>`,
+    ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':isPerDay?'×24h':''})＝<b>${f(dur,1)}h</b>`,
         `液体核对：泵速${f2(R)}ml/h×${f(dur,1)}h＝<b>${f(V,1)}ml</b>`], R, dose};
 }
 /* push 单次药配置表 */
@@ -654,7 +656,7 @@ function calcDrip(id){
   return {t1:`${g.name}${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
     prep:[`${g.name} ${f2(mgDay,2)}mg/24h 入${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(vol)}ml，24小时匀速`],
     ck:[`剂量核对：${f2(dose,2)} mg/kg/d×${W.toFixed(2)}kg＝<b>${f2(mgDay,2)}mg/d</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], R, dose};
 }
 /* 人高血糖素持续泵（库内配方：1mg 入5%葡萄糖 16.8ml 成组，1ml/h≈59.5μg/h） */
 function calcGlucagon(id){
@@ -708,7 +710,6 @@ function linesOf(key){
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
@@ -734,7 +735,7 @@ function cardHtml(id){
   const g=DRUGS[id], c=S[id], dc=DRUGCARDS.find(x=>x.id===id);
   const defR=f2(niceRate(rateOf(g.def,g)));
   const multi=dc.forms.length>1;
-  if(dc.forms.length===1&&(dc.forms[0]==='drip'||dc.forms[0]==='glu')){
+  if(dc.forms.length===1&&dc.forms[0]==='glu'){
     const defR2=dc.forms[0]==='glu'?f2(niceRate(g.def*W*16.8/1000)):defR;
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
@@ -955,8 +956,8 @@ function updCard(id){
   const g=DRUGS[id];
   /* 单形式药(胰岛素/呋塞米) */
   const dcU=DRUGCARDS.find(x=>x.id===id);
-  if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='drip'||dcU.forms[0]==='glu')){
-    const L=dcU.forms[0]==='drip'?calcDrip(id):calcGlucagon(id);
+  if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='glu'){
+    const L=calcGlucagon(id);
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
