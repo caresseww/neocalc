@@ -359,7 +359,7 @@ const DRUGS={
   spec:"150mg/3ml（50mg/ml）",specMg:150,stockConc:50,
   utd:"SVT/VT：负荷5mg/kg 缓泵≥1h；维持5–15μg/kg/min 按反应滴定（NeoFax/Starship）",
   hb:"未收录",
-  hosp:"库内模式：每日配一管（负荷5–60mg）先 17ml/h 快段，续上组转维持慢速 0.2–1.25ml/h＝1–12.5μg/kg/min（1ml/h=10μg/kg/min 袋最常见），次日弃余重配",
+  hosp:"库内模式：每日配一管（胺碘酮 {负荷}mg＋5%葡萄糖 12ml）先 17ml/h 快段（约45分钟），续上组转维持慢速 0.2–1.25ml/h＝1–12.5μg/kg/min（1ml/h=10μg/kg/min 袋最常见），次日弃余重配；小剂量负荷伴随糖水 4.8–14.4ml 不等",
   ind:"室上性/室性心动过速的药物复律与维持窦律、电复律后巩固；对其他抗心律失常药无效或不宜时的一线选择。甲状腺疾病、严重肝损害慎用。",
   pharm:"III类抗心律失常药（钾通道为主，兼钠/钙通道与β阻断）；起效慢、半衰期极长（数天至数周），蓄积明显；新生儿经肝CYP代谢慢，随访甲状腺功能。",
   adverse:"心动过缓、低血压（负荷期）；长程：甲减/甲亢、肝酶升高、角膜色素沉着、肺纤维化（罕见）；外周静脉易静脉炎，宜中心静脉。",
@@ -369,7 +369,7 @@ const DRUGS={
   spec:"35mg/10ml（3.5mg/ml）",specMg:35,stockConc:3.5,
   utd:"SVT：负荷5mg/kg 缓泵≥1h；维持泵入4–6.4μg/kg/min（文献/库内系列）",
   hb:"未收录",
-  hosp:"库内模式：负荷缓泵5.8–24mg 先 17ml/h 快段，续上组转维持慢速 0.5–0.8ml/h＝4–6.4μg/kg/min（1ml/h=8μg/kg/min）",
+  hosp:"库内模式：负荷（普罗帕酮 19–24mg＋5%葡萄糖 12–14.4ml）先 17ml/h 快段，续上组转维持慢速 0.5–0.8ml/h＝4–6.4μg/kg/min（1ml/h=8μg/kg/min）",
   ind:"室上性心动过速复律与预防复发（无器质性心脏病者）、WPW综合征。器质性心脏病/心衰/传导阻滞禁用。",
   pharm:"Ic类抗心律失常药，阻断快钠通道减慢心内传导，兼轻β阻断作用；肝首过效应强（口服生物利用度个体差异大），新生儿清除慢注意蓄积。",
   adverse:"低血压、心动过缓、传导阻滞；促心律失常作用；加重心衰；口干、头晕、味觉异常。",
@@ -684,7 +684,7 @@ function calcPush(id){
   const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
   if(cfg.rateText){
     return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.rateText} ${cfg.route||'静推'} ${cfg.freq||'once'}`,
-      prep:[],
+      prep:[`${g.name} ${f2(a)}mg＋5%葡萄糖 12ml`],
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
   return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} ${cfg.freq||'st'}`,
