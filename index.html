@@ -496,14 +496,14 @@ const DRUGCARDS=[
  {id:'torasemide',page:2,forms:['maint']},
  {id:'octreotide',page:2,title:'奥曲肽',kind:'maint',drug:'octreotide',forms:['maint']},
  {id:'omeprazole',page:2,forms:['push']},
- {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push']},
+ {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push','qd']},
  {id:'ps',page:2,forms:['push']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
-const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏'};
-const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'}};
+const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持'};
+const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
@@ -613,12 +613,22 @@ const PUSHCFG={
  midazolam:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'缓推≥2min · 监测血压'},
  vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'镇静确保后给 · 呼吸机下'},
  hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',note:'升压辅助 · 监测血压血糖'},
- caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；24h后维持5–10mg/kg q24h'},
+ caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；24h后转维持形式 qd'},
 
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
  ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',freq:'st',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
+/* 分频次维持形式（长嘱式：药 剂量 途径 频次） */
+const QDCFG={
+ caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',route:'静推',freq:'qd',note:'24h后开始维持 · 每日一次'}};
+function calcQd(id){
+  const g=DRUGS[id], cfg=QDCFG[id];
+  const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
+  return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} ${cfg.freq||'qd'}`,
+    prep:[],
+    ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
+}
 /* 胺碘酮/心律平统一泵（库内"续上组"模式：一管配好，负荷段快、维持段慢，次日弃余重配） */
 function calcPump(id){
   const g=DRUGS[id];
@@ -684,9 +694,9 @@ function calcGlucagon(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*16.8/1000, ugH=dose*W;
   return {t1:`人高血糖素${f2(R)}ml/h=${f2(dose,2)}μg/kg/h，维持24小时`,
-    prep:[`人高血糖素 1mg（诺和生 1ml）`, `5%葡萄糖 16.8ml`],
+    prep:[`人高血糖素 ${f2(ugH*24/1000,2)}mg/24h`, `5%葡萄糖 16.8ml（1mg 成组）`],
     ck:[`剂量核对：${f2(dose,2)} μg/kg/h×${W.toFixed(2)}kg＝<b>${f2(ugH)}μg/h</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>（库内走速0.7–8ml/h=6–14μg/kg/h）`], dose};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24,1)}ml</b>`], dose};
 }
 /* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
 function calcLoad(id){
@@ -720,6 +730,7 @@ function linesOf(key){
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
+  if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
@@ -852,6 +863,18 @@ function cardHtml(id){
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
     </div>`;
   }
+  /* 长嘱维持区（qd/q8h/q12h 分频次药） */
+  let qdSec='';
+  if(dc.forms.includes('qd')){
+    const q=QDCFG[id];
+    qdSec=`<div id="sec_qd_${id}" style="display:${c.form==='qd'?'block':'none'}">
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinq_${id}" type="number" inputmode="decimal" step="${q.step}" min="0" value="${q.def}"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="1">＋</button></div> ${q.unit}</div>
+      <div class="ordbox" id="ordq_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrq_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@qd" id="add_${id}_qd">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+    </div>`;
+  }
   /* 复苏区 */
   let resusSec='';
   if(dc.forms.includes('resus')){
@@ -885,7 +908,7 @@ function cardHtml(id){
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       ${formTabs}
-      ${maintSec}${pushSec}${loadSec||''}${resusSec}
+      ${maintSec}${pushSec}${loadSec||''}${qdSec}${resusSec}
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
     </div>
@@ -1025,6 +1048,12 @@ function updCard(id){
     $('ckrp_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     pushDose=L.dose;
   }
+  /* 长嘱维持区 */
+  if(dcU&&dcU.forms.includes('qd')){
+    const L=calcQd(id);
+    $('ordq_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
+    $('ckrq_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+  }
   /* 复苏区 */
   if(dcU&&dcU.forms.includes('resus')){
     ['iv','et'].forEach(rt=>{
@@ -1095,7 +1124,7 @@ function setMode(id,m){
 }
 function setForm(id,f){
   S[id].form=f;
-  ['load','maint','push','resus'].forEach(fm=>{
+  ['load','maint','push','resus','qd'].forEach(fm=>{
     const sec=$('sec_'+fm+'_'+id);
     if(sec)sec.style.display=f===fm?'block':'none';
   });
