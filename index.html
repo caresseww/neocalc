@@ -990,7 +990,7 @@ function updCard(id){
   let pushDose=null;
   if(dcU&&dcU.forms.includes('push')){
     const L=calcPush(id);
-    $('ordp_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
+    $('ordp_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckrp_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     pushDose=L.dose;
   }
