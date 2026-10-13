@@ -661,6 +661,7 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
 var W=1.5;
 const S={}; DRUGCARDS.forEach(c=>S[c.id]={form:c.forms[0], mode:'h24'});
 const basket={};
+const PRMODE={};   /* push 绝对量药（巴曲亭）途径模式：iv/iv_et/iv_gt/et/gt */
 const RES={iv:0.2, et:0.75};
 const META={bed:'',name:'',hosp:'',gaw:'',gad:'',dol:''};
 const $=id=>document.getElementById(id);
@@ -853,9 +854,17 @@ function calcPush(id){
   }
   const rt=(cfg.route&&cfg.route!=='静推')?' '+cfg.route:'';
   const prep=cfg.dilPerMg?[`${cfg.diluent||'5%葡萄糖'} ${f(a*cfg.dilPerMg,1)}ml`]:[];
-  const ck=cfg.abs
-    ? `剂量核对：绝对剂量 <b>${f2(a)}${cfg.out}</b>（库内 0.25–1iu，once 为主）`
-    : `剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`;
+  if(cfg.abs){
+    const m=PRMODE[id]||'iv', half=a/2;
+    const L={iv:  {t1:`${g.name} ${f2(a)}${cfg.out} st`},
+      iv_et:{t1:`${g.name} ${f2(half)}${cfg.out} 静推 st`, prep:[`${g.name} ${f2(half)}${cfg.out} 气管插管内滴入 st`]},
+      iv_gt:{t1:`${g.name} ${f2(half)}${cfg.out} 静推 st`, prep:[`${g.name} ${f2(half)}${cfg.out} 胃管内注入 st`]},
+      et:   {t1:`${g.name} ${f2(a)}${cfg.out} 气管插管内滴入 st`},
+      gt:   {t1:`${g.name} ${f2(a)}${cfg.out} 胃管内注入 st`}}[m]||{t1:`${g.name} ${f2(a)}${cfg.out} st`};
+    return {t1:L.t1, prep:L.prep||[],
+      ck:[`剂量核对：绝对剂量 <b>${f2(a)}${cfg.out}</b>（库内 0.25–1iu；组合用法＝静推＋局部各半）`], dose};
+  }
+  const ck=`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`;
   return {t1:`${g.name} ${f2(a)}${cfg.out}${rt} ${cfg.freq||'st'}`,
     prep,
     ck:[ck], dose};
@@ -1066,8 +1075,14 @@ function cardHtml(id){
   let pushSec='';
   if(dc.forms.includes('push')){
     const u=PUSHCFG[id].unit, def=PUSHCFG[id].def, step=PUSHCFG[id].step;
+    const prTabs=PUSHCFG[id].abs?(()=>{
+      const ms=[['iv','静推'],['iv_et','静推＋气管内各半'],['iv_gt','静推＋胃管内各半'],['et','气管内滴入'],['gt','胃管内注入']];
+      const cur=PRMODE[id]||'iv';
+      return `<div class="modetabs" id="pr_${id}">`+ms.map(([k,l])=>`<button type="button" data-act="prmode" data-card="${id}" data-mode="${k}" class="${cur===k?'on':''}">${l}</button>`).join('')+`</div>`;
+    })():'';
     pushSec=`<div id="sec_push_${id}" style="display:${c.form==='push'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="1">＋</button></div> ${u}</div>
+      ${prTabs}
       <div class="ordbox" id="ordp_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button>
@@ -1623,6 +1638,9 @@ document.addEventListener('click',e=>{
     case 'backlist': exitDrugSilent(); break;
     case 'form': setForm(b.dataset.card,b.dataset.form); break;
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
+    case 'prmode': PRMODE[b.dataset.card]=b.dataset.mode;
+      document.querySelectorAll('#pr_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
+      updCard(b.dataset.card); break;
     case 'add': toggleBasket(b.dataset.key); break;
     case 'del': delItem(b.dataset.key); break;
     case 'editdrug': gotoDrug(b.dataset.key); break;
