@@ -354,7 +354,7 @@ const DRUGS={
   pharm:"前列腺素E1，扩张动脉导管平滑肌并抑制其收缩；同时扩张全身血管、抑制血小板聚集。肺内首过消除快，需持续泵入。停药后作用迅速消退。",
   adverse:"呼吸暂停（约10–15%，需备插管）、低血压、发热、皮肤潮红/水肿；长程（>120h）可致胃幽门增生、骨皮质增生。凯时为脂质微球制剂，偶见过敏。",
   compat:"NS、5%GS均可稀释；脂质微球现配现用，避免与高渗液体直接混合。"},
- amiodarone:{name:"胺碘酮",en:"Amiodarone",unit:"μg/kg/min",def:5,step:"1",
+ amiodarone:{name:"胺碘酮",en:"Amiodarone",unit:"μg/kg/min",def:5,step:"1",noDur:true,
   rateDiv:10,mgPerKg:30,to:50,stockMlPerMg:0.02,stockLabel:"150mg/3ml原液",diluent:"5%葡萄糖",
   spec:"150mg/3ml（50mg/ml）",specMg:150,stockConc:50,
   utd:"SVT/VT：负荷5mg/kg 缓泵≥1h；维持5–15μg/kg/min 按反应滴定（NeoFax/Starship）",
@@ -364,7 +364,7 @@ const DRUGS={
   pharm:"III类抗心律失常药（钾通道为主，兼钠/钙通道与β阻断）；起效慢、半衰期极长（数天至数周），蓄积明显；新生儿经肝CYP代谢慢，随访甲状腺功能。",
   adverse:"心动过缓、低血压（负荷期）；长程：甲减/甲亢、肝酶升高、角膜色素沉着、肺纤维化（罕见）；外周静脉易静脉炎，宜中心静脉。",
   compat:"仅用5%GS稀释（NS中易浑浊）；独立通路，负荷期持续心电监护；不与其他静推药共管。"},
- propafenone:{name:"普罗帕酮",en:"Propafenone",unit:"μg/kg/min",def:4,step:"1",
+ propafenone:{name:"普罗帕酮",en:"Propafenone",unit:"μg/kg/min",def:4,step:"1",noDur:true,
   rateDiv:8,mgPerKg:24,to:50,stockMlPerMg:0.29,stockLabel:"35mg/10ml原液",
   spec:"35mg/10ml（3.5mg/ml）",specMg:35,stockConc:3.5,
   utd:"SVT：负荷5mg/kg 缓泵≥1h；维持泵入4–6.4μg/kg/min（文献/库内系列）",
@@ -571,7 +571,7 @@ function calcH24(id){
   const ck1=pm
     ? `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×60min×24h＝<b>${amt(mg24)}/24h</b>`
     : `剂量核对：${f(dose,2)} ${g.unit}×${W.toFixed(2)}kg×24h＝<b>${amt(mg24)}/24h</b>`;
-  return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}${g.unit}，维持24小时`,
+  return {t1:`${g.name}${f2(R)}ml/h=${f(dose,2)}${g.unit}${g.noDur?'':'，维持24小时'}`,
     prep:[`${g.name} ${amt(mg24)}/24h`,`${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(R*24)}ml/24h`],
     ck:[ck1,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f2(R*24)}ml</b>`], R, dose};
@@ -612,8 +612,8 @@ const PUSHCFG={
  vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'镇静确保后给 · 呼吸机下'},
  hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',note:'升压辅助 · 监测血压血糖'},
  caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；24h后维持5–10mg/kg q24h'},
- amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',freq:'st',note:'缓泵≥1h（滴速17ml/h）· 监测心率血压'},
- propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',freq:'st',note:'缓泵≥1h（滴速17ml/h）· 监测心率'},
+ amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'静推（干包）',freq:'once',load:true,loadRate:17,note:'缓泵≥1h · 监测心率血压'},
+ propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'静推（干包）',freq:'once',load:true,loadRate:17,note:'缓泵≥1h · 监测心率'},
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
@@ -682,6 +682,13 @@ function calcLoad(id){
 function calcPush(id){
   const g=DRUGS[id], cfg=PUSHCFG[id];
   const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
+  if(cfg.load){
+    const rEl=parseFloat($('rl_'+id).value);
+    const R=(isFinite(rEl)&&rEl>0)?rEl:(cfg.loadRate||17);
+    return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h ${cfg.route||'静推（干包）'} ${cfg.freq||'once'}`,
+      t2:`＝${f(dose,2)}${cfg.unit}`,
+      ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
+  }
   return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} ${cfg.freq||'st'}`,
     t2:`＝${f(dose,2)}${cfg.unit}`,
     ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
@@ -797,6 +804,7 @@ function cardHtml(id){
     const u=PUSHCFG[id].unit, def=PUSHCFG[id].def, step=PUSHCFG[id].step;
     pushSec=`<div id="sec_push_${id}" style="display:${c.form==='push'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="1">＋</button></div> ${u}</div>
+      ${PUSHCFG[id].load?`<div class="labeq">液速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rl_${id}" data-dir="-1">−</button><input data-act="loadrate" data-card="${id}" id="rl_${id}" type="number" inputmode="decimal" step="1" min="1" value="${PUSHCFG[id].loadRate||17}"><button type="button" class="stp" data-act="step" data-t="rl_${id}" data-dir="1">＋</button></div> ml/h</div>`:''}
       <div class="ordbox" id="ordp_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button>
@@ -1278,7 +1286,7 @@ function onInputLinkage(e){
     updCga(); renderBasket(); return;
   }
   const a=t.dataset.act;
-  if(a==='dose'||a==='rate'||a==='amprate'){
+  if(a==='dose'||a==='rate'||a==='amprate'||a==='loadrate'){
     if(a==='rate'||a==='amprate')S[t.dataset.card].rateTouched=true;
     const isMaintDose=t.id.indexOf('din_')===0;  /* 仅维持剂量框触发联动；dinp_(静推/负荷)/dinl_(首剂)不得改泵速 */
     if(a==='dose'&&isMaintDose&&!S[t.dataset.card].rateTouched){
