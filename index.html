@@ -392,7 +392,7 @@ const DRUGS={
   pharm:"长效糖皮质激素，生物半衰期36–54h，无盐皮质激素活性；抑制炎症介质与气道水肿；血浆半衰期短但药效持久，q12h即可。",
   adverse:"高血糖、高血压、感染风险↑、消化道出血（长程）；生长抑制（长程）；内生肌酐清除延迟一过性肥厚性心肌病（长程BPD方案需心超随访）；短程拔管预防剂量安全性良好。",
   compat:"NS、5%GS均可；不与碱性液混配；短程用完即停，勿骤停长程用药。"},
- insulin:{name:"胰岛素",en:"Insulin",unit:"IU/kg/h",def:0.03,step:"0.01",
+ insulin:{name:"胰岛素",en:"Insulin",unit:"IU/kg/h",def:0.03,step:"0.01",rateDiv:0.1,
   spec:"配比 1iu胰岛素:4g葡萄糖（10%GS组）",specMg:1,stockConc:1,
   utd:"新生儿高血糖：0.01–0.1IU/kg/h 持续泵入，从0.03–0.05起，血糖每1–2mmol/L 下调一档（uPIC/文献）；0.1ml/h=0.01iu/kg/h",
   hb:"未收录",
@@ -410,7 +410,7 @@ const DRUGS={
   pharm:"拮抗胰岛素的升糖激素：促进肝糖原分解与糖异生；起效快（静注数分钟）、半衰期短（8–18min）故需持续泵入；效果依赖肝糖原储备，营养不良/糖原贮积症效果差。",
   adverse:"恶心呕吐、低钾；血糖过高；长程泵入皮疹、钠潴留；停药后反跳性低血糖——先减糖速再撤药。",
   compat:"5%GS配制输注（库内固定袋口径）；独立通路；配后24h内用完。"},
- furosemide:{name:"呋塞米",en:"Furosemide",unit:"mg/kg/d",def:1,step:"0.1",
+ furosemide:{name:"呋塞米",en:"Furosemide",unit:"mg/kg/d",def:1,step:"0.1",rateDiv:10,
   spec:"20mg/2ml",specMg:20,stockConc:10,
   utd:"持续利尿 0.5–2mg/kg/d 泵入（稀释后0.05–0.2ml/h）；单次1mg/kg q6–24h（NeoFax/手册）",
   hb:"未收录",
@@ -419,7 +419,7 @@ const DRUGS={
   pharm:"袢利尿剂，抑制髓袢升支 Na-K-2Cl 同向转运；持续泵入利尿更平稳、电解质波动小于间断推注。",
   adverse:"低钾/低氯性碱中毒、低钠；耳毒性（快速推注风险高，持续泵入可降）；长程肾钙质沉着。每日查电解质。",
   compat:"NS、5%GS均可；pH>8 时与酸性药物沉淀；独立泵腔。"},
- torasemide:{name:"托拉塞米",en:"Torasemide",unit:"mg/kg/d",def:1,step:"0.1",
+ torasemide:{name:"托拉塞米",en:"Torasemide",unit:"mg/kg/d",def:1,step:"0.1",rateDiv:10,
   spec:"泽通 10mg/2ml",specMg:10,stockConc:5,
   utd:"持续利尿 0.5–2mg/kg/d 泵入（与呋塞米同口径）；单次0.5–1mg/kg qd（文献）",
   hb:"未收录",
@@ -613,7 +613,7 @@ const PUSHCFG={
  amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',note:'缓泵≥1h（滴速17ml/h）· 监测心率血压'},
  propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'负荷',note:'缓泵≥1h（滴速17ml/h）· 监测心率'},
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',note:'拔管后喉水肿/BPD · q12h · 监测血糖'},
- omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'应激性溃疡/消化道出血 · qd · 缓推'},
+ omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'应激性溃疡/消化道出血 · qd · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
  ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
 /* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配） */
@@ -622,7 +622,8 @@ function calcInsulin(id){
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* iu/kg/h */
-  const iuH=dose*W, R=dose*10, iu4=iuH*4;
+  const rEl=parseFloat($('rin_'+id).value);
+  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*10, iuH=dose*W, iu4=iuH*4;
   return {t1:`胰岛素${f2(R)}ml/h=${f2(dose,2)}iu/kg/h，维持24小时`,
     t2:`＝${f2(iuH)}iu/h · 每1–2h监测血糖`,
     prep:[`胰岛素 ${f2(iu4)}iu/4h 入10%葡萄糖组（配比 1iu胰岛素:4g糖）`,
@@ -636,7 +637,8 @@ function calcDrip(id){
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* mg/kg/d */
-  const R=dose*0.1, vol=R*24, mgDay=dose*W;
+  const rEl=parseFloat($('rin_'+id).value);
+  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*0.1, vol=R*24, mgDay=dose*W;
   return {t1:`${g.name}${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
     t2:`＝${f2(mgDay,2)}mg/d · 监测电解质与尿量`,
     prep:[`${g.name} ${f2(mgDay,2)}mg/24h`,
@@ -650,7 +652,8 @@ function calcGlucagon(id){
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* μg/kg/h */
-  const ugH=dose*W, R=ugH*16.8/1000;
+  const rEl=parseFloat($('rin_'+id).value);
+  const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*16.8/1000, ugH=dose*W;
   return {t1:`人高血糖素${f2(R)}ml/h=${f2(dose,2)}μg/kg/h，维持24小时`,
     t2:`＝${f2(ugH)}μg/h · 每1–2h监测血糖`,
     prep:[`人高血糖素 1mg（诺和生 1ml）入5%葡萄糖 16.8ml 成组`],
@@ -717,6 +720,7 @@ function cardHtml(id){
   const defR=f2(niceRate(rateOf(g.def,g)));
   const multi=dc.forms.length>1;
   if(dc.forms.length===1&&(dc.forms[0]==='ins'||dc.forms[0]==='drip'||dc.forms[0]==='glu')){
+    const defR2=dc.forms[0]==='glu'?f2(niceRate(g.def*W*16.8/1000)):defR;
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
       <span class="tri" id="tri_${id}">▸</span>
@@ -725,6 +729,7 @@ function cardHtml(id){
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="${g.step}" min="0" value="${g.def}"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ${g.unit}</div>
+      <div class="labeq">泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="-1">−</button><input data-act="rate" data-card="${id}" id="rin_${id}" type="number" inputmode="decimal" step="0.05" min="0" value="${defR2}"><button type="button" class="stp" data-act="step" data-t="rin_${id}" data-dir="1">＋</button></div> ml/h</div>
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@${dc.forms[0]}" id="add_${id}_${dc.forms[0]}">＋ 加医嘱</button>
@@ -1274,7 +1279,7 @@ function onInputLinkage(e){
       const id=t.dataset.card, g=DRUGS[id], d=parseFloat(t.value);
       if(isFinite(d)&&d>0){
         if(g.dynamic){ const r=$('rin_'+id); if(r)r.value=f2(d/10); }
-        else{ const sug=f2(niceRate(rateOf(d,g)));
+        else{ const sug=f2(niceRate(id==='glucagon'?d*W*16.8/1000:rateOf(d,g)));
           const r=$('rin_'+id); if(r)r.value=sug;
           const ar=$('arin_'+id); if(ar)ar.value=sug; }
       }
