@@ -77,10 +77,9 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .gico{font-size:19px; flex:0 0 auto;}
 .gsub{font-size:10.5px; color:var(--ink2); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .gmain{min-width:0; flex:1;}
-.gcnt{margin-left:auto; font-family:var(--mono); font-size:12px; color:#fff; background:var(--navy2);
-  border-radius:12px; padding:2px 9px; font-weight:600; flex:0 0 auto;}
+.gcnt{margin-left:auto; font-family:var(--mono); font-size:12px; color:#fff; background:var(--navy2);  border-radius:12px; padding:2px 9px; font-weight:600; flex:0 0 auto;}
+[id^="lbody_"] .card{margin:9px 0;}
 .group.open .ghead{border-bottom:1px dashed var(--line);}
-#lbody_0 .card, #lbody_1 .card, #lbody_2 .card, #lbody_3 .card, #lbody_4 .card{margin:9px 0;}
 .card{background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px 0;
   box-shadow:0 1px 4px rgba(20,30,50,.05); overflow:hidden;}
 .chead{display:flex; align-items:baseline; gap:7px; padding:8px 12px; min-height:33px; cursor:pointer; user-select:none;}
@@ -394,19 +393,19 @@ const DRUGS={
   adverse:"高血糖、高血压、感染风险↑、消化道出血（长程）；生长抑制（长程）；内生肌酐清除延迟一过性肥厚性心肌病（长程BPD方案需心超随访）；短程拔管预防剂量安全性良好。",
   compat:"NS、5%GS均可；不与碱性液混配；短程用完即停，勿骤停长程用药。"},
  insulin:{name:"胰岛素",en:"Insulin",unit:"IU/kg/h",def:0.03,step:"0.01",
-  spec:"原液稀释 0.1IU/ml",specMg:1,stockConc:1,
-  utd:"新生儿高血糖：0.01–0.1IU/kg/h 持续泵入，从0.03–0.05起，血糖每1–2mmol/L 下调一档（uPIC/文献）",
+  spec:"配比 1iu胰岛素:4g葡萄糖（10%GS组）",specMg:1,stockConc:1,
+  utd:"新生儿高血糖：0.01–0.1IU/kg/h 持续泵入，从0.03–0.05起，血糖每1–2mmol/L 下调一档（uPIC/文献）；0.1ml/h=0.01iu/kg/h",
   hb:"未收录",
-  hosp:"0.3ml/h=0.03iu/h 常见（0.1iu/ml 稀释液）",
+  hosp:"库内0.1–0.3ml/h=0.01–0.03iu/kg.h；铁律 1iu胰岛素+4g糖、胰岛素组每4小时弃液重配，停胰岛素连葡萄糖组同停",
   ind:"新生儿糖尿病/持续高血糖（血糖>10–14mmol/L 且液体治疗无效）。须每1–2h 监测血糖防低血糖。",
   pharm:"外源性人胰岛素，促进葡萄糖转运与糖原合成；新生儿清除个体差异大，稀释与泵速误差是低血糖主因。",
-  adverse:"低血糖（最高危：0.1iu/ml 稀释、独立通路、泵速双人核对）；低钾血症。",
-  compat:"NS稀释；原液易吸附管壁——用稀释液预充管路；禁与其他药共用通路。"},
+  adverse:"低血糖（最高危：独立通路、泵速双人核对、每1–2h监测血糖）；低钾血症。",
+  compat:"入10%葡萄糖组（1iu胰岛素:4g糖）；每4小时弃液重配；停胰岛素连葡萄糖组同停；稀释液预充管路防吸附；禁与其他药共用通路。"},
  glucagon:{name:"人高血糖素",en:"Glucagon",unit:"μg/kg/h",def:10,step:"2",
   spec:"诺和生 1mg/1ml",specMg:1,stockConc:1,
   utd:"顽固性/反复性低血糖（高胰岛素性）：5–20μg/kg/h 持续泵入，从10起按血糖滴定（儿科内分泌文献）",
   hb:"未收录",
-  hosp:"库内固定袋：0.65mg 入5%GS至24ml；0.1–1ml/h＝2–20μg/kg/h 逐档调（1ml/h≈16–20μg/kg/h 视体重）",
+  hosp:"库内配方：1mg 入5%葡萄糖 16.8ml 成组；走速0.7–8ml/h＝6–14μg/kg/h（中位10）逐档调",
   ind:"持续性/反复性低血糖的辅助（高胰岛素血症、贝-维综合征等），糖速不足以维持血糖时加用，为升糖「桥」治疗——为争取病因检查与手术（如局灶性胰岛素瘤切除）争取时间；须在充足葡萄糖输注基础上使用。",
   pharm:"拮抗胰岛素的升糖激素：促进肝糖原分解与糖异生；起效快（静注数分钟）、半衰期短（8–18min）故需持续泵入；效果依赖肝糖原储备，营养不良/糖原贮积症效果差。",
   adverse:"恶心呕吐、低钾；血糖过高；长程泵入皮疹、钠潴留；停药后反跳性低血糖——先减糖速再撤药。",
@@ -474,7 +473,7 @@ const DRUGS={
   ind:"RDS（早产儿肺透明膜病）一线治疗；胎粪吸入综合征、肺出血重症的抢救性给入。给入后立即下调呼吸机峰压防压力伤，并防一过性气道阻塞。",
   pharm:"天然猪肺磷脂制剂，降低肺泡表面张力、防止呼气末肺泡塌陷；经气管导管分体位注入，分布依赖注药手法与体位变换；起效数分钟（氧合迅速改善）。",
   adverse:"注药时一过性SpO₂下降/心动过缓（暂停注药即恢复）、急性气道阻塞；肺出血（极早产儿风险↑）；注后呼吸机参数需即刻重调。",
-  compat:"复温摇匀后抽吸（禁剧烈振荡）；双人核对剂量；单次气道内给入，注后1h内免吸痰。"},
+  compat:"复温摇匀后抽吸（禁剧烈振荡）；双人核对剂量；单次气道内给入，给药后禁吸痰6小时（库内护理配套口径）。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -616,20 +615,22 @@ const PUSHCFG={
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',note:'拔管后喉水肿/BPD · q12h · 监测血糖'},
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',note:'应激性溃疡/消化道出血 · qd · 缓推'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
- ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',note:'复温摇匀 · 注后1h免吸痰 · 100–200mg/kg'}};
-/* 胰岛素（0.1IU/ml 稀释液持续泵） */
+ ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'}};
+/* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配） */
 function calcInsulin(id){
   const g=DRUGS[id];
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
-  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* IU/kg/h */
-  const iuH=dose*W, R=iuH/0.1, vol=R*24;
-  return {t1:`胰岛素${f2(R)}ml/h＝${f2(iuH)}iu/h（0.1iu/ml），维持24小时`,
-    t2:`＝${f2(dose,2)} iu/kg/h · 每1–2h监测血糖`,
+  const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* iu/kg/h */
+  const iuH=dose*W, R=dose*10, iu4=iuH*4;
+  return {t1:`胰岛素${f2(R)}ml/h=${f2(dose,2)}iu/kg/h，维持24小时`,
+    t2:`＝${f2(iuH)}iu/h · 每1–2h监测血糖`,
+    prep:[`胰岛素 ${f2(iu4)}iu/4h 入10%葡萄糖组（配比 1iu胰岛素:4g糖）`,
+      `每4小时弃液重配 · 停胰岛素须连葡萄糖组同停`],
     ck:[`剂量核对：${f2(dose,2)} iu/kg/h×${W.toFixed(2)}kg＝<b>${f2(iuH)}iu/h</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>（0.1ml/h=0.01iu/kg/h）`], dose};
 }
-/* 呋塞米持续泵（0.1ml/h=1mg/kg/d 本院口径） */
+/* 呋塞米/托拉塞米持续泵（0.1ml/h=1mg/kg/d 本院口径，24小时匀速入） */
 function calcDrip(id){
   const g=DRUGS[id];
   const dinEl=$('din_'+id);
@@ -638,20 +639,23 @@ function calcDrip(id){
   const R=dose*0.1, vol=R*24, mgDay=dose*W;
   return {t1:`${g.name}${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
     t2:`＝${f2(mgDay,2)}mg/d · 监测电解质与尿量`,
+    prep:[`${g.name} ${f2(mgDay,2)}mg/24h`,
+      `${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(vol)}ml/24h 匀速入`],
     ck:[`剂量核对：${f2(dose,2)} mg/kg/d×${W.toFixed(2)}kg＝<b>${f2(mgDay,2)}mg/d</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
 }
-/* 人高血糖素持续泵（库内固定袋：0.65mg 入5%GS至24ml，1ml/h≈27μg/h） */
+/* 人高血糖素持续泵（库内配方：1mg 入5%葡萄糖 16.8ml 成组，1ml/h≈59.5μg/h） */
 function calcGlucagon(id){
   const g=DRUGS[id];
   const dinEl=$('din_'+id);
   const dEl=dinEl?parseFloat(dinEl.value):NaN;
   const dose=(isFinite(dEl)&&dEl>0)?dEl:g.def;  /* μg/kg/h */
-  const ugH=dose*W, R=ugH*24/650, vol=R*24;
-  return {t1:`人高血糖素${f2(R)}ml/h＝${f2(dose,2)}μg/kg/h（0.65mg/24ml袋），维持24小时`,
+  const ugH=dose*W, R=ugH*16.8/1000;
+  return {t1:`人高血糖素${f2(R)}ml/h=${f2(dose,2)}μg/kg/h，维持24小时`,
     t2:`＝${f2(ugH)}μg/h · 每1–2h监测血糖`,
+    prep:[`人高血糖素 1mg（诺和生 1ml）入5%葡萄糖 16.8ml 成组`],
     ck:[`剂量核对：${f2(dose,2)} μg/kg/h×${W.toFixed(2)}kg＝<b>${f2(ugH)}μg/h</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], dose};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>（库内走速0.7–8ml/h=6–14μg/kg/h）`], dose};
 }
 /* 特利首剂（20μg/kg 静推，半小时后接维持泵） */
 function calcLoad(id){
@@ -685,9 +689,9 @@ function linesOf(key){
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='ins'){const L=calcInsulin(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
+  if(form==='ins'){const L=calcInsulin(id); return {t1:L.t1,prep:[L.t2].concat(L.prep||[]),ck:L.ck};}
+  if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:[L.t2].concat(L.prep||[]),ck:L.ck};}
+  if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:[L.t2].concat(L.prep||[]),ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
 
@@ -836,37 +840,45 @@ function cardHtml(id){
     </div>
   </div>`;
 }
+/* 首页 7 框：两大类(血管活性/镇静镇痛,带子分类层) + 其余按系统直接一级（2026-10-13 用户拍板撤销"常用治疗药"大筐） */
+const L1META=[
+  {name:'血管活性药物',icon:'🫀',grps:[0,1,2]},
+  {name:'镇静镇痛药',icon:'😴',grps:[8,9,10]},
+  {name:'激素·内分泌',grps:[3]},
+  {name:'抗惊厥',grps:[4]},
+  {name:'利尿',grps:[5]},
+  {name:'消化道',grps:[6]},
+  {name:'呼吸系统',grps:[7]},
+];
 function renderCards(){
-  /* L1: 两大类框 */
-  const l1meta=[{p:0,name:'血管活性药物',icon:'🫀'},{p:1,name:'镇静镇痛药',icon:'😴'},{p:2,name:'常用治疗药',icon:'⚕'}];
-  $('viewL1').innerHTML=l1meta.map(m=>{
-    const grps=GROUPS.filter(g=>g.page===m.p);
+  $('viewL1').innerHTML=L1META.map((m,mi)=>{
+    const grps=m.grps.map(gi=>GROUPS[gi]);
     const n=grps.reduce((a,g)=>a+g.cards.length,0);
-    const sub=grps.map(g=>g.title).join(' · ');
-    return `<div class="group" data-act="l1" data-l1="${m.p}">
-      <div class="ghead"><span class="gico">${m.icon}</span>
+    const sub=m.grps.length>1?grps.map(g=>g.title).join(' · '):grps[0].cards.map(id=>DRUGS[id].name).join(' · ');
+    const act=m.grps.length>1?`data-act="l1" data-l1="${mi}"`:`data-act="cat" data-grp="${m.grps[0]}"`;
+    return `<div class="group" ${act}>
+      <div class="ghead"><span class="gico">${m.icon||'⚕'}</span>
         <div class="gmain"><div class="gtitle2">${m.name}</div><div class="gsub">${sub}</div></div>
         <span class="gcnt">${n}</span>
       </div></div>`;
   }).join('');
-  /* L2: 分类框(按大类容器), L3: 药列表 */
+  /* 二级分类页：仅两大类有子分类层 */
   $('viewL2').innerHTML=`<div class="backrow" data-act="backl1">‹ 返回</div>`+
-    [0,1,2].map(p=>`<div id="l2g_${p}" style="display:none">`+
-      GROUPS.map((gr,gi)=>gr.page===p?`<div class="group" data-act="cat" data-grp="${gi}">
+    L1META.map((m,mi)=>m.grps.length>1?`<div id="l2g_${mi}" style="display:none">`+
+      m.grps.map(gi=>{const gr=GROUPS[gi];return `<div class="group" data-act="cat" data-grp="${gi}">
         <div class="ghead">
           <span class="gtri">▸</span>
           <div class="gmain"><div class="gtitle2">${gr.title}</div><div class="gsub">${gr.cards.map(id=>DRUGS[id].name).join(' · ')}</div></div>
           <span class="gcnt">${gr.cards.length}</span>
-        </div></div>`:'').join('')+`</div>`).join('');
+        </div></div>`;}).join('')+`</div>`:'').join('');
   $('viewL3').innerHTML=GROUPS.map((gr,gi)=>`<div id="lwrap_${gi}" style="display:none">
-      <div class="backrow" data-act="backcat" data-grp="${gi}">‹ ${l1meta[gr.page].name}</div>
+      <div class="backrow" data-act="backcat" data-grp="${gi}">‹ 返回</div>
       <div class="backrow" data-act="backlist" data-grp="${gi}" id="backdrug_${gi}" style="display:none">‹ 返回列表</div>
       <div id="lbody_${gi}">${gr.cards.map(id=>cardHtml(id)).join('')}</div>
     </div>`).join('');
 }
-/* ===== drill-down 四级视图：大类 → 分类 → 药列表 → 详情（切换+退出） ===== */
+/* ===== drill-down：首页7框 → (两大类经分类页) → 药列表 → 详情 ===== */
 var view={l1:null, grp:null, drug:null};
-const L1NAME=['血管活性药物','镇静镇痛药'];
 function show(a,b,c){
   $('viewL1').style.display=a?'block':'none';
   $('viewL2').style.display=b?'block':'none';
@@ -875,7 +887,7 @@ function show(a,b,c){
 function openL1(x){
   view={l1:x, grp:null, drug:null};
   show(false,true,false);
-  [0,1,2].forEach(p=>{$('l2g_'+p).style.display=p===x?'block':'none';});  /* 三大类——[0,1]是两大类时代的残留,常用治疗药页曾空白 */
+  L1META.forEach((m,mi)=>{ if(m.grps.length>1){const el=$('l2g_'+mi); if(el)el.style.display=mi===x?'block':'none';} });
   window.scrollTo(0,0);
 }
 function backL1(){
@@ -883,14 +895,12 @@ function backL1(){
   show(true,false,false);
   window.scrollTo(0,0);
 }
-
 function resetView(){
   if(view.drug)exitDrugSilent();
   if(view.grp!==null)backCat();
   else if(view.l1!==null)backL1();
 }
 function openCat(gi){
-  view.l1=GROUPS[gi].page;
   view.grp=gi;
   show(false,false,true);
   GROUPS.forEach((g,i)=>{$('lwrap_'+i).style.display=i===gi?'block':'none';});
@@ -898,8 +908,8 @@ function openCat(gi){
 }
 function backCat(){
   view.grp=null;
-  show(false,true,false);
-  [0,1,2].forEach(p=>{$('l2g_'+p).style.display=p===view.l1?'block':'none';});
+  if(view.l1!==null){openL1(view.l1); return;}
+  show(true,false,false);
   window.scrollTo(0,0);
 }
 function enterDrug(id){
@@ -928,7 +938,7 @@ function updCard(id){
   const dcU=DRUGCARDS.find(x=>x.id===id);
   if(dcU&&dcU.forms.length===1&&(dcU.forms[0]==='ins'||dcU.forms[0]==='drip'||dcU.forms[0]==='glu')){
     const L=dcU.forms[0]==='ins'?calcInsulin(id):dcU.forms[0]==='drip'?calcDrip(id):calcGlucagon(id);
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${[L.t2].concat(L.prep||[]).join('<br>')}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
@@ -1085,6 +1095,8 @@ function gotoDrug(key){
   const dc=DRUGCARDS.find(x=>x.id===id); if(!dc)return;
   const gi=GROUPS.findIndex(g=>g.cards.includes(id)); if(gi<0)return;
   go(0);  /* 🔴 固定回药物浏览页——go()的页号(pMain/p2)与分类page号(0/1/2)是两套语义，go(dc.page)会让常用治疗药跳进医嘱单、page1白屏 */
+  const mi=L1META.findIndex(m=>m.grps.includes(gi)&&m.grps.length>1);
+  if(mi>-1)openL1(mi);  /* 大类药先亮分类层，返回键才有正确落点 */
   openCat(gi);
   enterDrug(id);
   if(dc.forms.includes(form))setForm(id,form);  /* 同步sec显示——只改S.form会停在上次的区块 */
@@ -1135,11 +1147,11 @@ function renderBasket(){
     const L=linesOf(k);
     const ck=L.ck&&L.ck.length?`<div class="ckbox"><div class="t">核对（体重 ${W.toFixed(2)}kg）</div>${L.ck.map(r=>`<div class="r">${r}</div>`).join('')}</div>`:'';
     return `<div class="ordbox" style="position:relative"><button class="del" data-act="del" data-key="${k}">✕</button>
-      <div class="o1">${i+1}. ${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div></div>${ck}
+      <div class="o1">${i+1}、${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div></div>${ck}
       <div class="ordops"><button class="linklike" data-act="editdrug" data-key="${k}">✎ 改药 ›</button></div>`;
   }).join(''):`<div style="text-align:center;color:var(--ink2);padding:22px 0;font-size:13px">（空）—— 展开药物输剂量后点【＋加医嘱】</div>`;
   $('ordTxt').value=`【新生儿临时医嘱】${ms.length?ms.join(' '):'体重'+W.toFixed(2)+'kg'} ${new Date().toLocaleDateString('zh-CN')}\n`+
-    ks.map(k=>{const L=linesOf(k); return [L.t1].concat(L.prep||[]).join('\n');}).join('\n')+'\n（须上级医师核对后录入）';
+    ks.map((k,i)=>{const L=linesOf(k); return (i+1)+'、'+[L.t1].concat(L.prep||[]).join('\n');}).join('\n')+'\n（须上级医师核对后录入）';
 }
 
 /* ================= 长图（780px 黑白简框） ================= */
@@ -1163,7 +1175,7 @@ function makeImg(){
     items.forEach((it,i)=>{
       var boxTop=yy;
       x.fillStyle='#000'; x.font='bold 20px monospace';
-      var yc=wrap((i+1)+'. '+it.L.t1,pad+12,boxTop+28,innerW,28,'bold 20px monospace');
+      var yc=wrap((i+1)+'、'+it.L.t1,pad+12,boxTop+28,innerW,28,'bold 20px monospace');
       if(it.L.prep){x.fillStyle='#333';it.L.prep.forEach(pl=>{yc=wrap(pl,pad+12,yc+2,innerW,24,'16px monospace');});}
       var bh=yc-boxTop+10;
       x.strokeStyle='#000';x.lineWidth=1.5;x.strokeRect(pad,boxTop,Wc-2*pad,bh);
