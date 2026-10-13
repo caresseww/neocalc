@@ -669,6 +669,15 @@ const DRUGS={
   pharm:"Na-K-ATP酶抑制剂，正性肌力＋降低房室传导；新生儿肾清除慢、半衰期长；低钾加重中毒——电解质须稳定。",
   adverse:"①中毒：呕吐、心率过缓/传导阻滞、室性心律失常（治疗窗窄）；②低钾/低镁时中毒风险↑；③血药浓度监测是安全底线。",
   compat:"0.005%口服溶液换算：10μg＝0.2ml（50μg/ml）；研配鼻饲/口服；与胺碘酮/普萘洛尔合用须减量并监护；定期查血药浓度与电解质。"},
+ sildenafil:{name:"西地那非",en:"Sildenafil",unit:"mg/kg",def:1,step:"0.25",csum:"25mg/片（研配）",
+  spec:"枸橼酸西地那非片（研配鼻饲）",
+  utd:"PPHN 撤离 NO 吸入的口服降肺压桥接：0.5–1mg/kg/次 q6–8h 起始、按氧合与血压滴定（文献/UpToDate 儿童肺高压）",
+  hb:"未收录（按氧合与血压滴定）",
+  hosp:"库内 270条/95人：q8h 为主（136条）q6h 次之；单次 0.4–3.5mg（p50 2mg）绝对量；配体重实测（n=86）：0.59–1.0mg/kg/次（p50 0.86）≈2.6–3.5mg/kg/d；鼻饲为主",
+  ind:"PPHN 撤离一氧化氮（NO）吸入时的口服降肺压桥接，防肺高压反跳；撤离须逐步减量不可骤停。用药期间监测体循环血压。",
+  pharm:"5型磷酸二酯酶（PDE5）抑制剂，升高 cGMP→肺血管平滑肌松弛、选择性降低肺动脉压；口服吸收快（约1小时），肝代谢。",
+  adverse:"①全身低血压（主要顾虑，与米力农/NO 合用降压叠加——持续血压监测）；②骤停反跳（肺高压危象，撤离须逐减）；③消化道反应；④视觉异常（长程）。",
+  compat:"研配鼻饲/口服；与 NO/米力农序贯或合用时监测血压；撤 NO 时先起步口服再逐减 NO，停本药也逐减。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -682,6 +691,7 @@ const DRUGCARDS=[
  {id:'alprostadil',page:0,title:'前列地尔',kind:'maint',drug:'alprostadil',forms:['maint']},
  {id:'amiodarone',page:0,forms:['push','maint']},
  {id:'propafenone',page:0,forms:['push','maint']},
+ {id:'sildenafil',page:0,title:'西地那非',kind:'maint',drug:'sildenafil',forms:['qd']},
  {id:'isoprenaline',page:0,forms:['maint']},
  {id:'hydrocortisone',page:2,title:'琥珀氢考',kind:'maint',drug:'hydrocortisone',forms:['push']},
  {id:'dexamethasone',page:2,forms:['push']},
@@ -724,7 +734,7 @@ const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne','isoprenaline']},
- {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil']},
+ {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil','sildenafil']},
  {page:0,title:'抗心律失常',cards:['amiodarone','propafenone','propranolol','digoxin']},
  {page:2,title:'激素·内分泌',cards:['hydrocortisone','dexamethasone','insulin','glucagon','levothyroxine']},
  {page:2,title:'抗惊厥',cards:['phenobarb','levetiracetam']},
@@ -763,6 +773,7 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  ivig:'丙种球蛋白 丙球 免疫球蛋白 IVIG',
  fibg:'纤维蛋白原 人纤维蛋白原',
  pcc:'凝血酶原复合物 PCC 凝血酶原',
+ sildenafil:'西地那非 降肺压 PPHN 肺高压 撤NO',
  spironolactone:'螺内酯 安体舒通 保钾利尿 口服利尿',
  hydrochlorothiazide:'氢氯噻嗪 双氢克尿噻 噻嗪 利尿',
  levothyroxine:'左甲状腺素 优甲乐 甲状腺 甲减 替代',
@@ -872,6 +883,7 @@ const PUSHCFG={
 const QDCFG={
  caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'},
  spironolactone:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'保钾 · 常与氢氯噻嗪配对 · 监测血钾'},
+ sildenafil:{def:1,step:0.25,unit:'mg/kg',out:'mg',freq:'q8h',route:'口服/鼻饲',note:'PPHN 撤 NO 桥接 · 库内实测0.59–1.0mg/kg/次 · 监测血压 · 撤药逐减'},
  hydrochlorothiazide:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'排钾 · 与螺内酯配对互补'},
  levothyroxine:{def:10,step:2.5,max:50,unit:'μg',out:'μg',freq:'qd',route:'口服/鼻饲',abs:true,note:'晨起顿服 · 按 TSH/FT4 滴定 · 与奶液铁钙间隔'},
  ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,modes:[{k:'d1',label:'第1剂 DAY1',def:10},{k:'d23',label:'第2·3剂 DAY2-3',def:5}],note:'PDA三剂法间隔24h×3 · 静注路径另见 8mg＋5%葡萄糖1ml'},
