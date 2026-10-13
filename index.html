@@ -627,10 +627,10 @@ function calcPump(id){
   const dmEl=$('dinm_'+id);
   const dmV=parseFloat(dmEl.value);
   const dm=(isFinite(dmV)&&dmV>0)?dmV:g.def;  /* 维持 μg/kg/min */
-  const tube=(5+1.44*dm)*W;                   /* 管内药量=负荷5mg/kg+24h维持量，配至50ml */
-  const R1=250/(5+1.44*dm);                   /* 负荷段液速：1小时泵完负荷量 */
-  const R2=3*dm/(5+1.44*dm);                  /* 维持段液速：续同管 */
-  return {t1:`${g.name} ${f2(5*W)}mg 滴速${f2(R1)}ml/h 静推 once`,
+  const tube=(dl+1.44*dm)*W;                  /* 管内药量=负荷量+24h维持量，配至50ml */
+  const R1=50*dl/(dl+1.44*dm);                /* 负荷段液速：1小时泵完负荷量 */
+  const R2=3*dm/(dl+1.44*dm);                 /* 维持段液速：续同管 */
+  return {t1:`${g.name} ${f2(dl*W)}mg 滴速${f2(R1)}ml/h 静推 once`,
     prep:[`${g.name}${f2(R2)}ml/h=${f2(dm,2)}μg/kg/min，续上组`,
       `${g.name} ${f2(tube,2)}mg（原液 ${f2(tube*g.stockMlPerMg,2)}ml）`,
       `5%葡萄糖 至 50ml`],
