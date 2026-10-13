@@ -883,7 +883,7 @@ const PUSHCFG={
 const QDCFG={
  caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'},
  spironolactone:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'保钾 · 常与氢氯噻嗪配对 · 监测血钾'},
- sildenafil:{def:1,step:0.25,unit:'mg/kg',out:'mg',freq:'q8h',route:'口服/鼻饲',modes:[{k:'q8',label:'q8h',def:1,freq:'q8h'},{k:'q6',label:'q6h',def:1,freq:'q6h'}],note:'PPHN 撤 NO 桥接 · 库内实测0.59–1.0mg/kg/次 · 监测血压 · 撤药逐减'},
+ sildenafil:{def:1,step:0.25,unit:'mg/kg',out:'mg',freq:'q8h',route:'口服/鼻饲',freqOptions:['q8h','q6h'],note:'PPHN 撤 NO 桥接 · 库内实测0.59–1.0mg/kg/次 · 监测血压 · 撤药逐减'},
  hydrochlorothiazide:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'排钾 · 与螺内酯配对互补'},
  levothyroxine:{def:10,step:2.5,max:50,unit:'μg',out:'μg',freq:'qd',route:'口服/鼻饲',abs:true,note:'晨起顿服 · 按 TSH/FT4 滴定 · 与奶液铁钙间隔'},
  ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,modes:[{k:'d1',label:'第1剂 DAY1',def:10},{k:'d23',label:'第2·3剂 DAY2-3',def:5}],note:'PDA三剂法间隔24h×3 · 静注路径另见 8mg＋5%葡萄糖1ml'},
@@ -897,6 +897,8 @@ function calcQd(id){
   const g=DRUGS[id], cfg=QDCFG[id];
   let dv=cfg.def, fq=cfg.freq||'qd';
   if(cfg.modes){const mm=cfg.modes.find(m=>m.k===(QMODE[id]||cfg.modes[0].k)); if(mm){dv=mm.def!==undefined?mm.def:cfg.def; fq=mm.freq||fq;}}
+  const selEl=$('selq_'+id);
+  if(cfg.freqOptions&&selEl&&selEl.value){fq=selEl.value;}
   const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:dv;
   const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
   const rt=cfg.route?` ${cfg.route}`:'';
@@ -1285,7 +1287,7 @@ function cardHtml(id){
     const qTabs=q.modes?(()=>{
       const cur=QMODE[id]||q.modes[0].k;
       return `<div class="modetabs" id="qm_${id}">`+q.modes.map(m=>`<button type="button" data-act="qmode" data-card="${id}" data-mode="${m.k}" class="${cur===m.k?'on':''}">${m.label}</button>`).join('')+`</div>`;
-    })():'';
+    })():(q.freqOptions?`<div class="labeq">频次 <select data-card="${id}" id="selq_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+q.freqOptions.map(f=>`<option ${f===q.freq?'selected':''}>${f}</option>`).join('')+`</select></div>`:'');
     const qdef=(q.modes&&QMODE[id])?(q.modes.find(m=>m.k===QMODE[id])||q.modes[0]).def:q.def;
     qdSec=`<div id="sec_qd_${id}" style="display:${c.form==='qd'?'block':'none'}">
       ${qTabs}
@@ -1806,6 +1808,7 @@ function onInputLinkage(e){
   else if(a==='resus'){updCard('epi');}
 }
 document.addEventListener('input',onInputLinkage);
+document.addEventListener('change',e=>{const t=e.target; if(t&&t.id&&t.id.indexOf('selq_')===0){updCard(t.id.slice(5));}});
 document.addEventListener('focusout',e=>{
   if(e.target.id==='wt')$('wt').value=String(W); /* 失焦时框值归一为实际计算体重 */
 });
