@@ -359,7 +359,7 @@ const DRUGS={
   spec:"150mg/3ml（50mg/ml）",specMg:150,stockConc:50,
   utd:"SVT/VT：负荷5mg/kg 缓泵≥1h；维持5–15μg/kg/min 按反应滴定（NeoFax/Starship）",
   hb:"未收录",
-  hosp:"库内维持0.2–1.25ml/h＝1–12.5μg/kg/min（1ml/h=10μg/kg/min 口径袋最常见）；负荷5–24mg 缓泵（滴速17ml/h）",
+  hosp:"库内模式：每日配一管（负荷5–60mg）先 17ml/h 快段，续上组转维持慢速 0.2–1.25ml/h＝1–12.5μg/kg/min（1ml/h=10μg/kg/min 袋最常见），次日弃余重配",
   ind:"室上性/室性心动过速的药物复律与维持窦律、电复律后巩固；对其他抗心律失常药无效或不宜时的一线选择。甲状腺疾病、严重肝损害慎用。",
   pharm:"III类抗心律失常药（钾通道为主，兼钠/钙通道与β阻断）；起效慢、半衰期极长（数天至数周），蓄积明显；新生儿经肝CYP代谢慢，随访甲状腺功能。",
   adverse:"心动过缓、低血压（负荷期）；长程：甲减/甲亢、肝酶升高、角膜色素沉着、肺纤维化（罕见）；外周静脉易静脉炎，宜中心静脉。",
@@ -369,7 +369,7 @@ const DRUGS={
   spec:"35mg/10ml（3.5mg/ml）",specMg:35,stockConc:3.5,
   utd:"SVT：负荷5mg/kg 缓泵≥1h；维持泵入4–6.4μg/kg/min（文献/库内系列）",
   hb:"未收录",
-  hosp:"库内负荷缓泵5.8–24mg（滴速17ml/h，≈5mg/kg）；维持泵入0.5–0.8ml/h＝4–6.4μg/kg/min（1ml/h=8μg/kg/min）",
+  hosp:"库内模式：负荷缓泵5.8–24mg 先 17ml/h 快段，续上组转维持慢速 0.5–0.8ml/h＝4–6.4μg/kg/min（1ml/h=8μg/kg/min）",
   ind:"室上性心动过速复律与预防复发（无器质性心脏病者）、WPW综合征。器质性心脏病/心衰/传导阻滞禁用。",
   pharm:"Ic类抗心律失常药，阻断快钠通道减慢心内传导，兼轻β阻断作用；肝首过效应强（口服生物利用度个体差异大），新生儿清除慢注意蓄积。",
   adverse:"低血压、心动过缓、传导阻滞；促心律失常作用；加重心衰；口干、头晕、味觉异常。",
@@ -612,8 +612,8 @@ const PUSHCFG={
  vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'镇静确保后给 · 呼吸机下'},
  hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',note:'升压辅助 · 监测血压血糖'},
  caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；24h后维持5–10mg/kg q24h'},
- amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'静推（干包）',freq:'once',load:true,loadRate:17,note:'缓泵≥1h · 监测心率血压'},
- propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',route:'静推（干包）',freq:'once',load:true,loadRate:17,note:'缓泵≥1h · 监测心率'},
+ amiodarone:{def:5,step:1,unit:'mg/kg',out:'mg',rateText:'滴速17ml/h',freq:'once',note:'配好一管先快后慢 · 监测心率血压'},
+ propafenone:{def:5,step:1,unit:'mg/kg',out:'mg',rateText:'滴速17ml/h',freq:'once',note:'配好一管先快后慢 · 监测心率'},
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
@@ -682,10 +682,8 @@ function calcLoad(id){
 function calcPush(id){
   const g=DRUGS[id], cfg=PUSHCFG[id];
   const dEl=parseFloat($('dinp_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
-  if(cfg.load){
-    const rEl=parseFloat($('rl_'+id).value);
-    const R=(isFinite(rEl)&&rEl>0)?rEl:(cfg.loadRate||17);
-    return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h ${cfg.route||'静推（干包）'} ${cfg.freq||'once'}`,
+  if(cfg.rateText){
+    return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.rateText} ${cfg.route||'静推'} ${cfg.freq||'once'}`,
       prep:[],
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
@@ -804,7 +802,6 @@ function cardHtml(id){
     const u=PUSHCFG[id].unit, def=PUSHCFG[id].def, step=PUSHCFG[id].step;
     pushSec=`<div id="sec_push_${id}" style="display:${c.form==='push'?'block':'none'}">
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinp_${id}" type="number" inputmode="decimal" step="${step}" min="0" value="${def}"><button type="button" class="stp" data-act="step" data-t="dinp_${id}" data-dir="1">＋</button></div> ${u}</div>
-      ${PUSHCFG[id].load?`<div class="labeq">液速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="rl_${id}" data-dir="-1">−</button><input data-act="loadrate" data-card="${id}" id="rl_${id}" type="number" inputmode="decimal" step="1" min="1" value="${PUSHCFG[id].loadRate||17}"><button type="button" class="stp" data-act="step" data-t="rl_${id}" data-dir="1">＋</button></div> ml/h</div>`:''}
       <div class="ordbox" id="ordp_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrp_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@push" id="add_${id}_push">＋ 加医嘱</button>
