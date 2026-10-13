@@ -1369,12 +1369,12 @@ function cardHtml(id){
 const L1META=[
   {name:'循环系统用药',icon:'🫀',grps:[0,1,2,14]},
   {name:'神经系统用药',icon:'🧠',grps:[8,9,10,11,4]},
-  {name:'利尿药',icon:'💧',grps:[5,15]},
   {name:'呼吸系统用药',icon:'🫁',grps:[7]},
   {name:'消化系统用药',icon:'🍼',grps:[6]},
   {name:'内分泌及代谢用药',icon:'💉',grps:[3,16,17]},
-  {name:'止血药',icon:'🩹',grps:[12]},
   {name:'血液制品',icon:'🩸',grps:[13]},
+  {name:'止血药',icon:'🩹',grps:[12]},
+  {name:'利尿药',icon:'💧',grps:[5,15]},
 ];
 function renderCards(){
   $('viewL1').innerHTML=L1META.map((m,mi)=>{
