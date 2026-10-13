@@ -2145,6 +2145,7 @@ function updCard(id){
   /* 抗感染专属卡 */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='ab'){
     const L=calcAb(id);
+    if(!S[id].abzMan){const bz=$('dabz_'+id); if(bz&&!bz.value)bz.value=L.rec;}
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
