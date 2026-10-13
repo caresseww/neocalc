@@ -562,7 +562,7 @@ function calcH24(id){
     const rEl=parseFloat($('rin_'+id).value);
     const R=(isFinite(rEl)&&rEl>0)?rEl:niceRate(dose/10);
     return {t1:`特利加压素${f2(R)}ml/h=${f(dose,2)}ug/kg/hr，维持12小时`,
-      prep:[`特利加压素 ${f(bagMg,2)}mg，入0.9%氯化钠至12ml`,`0.9%氯化钠或5%葡萄糖 弃余量`],
+      prep:[`特利加压素 ${f(bagMg,2)}mg`, `0.9%氯化钠 至 12ml`],
       ck:[`剂量核对：${f(dose,2)} μg/kg/h×${W.toFixed(2)}kg×12h＝<b>${f(dose*W*12/1000,2)}mg</b>（12h袋）`,
           `液体核对：泵速<b>${f2(R)}ml/h</b>；12小时入液<b>${f2(R*12)}ml</b>`], R, dose};
   }
@@ -646,7 +646,7 @@ function calcInsulinH24(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*10, iuH=dose*W;
   return {t1:`胰岛素${f2(R)}ml/h=${f2(dose,2)}iu/kg/h，维持24小时`,
-    prep:[`胰岛素 ${f2(iuH*24,2)}iu/24h`, `10%葡萄糖 ${f2(iuH*960,1)}ml，24小时匀速`],
+    prep:[`胰岛素 ${f2(iuH*24,2)}iu/24h`, `10%葡萄糖 ${f2(iuH*960,1)}ml/24h`],
     ck:[`剂量核对：${f2(dose,2)} iu/kg/h×${W.toFixed(2)}kg＝<b>${f2(iuH)}iu/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>（0.1ml/h=0.01iu/kg/h）`], R, dose};
 }
@@ -658,7 +658,7 @@ function calcInsulinAmp(id){
   const rEl=parseFloat($('arin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*4, act=R*0.25/W;  /* 组液 1iu＋10%葡萄糖 40ml（1iu:4g糖） */
   return {t1:`胰岛素${f2(R)}ml/h=${f2(act,2)}iu/kg/h，维持4小时`,
-    prep:[`胰岛素 1iu`, `10%葡萄糖 40ml，4小时匀速`],
+    prep:[`胰岛素 1iu`, `10%葡萄糖 40ml/4h`],
     ck:[`剂量核对：泵速${f2(R)}ml/h×0.25iu/ml÷${W.toFixed(2)}kg＝<b>${f2(act,2)}iu/kg/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；4小时入液<b>${f2(R*4)}ml</b>`], R, dose:act};
 }
@@ -671,7 +671,7 @@ function calcDrip(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*0.1, vol=R*24, mgDay=dose*W;
   return {t1:`${g.name}${f2(R)}ml/h=${f2(dose,2)}mg/kg/d，维持24小时`,
-    prep:[`${g.name} ${f2(mgDay,2)}mg/24h 入${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(vol)}ml，24小时匀速`],
+    prep:[`${g.name} ${f2(mgDay,2)}mg/24h`, `${g.diluent||'0.9%氯化钠或5%葡萄糖'} ${f2(vol)}ml/24h`],
     ck:[`剂量核对：${f2(dose,2)} mg/kg/d×${W.toFixed(2)}kg＝<b>${f2(mgDay,2)}mg/d</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>；24小时入液<b>${f(vol,1)}ml</b>`], R, dose};
 }
@@ -684,7 +684,7 @@ function calcGlucagon(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*16.8/1000, ugH=dose*W;
   return {t1:`人高血糖素${f2(R)}ml/h=${f2(dose,2)}μg/kg/h，维持24小时`,
-    prep:[`人高血糖素 1mg（诺和生 1ml）入5%葡萄糖 16.8ml 成组`],
+    prep:[`人高血糖素 1mg（诺和生 1ml）`, `5%葡萄糖 16.8ml`],
     ck:[`剂量核对：${f2(dose,2)} μg/kg/h×${W.toFixed(2)}kg＝<b>${f2(ugH)}μg/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>（库内走速0.7–8ml/h=6–14μg/kg/h）`], dose};
 }
