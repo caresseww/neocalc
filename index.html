@@ -686,11 +686,11 @@ function calcPush(id){
     const rEl=parseFloat($('rl_'+id).value);
     const R=(isFinite(rEl)&&rEl>0)?rEl:(cfg.loadRate||17);
     return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h ${cfg.route||'静推（干包）'} ${cfg.freq||'once'}`,
-      t2:`＝${f(dose,2)}${cfg.unit}`,
+      prep:[],
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
   return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.route||'静推'} ${cfg.freq||'st'}`,
-    t2:`＝${f(dose,2)}${cfg.unit}`,
+    prep:[],
     ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
 }
 function calcResus(rt){
@@ -991,7 +991,7 @@ function updCard(id){
   let pushDose=null;
   if(dcU&&dcU.forms.includes('push')){
     const L=calcPush(id);
-    $('ordp_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.t2}</div>`;
+    $('ordp_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
     $('ckrp_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     pushDose=L.dose;
   }
