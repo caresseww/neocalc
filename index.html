@@ -429,7 +429,7 @@ const DRUGS={
   spec:"20mg/2ml",specMg:20,stockConc:10,
   utd:"持续利尿 0.5–2mg/kg/d 泵入（稀释后0.05–0.2ml/h）；单次1mg/kg q6–24h（NeoFax/手册）",
   hb:"未收录",
-  hosp:"0.1ml/h=1mg/kg.d（本院主流）；0.2ml/h=2mg/kg.d",
+  hosp:"持续泵入 0.1ml/h=1mg/kg.d（本院主流），0.2ml/h=2mg/kg.d；单次静推 0.5–1mg/kg（血制品输一半时速尿配套最高频 1mg×99）",
   ind:"液体超负荷/BPD 肺水肿的持续利尿；心力衰竭辅助。每日记尿量与体重，监测电解质。",
   pharm:"袢利尿剂，抑制髓袢升支 Na-K-2Cl 同向转运；持续泵入利尿更平稳、电解质波动小于间断推注。",
   adverse:"低钾/低氯性碱中毒、低钠；耳毒性（快速推注风险高，持续泵入可降）；长程肾钙质沉着。每日查电解质。",
@@ -598,7 +598,7 @@ const DRUGCARDS=[
  {id:'insulin',page:2,title:'胰岛素',kind:'maint',drug:'insulin',forms:['maint']},
  {id:'glucagon',page:2,forms:['maint']},
  {id:'phenobarb',page:2,forms:['push']},
- {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['maint']},
+ {id:'furosemide',page:2,title:'呋塞米',kind:'maint',drug:'furosemide',forms:['push','maint']},
  {id:'torasemide',page:2,forms:['maint']},
  {id:'octreotide',page:2,title:'奥曲肽',kind:'maint',drug:'octreotide',forms:['maint']},
  {id:'omeprazole',page:2,forms:['push']},
@@ -753,7 +753,8 @@ const PUSHCFG={
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
  ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',freq:'st',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'},
  etamsylate:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'静滴',note:'出血倾向辅助 · 库内静滴伴滴速5–18ml/h · 大体重固定写法125/250mg'},
- hemocoag:{def:0.5,step:0.05,unit:'iu',out:'iu',freq:'st',abs:true,note:'静推为主 · 可气管内/胃管内局部 · 0.25–1iu · 不替代成分输血'}};
+ hemocoag:{def:0.5,step:0.05,unit:'iu',out:'iu',freq:'st',abs:true,note:'静推为主 · 可气管内/胃管内局部 · 0.25–1iu · 不替代成分输血'},
+ furosemide:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'st',note:'单次利尿 0.5–1mg/kg · 库内亦见 q12h/q8h · 血制品输一半时速尿即此用法'}};
 /* 分频次维持形式（长嘱式：药 剂量 途径 频次） */
 const QDCFG={
  caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'}};
