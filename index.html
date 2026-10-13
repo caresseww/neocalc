@@ -631,10 +631,11 @@ function calcPump(id){
   const R1=250/(5+1.44*dm);                   /* 负荷段液速：1小时泵完负荷量 */
   const R2=3*dm/(5+1.44*dm);                  /* 维持段液速：续同管 */
   return {t1:`${g.name} ${f2(5*W)}mg 滴速${f2(R1)}ml/h 静推 once`,
-    prep:[`续同管：${g.name}${f2(R2)}ml/h=${f2(dm,2)}μg/kg/min`,
-      `${g.name} ${f2(tube,2)}mg（原液 ${f2(tube*g.stockMlPerMg,2)}ml）＋5%葡萄糖 至 50ml · 次日弃余重配`],
+    prep:[`${g.name}${f2(R2)}ml/h=${f2(dm,2)}μg/kg/min，续上组`,
+      `${g.name} ${f2(tube,2)}mg（原液 ${f2(tube*g.stockMlPerMg,2)}ml）`,
+      `5%葡萄糖 至 50ml`],
     ck:[`负荷核对：滴速${f2(R1)}ml/h×1小时＝<b>${f2(5*W)}mg</b>（5mg/kg）`,
-        `维持核对：滴速<b>${f2(R2)}ml/h</b>＝${f2(dm,2)}μg/kg/min（续同管转慢速）`], dose:dm};
+        `维持核对：滴速<b>${f2(R2)}ml/h</b>＝${f2(dm,2)}μg/kg/min（续上组转慢速）`], dose:dm};
 }
 /* 胰岛素（库内口径：0.1ml/h=0.01iu/kg/h；配比铁律 1iu胰岛素:4g糖，4小时弃液重配；停胰岛素连葡萄糖组同停） */
 function calcInsulinH24(id){
@@ -645,7 +646,7 @@ function calcInsulinH24(id){
   const rEl=parseFloat($('rin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*10, iuH=dose*W;
   return {t1:`胰岛素${f2(R)}ml/h=${f2(dose,2)}iu/kg/h，维持24小时`,
-    prep:[`胰岛素 ${f2(iuH*24,2)}iu＋10%葡萄糖 ${f2(iuH*960,1)}ml`],
+    prep:[`胰岛素 ${f2(iuH*24,2)}iu/24h`, `10%葡萄糖 ${f2(iuH*960,1)}ml，24小时匀速`],
     ck:[`剂量核对：${f2(dose,2)} iu/kg/h×${W.toFixed(2)}kg＝<b>${f2(iuH)}iu/h</b>`,
         `液体核对：泵速<b>${f2(R)}ml/h</b>（0.1ml/h=0.01iu/kg/h）`], R, dose};
 }
@@ -657,9 +658,9 @@ function calcInsulinAmp(id){
   const rEl=parseFloat($('arin_'+id).value);
   const R=(isFinite(rEl)&&rEl>0)?rEl:dose*W*4, act=R*0.25/W;  /* 组液 1iu＋10%葡萄糖 40ml（1iu:4g糖） */
   return {t1:`胰岛素${f2(R)}ml/h=${f2(act,2)}iu/kg/h，维持4小时`,
-    prep:[`胰岛素 1iu＋10%葡萄糖 40ml`],
+    prep:[`胰岛素 1iu`, `10%葡萄糖 40ml，4小时匀速`],
     ck:[`剂量核对：泵速${f2(R)}ml/h×0.25iu/ml÷${W.toFixed(2)}kg＝<b>${f2(act,2)}iu/kg/h</b>`,
-        `液体核对：泵速<b>${f2(R)}ml/h</b>；4小时入液<b>${f2(R*4)}ml</b>（每4小时弃液重配）`], R, dose:act};
+        `液体核对：泵速<b>${f2(R)}ml/h</b>；4小时入液<b>${f2(R*4)}ml</b>`], R, dose:act};
 }
 /* 呋塞米/托拉塞米持续泵（0.1ml/h=1mg/kg/d 本院口径，24小时匀速入） */
 function calcDrip(id){
