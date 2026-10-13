@@ -778,7 +778,8 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
 var W=1.5;
 const S={}; DRUGCARDS.forEach(c=>S[c.id]={form:c.forms[0], mode:'h24'});
 const basket={};
-const PRMODE={};   /* push 绝对量药（巴曲亭）途径模式：iv/iv_et/iv_gt/et/gt */
+const PRMODE={};
+const QMODE={};   /* qd 多档模式（布洛芬三剂法：d1/d23） */   /* push 绝对量药（巴曲亭）途径模式：iv/iv_et/iv_gt/et/gt */
 const RES={iv:0.2, et:0.75};
 const META={bed:'',name:'',hosp:'',gaw:'',gad:'',dol:''};
 const $=id=>document.getElementById(id);
@@ -873,7 +874,7 @@ const QDCFG={
  spironolactone:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'保钾 · 常与氢氯噻嗪配对 · 监测血钾'},
  hydrochlorothiazide:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'排钾 · 与螺内酯配对互补'},
  levothyroxine:{def:10,step:2.5,max:50,unit:'μg',out:'μg',freq:'qd',route:'口服/鼻饲',abs:true,note:'晨起顿服 · 按 TSH/FT4 滴定 · 与奶液铁钙间隔'},
- ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,note:'PDA三剂法：第1剂10、第2/3剂5mg/kg 间隔24h×3'},
+ ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,modes:[{k:'d1',label:'第1剂 DAY1',def:10},{k:'d23',label:'第2·3剂 DAY2-3',def:5}],note:'PDA三剂法间隔24h×3 · 静注路径另见 8mg＋5%葡萄糖1ml'},
  acetaminophen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q6h',route:'口服/鼻饲',mlConc:100,note:'PRN · 24h ≤4剂 · 核对浓度(滴剂100mg/ml)'},
  ursodiol:{def:25,step:5,max:100,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'利胆 · 胆道梗阻禁用 · 按肝功随访'},
  simethicone:{def:0.5,step:0.1,max:2,unit:'ml',out:'ml',freq:'q8h',route:'口服/鼻饲',abs:true,note:'奶前半小时 · 库内固定0.5ml/次'},
@@ -882,7 +883,9 @@ const QDCFG={
  digoxin:{def:5,step:2.5,max:25,unit:'μg',out:'μg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'0.005%溶液50μg/ml（10μg=0.2ml） · 血药浓度监测'}};
 function calcQd(id){
   const g=DRUGS[id], cfg=QDCFG[id];
-  const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def;
+  let dv=cfg.def;
+  if(cfg.modes){const mm=cfg.modes.find(m=>m.k===(QMODE[id]||cfg.modes[0].k)); if(mm)dv=mm.def;}
+  const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:dv;
   const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
   const rt=cfg.route?` ${cfg.route}`:'';
   if(cfg.perMl){
@@ -1267,8 +1270,14 @@ function cardHtml(id){
   let qdSec='';
   if(dc.forms.includes('qd')){
     const q=QDCFG[id];
+    const qTabs=q.modes?(()=>{
+      const cur=QMODE[id]||q.modes[0].k;
+      return `<div class="modetabs" id="qm_${id}">`+q.modes.map(m=>`<button type="button" data-act="qmode" data-card="${id}" data-mode="${m.k}" class="${cur===m.k?'on':''}">${m.label}</button>`).join('')+`</div>`;
+    })():'';
+    const qdef=(q.modes&&QMODE[id])?(q.modes.find(m=>m.k===QMODE[id])||q.modes[0]).def:q.def;
     qdSec=`<div id="sec_qd_${id}" style="display:${c.form==='qd'?'block':'none'}">
-      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinq_${id}" type="number" inputmode="decimal" step="${q.step}" min="0" value="${q.def}"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="1">＋</button></div> ${q.unit}</div>
+      ${qTabs}
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinq_${id}" type="number" inputmode="decimal" step="${q.step}" min="0" value="${qdef}"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="1">＋</button></div> ${q.unit}</div>
       <div class="ordbox" id="ordq_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrq_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@qd" id="add_${id}_qd">＋ 加医嘱</button>
@@ -1805,6 +1814,11 @@ document.addEventListener('click',e=>{
     case 'backlist': exitDrugSilent(); break;
     case 'form': setForm(b.dataset.card,b.dataset.form); break;
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
+    case 'qmode': QMODE[b.dataset.card]=b.dataset.mode;
+      document.querySelectorAll('#qm_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
+      { const c2=QDCFG[b.dataset.card], mm=(c2.modes||[]).find(m=>m.k===b.dataset.mode);
+        const inp=$('dinq_'+b.dataset.card); if(mm&&inp)inp.value=mm.def; }
+      updCard(b.dataset.card); break;
     case 'prmode': PRMODE[b.dataset.card]=b.dataset.mode;
       document.querySelectorAll('#pr_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
       updCard(b.dataset.card); break;
