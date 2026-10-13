@@ -669,6 +669,15 @@ const DRUGS={
   pharm:"Na-K-ATP酶抑制剂，正性肌力＋降低房室传导；新生儿肾清除慢、半衰期长；低钾加重中毒——电解质须稳定。",
   adverse:"①中毒：呕吐、心率过缓/传导阻滞、室性心律失常（治疗窗窄）；②低钾/低镁时中毒风险↑；③血药浓度监测是安全底线。",
   compat:"0.005%口服溶液换算：10μg＝0.2ml（50μg/ml）；研配鼻饲/口服；与胺碘酮/普萘洛尔合用须减量并监护；定期查血药浓度与电解质。"},
+ exs:{name:"换血",en:"Exchange transfusion",unit:"ml",csum:"双倍量 2×血容量",
+  spec:"双倍量换血：2×血容量（红细胞:血浆＝2:1）",
+  utd:"新生儿重度高胆红素血症换血：双倍量换血＝2×血容量（早产儿 90–100、足月 80–85ml/kg），红细胞悬液与血浆按 2:1 配比、1–4 小时匀速（AAP/换血指南）",
+  hb:"未收录（换血以科内规程与血源为准）",
+  hosp:"库内换血实录：「换血4小时,输入150ml O型RH阴性悬浮红细胞、75ml O型RH阳性病毒灭活血浆,换出225ml血」——组分2:1、4小时匀速、总量=2×血容量；另有部分换血（单纯抽血/血浆输注）另案不入本卡",
+  ind:"重度高胆红素血症达换血阈值（光疗无效/胆红素脑病警示）、Rh 溶血病；须血源预备（血型交配）、双通道同步（一侧抽血一侧输血）、全程心电与血压监护。",
+  pharm:"双倍量换血可换出循环中约 85% 的胆红素与致敏红细胞，并纠正贫血；库内组分＝悬浮红细胞:血浆 2:1（压积约 50–55%），维持血细胞比容稳定。",
+  adverse:"①低钙血症（枸橼酸抗凝——每换 100ml 常规补葡萄糖酸钙）；②容量/血压波动（双通道同步防）；③血小板与凝血因子稀释（换后复查）；④NEC/肠穿孔风险（换血期禁食）；⑤输血反应与感染（去白+筛查后极低）。",
+  compat:"血源：O型RH阴性悬浮红细胞＋AB型血浆（或同型交配）；换血期禁食；每换 100ml 补 10%葡萄糖酸钙 1–2ml（遵科内规程）；换后复查血常规/胆红素/电解质/血糖/血小板。"},
  sildenafil:{name:"西地那非",en:"Sildenafil",unit:"mg/kg",def:1,step:"0.25",csum:"25mg/片（研配）",
   spec:"枸橼酸西地那非片（研配鼻饲）",
   utd:"PPHN 撤离 NO 吸入的口服降肺压桥接：0.5–1mg/kg/次 q6–8h 起始、按氧合与血压滴定（文献/UpToDate 儿童肺高压）",
@@ -727,6 +736,7 @@ const DRUGCARDS=[
  {id:'etamsylate',page:2,forms:['push']},
  {id:'hemocoag',page:2,forms:['push']},
  {id:'rbc',page:2,title:'红细胞输血',kind:'maint',drug:'rbc',forms:['rbc']},
+ {id:'exs',page:2,title:'换血',kind:'maint',drug:'exs',forms:['exs']},
  {id:'ffp',page:2,title:'冰冻血浆',kind:'maint',drug:'ffp',forms:['prod']},
  {id:'plt',page:2,title:'单采血小板',kind:'maint',drug:'plt',forms:['prod']},
  {id:'cryo',page:2,title:'冷沉淀',kind:'maint',drug:'cryo',forms:['prod']},
@@ -768,7 +778,7 @@ const GROUPS=[
  {page:1,title:'镇静催眠药',cards:['midazolam','dexmedetomidine']},
  {page:1,title:'骨骼肌松弛药',cards:['vecuronium']},
  {page:2,title:'止血药',cards:['etamsylate','hemocoag']},
- {page:2,title:'血液制品',cards:['rbc','ffp','plt','cryo','alb','ivig','fibg','pcc']},
+ {page:2,title:'血液制品',cards:['rbc','exs','ffp','plt','cryo','alb','ivig','fibg','pcc']},
  {page:0,title:'动脉导管关闭药',cards:['ibuprofen']},
  {page:2,title:'噻嗪类与保钾利尿剂',cards:['hydrochlorothiazide','spironolactone']},
  {page:2,title:'血糖调节药',cards:['insulin','glucagon']},
@@ -799,6 +809,7 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  fibg:'纤维蛋白原 人纤维蛋白原',
  pcc:'凝血酶原复合物 PCC 凝血酶原',
  sildenafil:'西地那非 降肺压 PPHN 肺高压 撤NO',
+ exs:'换血 双倍量 换血疗法 高胆红素血症 胆红素',
  morphine:'吗啡 镇痛 阿片 人机对抗',
  dexmedetomidine:'右美托咪定 右美 镇静 人机对抗',
  spironolactone:'螺内酯 安体舒通 保钾利尿 口服利尿',
@@ -1065,6 +1076,18 @@ function calcPush(id){
     prep,
     ck:[ck], dose};
 }
+/* 换血（双倍量=2×血容量；组分=悬浮红细胞:血浆 2:1；库内实录 225ml=150+75、4小时匀速） */
+function calcExs(id){
+  const bvEl=parseFloat($('din_'+id).value);
+  const bv=(isFinite(bvEl)&&bvEl>=60&&bvEl<=150)?bvEl:90;   /* 血容量 ml/kg（早产90–100/足月80–85） */
+  const V=Math.round(2*bv*W);
+  const rbc=Math.round(V*2/3), pla=V-rbc;
+  return {t1:`换血 ${V}ml（悬浮红细胞 ${rbc}ml＋病毒灭活血浆 ${pla}ml，4小时匀速）`,
+    prep:[`换出总量＝2×血容量（${f2(bv)}ml/kg × ${W.toFixed(2)}kg）`],
+    ck:[`血容量核对：${f2(bv)}ml/kg × ${W.toFixed(2)}kg ＝ <b>${f2(bv*W,1)}ml</b>`,
+        `双倍量：2 × ${f2(bv*W,1)}ml ＝ <b>${V}ml</b>（库内实录例：225ml＝红细胞150＋血浆75）`,
+        `组分核对：红细胞 ${rbc}ml ： 血浆 ${pla}ml ＝ 2:1（换后复查胆红素/血常规/电解质/血糖）`], dose:V};
+}
 /* 红细胞输血（本院实测 n=326：每1ml/kg≈Hb+0.1g/dL；计划量上限 20ml/kg 封顶；换血/大输血不在本卡） */
 function calcRbc(id){
   const hbEl=parseFloat($('din_'+id).value);
@@ -1134,6 +1157,7 @@ function linesOf(key){
   if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck,load:L.load,maint:L.maint};}
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
+  if(form==='exs'){const L=calcExs(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
@@ -1192,6 +1216,25 @@ function cardHtml(id){
   </div>`;
   }
 
+  if(dc.forms.length===1&&dc.forms[0]==='exs'){
+    return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+      <span class="csum">${g.csum}</span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      <div class="labeq">血容量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="5" min="60" max="150" value="90"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> ml/kg（早产90–100/足月80–85）</div>
+      <div class="ordbox" id="ord_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@exs" id="add_${id}_exs">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
+    </div>
+  </div>`;
+  }
   if(dc.forms.length===1&&dc.forms[0]==='rbc'){
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
@@ -1469,6 +1512,14 @@ function updCard(id){
     $('ordm2_'+id).innerHTML=`<div class="o1">${L.maint.t1}</div>`;
     $('ckm2_'+id).textContent=L.maint.ck;
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div>`;
+    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
+    return;
+  }
+  /* 换血单形式卡 */
+  if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='exs'){
+    const L=calcExs(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
