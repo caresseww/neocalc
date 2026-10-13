@@ -579,7 +579,7 @@ const DRUGS={
   pharm:"血浆来源四因子浓缩物，即输即效纠正 PT/INR；起效快于 FFP 且容量负荷小；不含 V 与纤维蛋白原——DIC/肝病复杂缺乏仍需血浆/冷沉淀配合。",
   adverse:"①血栓栓塞（最主要风险，含促凝血复合物）；②过敏；③经血传播感染；④DIC 患者禁忌或极慎用。",
   compat:"输注限2小时（库内原文）；专配溶媒溶解；独立通路；输后复查 PT/INR。"},
- spironolactone:{name:"螺内酯",en:"Spironolactone",unit:"mg/kg",def:0.5,step:"0.25",
+ spironolactone:{csum:"20mg/片（研配）",name:"螺内酯",en:"Spironolactone",unit:"mg/kg",def:0.5,step:"0.25",
   spec:"螺内酯片(安体舒通) 20mg/片（研配鼻饲）",
   utd:"口服利尿 0.5–2mg/kg/d 分 q12h（保钾，常与氢氯噻嗪配对）；BPD/心衰长期利尿主力（NeoFax/文献）",
   hb:"未收录（口服以说明书与电解质监测为准）",
@@ -588,7 +588,7 @@ const DRUGS={
   pharm:"醛固酮受体拮抗剂，远曲小管与集合管保钾排钠；利尿作用温和、不排钾；起效慢（2–3天），适合长程维持。",
   adverse:"①高钾血症（与氢氯噻嗪配对可抵消，仍须监测）；②低钠；③胃肠反应；④长期内分泌影响（男性乳房发育，短期新生儿少见）。",
   compat:"研配混悬鼻饲/口服；与氢氯噻嗪同频 q12h 配对；监测电解质（K、Na）按日复查。"},
- hydrochlorothiazide:{name:"氢氯噻嗪",en:"Hydrochlorothiazide",unit:"mg/kg",def:0.5,step:"0.25",
+ hydrochlorothiazide:{csum:"25mg/片（研配）",name:"氢氯噻嗪",en:"Hydrochlorothiazide",unit:"mg/kg",def:0.5,step:"0.25",
   spec:"氢氯噻嗪片(双氢克尿噻) 25mg/片（研配鼻饲）",
   utd:"口服利尿 1–2mg/kg/d 分 q12h，常与螺内酯配对（排钾，互补保钾）；BPD 利尿一线组合（NeoFax/文献）",
   hb:"未收录（口服以说明书与电解质监测为准）",
@@ -597,7 +597,7 @@ const DRUGS={
   pharm:"噻嗪类利尿剂，抑制远曲小管 Na-Cl 共转运体；排钾排氯；口服起效约 1–2 小时；新生儿清除慢，q12h 即可维持。",
   adverse:"①低钾低氯碱中毒（与螺内酯配对平衡）；②低钠；③高钙/低钙个体差异；④胆红素竞争白蛋白（早疸注意）；⑤胃肠反应。",
   compat:"研配混悬鼻饲/口服；与螺内酯同频 q12h 配对；按日复查电解质。"},
- levothyroxine:{name:"左甲状腺素",en:"Levothyroxine",unit:"μg",def:10,step:"2.5",
+ levothyroxine:{csum:"50μg/片（研配）",name:"左甲状腺素",en:"Levothyroxine",unit:"μg",def:10,step:"2.5",
   spec:"左甲状腺素钠片(优甲乐) 50μg/片（研配）",
   utd:"先天性甲减：起始 10–15μg/kg/d 晨起顿服，按 TSH/FT4 滴定（AAP/文献）；早产儿一过性低甲状腺素血症按筛查随访",
   hb:"未收录（按筛查与内分泌随访滴定）",
@@ -606,7 +606,7 @@ const DRUGS={
   pharm:"合成 T4，外周转化为 T3 起效；半衰期约 7 天，qd 稳态；奶液（尤其豆奶/铁钙）影响吸收——与喂奶间隔、固定时间服用。",
   adverse:"按量替代不良反应少；过量：心动过速、烦躁、颅缝早闭顾虑（长程过量）；漏服/吸收不全是治疗失败主因。",
   compat:"研配温水鼻饲/口服；与铁剂、钙剂、奶液间隔服用；晨起固定时间；按筛查周期复查甲功。"},
- ibuprofen:{name:"布洛芬",en:"Ibuprofen",unit:"mg/kg",def:10,step:"5",
+ ibuprofen:{csum:"40mg/ml（美林）",name:"布洛芬",en:"Ibuprofen",unit:"mg/kg",def:10,step:"5",
   spec:"布洛芬混悬滴剂(美林) 40mg/ml",
   utd:"PDA 关闭口服方案：首剂 10mg/kg、第2/3剂 5mg/kg 间隔24h×3（文献/Gentili 方案）；静脉布洛芬 10mg/kg/d×3 另见",
   hb:"未收录（PDA 口服方案以科内规程为准）",
@@ -615,7 +615,7 @@ const DRUGS={
   pharm:"NSAID，抑制前列腺素合成→导管平滑肌收缩关闭；口服吸收良好（混悬滴剂 40mg/ml）；经肾排泄，肾功能不成熟者半衰期长。",
   adverse:"①一过性肾损伤（少尿，输前评估尿量与肌酐）；②血小板功能抑制（出血/IVH 顾虑）；③NEC/肠穿孔顾虑（极低体重慎用）；④高胆红素竞争（游离胆红素升高）。",
   compat:"混悬滴剂直接鼻饲/口服（40mg/ml）；三剂法间隔 24h；用药前后查肾功能、电解质与血小板；禁忌=严重肾功能不全/活动性出血/NEC。"},
- acetaminophen:{name:"对乙酰氨基酚",en:"Acetaminophen",unit:"mg/kg",def:10,step:"5",
+ acetaminophen:{csum:"100mg/ml（泰诺林）",name:"对乙酰氨基酚",en:"Acetaminophen",unit:"mg/kg",def:10,step:"5",
   spec:"对乙酰氨基酚混悬滴剂(泰诺林) 100mg/ml",
   utd:"退热/镇痛 10–15mg/kg/次 q6–8h，24h 不超过 4 剂（NeoFax/文献）；新生儿清除慢，q6h 为上限频次",
   hb:"未收录（口服以说明书为准）",
@@ -624,7 +624,7 @@ const DRUGS={
   pharm:"中枢 COX 抑制解热镇痛，外周抗炎弱；口服吸收快；新生儿经硫酸结合代谢（葡萄糖醛酸通路不成熟），q6h 频次已接近上限。",
   adverse:"①肝毒性（过量/长程——严格 24h ≤4 剂并记录总剂量）；②皮疹少见；③长期使用的肝功能随访。",
   compat:"混悬滴剂直接鼻饲/口服（100mg/ml）；核对浓度（滴剂与儿童混悬液浓度不同）；24h 总量登记。"},
- ursodiol:{name:"熊去氧胆酸",en:"Ursodeoxycholic acid",unit:"mg",def:25,step:"5",
+ ursodiol:{csum:"胶囊研配",name:"熊去氧胆酸",en:"Ursodeoxycholic acid",unit:"mg",def:25,step:"5",
   spec:"熊去氧胆酸胶囊（研配鼻饲）",
   utd:"胆汁淤积利胆 10–20mg/kg/d 分 q12h（文献）；静脉营养相关胆汁淤积的辅助（证据中等）",
   hb:"未收录（口服以说明书与肝功随访为准）",
@@ -633,7 +633,7 @@ const DRUGS={
   pharm:"亲水性胆汁酸，替换毒性疏水胆汁酸池、促进胆汁分泌与肝细胞保护；口服吸收后肠肝循环；起效数周。",
   adverse:"①腹泻（最常见）；②一过性转氨酶波动；③过敏少见；④不能替代梗阻性黄疸的外科处理。",
   compat:"研配鼻饲/口服；按肝功（GGT/胆红素）随访调整；梗阻性黄疸禁用。"},
- simethicone:{name:"西甲硅油",en:"Simethicone",unit:"ml",def:0.5,step:"0.1",
+ simethicone:{csum:"100mg/ml（柏西）",name:"西甲硅油",en:"Simethicone",unit:"ml",def:0.5,step:"0.1",
   spec:"西甲硅油乳剂(柏西) 100mg/1ml",
   utd:"胀气消泡 0.3–0.5ml/次 奶前，q8h–tid（说明书）；不被吸收、物理消泡，安全性高",
   hb:"未收录（口服以说明书为准）",
@@ -642,7 +642,7 @@ const DRUGS={
   pharm:"表面活性剂物理作用降低气泡表面张力，肠道内局部消泡；不吸收入血，随粪便排出。",
   adverse:"几乎无全身不良反应；偶见呕奶/粪便量改变；乳剂含少量对羟苯甲酸（过敏体质注意）。",
   compat:"奶前半小时给入（库内「奶前半小时鼻饲」原文）；可与奶同管；开启后按说明书期限用完。"},
- levetiracetam:{name:"左乙拉西坦",en:"Levetiracetam",unit:"mg/kg",def:10,step:"5",
+ levetiracetam:{csum:"100mg/ml（10%溶液）",name:"左乙拉西坦",en:"Levetiracetam",unit:"mg/kg",def:10,step:"5",
   spec:"10%左乙拉西坦口服溶液 100mg/ml",
   utd:"抗惊厥维持口服 10mg/kg/次 q12h 起始（可至 20–30mg/kg/d）（文献/UpToDate）；静脉负荷后接口服序贯",
   hb:"未收录（按惊厥随访与脑电滴定）",
@@ -651,7 +651,7 @@ const DRUGS={
   pharm:"突触囊泡蛋白 SV2A 结合剂，广谱抗惊厥；口服生物利用度近 100%；主要经肾排泄，新生儿半衰期长。",
   adverse:"①镇静、嗜睡；②喂养不耐受；③易激惹/行为改变（少见）；④肾功能不全减量。",
   compat:"10%口服溶液直接胃管注入/口服（100mg/ml，勿混淆静脉剂型）；换算按 ml 核对；肾功异常减量。"},
- propranolol:{name:"普萘洛尔",en:"Propranolol",unit:"mg",def:1,step:"0.25",
+ propranolol:{csum:"10mg/片（研配）",name:"普萘洛尔",en:"Propranolol",unit:"mg",def:1,step:"0.25",
   spec:"盐酸普萘洛尔片 10mg/片（研配鼻饲）",
   utd:"SVT/心率控制口服 0.25–0.5mg/kg/d 起始逐段上调至 1–2mg/kg/d 分 q8–12h；婴儿血管瘤另案（文献）",
   hb:"未收录（按心率与心电图滴定）",
@@ -660,7 +660,7 @@ const DRUGS={
   pharm:"非选择性β阻断剂，降低窦房结自律性、减慢房室传导；口服首过效应个体差异大；低血糖与心动过缓为主要监测点（喂奶间隔防低血糖）。",
   adverse:"①心动过缓（用药前查心率/心电图）；②低血糖（喂奶相关，定时喂养）；③支气管痉挛（肺部疾病患儿慎用）；④骤停反跳（撤药渐减）。",
   compat:"研配鼻饲/口服；定时喂养防低血糖；与地高辛合用加强房室阻滞须监护；停药逐周减量。"},
- digoxin:{name:"地高辛",en:"Digoxin",unit:"μg",def:5,step:"2.5",
+ digoxin:{csum:"0.005%溶液 50μg/ml",name:"地高辛",en:"Digoxin",unit:"μg",def:5,step:"2.5",
   spec:"0.005%地高辛口服溶液 50μg/ml / 地高辛片 0.25mg/片",
   utd:"洋地黄化维持口服 5–10μg/kg/d 分 q12h（新生儿）；维持治疗按血药浓度（0.5–2ng/ml）与心电图滴定（NeoFax/文献）",
   hb:"未收录（按血药浓度与心电图滴定）",
@@ -1304,7 +1304,7 @@ function cardHtml(id){
       <span class="tri" id="tri_${id}">▸</span>
       <span class="ct">${g.name}</span><span class="en">${g.en}</span>
       <span class="cspec">${g.spec}</span>
-      <span class="csum">每支 ${f(g.specMg,2)}mg</span>
+      <span class="csum">${g.csum||("每支 "+f(g.specMg,2)+"mg")}</span>
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       ${formTabs}
