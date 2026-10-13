@@ -386,13 +386,13 @@ const DRUGS={
   compat:"NS、5%GS均可；碱性液失活；独立泵腔独立通路；持续心电监护，同步准备临时起搏条件。"},
  hydrocortisone:{name:"琥珀酸氢化可的松",en:"Hydrocortisone",unit:"mg/kg",def:0.5,step:"0.1",
   spec:"琥珀酸钠 135mg/支（≈氢考100mg）",specMg:135,stockConc:135,
-  utd:"升压辅助（儿茶酚胺抵抗性休克）：应激剂量0.5–1mg/kg q8h 静推；或持续1–2mg/kg/d（文献/ENDO）",
+  utd:"升压辅助（儿茶酚胺抵抗性休克）：应激剂量0.5–1mg/kg q8h 配糖水稀释泵入；或持续1–2mg/kg/d（文献/ENDO）",
   hb:"未收录",
-  hosp:"库内单次0.2–4mg（按体重）q8h 常见；持续泵0.5ml/h 偶见（不冲管）",
+  hosp:"库内1,609行/469人：静滴(泵入)为主，q12h最多（258行）q8h次之；单次0.2–7.3mg（p50 0.64mg）；**配液铁律：琥珀氢考 Xmg＋5%葡萄糖 Xml（1:1，库内382对伴随实测，比值中位1.14）泵入，伴滴速中位8ml/h（6–11）**；原液可直推但本院主流为配糖水稀释泵入",
   ind:"儿茶酚胺抵抗性休克的激素辅助（可疑肾上腺功能不全、超低出生体重儿升压难治）；止痉、BPD 激素撤机另案。",
-  pharm:"糖皮质激素琥珀酸钠酯，水溶性可静推；补充应激剂量纠正相对肾上腺功能不全，降低血管张力、恢复儿茶酚胺敏感性。q8h 给药维持血药浓度。",
+  pharm:"糖皮质激素琥珀酸钠酯，水溶性；补充应激剂量纠正相对肾上腺功能不全，降低血管张力、恢复儿茶酚胺敏感性。q8h 给药维持血药浓度。",
   adverse:"高血糖（监测）、免疫抑制（长程）、胃肠道穿孔风险（超低体重儿长程）、生长抑制；短程应激剂量（≤7天）安全性良好。",
-  compat:"NS、5%GS均可；建议独立通路；现配现用。"},
+  compat:"配5%葡萄糖稀释泵入（1mg:1ml 本院口径）；建议独立通路；现配现用。"},
  dexamethasone:{name:"地塞米松",en:"Dexamethasone",unit:"mg/kg",def:0.25,step:"0.05",
   spec:"5mg/1ml",specMg:5,stockConc:5,
   utd:"拔管后喉水肿预防：0.25mg/kg q12h×2–4剂（首剂拔管前≥6h，NeoFax）；BPD 低剂量方案0.05–0.15mg/kg/d 另案",
@@ -544,7 +544,7 @@ const DRUGCARDS=[
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血'};
-const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'}};
+const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
@@ -659,7 +659,7 @@ const PUSHCFG={
  fentanyl:{def:2,step:0.5,unit:'μg/kg',out:'μg',freq:'st',note:'缓推≥3min · 备气囊'},
  midazolam:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'缓推≥2min · 监测血压'},
  vecuronium:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'镇静确保后给 · 呼吸机下'},
- hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',note:'升压辅助 · 监测血压血糖'},
+ hydrocortisone:{def:0.5,step:0.1,unit:'mg/kg',out:'mg',freq:'q8h',dilPerMg:1,diluent:'5%葡萄糖',note:'升压辅助 · 配5%葡萄糖1:1两行式泵入（库内382对实测） · 监测血压血糖'},
  caffeine:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',load:true,perMl:0.05,gsPerMg:0.2,note:'负荷稀释泵入1小时 · 24h后转维持形式 qd'},
 
  dexamethasone:{def:0.25,step:0.05,unit:'mg/kg',out:'mg',freq:'q12h',note:'拔管后喉水肿/BPD · 监测血糖'},
@@ -774,11 +774,12 @@ function calcPush(id){
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
   const rt=(cfg.route&&cfg.route!=='静推')?' '+cfg.route:'';
+  const prep=cfg.dilPerMg?[`${cfg.diluent||'5%葡萄糖'} ${f(a*cfg.dilPerMg,1)}ml`]:[];
   const ck=cfg.abs
     ? `剂量核对：绝对剂量 <b>${f2(a)}${cfg.out}</b>（库内 0.25–1iu，once 为主）`
     : `剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`;
   return {t1:`${g.name} ${f2(a)}${cfg.out}${rt} ${cfg.freq||'st'}`,
-    prep:[],
+    prep,
     ck:[ck], dose};
 }
 /* 红细胞输血（本院实测 n=326：每1ml/kg≈Hb+0.1g/dL；top-up 每日上限 20ml/kg；换血/大输血不在本卡） */
