@@ -502,6 +502,15 @@ const DRUGS={
   pharm:"矛头蝮蛇血凝酶（巴西矛头蝮蛇毒提纯）：类凝血酶活性在出血部位促进纤维蛋白原形成纤维蛋白、类凝血激酶促进凝血酶生成；静推约5–10分钟起效；正常血管内无血小板聚集处不激活凝血。",
   adverse:"① 过敏反应（蛇毒蛋白，罕见但可严重——用药前询问过敏史、备抗过敏抢救）；② 高剂量/长程的血栓风险顾虑；③ 新生儿证据以本院库内经验与小样本为主；④ DIC等凝血底物耗竭性出血单用无效——先纠正凝血底物。",
   compat:"原液直推无需稀释（库内「干包 滴速:0」直推先例）；不与其他药共推注；局部给药按需用原液。"},
+ rbc:{name:"悬浮红细胞",en:"RBC transfusion",unit:"g/dL",
+  spec:"去白细胞悬浮红细胞 0.5U≈67.5ml（1U≈135ml）",
+  utd:"限制性阈值策略（IPT/PINT RCT、Cochrane）：机械通气·休克·活动性失血 Hb<8.5、氧疗 <8.0、稳定儿 <7.0 g/dL 起输，结合症状（呼吸暂停/心动过速/生长迟缓）；常规 top-up 10–20ml/kg，15ml/kg 预期 Hb+2g/dL（加拿大血液服务局）；换血/大量失血输注不在本卡范围",
+  hb:"未收录（输血以科内规程为准）",
+  hosp:"库内红细胞3,407条：0.5U/1U与毫升制并存（0.5U≈67.5ml），输血日单次中位17.5ml/kg；输注限4小时、输一半时速尿静推为固定配套（独立医嘱）；本院实测（n=326对，输前−4~−1天/输后+1~+4天Hb配对）：每1ml/kg≈Hb+1g/L（+0.1g/dL），15–20ml/kg段中位+1.8~1.9g/dL",
+  ind:"阈值性/症状性贫血的 top-up 输注：早产儿发育性贫血、医源性失血累积、溶血性贫血；输前双人核对血型与交叉配血，输中监测输血反应。",
+  pharm:"去白细胞悬浮红细胞 Hct约60–70%，补充携氧容量；新生儿血容量约80ml/kg；实测提升低于理论值（继续失血、稀释、采样变异）——以本院配对实测为准而非理论换算。",
+  adverse:"①循环过负荷（小婴儿慢速输注，必要时利尿——本院「输一半时速尿」配套）；②输血反应/急性溶血（双人床头核对）；③经血传播感染（去白+核酸筛查后极低）；④早产儿输血相关 NEC 顾虑（证据不一）；⑤多次输注的铁过载与迟发贫血（促红素抑制）。",
+  compat:"输注限4小时（库内原文）；专用输血器，禁与其他药同管；输一半时速尿静推为本院固定配套（独立医嘱，不入本行）。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -529,11 +538,12 @@ const DRUGCARDS=[
  {id:'ps',page:2,forms:['push']},
  {id:'etamsylate',page:2,forms:['push']},
  {id:'hemocoag',page:2,forms:['push']},
+ {id:'rbc',page:2,title:'红细胞输血',kind:'maint',drug:'rbc',forms:['rbc']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
 ];
-const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持'};
+const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血'};
 const DFORM_OV={amiodarone:{push:'负荷'},propafenone:{push:'负荷'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
@@ -549,7 +559,7 @@ const GROUPS=[
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
- {page:2,title:'止血药',cards:['etamsylate','hemocoag']},
+ {page:2,title:'止血·输血',cards:['rbc','etamsylate','hemocoag']},
 ];
 
 /* 搜索别名（临床俗名/商品名） */
@@ -564,6 +574,7 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  torasemide:'泽通 托拉塞米 利尿',furosemide:'呋塞米 速尿 利尿 泽通',
  omeprazole:'洛赛克 奥美拉唑 抑酸 消化道',octreotide:'善宁 奥曲肽',
  caffeine:'咖啡因 呼吸暂停',
+ rbc:'输血 红细胞 悬浮 贫血 血色素 输血反应',
  isoprenaline:'异丙肾 异丙 提心率 传导阻滞 心动过缓',
  etamsylate:'止血敏 酚磺乙胺 止血 出血',
  hemocoag:'巴曲亭 血凝酶 蛇毒 止血 出血'};
@@ -770,6 +781,25 @@ function calcPush(id){
     prep:[],
     ck:[ck], dose};
 }
+/* 红细胞输血（本院实测 n=326：每1ml/kg≈Hb+0.1g/dL；top-up 每日上限 20ml/kg；换血/大输血不在本卡） */
+function calcRbc(id){
+  const hbEl=parseFloat($('din_'+id).value);
+  const hb=(isFinite(hbEl)&&hbEl>0)?hbEl:8;
+  const usedEl=parseFloat($('dinm_'+id).value);
+  const used=(isFinite(usedEl)&&usedEl>0)?usedEl:0;
+  const tgEl=parseFloat($('dint_'+id).value);
+  const tgt=(isFinite(tgEl)&&tgEl>0)?tgEl:12;
+  const cap=20-used;                       /* 今日剩余额度 ml/kg */
+  const need=Math.max(0,(tgt-hb)*10);      /* 需要量 ml/kg：每升1g/dL≈10ml/kg（本院实测） */
+  const v=(cap>0&&need>0)?Math.min(cap,need):0;
+  const t1 = need<=0 ? `悬浮红细胞 — 当前Hb ${f2(hb)}g/dL 已达目标，无需输注`
+    : cap<=0 ? `悬浮红细胞 — 今日20ml/kg额度已满（已输${f2(used)}ml/kg），次日再评`
+    : `输悬浮红细胞 ${Math.round(v*W)}ml（${f2(v)}ml/kg）`;
+  return {t1,
+    ck:[`提升预估：${f2(v)}ml/kg ≈ Hb +${f2(v*0.1)}g/dL（本院实测每1ml/kg≈+1g/L；15–20ml/kg段中位+1.8~1.9g/dL）`,
+        `今日额度：上限20ml/kg − 已输${f2(used)} ＝ ${f2(Math.max(cap,0))}ml/kg（${Math.round(Math.max(cap,0)*W)}ml）`,
+        `需要量：目标${f2(tgt)}−当前${f2(hb)}＝${f2(tgt-hb)}g/dL × 10ml/kg ＝ ${f2(need)}ml/kg${need>cap&&cap>0?' —— 超今日额度，分两日输':''}`], dose:v};
+}
 function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
   const ml=d*W, mg=ml*0.1;
@@ -786,6 +816,7 @@ function linesOf(key){
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
+  if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
@@ -831,6 +862,27 @@ function cardHtml(id){
   </div>`;
   }
 
+  if(dc.forms.length===1&&dc.forms[0]==='rbc'){
+    return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      <div class="spec">输血阈值（限制性策略·IPT/PINT/Cochrane）：机械通气·休克·活动性失血 <b>Hb&lt;8.5</b> ｜ 氧疗 <b>&lt;8.0</b> ｜ 稳定儿 <b>&lt;7.0</b> g/dL —— 结合症状（呼吸暂停/心动过速/生长迟缓）与上级决策</div>
+      <div class="labeq">当前 Hb <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="0.5" min="0" value="8"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> g/dL</div>
+      <div class="labeq">今日已输 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinm_${id}" type="number" inputmode="decimal" step="1" min="0" value="0"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="1">＋</button></div> ml/kg</div>
+      <div class="labeq">目标 Hb <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dint_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dint_${id}" type="number" inputmode="decimal" step="0.5" min="0" value="12"><button type="button" class="stp" data-act="step" data-t="dint_${id}" data-dir="1">＋</button></div> g/dL</div>
+      <div class="ordbox" id="ord_${id}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@rbc" id="add_${id}_rbc">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
+    </div>
+  </div>`;
+  }
   if(dc.forms.length===1&&dc.forms[0]==='amp'){
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
@@ -1048,6 +1100,14 @@ function updCard(id){
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='pump'){
     const L=calcPump(id);
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div><div class="o2">${L.prep.join('<br>')}</div>`;
+    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
+    return;
+  }
+  /* 红细胞输血单形式卡 */
+  if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='rbc'){
+    const L=calcRbc(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
