@@ -704,7 +704,7 @@ function calcResus(rt){
 function linesOf(key){
   const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
   if(form==='resus'){const L=calcResus(rt); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
-  if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:[],ck:L.ck};}
+  if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   if(form==='drip'){const L=calcDrip(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
   if(form==='glu'){const L=calcGlucagon(id); return {t1:L.t1,prep:L.prep,ck:L.ck};}
