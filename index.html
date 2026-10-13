@@ -782,24 +782,17 @@ function calcPush(id){
     prep,
     ck:[ck], dose};
 }
-/* 红细胞输血（本院实测 n=326：每1ml/kg≈Hb+0.1g/dL；top-up 每日上限 20ml/kg；换血/大输血不在本卡） */
+/* 红细胞输血（本院实测 n=326：每1ml/kg≈Hb+0.1g/dL；计划量上限 20ml/kg 封顶；换血/大输血不在本卡） */
 function calcRbc(id){
   const hbEl=parseFloat($('din_'+id).value);
   const hb=(isFinite(hbEl)&&hbEl>0)?hbEl:8;
-  const usedEl=parseFloat($('dinm_'+id).value);
-  const used=(isFinite(usedEl)&&usedEl>0)?usedEl:0;
-  const tgEl=parseFloat($('dint_'+id).value);
-  const tgt=(isFinite(tgEl)&&tgEl>0)?tgEl:12;
-  const cap=20-used;                       /* 今日剩余额度 ml/kg */
-  const need=Math.max(0,(tgt-hb)*10);      /* 需要量 ml/kg：每升1g/dL≈10ml/kg（本院实测） */
-  const v=(cap>0&&need>0)?Math.min(cap,need):0;
-  const t1 = need<=0 ? `悬浮红细胞 — 当前Hb ${f2(hb)}g/dL 已达目标，无需输注`
-    : cap<=0 ? `悬浮红细胞 — 今日20ml/kg额度已满（已输${f2(used)}ml/kg），次日再评`
-    : `输悬浮红细胞 ${Math.round(v*W)}ml（${f2(v)}ml/kg）`;
-  return {t1,
-    ck:[`提升预估：${f2(v)}ml/kg ≈ Hb +${f2(v*0.1)}g/dL（本院实测每1ml/kg≈+1g/L；15–20ml/kg段中位+1.8~1.9g/dL）`,
-        `今日额度：上限20ml/kg − 已输${f2(used)} ＝ ${f2(Math.max(cap,0))}ml/kg（${Math.round(Math.max(cap,0)*W)}ml）`,
-        `需要量：目标${f2(tgt)}−当前${f2(hb)}＝${f2(tgt-hb)}g/dL × 10ml/kg ＝ ${f2(need)}ml/kg${need>cap&&cap>0?' —— 超今日额度，分两日输':''}`], dose:v};
+  const plEl=parseFloat($('dinm_'+id).value);
+  const v=Math.min((isFinite(plEl)&&plEl>0)?plEl:10,20);
+  const vR=Math.round(v*W);
+  return {t1:`输悬浮红细胞 ${vR}ml（${f2(v)}ml/kg）`,
+    ck:[`可达 Hb：当前${f2(hb)} ＋ ${f2(v*0.1)} ≈ <b>${f2(hb+v*0.1)}g/dL</b>（本院实测每1ml/kg≈+1g/L；15–20ml/kg段中位+1.8~1.9g/dL）`,
+        `容量核对：${f2(v)}ml/kg × ${W.toFixed(2)}kg ＝ ${vR}ml（0.5U≈67.5ml，1U≈135ml）`,
+        `额度：${f2(v)}/20ml/kg——每日 top-up 上限，填入超 20 按 20 计`], dose:v};
 }
 function calcResus(rt){
   const d=RES[rt]||((rt==='iv')?0.2:0.75);
@@ -873,8 +866,7 @@ function cardHtml(id){
     <div class="cbody" id="body_${id}" style="display:none">
       <div class="spec">输血阈值（限制性策略·IPT/PINT/Cochrane）：机械通气·休克·活动性失血 <b>Hb&lt;8.5</b> ｜ 氧疗 <b>&lt;8.0</b> ｜ 稳定儿 <b>&lt;7.0</b> g/dL —— 结合症状（呼吸暂停/心动过速/生长迟缓）与上级决策</div>
       <div class="labeq">当前 Hb <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="din_${id}" type="number" inputmode="decimal" step="0.5" min="0" value="8"><button type="button" class="stp" data-act="step" data-t="din_${id}" data-dir="1">＋</button></div> g/dL</div>
-      <div class="labeq">今日已输 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinm_${id}" type="number" inputmode="decimal" step="1" min="0" value="0"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="1">＋</button></div> ml/kg</div>
-      <div class="labeq">目标 Hb <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dint_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dint_${id}" type="number" inputmode="decimal" step="0.5" min="0" value="12"><button type="button" class="stp" data-act="step" data-t="dint_${id}" data-dir="1">＋</button></div> g/dL</div>
+      <div class="labeq">计划输注 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinm_${id}" type="number" inputmode="decimal" step="5" min="0" max="20" value="10"><button type="button" class="stp" data-act="step" data-t="dinm_${id}" data-dir="1">＋</button></div> ml/kg（≤20）</div>
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@rbc" id="add_${id}_rbc">＋ 加医嘱</button>
