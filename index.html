@@ -64,6 +64,12 @@ nav button.on{background:#fff; border-color:#fff; color:var(--navy); box-shadow:
 .searchrow input::placeholder{color:#8a97ab;}
 .searchrow input:focus{outline:none; background:#fff;}
 .searchrow input::-webkit-search-cancel-button{-webkit-appearance:none;}
+.abinfo{border-left:3px solid var(--primary2); background:#f4f8fd; padding:6px 9px; border-radius:0 6px 6px 0; margin:5px 0; font-size:12.5px; line-height:1.55;}
+.abinfo .abt{font-weight:700; color:var(--primary); margin-bottom:2px;}
+.abinfo.warnb{border-color:var(--warn); background:#fef9ef;}
+.abinfo.warnb .abt{color:#b9770e;}
+.abinfo.badb{border-color:var(--accent); background:#fdf1f0;}
+.abinfo.badb .abt{color:var(--accent);}
 .dualwrap{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:4px 0;}
 .dualmod{border:1px solid #e3eaf5; border-radius:12px; padding:8px; background:#fafcff;}
 .dualt{font-size:12px; font-weight:700; color:var(--navy2); margin-bottom:4px;}
@@ -669,6 +675,159 @@ const DRUGS={
   pharm:"Na-K-ATP酶抑制剂，正性肌力＋降低房室传导；新生儿肾清除慢、半衰期长；低钾加重中毒——电解质须稳定。",
   adverse:"①中毒：呕吐、心率过缓/传导阻滞、室性心律失常（治疗窗窄）；②低钾/低镁时中毒风险↑；③血药浓度监测是安全底线。",
   compat:"0.005%口服溶液换算：10μg＝0.2ml（50μg/ml）；研配鼻饲/口服；与胺碘酮/普萘洛尔合用须减量并监护；定期查血药浓度与电解质。"},
+ penicillin:{name:"青霉素G",en:"Penicillin G",unit:"万U/kg",def:5,step:"1",csum:"80万U/支（钠1.35mmol）",
+  spec:"注射用青霉素钠 80万U/支",
+  utd:"GBS预防与菌血症5万U/kg/次；GBS脑膜炎更大剂量并延长疗程（UpToDate/儿科诊疗规范）",
+  hb:"GBS菌血症5万U/kg；脑膜炎15万(≤7d)或12.5万(≥8d)U/kg；7d内q12h后q8h，脑膜炎q6–8h",
+  hosp:"库内 82人：静滴为主；每支80万U含钠1.35mmol（长程注意钠负荷）",
+  ind:"GBS（B族链球菌）预防与治疗、梅毒、敏感革兰阳性菌感染；本室产时预防与早发败血症主线用药。",
+  pharm:"β内酰胺类（天然青霉素），抑制细胞壁合成；脑膜炎时脑脊液穿透随炎症增加；新生儿半衰期长、按日龄调间隔。",
+  adverse:"①过敏反应（用前皮试——库内「青霉素皮试」常规）；②高钠负荷（80万U=钠1.35mmol）；③神经系统刺激（超大剂量直接静推）。",
+  compat:"NS/GS溶解稀释；现配现用；皮试阴性后使用；不与其他药共管。"},
+ amoxiclav:{name:"阿莫西林克拉维酸",en:"Amoxicillin-clavulanate",unit:"mg/kg",def:15,step:"5",
+  spec:"阿莫西林克拉维酸钾（以阿莫西林计）",
+  utd:"30–34mg/kg/d（以阿莫西林计）分q12h；尿路感染预防可qd（文献）",
+  hb:"30–34mg/kg/d（以阿莫西林计）；q12h，预防尿感qd",
+  hosp:"库内 143人：口服/静滴均有，体量中等",
+  ind:"敏感菌感染（产酶菌）；尿路感染的预防与治疗；口服序贯。",
+  pharm:"阿莫西林（β内酰胺）＋克拉维酸（β内酰胺酶抑制剂）复合；口服吸收好；按阿莫西林成分计剂量。",
+  adverse:"①腹泻（克拉维酸相关，较常见）；②皮疹；③肝酶升高（长程）。",
+  compat:"研配口服/静滴；以阿莫西林成分计算剂量；腹泻明显时评估。"},
+ ampicillin:{name:"氨苄西林舒巴坦",en:"Ampicillin-sulbactam",unit:"mg/kg",def:50,step:"5",
+  spec:"注射用氨苄西林钠舒巴坦钠 0.75g/支",
+  utd:"氨苄西林 100–200mg/kg/d 分q8–12h（舒巴坦不超过其1/2）；脑膜炎加大剂量（UpToDate）",
+  hb:"一般/脑膜炎剂量同青霉素（间隔随日龄调整）",
+  hosp:"库内最大品种 3,202人：q12h（2,891条）与q8h（1,386条）静滴为主；每支0.75g含钠2.39mmol",
+  ind:"早发败血症一线（GBS/李斯特菌覆盖）、敏感菌呼吸道/泌尿道感染；与氨基糖苷类联用为本院早发败血症经典组合。",
+  pharm:"氨苄西林（广谱β内酰胺）＋舒巴坦（酶抑制剂）；脑膜炎时CSF穿透良好；新生儿按日龄调间隔。",
+  adverse:"①皮疹（氨苄西林特征性，传染性单核细胞增多症高发）；②高钠负荷；③腹泻；④过敏（皮试）。",
+  compat:"NS/GS溶解，现配现用；皮试后使用；与氨基糖苷类分开输注。"},
+ cefuroxime:{name:"头孢呋辛",en:"Cefuroxime",unit:"mg/kg",def:50,step:"5",
+  spec:"注射用头孢呋辛钠 0.75g/支",
+  utd:"二代头孢，30–100mg/kg/d 分q12h（文献）；新生儿常 25–50mg/kg/次 q12h",
+  hb:"50mg/kg（间隔遵医嘱）",
+  hosp:"库内 13人（体量小）",
+  ind:"敏感革兰阳性/阴性菌感染（二代覆盖：流感嗜血杆菌等）；体量小，按药敏选用。",
+  pharm:"二代头孢菌素，抑制细胞壁合成；较一代增强革兰阴性覆盖；不经代谢、肾排。",
+  adverse:"①过敏（交叉青霉素过敏率低但存在）；②腹泻；③一过性肝酶升高。",
+  compat:"NS/GS溶解；静滴30–60分钟；与其他药分开输注。"},
+ cefotaxime:{name:"头孢噻肟",en:"Cefotaxime",unit:"mg/kg",def:50,step:"5",
+  spec:"注射用头孢噻肟钠",
+  utd:"50mg/kg/次 q6–12h 按日龄；脑膜炎可至 75mg/kg/次（UpToDate/NeoFax）",
+  hb:"一般50；淋球菌25；脑膜炎max75；q6–8h，<2kg减量",
+  hosp:"库内 15人（体量小，三代头孢以他啶为主）",
+  ind:"三代头孢：革兰阴性菌脑膜炎、淋球菌感染（新生儿眼炎/播散性淋病）。",
+  pharm:"三代头孢，革兰阴性覆盖强、CSF穿透好；去乙酰代谢物有活性；新生儿半衰期长。",
+  adverse:"①皮疹/腹泻；②抗生素相关菌群紊乱；③过敏。",
+  compat:"NS/GS溶解；与含钙液体配伍禁忌（头孢曲松特性，噻肟无此限但习惯分开）；<2kg减量。"},
+ ceftazidime:{name:"头孢他啶",en:"Ceftazidime",unit:"mg/kg",def:30,step:"5",
+  spec:"注射用头孢他啶",
+  utd:"25–50mg/kg/次 q8h（按日龄与感染严重度；UpToDate/NeoFax）",
+  hb:"未收录（三代头孢以噻肟条目为主）",
+  hosp:"库内 2,560人（三代头孢主力）：q12h（1,593条）与q8h（694条）静滴为主",
+  ind:"铜绿假单胞菌等革兰阴性菌感染（HAP/VAP、导管相关）；中性粒缺乏发热的经验覆盖。",
+  pharm:"三代头孢，铜绿假单胞菌覆盖强；CSF穿透好（炎症时）；肾排、按日龄调间隔。",
+  adverse:"①腹泻/菌群紊乱；②过敏；③静脉炎；④长程注意真菌二重感染。",
+  compat:"NS/GS溶解；独立输注；与氨基糖苷类分开。"},
+ cefepime:{name:"头孢吡肟",en:"Cefepime",unit:"mg/kg",def:30,step:"5",
+  spec:"注射用盐酸头孢吡肟",
+  utd:"30–50mg/kg/次（铜绿/肠球菌50）；≤28d q12h、>28d q6–12h（UpToDate/NeoFax）",
+  hb:"一般30–50；铜绿/肠球菌50；≤28d q12h，>28d q6–12h",
+  hosp:"库内 834人：q12h（398条）与q8h（189条）静滴",
+  ind:"四代头孢：产酶耐药革兰阴性菌、中性粒缺乏发热的经验覆盖；常与万古霉素联用。",
+  pharm:"四代头孢，对 AmpC 酶稳定、CSF穿透好；肾排；新生儿按日龄调间隔。",
+  adverse:"①脑病/肌阵挛（超剂量与肾功能不全时——严格按日龄间隔）；②皮疹；③腹泻。",
+  compat:"NS/GS溶解；q12h/q8h 严格按日龄；肾功能不全减量。"},
+ meropenem:{name:"美罗培南",en:"Meropenem",unit:"mg/kg",def:20,step:"5",
+  spec:"注射用美罗培南",
+  utd:"20mg/kg/次 q8h；化脑/铜绿 40mg/kg/次；静滴>30分钟、脑膜炎>1小时（UpToDate/NeoFax）",
+  hb:"一般20；化脑/绿脓40；静滴>30min，脑膜炎>1h",
+  hosp:"库内 908人：静滴为主，q8h 常见；重症革兰阴性耐药菌的主力",
+  ind:"碳青霉烯：产超广谱酶（ESBL）革兰阴性菌、化脓性脑膜炎、重症感染降阶梯后目标治疗；不作为一线。",
+  pharm:"碳青霉烯类，超广谱（G+/G−，对 ESBL 稳定）；CSF穿透好；癫痫风险低于亚胺培南。",
+  adverse:"①腹泻/菌群紊乱（筛选耐药菌）；②中枢反应（抽搐，罕见）；③血小板嗜酸细胞变化；④二重感染（真菌）。",
+  compat:"NS/GS溶解；输注≥30分钟（化脑延长）；不与丙戊酸同用（降丙戊酸浓度）。"},
+ vancomycin:{name:"万古霉素",en:"Vancomycin",unit:"mg/kg",def:15,step:"5",
+  spec:"注射用盐酸万古霉素(稳可信) 0.5g/支",
+  utd:"15mg/kg/次，间隔按日龄与肾功能；目标谷浓度 10–20μg/ml（UpToDate/NeoFax/ASHP 一致）",
+  hb:"未收录（按血药谷浓度滴定）",
+  hosp:"库内 364人：静滴；MRSA/凝固酶阴性葡萄球菌（导管相关）主力；谷浓度监测为本院常规",
+  ind:"MRSA、凝固酶阴性葡萄球菌（导管相关血流感染）、青霉素过敏的革兰阳性感染；与头孢吡肟联用为重症经验覆盖。",
+  pharm:"糖肽类，抑制细胞壁合成；治疗窗窄——谷浓度过低无效、过高肾毒；新生儿按 GA 与肌酐个体化间隔。",
+  adverse:"①肾毒性（谷浓度>20 或合用肾毒药）；②红人综合征（输注过快——输注≥60分钟）；③耳毒性（罕见）；④血小板减少。",
+  compat:"NS/GS溶解；输注≥60分钟；测谷浓度（第4剂前抽血）；避免与其他肾毒药同用。"},
+ linezolid:{name:"利奈唑胺",en:"Linezolid",unit:"mg/kg",def:10,step:"5",
+  spec:"利奈唑胺注射液/片",
+  utd:"10mg/kg/次；<34周 q12h、≥34周 q8h（UpToDate/NeoFax）",
+  hb:"10mg/kg；<34周q12h；≥34周q8h",
+  hosp:"库内 178人：静滴；万古霉素替代（肾功能不全/耐药）",
+  ind:"MRSA、VRE、耐药革兰阳性菌感染的替代选择（万古霉素不耐受/无效时）；肺炎与软组织感染。",
+  pharm:"恶唑烷酮类，抑制蛋白合成 50S 起始；组织穿透极好；口服生物利用度 100%（静滴可序贯口服同量）。",
+  adverse:"①血小板/白细胞减少（长程>10–14天必须查血常规）；②乳酸酸中毒；③单胺氧化酶抑制作用（含酪胺食物/拟交感药注意）；④周围神经病变（长程）。",
+  compat:"静滴30–120分钟，可口服序贯同量；长程每周血常规；避与大剂量肾上腺素能药。"},
+ metronidazole:{name:"甲硝唑",en:"Metronidazole",unit:"mg/kg",def:7.5,step:"2.5",
+  spec:"甲硝唑注射液/片",
+  utd:"首剂15mg/kg，维持7.5mg/kg q12h（新生儿负荷后维持；UpToDate）",
+  hb:"首剂15；维持7.5；q12h",
+  hosp:"库内 455人：厌氧菌覆盖（常与β内酰胺联用）；NICU 常见腹腔/厌氧场景",
+  ind:"厌氧菌感染（腹腔、NEC 穿孔术后）、难辨梭菌结肠炎的口服治疗；幽门螺杆菌另案。",
+  pharm:"硝基咪唑类，厌氧菌 DNA 断裂；口服/静滴生物利用度等效；肝代谢，新生儿清除慢（首剂后维持减量）。",
+  adverse:"①胃肠反应；②金属味；③神经系统（长程——周围神经病变）；④与酒精禁忌（双硫仑）。",
+  compat:"静滴缓慢（≥30分钟）；首剂15mg/kg 后维持7.5 q12h；长程注意神经症状。"},
+ erythromycin:{name:"红霉素",en:"Erythromycin",unit:"mg/kg",def:12.5,step:"2.5",
+  spec:"乳糖酸红霉素（静滴）/依托红霉素（口服）",
+  utd:"支原体/衣原体 12.5mg/kg/次 q6h；百日咳 10mg/kg/次 口服（UpToDate/文献）",
+  hb:"支/衣12.5；百日咳10 po；q6h",
+  hosp:"库内 260人：静滴/口服；另见胃动力低剂量用法（喂养不耐受）",
+  ind:"支原体/衣原体感染（肺炎、结膜炎）、百日咳；低剂量促胃肠动力（喂养不耐受，超说明书）。",
+  pharm:"大环内酯类，抑制蛋白合成 50S；胃动力作用经 motilin 受体；肝代谢、胆汁排泌。",
+  adverse:"①胃肠反应（呕吐腹泻，促动力用时更明显）；②肥厚性幽门狭窄（口服促动力——新生儿风险，须告知）；③肝酶升高；④静脉炎；⑤QT延长（与其他延长 QT 药合用注意心电）。",
+  compat:"乳糖酸红霉素 NS/GS 稀释静滴；口服促动力用小剂量短程；与西沙必利等禁忌。"},
+ azithromycin:{name:"阿奇霉素",en:"Azithromycin",unit:"mg/kg",def:10,step:"5",
+  spec:"注射用阿奇霉素/干混悬",
+  utd:"10mg/kg/d qd（首日常10，维持5；Uptodate/BNF儿童）",
+  hb:"未收录（按适应症滴定）",
+  hosp:"库内 300人：静滴/口服；百日咳与支原体主流",
+  ind:"支原体肺炎、百日咳、衣原体感染；组织半衰期长故 qd 短程。",
+  pharm:"大环内酯类（阿扎内酯），组织浓度高、半衰期 68h（qd 基础）；肝胆排泄。",
+  adverse:"①胃肠反应（较红霉素轻）；②肝酶升高；③QT延长（静滴——心电监测）；④婴幼儿肥厚性幽门狭窄顾虑（口服早用——文献警示，本院喂养不耐受不首选阿奇）。",
+  compat:"静滴≥60分钟；不与含铝镁抗酸同服（口服）；QT 药物合用心电。"},
+ aciclovir:{name:"阿昔洛韦",en:"Aciclovir",unit:"mg/kg",def:20,step:"5",
+  spec:"注射用阿昔洛韦",
+  utd:"HSV 感染 20mg/kg/次 IV：≥30周 q8h、<30周 q12h（UpToDate/NeoFax）",
+  hb:"20mg/kg；<30周q8–12h；≥30周q8h",
+  hosp:"库内 2,843人（含滴眼液另有 1,290人）：静滴 54条+口服；新生儿 HSV 全身性/脑炎标准剂量",
+  ind:"新生儿 HSV（皮肤眼口/脑炎/播散型——脑炎与播散型静脉足程 21 天）；水痘-带状疱疹重症。",
+  pharm:"核苷类似物，抑制 HSV DNA 聚合酶；CSF 穿透约 50%；肾排（结晶性肾病风险——水化）。",
+  adverse:"①肾毒性（结晶性肾病——充分水化、缓慢输注）；②静脉炎；③中性粒细胞减少；④胃肠反应。",
+  compat:"NS/GS 稀释至≤7mg/ml、输注≥1小时；充分水化；肾功能不全减量延长间隔。"},
+ ganciclovir:{name:"更昔洛韦",en:"Ganciclovir",unit:"mg/kg",def:6,step:"1",
+  spec:"注射用更昔洛韦",
+  utd:"先天性 CMV 治疗：诱导 6mg/kg/次 q12h×14–21 天，维持 5mg/kg/d（ symptomatic cCMV 文献/AAP）",
+  hb:"未收录（按 CMV 随访滴定）",
+  hosp:"库内 200人：静滴诱导为主；症状性先天性巨细胞病毒病毒血症/脑炎用",
+  ind:"症状性先天性巨细胞病毒（cCMV）感染（血小板减少、肝脾大、脑炎、颅内钙化）诱导+维持；须与家属充分沟通中性粒减少风险（SIHN study）。",
+  pharm:"核苷类似物，CMV DNA 聚合酶抑制；口服缬更昔洛韦生物利用度好（序贯）；肾排——中性粒减少为最常见剂量限制毒性。",
+  adverse:"①中性粒细胞减少（最常见，每周血常规——<500 暂停）；②血小板减少；③肝酶升高；④生殖与骨髓远期毒性（输注防护与知情）；⑤肾毒性。",
+  compat:"NS 稀释、输注≥1小时；每周血常规与肝肾功；粒细胞集落刺激药按需；肾功能按肌酐调间隔。"},
+ fluconazole:{name:"氟康唑",en:"Fluconazole",unit:"mg/kg",def:6,step:"1",
+  spec:"氟康唑注射液/胶囊",
+  utd:"侵袭性念珠菌 6–12mg/kg/d；预防 3mg/kg biw（ELBW ICU 预防——UpToDate/文献）",
+  hb:"首剂12–25；维持6–12；预防3；qd或biw",
+  hosp:"库内 1,974人：biw（1,496条，ELBW 预防）与qd；静滴/口服",
+  ind:"侵袭性念珠菌病治疗与 ELBW 预防（本院 biw 预防方案量大）；维持剂量按感染部位（尿/CSF）调整。",
+  pharm:"三唑类，真菌 CYP51 抑制；CSF/尿液穿透好；肾排 80%（原形）；新生儿清除慢（半衰期 30–70h）→ qd–q48h。",
+  adverse:"①肝酶升高/胃肠反应；②QT 延长（与延长 QT 药合用心电）；③药物相互作用多（CYP 抑制——与咪达唑仑/激素合用注意）；④长程警惕耐药。",
+  compat:"静滴≤0.2ml/kg/min（10分钟以上）；与咪达唑仑/西地那非等 CYP 底物相互作用——合用调整；肝功随访。"},
+ amphotericin:{name:"两性霉素B",en:"Amphotericin B",unit:"mg/kg",def:0.5,step:"0.25",
+  spec:"注射用两性霉素B",
+  utd:"去氧胆酸盐 0.5–1mg/kg/d 逐增至目标（侵袭性念珠菌/隐球菌；UpToDate）",
+  hb:"未收录（按真菌种类与肾功能滴定）",
+  hosp:"库内 47人：静滴；氟康唑不覆盖/重症真菌的二线",
+  ind:"侵袭性真菌感染（念珠菌血症、隐球菌脑膜炎）的二线/重症治疗；毒性大——脂质体剂型优先（本院以去氧胆酸盐为主，按院内剂型）。",
+  pharm:"多烯类，与真菌细胞壁麦角固醇结合成孔；广谱真菌；几乎不透过血脑屏障（脑膜炎需鞘注/脂质体大剂量）。",
+  adverse:"①发热寒战（输注反应——预处理苯海拉明）；②肾毒性（几乎必见——肌酐随访、水化）；③低钾低镁；④静脉炎；⑤贫血。",
+  compat:"5%GS 单独溶解（NS 中沉淀！）；避光、输注 2–6 小时；隔日或每日方案按耐受；每剂前肌酐/钾评估。"},
  exs:{name:"换血",en:"Exchange transfusion",unit:"ml",csum:"双倍量 2×血容量",
   spec:"双倍量换血：2×血容量（红细胞:血浆＝2:1）",
   utd:"新生儿重度高胆红素血症换血：双倍量换血＝2×血容量（早产儿 90–100、足月 80–85ml/kg），红细胞悬液与血浆按 2:1 配比、1–4 小时匀速（AAP/换血指南）",
@@ -707,6 +866,123 @@ const DRUGS={
   pharm:"选择性 α2 受体激动剂，产生可唤醒的镇静（近似自然睡眠）并节约其他镇静剂用量；不抑制呼吸驱动；肝代谢，新生儿清除慢。",
   adverse:"①心动过缓（剂量限制性，全程心率监护）；②低血压（快速输注时）；③长程撤离后激惹/血压反跳（逐减停药）；④传导障碍者慎用。",
   compat:"NS、5%GS均可稀释；独立泵腔；长程逐减停药；与阿片类合用镇静叠加、血流动力学监护。"},
+ clindamycin:{name:"克林霉素",en:"Clindamycin",unit:"mg/kg",def:5,step:"1",csum:"颗粒 75mg×12包",
+  spec:"克林霉素颗粒 75mg×12包",specMg:75,stockConc:75,
+  utd:"PMA 分档口服 5–9mg/kg/次 q8h（本院口服剂量表 2023.04 复旦儿科临床药学部）",
+  hb:"PMA≤32周 5mg/kg/次 q8h；32–40周 7mg/kg/次 q8h；>40周 9mg/kg/次 q8h",
+  hosp:"库内口服零星；静脉与口服序贯为主",
+  ind:"G+菌与厌氧菌感染（骨关节、腹腔、皮肤软组织）；口服序贯治疗。",
+  pharm:"林可酰胺类，抑制蛋白合成 50S；肝代谢（CYP3A4）。",
+  adverse:"胃肠反应、皮疹、血细胞减少、肝酶升高、伪膜性结肠炎（CDAD 警惕）。",
+  compat:"口服/鼻饲；CYP3A4 底物——相互作用多。"},
+ cycline:{name:"环酯红霉素",en:"Erythromycin cyclocarbonate",unit:"mg/kg",def:15,step:"2.5",csum:"干混悬 0.15g×12袋",
+  spec:"环酯红霉素干混悬剂 0.15g×12袋",specMg:150,stockConc:150,
+  utd:"15mg/kg/次 q12h（本院口服剂量表）",
+  hb:"15mg/kg/次，q12h",
+  hosp:"库内零星；支原体/衣原体/百日咳口服选择之一",
+  ind:"肺炎支原体、嗜肺军团菌、肺炎衣原体肺炎；淋球菌/弯曲杆菌/幽门螺杆菌感染；百日咳。",
+  pharm:"大环内酯衍生物，半衰期长支持 q12h；肝胆排泄。",
+  adverse:"腹部不适、恶心呕吐、腹泻、皮疹、可逆性听力损伤（极少数）、QT（监测）。",
+  compat:"口服/鼻饲；监测 QT。"},
+ cefdinir:{name:"头孢地尼",en:"Cefdinir",unit:"mg/kg",def:7,step:"1",csum:"分散片 100mg×12片",
+  spec:"头孢地尼分散片 100mg×12片",specMg:100,stockConc:100,
+  utd:"14mg/kg/d 分1–2次（>28天；本院口服剂量表）",
+  hb:">28d：14mg/kg/d，分1–2次服用",
+  hosp:"库内口服零星；门诊口服序贯常用",
+  ind:"敏感菌的咽喉炎/扁桃体炎/中耳炎/鼻窦炎/皮肤软组织感染等口服治疗。",
+  pharm:"三代口服头孢；肾排泄；与铁剂螯合。",
+  adverse:"腹泻/腹痛、皮疹瘙痒、ALT/AST升高、嗜酸细胞增多、二重感染。",
+  compat:"口服/鼻饲；与铁剂间隔3小时。"},
+ cefixime:{name:"头孢克肟",en:"Cefixime",unit:"mg/kg",def:8,step:"1",csum:"颗粒/分散片 50或100mg",
+  spec:"头孢克肟颗粒/分散片 50或100mg",specMg:50,stockConc:50,
+  utd:"8mg/kg/d qd 或 q12h（>28天；UpToDate 尿感专题 ≥1月）",
+  hb:">28d：8mg/kg/d，qd 或 q12h",
+  hosp:"库内口服零星；尿感口服序贯常用",
+  ind:"敏感菌的胆囊炎/中耳炎/鼻窦炎/猩红热/尿路感染等口服治疗。",
+  pharm:"三代口服头孢；肾排泄为主。",
+  adverse:"腹泻、皮疹、ALT/AST升高；严重：休克样过敏、结肠炎（罕见）。",
+  compat:"口服/鼻饲；说明书≥6月、UpToDate 尿感专题 ≥1月。"},
+ ceclor:{name:"头孢克洛",en:"Cefaclor",unit:"mg/kg",def:10,step:"2.5",csum:"干混悬 0.125g×6包",
+  spec:"头孢克洛干混悬剂 0.125g×6包",specMg:125,stockConc:125,
+  utd:"20–40mg/kg/d 分 q8–12h（一般20；重度40）（>28天；本院口服剂量表）",
+  hb:">28d：20–40mg/kg/d，分成q8–12h给药（一般20mg/kg/d；重度40mg/kg/d）",
+  hosp:"库内口服零星",
+  ind:"敏感菌的尿路/呼吸道/皮肤软组织/中耳炎/鼻窦炎等口服治疗。",
+  pharm:"二代口服头孢；肾排泄；空腹吸收更佳。",
+  adverse:"过敏、胃肠综合征、伪膜性结肠炎、嗜酸细胞增多、间质性肾炎/淤胆性黄疸（罕见）。",
+  compat:"口服/鼻饲。"},
+ nitrofurantoin:{name:"呋喃妥因",en:"Nitrofurantoin",unit:"mg/kg",def:1.25,step:"0.25",csum:"肠溶片 50mg×100片",
+  spec:"呋喃妥因肠溶片 50mg×100片",specMg:50,stockConc:50,
+  utd:"尿感 5–7mg/kg/d 分4次，疗程至尿培养转阴后3日；预防复发 1–2mg/kg/d 睡前（>28天；本院口服剂量表）",
+  hb:">28d：每日5–7mg/kg/d分4次；预防复发1–2mg/kg/d睡前单次或bid",
+  hosp:"库内零星；尿路感染专用（尿中浓度高）",
+  ind:"下尿路感染（膀胱炎）的治疗与反复发作的预防；<1个月禁用。",
+  pharm:"尿中浓度极高、血中低——仅限尿路；肾排泄；G6PD 缺乏溶血风险。",
+  adverse:"胃肠反应、皮疹、G6PD 溶血、周围神经炎（长程）、急性肺炎（长程）。",
+  compat:"口服/鼻饲；<1月禁用；G6PD 缺乏慎用。"},
+ voriconazole:{name:"伏立康唑",en:"Voriconazole",unit:"mg/kg",def:9,step:"1",csum:"片 200/50mg",
+  spec:"伏立康唑片 200mg/50mg",specMg:200,stockConc:200,
+  utd:"负荷 9mg/kg/次 q12h×2剂 → 维持 8mg/kg/次 q12h；监测血药浓度（>28天；本院口服剂量表）",
+  hb:">28d：负荷2剂9mg/kg/次q12h，维持8mg/kg/次q12h；监测血药浓度",
+  hosp:"库内零星；曲霉/克柔念珠菌的二线口服",
+  ind:"侵袭性曲霉病、耐氟康唑念珠菌（含克柔）、足放线病菌/镰刀菌感染。",
+  pharm:"三唑类，CYP2C19 代谢（基因多态性——非线性药代）；监测血药浓度。",
+  adverse:"视觉障碍（常见）、肝功异常、皮疹/光敏、胃肠反应、周围水肿。",
+  compat:"口服/鼻饲；空腹或餐后一致服用；肝功随访。"},
+ smztmp:{name:"复方磺胺甲噁唑",en:"SMZ-TMP",unit:"mg/kg",def:30,step:"5",csum:"片 0.48g（SMZ0.4+TMP0.08）",
+  spec:"复方磺胺甲噁唑片 0.48g（SMZ0.4+TMP0.08）",specMg:480,stockConc:480,
+  utd:"一般 48–72mg/kg/d q12h；尿感预防 12–18 qd；PCP预防 30–60 qd；PCP治疗 90–120 分q6–8h（≥2月；本院口服剂量表，以复方计）",
+  hb:"≥2月：一般48–72mg/kg/d q12h；尿感预防12–18qd；PCP预防30–60qd或q12h（2–3天/周）；PCP治疗90–120分q6–8h",
+  hosp:"库内 6人（体量小）；PCP 与尿感预防为本院主要场景",
+  ind:"敏感菌感染、卡氏肺孢子虫肺炎（PCP）治疗与预防、尿感预防；≥2月适用。",
+  pharm:"SMZ+TMP 双靶点协同；肝乙酰化+肾排；组织/CSF 穿透好。",
+  adverse:"药疹（严重 SJS/TEN）、光敏、血细胞减少、G6PD 溶血、高胆红素/核黄疸（新生儿）、肝肾损。",
+  compat:"口服/鼻饲；≥2月适用；监测血常规与肝肾功能；充分饮水。"},
+ cefprozil:{name:"头孢丙烯",en:"Cefprozil",unit:"mg/kg",def:10,step:"2.5",csum:"分散片 250mg×10片",
+  spec:"头孢丙烯分散片 250mg×10片",specMg:250,stockConc:250,
+  utd:"7.5–15mg/kg/次 q12h（≥2月；本院口服剂量表）",
+  hb:"≥2月：7.5–15mg/kg/次，bid",
+  hosp:"库内零星",
+  ind:"敏感菌的咽喉炎/扁桃体炎/中耳炎/鼻窦炎/皮肤软组织感染口服治疗。",
+  pharm:"二代口服头孢；肾排泄原形。",
+  adverse:"腹泻/恶心/呕吐/腹痛、头晕、皮疹荨麻疹、肝胆酶升高。",
+  compat:"口服/鼻饲；≥2月适用。"},
+ clarithromycin:{name:"克拉霉素",en:"Clarithromycin",unit:"mg/kg",def:7.5,step:"2.5",csum:"干混悬 25mg/ml 60ml",
+  spec:"克拉霉素干混悬剂 25mg/ml 60ml",specMg:1000,stockConc:25,
+  utd:"7.5mg/kg/次 q12h（>28天；Nelson 百日咳>1月同量）",
+  hb:">28d：7.5mg/kg/次，q12h",
+  hosp:"库内零星",
+  ind:"敏感菌的上呼吸道感染、支原体/衣原体、幽门螺杆菌、鸟-胞内分枝杆菌复合体。",
+  pharm:"大环内酯类，CYP3A4 强抑制剂；肝代谢+肾排。",
+  adverse:"腹痛/腹泻/消化不良/恶心呕吐、皮疹、味觉异常、头痛、QT 延长、肝毒性、CDAD。",
+  compat:"口服/鼻饲；>28天；CYP3A4 相互作用多。"},
+ ethambutol:{name:"乙胺丁醇",en:"Ethambutol",unit:"mg/kg",def:20,step:"5",csum:"片 0.25g",
+  spec:"乙胺丁醇片 0.25g",specMg:250,stockConc:250,
+  utd:"结核 20mg/kg/次 qd（15–25）或50mg/kg tiw；鸟-胞内 15–25mg/kg qd（>28天；本院口服剂量表）",
+  hb:">28d：结核20mg/kg/次qd（15–25）或50mg/kg tiw；鸟-胞内15–25mg/kg qd，max2500mg/次",
+  hosp:"库内零星；抗结核联合方案组分",
+  ind:"结核病与非结核分枝杆菌感染的联合治疗；<2岁安全未建立。",
+  pharm:"抑制分枝杆菌 RNA 合成；肾排泄原形约80%——肾功能减量；饭后服。",
+  adverse:"视神经炎（视力模糊/红绿色盲/视野缩小）、胃肠反应、皮疹、高尿酸。",
+  compat:"口服/鼻饲；>28天；定期视力评估；肾功能减量。"},
+ rifampicin:{name:"利福平",en:"Rifampicin",unit:"mg/kg",def:10,step:"5",csum:"胶囊 0.15g",
+  spec:"利福平胶囊 0.15g",specMg:150,stockConc:150,
+  utd:"<28d 10mg/kg/次 qd；>28d 结核 10–20mg/kg/d 空腹顿服（本院口服剂量表）",
+  hb:"<28d：10mg/kg/次q24h；>28d：抗结核10–20mg/kg qd空腹顿服；流感嗜血杆菌预防po10mg/kg×4天；脑膜炎球菌预防5mg/kg q12h×2天",
+  hosp:"库内零星；抗结核联合与 MRSA 严重感染辅助（与万古联用）",
+  ind:"结核病联合治疗、MRSA 严重感染辅助、脑膜炎球菌/流感嗜血杆菌接触后预防。",
+  pharm:"肝药酶强诱导剂（CYP450——相互作用极多）；肝代谢；体液橘红色。",
+  adverse:"肝毒性、胃肠反应、体液橘红（尿泪痰）、流感样综合征、过敏。",
+  compat:"口服/鼻饲；空腹顿服；与激素/抗真菌药/华法林等相互作用极多；肝功随访。"},
+ isoniazid:{name:"异烟肼",en:"Isoniazid",unit:"mg/kg",def:10,step:"2.5",csum:"片 100mg",
+  spec:"异烟肼片 100mg",specMg:100,stockConc:100,
+  utd:"结核敏感株 10–15mg/kg/次 qd；耐药 15–20mg/kg qd；非结核分枝杆菌 10mg/kg qd（>28天；本院口服剂量表）",
+  hb:">28d：结核敏感10–15mg/kg/次qd或一周五次（或20–30 tiw）；耐药15–20qd；非结核分枝杆菌10mg/kg qd",
+  hosp:"库内零星；抗结核联合与潜伏感染预防",
+  ind:"各型结核病的联合治疗（含结核性脑膜炎）与潜伏感染预防。",
+  pharm:"肝乙酰化代谢（快慢乙酰化多态性）、肾排泄；CSF 穿透好；新生儿肝乙酰化慢——半衰期延长。",
+  adverse:"周围神经炎（补维生素B6）、肝毒性（深色尿/黄疸前驱）、皮疹、血细胞减少、男性乳房发育（罕见）、抽搐（罕见）。",
+  compat:"口服/鼻饲；>28天；补充维生素B6；肝功随访。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -744,6 +1020,19 @@ const DRUGCARDS=[
  {id:'ivig',page:2,title:'丙种球蛋白',kind:'maint',drug:'ivig',forms:['prod']},
  {id:'fibg',page:2,title:'纤维蛋白原',kind:'maint',drug:'fibg',forms:['prod']},
  {id:'pcc',page:2,title:'凝血酶原复合物',kind:'maint',drug:'pcc',forms:['prod']},
+ {id:'clindamycin',page:0,title:'克林霉素',kind:'maint',drug:'clindamycin',forms:['ab']},
+ {id:'cycline',page:0,title:'环酯红霉素',kind:'maint',drug:'cycline',forms:['ab']},
+ {id:'cefdinir',page:0,title:'头孢地尼',kind:'maint',drug:'cefdinir',forms:['ab']},
+ {id:'cefixime',page:0,title:'头孢克肟',kind:'maint',drug:'cefixime',forms:['ab']},
+ {id:'ceclor',page:0,title:'头孢克洛',kind:'maint',drug:'ceclor',forms:['ab']},
+ {id:'nitrofurantoin',page:0,title:'呋喃妥因',kind:'maint',drug:'nitrofurantoin',forms:['ab']},
+ {id:'voriconazole',page:0,title:'伏立康唑',kind:'maint',drug:'voriconazole',forms:['ab']},
+ {id:'smztmp',page:0,title:'复方磺胺甲噁唑',kind:'maint',drug:'smztmp',forms:['ab']},
+ {id:'cefprozil',page:0,title:'头孢丙烯',kind:'maint',drug:'cefprozil',forms:['ab']},
+ {id:'clarithromycin',page:0,title:'克拉霉素',kind:'maint',drug:'clarithromycin',forms:['ab']},
+ {id:'ethambutol',page:0,title:'乙胺丁醇',kind:'maint',drug:'ethambutol',forms:['ab']},
+ {id:'rifampicin',page:0,title:'利福平',kind:'maint',drug:'rifampicin',forms:['ab']},
+ {id:'isoniazid',page:0,title:'异烟肼',kind:'maint',drug:'isoniazid',forms:['ab']},
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'morphine',page:1,title:'吗啡',kind:'maint',drug:'morphine',forms:['maint','push']},
  {id:'dexmedetomidine',page:1,title:'右美托咪定',kind:'maint',drug:'dexmedetomidine',forms:['maint']},
@@ -759,6 +1048,23 @@ const DRUGCARDS=[
  {id:'levetiracetam',page:2,title:'左乙拉西坦',kind:'maint',drug:'levetiracetam',forms:['qd']},
  {id:'propranolol',page:2,title:'普萘洛尔',kind:'maint',drug:'propranolol',forms:['qd']},
  {id:'digoxin',page:2,title:'地高辛',kind:'maint',drug:'digoxin',forms:['qd']},
+ {id:'penicillin',page:0,title:'青霉素G',kind:'maint',drug:'penicillin',forms:['ab']},
+ {id:'amoxiclav',page:0,title:'阿莫西林克拉维酸',kind:'maint',drug:'amoxiclav',forms:['ab']},
+ {id:'ampicillin',page:0,title:'氨苄西林舒巴坦',kind:'maint',drug:'ampicillin',forms:['ab']},
+ {id:'cefuroxime',page:0,title:'头孢呋辛',kind:'maint',drug:'cefuroxime',forms:['ab']},
+ {id:'cefotaxime',page:0,title:'头孢噻肟',kind:'maint',drug:'cefotaxime',forms:['ab']},
+ {id:'ceftazidime',page:0,title:'头孢他啶',kind:'maint',drug:'ceftazidime',forms:['ab']},
+ {id:'cefepime',page:0,title:'头孢吡肟',kind:'maint',drug:'cefepime',forms:['ab']},
+ {id:'meropenem',page:0,title:'美罗培南',kind:'maint',drug:'meropenem',forms:['ab']},
+ {id:'vancomycin',page:0,title:'万古霉素',kind:'maint',drug:'vancomycin',forms:['ab']},
+ {id:'linezolid',page:0,title:'利奈唑胺',kind:'maint',drug:'linezolid',forms:['ab']},
+ {id:'metronidazole',page:0,title:'甲硝唑',kind:'maint',drug:'metronidazole',forms:['ab']},
+ {id:'erythromycin',page:0,title:'红霉素',kind:'maint',drug:'erythromycin',forms:['ab']},
+ {id:'azithromycin',page:0,title:'阿奇霉素',kind:'maint',drug:'azithromycin',forms:['ab']},
+ {id:'aciclovir',page:0,title:'阿昔洛韦',kind:'maint',drug:'aciclovir',forms:['ab']},
+ {id:'ganciclovir',page:0,title:'更昔洛韦',kind:'maint',drug:'ganciclovir',forms:['ab']},
+ {id:'fluconazole',page:0,title:'氟康唑',kind:'maint',drug:'fluconazole',forms:['ab']},
+ {id:'amphotericin',page:0,title:'两性霉素B',kind:'maint',drug:'amphotericin',forms:['ab']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血'};
 const DFORM_OV={amiodarone:{push:'负荷',maint:'维持'},propafenone:{push:'负荷',maint:'维持'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'}};
@@ -778,11 +1084,18 @@ const GROUPS=[
  {page:1,title:'镇静催眠药',cards:['midazolam','dexmedetomidine']},
  {page:1,title:'骨骼肌松弛药',cards:['vecuronium']},
  {page:2,title:'止血药',cards:['etamsylate','hemocoag']},
- {page:2,title:'血液制品',cards:['rbc','exs','ffp','plt','cryo','alb','ivig','fibg','pcc']},
+ {page:2,title:'血液制品',cards:['rbc','ffp','plt','cryo','alb','ivig','fibg','pcc']},   /* 换血(exs)→将移入「临床场景」模块 */
  {page:0,title:'动脉导管关闭药',cards:['ibuprofen']},
  {page:2,title:'噻嗪类与保钾利尿剂',cards:['hydrochlorothiazide','spironolactone']},
  {page:2,title:'血糖调节药',cards:['insulin','glucagon']},
  {page:2,title:'甲状腺激素',cards:['levothyroxine']},
+ {page:0,title:'青霉素类',cards:['penicillin','amoxiclav','ampicillin']},
+ {page:0,title:'头孢菌素类',cards:['cefuroxime','cefotaxime','ceftazidime','cefepime']},
+ {page:0,title:'碳青霉烯类',cards:['meropenem']},
+ {page:0,title:'其他抗菌药',cards:['vancomycin','linezolid','metronidazole','erythromycin','azithromycin']},
+ {page:0,title:'抗病毒药',cards:['aciclovir','ganciclovir']},
+ {page:0,title:'抗真菌药',cards:['fluconazole','amphotericin']},
+ {page:1,title:'口服抗菌药',cards:['clindamycin','cycline','cefdinir','cefixime','ceclor','nitrofurantoin','voriconazole','smztmp','cefprozil','clarithromycin','ethambutol','rifampicin','isoniazid']},
 ];
 
 /* 搜索别名（临床俗名/商品名） */
@@ -810,6 +1123,23 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  pcc:'凝血酶原复合物 PCC 凝血酶原',
  sildenafil:'西地那非 降肺压 PPHN 肺高压 撤NO',
  exs:'换血 双倍量 换血疗法 高胆红素血症 胆红素',
+ penicillin:'青霉素G 青霉素 GBS 皮试',
+ amoxiclav:'阿莫西林克拉维酸 阿莫西林 克拉维酸',
+ ampicillin:'氨苄西林舒巴坦 氨苄青霉素 氨苄 西巴坦',
+ cefuroxime:'头孢呋辛 二代头孢 西力欣',
+ cefotaxime:'头孢噻肟 三代头孢',
+ ceftazidime:'头孢他啶 复达欣 三代头孢 铜绿',
+ cefepime:'头孢吡肟 四代头孢 马斯平',
+ meropenem:'美罗培南 碳青霉烯 倍能',
+ vancomycin:'万古霉素 稳可信 MRSA 谷浓度',
+ linezolid:'利奈唑胺 斯沃 VRE MRSA',
+ metronidazole:'甲硝唑 灭滴灵 厌氧',
+ erythromycin:'红霉素 阿片? 支原体 衣原体 百日咳 促胃动力',
+ azithromycin:'阿奇霉素 希舒美 支原体 百日咳',
+ aciclovir:'阿昔洛韦 无环鸟苷 HSV 疱疹 脑炎',
+ ganciclovir:'更昔洛韦 丽科伟 CMV 巨细胞病毒',
+ fluconazole:'氟康唑 大扶康 念珠菌 真菌 预防',
+ amphotericin:'两性霉素B 真菌 侵袭性',
  morphine:'吗啡 镇痛 阿片 人机对抗',
  dexmedetomidine:'右美托咪定 右美 镇静 人机对抗',
  spironolactone:'螺内酯 安体舒通 保钾利尿 口服利尿',
@@ -900,6 +1230,222 @@ function calcAmp(id){
     ck:[`1支药物可维持时间：${f(g.specMg,2)}mg ÷ (${W.toFixed(2)}kg×${f(act,2)} ${g.unit}${pm?'×60min':isPerDay?'×24h':''})＝<b>${f(dur,1)}h</b>`,
         `液体核对：泵速${f2(R)}ml/h×${f(dur,1)}h＝<b>${f(V,1)}ml</b>`], R, dose};
 }
+/* ===== 抗感染用药专属配置：schemes 按 剂量档×日龄/胎龄 自动推荐；四区块常显 ===== */
+const ABCFG={
+ penicillin:{sites:['GBS菌血症','脑膜炎≤7天','脑膜炎≥8天'],unit:'万U/kg',out:'万U',step:1,csum:'80万U/支（钠1.35mmol）',solvent:'糖水/盐水',
+  schemes:{'GBS菌血症':[{dose:5,freq:'q12h'}],'脑膜炎≤7天':[{dose:15,freq:'q8h'}],'脑膜炎≥8天':[{dose:12.5,freq:'q6h'}]},
+  specS:'GBS（B族链球菌）、梅毒螺旋体、敏感肺炎链球菌；肠球菌中敏。',
+  specR:'产青霉素酶金葡菌、多数革兰阴性杆菌、支原体、MRS（天然耐药）。',
+  caution:'用前青霉素皮试（本院常规）；80万U/支含钠1.35mmol——长程注意钠负荷；脑膜炎大剂量方案缓慢输注防神经刺激。',
+  pk:'半衰期随日龄缩短（≤7天约3–4小时，之后1–2小时）——7天内q12h、之后加密q8h/q6h；肾排泄为主；脑膜炎时CSF穿透随炎症增加。',
+  adverse:'过敏（皮试筛查）；大剂量神经刺激（肌阵挛）；高钠负荷。'},
+ ampicillin:{sites:['外周感染','中枢感染'],unit:'mg/kg',out:'mg',step:5,csum:'0.75g/支（钠2.39mmol）',solvent:'糖水/盐水',ageDep:true,
+  schemes:{'外周感染':[{max:7,dose:50,freq:'q12h'},{min:8,dose:50,freq:'q8h'}],'中枢感染':[{max:7,dose:75,freq:'q8h'},{min:8,dose:75,freq:'q6h'}]},
+  doseTableHtml:'<table style="width:100%;font-size:12px;margin:6px 0;border-collapse:collapse;"><tr style="background:#eaf2f8;"><td style="border:1px solid #d8e2f0;padding:4px;">体重＼日龄</td><td style="border:1px solid #d8e2f0;padding:4px;">≤7天</td><td style="border:1px solid #d8e2f0;padding:4px;">8–28天</td><td style="border:1px solid #d8e2f0;padding:4px;">>28天</td></tr><tr><td style="border:1px solid #d8e2f0;padding:4px;">≤2000g</td><td style="border:1px solid #d8e2f0;padding:4px;">100mg/kg/d q12h</td><td style="border:1px solid #d8e2f0;padding:4px;">150mg/kg/d q8h</td><td style="border:1px solid #d8e2f0;padding:4px;">150mg/kg/d q6h</td></tr><tr><td style="border:1px solid #d8e2f0;padding:4px;">>2000g</td><td style="border:1px solid #d8e2f0;padding:4px;">150mg/kg/d q8h</td><td style="border:1px solid #d8e2f0;padding:4px;">200mg/kg/d q8h</td><td style="border:1px solid #d8e2f0;padding:4px;">200mg/kg/d q6h</td></tr></table>',
+  specS:'GBS、李斯特菌（天然敏感——早发败血症必覆盖）、肠球菌、部分肠杆菌。',
+  specR:'产TEM-1酶的克雷伯菌/肠杆菌属、MRS、铜绿假单胞菌（天然耐药）。',
+  caution:'舒巴坦不超过氨苄成分1/2（本院固定复方）；每支0.75g含钠2.39mmol；用前皮试；常见剂量调整表见上（按体重与日龄分档）。',
+  pk:'半衰期随日龄缩短（≤7天q12h→之后q8h）；肾排泄为主；中枢感染时CSF穿透随炎症增加——中枢档加量。',
+  adverse:'皮疹（氨苄特征性）、腹泻、高钠负荷。'},
+ amoxiclav:{sites:['感染治疗','尿感预防'],unit:'mg/kg',out:'mg',step:5,route:'口服/鼻饲',csum:'以阿莫西林计',ageDep:true,
+  schemes:{'感染治疗':[{max:28,dose:17,freq:'q12h'},{min:29,dose:20,freq:'q12h'}],'尿感预防':[{dose:15,freq:'qd'}]},
+  specS:'金葡（含产β内酰胺酶株）、肺链、大肠埃希菌、流感嗜血杆菌、克雷伯菌属、卡他莫拉菌。',
+  specR:'MRS、肠球菌、铜绿假单胞菌、产AmpC肠杆菌（天然耐药）。',
+  caution:'剂量以阿莫西林成分计；克拉维酸相关腹泻较常见——喂养不耐受时评估。',
+  pk:'口服吸收好；新生儿肾清除慢，q12h足够；克拉维酸肝代谢。',
+  adverse:'腹泻（最常见）、皮疹、肝酶升高。'},
+ cefuroxime:{sites:['静滴（一般）','口服酯（>28天）'],unit:'mg/kg',out:'mg',step:5,csum:'注射0.75g支 / 酯片0.125g包',solvent:'糖水/盐水',
+  schemes:{'静滴（一般）':[{dose:50,freq:'q12h'}],'口服酯（>28天）':[{min:29,dose:12.5,freq:'q12h'}]},
+  specS:'金葡（含产酶株）、肺链、化脓性链球菌、大肠埃希菌、流感嗜血杆菌（含产酶株）、卡他莫拉菌。',
+  specR:'MRS、肠球菌、铜绿假单胞菌、不动杆菌（天然耐药）。',
+  caution:'二代头孢CSF穿透不足——不作中枢感染用药；口服为头孢呋辛酯（>28天，20–30mg/kg/d bid，单次max500mg）。',
+  pk:'肾排泄，新生儿半衰期延长（q12h）；炎症时CSF仅少量穿透。',
+  adverse:'胃肠反应、皮疹、一过性肝酶升高。'},
+ cefotaxime:{sites:['一般感染','脑膜炎','淋球菌'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'糖水/盐水',ageDep:true,
+  schemes:{'一般感染':[{max:7,dose:50,freq:'q12h'},{min:8,dose:50,freq:'q8h'}],'脑膜炎':[{dose:75,freq:'q6h'}],'淋球菌':[{dose:25,freq:'q8h'}]},
+  specS:'肠杆菌科（三代强）、流感嗜血杆菌、淋球菌、链球菌、脑膜炎奈瑟菌。',
+  specR:'肠球菌、MRS、铜绿（覆盖弱）、产ESBL菌（天然耐药）。',
+  caution:'<2kg减量；脑膜炎可至75mg/kg q6h；新生儿半衰期长——按日龄调间隔。',
+  pk:'去乙酰代谢物有活性；CSF穿透好（炎症时）；日龄决定清除。',
+  adverse:'皮疹、腹泻、菌群紊乱。'},
+ ceftazidime:{sites:['外周感染','中枢/铜绿'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'糖水/盐水',
+  schemes:{'外周感染':[{dose:30,freq:'q8h'}],'中枢/铜绿':[{dose:50,freq:'q8h'}]},
+  specS:'铜绿假单胞菌（三代中最强）、肠杆菌科。',
+  specR:'肠球菌、MRS、产ESBL/AmpC菌、脆弱拟杆菌（天然耐药）。',
+  caution:'三代头孢主力但产ESBL菌需美罗培南；长程注意真菌二重感染。',
+  pk:'肾排泄；CSF穿透随炎症增加；新生儿半衰期长（q8h）。',
+  adverse:'腹泻、静脉炎、皮疹、菌群紊乱。'},
+ cefepime:{sites:['一般≤28天','一般>28天','铜绿/重症'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'糖水/盐水',ageDep:true,
+  schemes:{'一般≤28天':[{dose:30,freq:'q12h'}],'一般>28天':[{dose:30,freq:'q8h'}],'铜绿/重症':[{dose:50,freq:'q8h'}]},
+  specS:'四代：肠杆菌（AmpC稳定）＋铜绿假单胞菌。',
+  specR:'MRS、肠球菌、脆弱拟杆菌、产KPC菌（天然耐药）。',
+  caution:'脑病/肌阵挛（肾功能不全或超剂量）——严格按日龄间隔；避免与肾毒药叠加。',
+  pk:'肾排泄，≤28天半衰期长（q12h）——间隔错误是脑病主因。',
+  adverse:'脑病/肌阵挛（罕见但重要）、皮疹、腹泻、嗜酸细胞增多。'},
+ meropenem:{sites:['一般','化脑/铜绿'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'糖水/盐水',
+  schemes:{'一般':[{dose:20,freq:'q8h'}],'化脑/铜绿':[{dose:40,freq:'q8h'}]},
+  specS:'超广谱（ESBL稳定）：肠杆菌、铜绿、葡萄球菌、厌氧菌。',
+  specR:'MRS（不均一）、嗜麦芽窄食单胞菌、屎肠球菌部分、产KPC菌视地区（天然/获得耐药）。',
+  caution:'不与丙戊酸同用（浓度骤降→抽搐复发）；筛选耐药菌——限重症/降阶梯；输注≥30分钟、化脑延长>1小时。',
+  pk:'肾排泄，半衰期按日龄；时间依赖性杀菌——延长输注策略（化脑>1小时）。',
+  adverse:'腹泻、菌群紊乱/真菌二重、中枢反应（罕见抽搐）、血小板减少。'},
+ vancomycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'0.5g/支（稳可信）',solvent:'糖水/盐水',
+  schemes:{'一般':[{dose:15,freq:'q12h'}]},
+  specS:'MRSA、MRCNS、链球菌。',
+  specR:'全部革兰阴性菌（外膜屏障）、VRE（天然耐药）。',
+  caution:'治疗窗窄：谷浓度目标10–20μg/ml（第4剂给药前抽血）；输注≥60分钟防红人综合征；肾功能与GA个体化间隔。',
+  pk:'肾排泄为主，半衰期随GA/日龄/肌酐显著变化——本院常规谷浓度监测。',
+  adverse:'肾毒性（谷>20）、红人综合征、耳毒性（罕见）、血小板减少。'},
+ linezolid:{sites:['<34周','≥34周'],unit:'mg/kg',out:'mg',step:5,gaUsed:true,csum:'注射液/片',solvent:'糖水/盐水',gaDep:true,
+  schemes:{'<34周':[{gaMax:34,dose:10,freq:'q12h'}],'≥34周':[{gaMin:34,dose:10,freq:'q8h'}]},
+  specS:'MRSA、VRE、MRCNS、链球菌。',
+  specR:'革兰阴性菌、多数厌氧菌（天然耐药）。',
+  caution:'长程（>10–14天）血小板/白细胞减少——每周血常规；单胺氧化酶抑制（拟交感药注意）；口服生物利用度100%可序贯同量。',
+  pk:'肝代谢弱、肾排代谢物；CSF穿透中等。',
+  adverse:'血小板减少、乳酸酸中毒（罕见）、周围神经病变（长程）。'},
+ metronidazole:{sites:['维持（首剂15单独给）','口服（厌氧菌）'],unit:'mg/kg',out:'mg',step:2.5,csum:'注射液/片',solvent:'可直接静滴',
+  schemes:{'维持（首剂15单独给）':[{dose:7.5,freq:'q12h'}],'口服（厌氧菌）':[{max:56,dose:7.5,freq:'q12h'},{min:57,dose:10,freq:'q12h'}]},
+  specS:'厌氧菌（脆弱拟杆菌群）、难辨梭菌、滴虫、阿米巴。',
+  specR:'全部需氧菌（天然耐药）。',
+  caution:'首剂15mg/kg单独给；长程周围神经病变；双硫仑反应（禁酒精）；孕龄<40周新生儿第一周可能蓄积。',
+  pk:'肝代谢，新生儿清除慢；口服＝静滴生物利用度。',
+  adverse:'胃肠反应、金属味、长程神经病变、二重感染（CDAD）。'},
+ erythromycin:{sites:['静滴（支/衣原体）','口服（<28天）','口服（≥28天）'],unit:'mg/kg',out:'mg',step:2.5,csum:'乳糖酸红霉素（静滴）',solvent:'糖水/盐水',
+  schemes:{'静滴（支/衣原体）':[{dose:12.5,freq:'q6h'}],'口服（<28天）':[{max:28,dose:10,freq:'q6h'}],'口服（≥28天）':[{min:29,dose:16.5,freq:'q8h'}]},
+  specS:'支原体、衣原体、百日咳杆菌、军团菌、部分革兰阳性。',
+  specR:'多数肠杆菌科（产酯酶）、产酶金葡（天然耐药）。',
+  caution:'口服促胃动力（喂养不耐受，超说明书）与肥厚性幽门狭窄相关——须家属告知；静滴静脉炎；QT延长。',
+  pk:'肝代谢、胆汁排泄；QT延长药合用心电监护。',
+  adverse:'胃肠反应、静脉炎、肥厚性幽门狭窄顾虑、肝酶升高。'},
+ azithromycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'注射用/干混悬',solvent:'糖水/盐水',
+  schemes:{'一般':[{dose:10,freq:'qd'}]},
+  specS:'支原体、衣原体、百日咳杆菌、部分革兰阳性、流感嗜血杆菌。',
+  specR:'多数肠杆菌科（天然耐药）。',
+  caution:'静滴≥60分钟——QT延长（心电）；婴儿口服肥厚性幽门狭窄顾虑（文献警示）；口服同量序贯。',
+  pk:'半衰期68小时（qd）；组织高浓度；肝胆排泄。',
+  adverse:'胃肠反应（轻于红霉素）、肝酶升高、QT延长。'},
+ aciclovir:{sites:['≥30周','<30周'],unit:'mg/kg',out:'mg',step:5,gaUsed:true,gaDep:true,csum:'注射用粉针',solvent:'糖水/盐水（稀释至≤7mg/ml）',
+  schemes:{'≥30周':[{gaMin:30,dose:20,freq:'q8h'}],'<30周':[{gaMax:30,dose:20,freq:'q12h'}]},
+  specS:'HSV-1/2、VZV。',
+  specR:'CMV（完全耐药）、TK基因缺失突变株（治疗中诱发）。',
+  caution:'结晶性肾病——充分水化、输注≥1小时、肾功能调间隔；足程：皮肤眼口型14天、脑炎/播散型21天。',
+  pk:'肾排泄原形；CSF穿透约50%；<30周清除极慢（q12h）。',
+  adverse:'肾毒性（结晶）、静脉炎、中性粒细胞减少。'},
+ ganciclovir:{sites:['诱导期','维持期'],unit:'mg/kg',out:'mg',step:1,csum:'注射用粉针',solvent:'糖水/盐水',
+  schemes:{'诱导期':[{dose:6,freq:'q12h'}],'维持期':[{dose:5,freq:'qd'}]},
+  specS:'CMV（首选）、HHV-6/7。',
+  specR:'其他疱疹病毒部分、UL97/UL54突变株（治疗中诱发耐药）。',
+  caution:'中性粒细胞减少为最常见剂量限制毒性——每周血常规（<0.5×10⁹/L暂停）；生殖/骨髓远期毒性——输注防护与家属知情；肾功能按肌酐调间隔。',
+  pk:'肾排泄原形；CSF穿透50–70%；口服缬更昔洛韦16mg/kg可序贯同效。',
+  adverse:'中性粒/血小板减少、肝酶升高、输注部位反应。'},
+ fluconazole:{sites:['治疗','ELBW预防'],unit:'mg/kg',out:'mg',step:1,freqOptions:['qd','biw'],csum:'注射液/胶囊',solvent:'糖水/盐水',
+  schemes:{'治疗':[{dose:6,freq:'qd'}],'ELBW预防':[{dose:3,freq:'biw'}]},
+  specS:'白念珠菌、近平滑念珠菌、隐球菌。',
+  specR:'克柔念珠菌（天然耐药）、光滑念珠菌（剂量依赖）、毛霉/曲霉全部。',
+  caution:'CYP3A/2C9强抑制——与咪达唑仑、西地那非、激素显著相互作用；肝酶随访；QT延长；口服同量序贯。',
+  pk:'肾排泄原形80%；CSF与尿液穿透好；半衰期随GA/日龄30–70小时——qd/biw。',
+  adverse:'肝酶升高、胃肠反应、QT延长、药物相互作用。'},
+ amphotericin:{sites:['起始剂量','目标剂量'],unit:'mg/kg',out:'mg',step:0.25,csum:'注射用粉针（去氧胆酸盐）',solvent:'仅5%葡萄糖（生理盐水中沉淀）',
+  schemes:{'起始剂量':[{dose:0.5,freq:'qd'}],'目标剂量':[{dose:1,freq:'qd'}]},
+  specS:'广谱真菌：念珠菌、隐球菌、毛霉、曲霉。',
+  specR:'土曲霉、葡萄牙念珠菌部分、其他接合菌部分（天然/获得耐药）。',
+  caution:'仅5%GS溶解——生理盐水中沉淀！；发热寒战预处理（苯海拉明）；肾毒性几乎必见——肌酐/血钾随访+水化；每剂前评估。',
+  pk:'组织结合极高、肾排极低；长半衰期——可隔日方案；脑膜炎CSF穿透差。',
+  adverse:'发热寒战（输注反应）、肾毒性、低钾低镁、静脉炎、贫血。'},
+/* ===== 口服抗菌药（本科室口服剂量表 2023.04 复旦儿科临床药学部） ===== */
+ clindamycin:{sites:['PMA≤32周','PMA32–40周','PMA>40周'],unit:'mg/kg',out:'mg',step:1,route:'口服/鼻饲',pmaDep:true,csum:'颗粒 75mg×12包',
+  schemes:{'PMA≤32周':[{pmaMax:32,dose:5,freq:'q8h'}],'PMA32–40周':[{pmaMin:32,pmaMax:40,dose:7,freq:'q8h'}],'PMA>40周':[{pmaMin:40,dose:9,freq:'q8h'}]},
+  specS:'金葡、肺链、化脓性链球菌、厌氧菌（脆弱拟杆菌等）。',
+  specR:'肠球菌、MRS部分、需氧革兰阴性菌（天然耐药）。',
+  caution:'PMA 分档剂量；伪膜性结肠炎（CDAD）警惕；CYP3A4底物——相互作用多。',
+  pk:'肝代谢（CYP3A4），尿与胆汁排泄；PMA决定清除。',
+  adverse:'胃肠反应、皮疹、血细胞减少、肝酶升高、伪膜性结肠炎。'},
+ cycline:{sites:['一般'],unit:'mg/kg',out:'mg',step:2.5,route:'口服/鼻饲',csum:'干混悬 0.15g×12袋',
+  schemes:{'一般':[{dose:15,freq:'q12h'}]},
+  specS:'肺炎支原体、嗜肺军团菌、肺炎衣原体、淋球菌、弯曲杆菌、幽门螺杆菌。',
+  specR:'产酶肠杆菌（天然耐药）。',
+  caution:'腹部不适/恶心常见；监测QT间期。',
+  pk:'大环内酯衍生物、半衰期长（q12h）；肝胆排泄。',
+  adverse:'腹部不适、恶心呕吐、腹泻、皮疹、可逆性听力损伤（极少数）。'},
+ cefdinir:{sites:['一般（>28天）'],unit:'mg/kg',out:'mg',step:1,route:'口服/鼻饲',minAge:29,csum:'分散片 100mg×12片',
+  schemes:{'一般（>28天）':[{min:29,dose:7,freq:'q12h'}]},
+  specS:'葡萄球菌属、链球菌属、肺炎球菌、卡他莫拉菌、大肠埃希菌、克雷伯菌、奇异变形杆菌、流感嗜血杆菌。',
+  specR:'MRS、肠球菌、铜绿假单胞菌（天然耐药）。',
+  caution:'>28天适用；与铁剂间隔3小时（可出现红色粪便/沉淀）。',
+  pk:'肾排泄为主；与铁螯合降低吸收。',
+  adverse:'腹泻/腹痛、皮疹瘙痒、ALT/AST升高、嗜酸细胞增多、真菌二重感染。'},
+ cefixime:{sites:['一般（>28天）'],unit:'mg/kg',out:'mg',step:1,route:'口服/鼻饲',minAge:29,csum:'颗粒/分散片 50或100mg',
+  schemes:{'一般（>28天）':[{min:29,dose:8,freq:'qd'}]},
+  specS:'链球菌（肠球菌除外）、淋球菌、卡他莫拉菌、大肠埃希菌、克雷伯菌、流感嗜血杆菌。',
+  specR:'MRS、肠球菌、铜绿、葡萄球菌产酶株（天然耐药）。',
+  caution:'>28天适用；说明书≥6月、UpToDate尿感专题≥1月。',
+  pk:'肾排泄为主；儿童半衰期约3小时。',
+  adverse:'腹泻、皮疹、ALT/AST升高；严重：休克样过敏/结肠炎（罕见）。'},
+ ceclor:{sites:['一般（>28天）'],unit:'mg/kg',out:'mg',step:2.5,route:'口服/鼻饲',minAge:29,csum:'干混悬 0.125g×6包',
+  schemes:{'一般（>28天）':[{min:29,dose:10,freq:'q12h'}]},
+  specS:'葡萄球菌、肺炎球菌、化脓性链球菌、大肠埃希菌、流感嗜血杆菌（含产酶）、卡他莫拉菌、奇异变形杆菌。',
+  specR:'肠球菌、MRS、铜绿、脆弱拟杆菌（天然耐药）。',
+  caution:'>28天；一般20mg/kg/d、重度40mg/kg/d。',
+  pk:'肾排泄；空腹吸收更佳。',
+  adverse:'过敏、胃肠综合征、伪膜性结肠炎、嗜酸细胞增多、间质性肾炎/淤胆性黄疸（罕见）。'},
+ nitrofurantoin:{sites:['尿感治疗','尿感预防复发'],unit:'mg/kg',out:'mg',step:0.25,route:'口服/鼻饲',minAge:30,csum:'肠溶片 50mg×100片',
+  schemes:{'尿感治疗':[{min:30,dose:1.25,freq:'q6h'}],'尿感预防复发':[{min:30,dose:0.25,freq:'qd'}]},
+  specS:'大肠埃希菌、肠球菌属、葡萄球菌属、克雷伯菌/肠杆菌（尿路）。',
+  specR:'多数变形杆菌、沙门/志贺菌、铜绿（尿中无效，天然耐药）。',
+  caution:'<1个月禁用（红细胞酶系不成熟→溶血）；疗程至尿培养转阴后3日；G6PD缺乏慎用。',
+  pk:'尿中浓度极高（仅限尿路感染）；肾排泄。',
+  adverse:'胃肠反应、皮疹、G6PD溶血、周围神经炎（长程）、急性肺炎（长程）。'},
+ voriconazole:{sites:['负荷（×2剂）','维持'],unit:'mg/kg',out:'mg',step:1,route:'口服/鼻饲',minAge:29,csum:'片 200/50mg',
+  schemes:{'负荷（×2剂）':[{min:29,dose:9,freq:'q12h'}],'维持':[{min:29,dose:8,freq:'q12h'}]},
+  specS:'曲霉菌（首选）、念珠菌（含克柔/耐氟康唑株）、足放线病菌/镰刀菌。',
+  specR:'接合菌（毛霉）全部（天然耐药）。',
+  caution:'>28天；监测血药浓度；吸收不良者建议IV；光毒性儿童更常见。',
+  pk:'肝CYP2C19代谢（基因多态性——非线性药代，监测浓度）。',
+  adverse:'视觉障碍（常见）、肝功异常、皮疹/光敏、胃肠反应、周围水肿。'},
+ smztmp:{sites:['一般感染','尿感预防','PCP预防','PCP治疗'],unit:'mg/kg',out:'mg',step:5,route:'口服/鼻饲',minAge:61,csum:'片 0.48g（SMZ0.4+TMP0.08）',
+  schemes:{'一般感染':[{min:61,dose:30,freq:'q12h'}],'尿感预防':[{min:61,dose:15,freq:'qd'}],'PCP预防':[{min:61,dose:45,freq:'qd'}],'PCP治疗':[{min:61,dose:105,freq:'q8h'}]},
+  specS:'非产酶金葡、化脓链球菌、肺链、大肠埃希菌、克雷伯菌、沙门/变形/志贺菌、流感嗜血杆菌、卡氏肺孢子虫。',
+  specR:'产酶金葡、肠球菌、铜绿多数、厌氧菌（天然耐药）。',
+  caution:'≥2月适用（新生儿高胆红素/核黄疸风险）；G6PD溶血；监测血常规；严重：SJS/TEN、光敏。',
+  pk:'SMZ肝乙酰化+肾排、TMP肾排；组织/CSF穿透好。',
+  adverse:'药疹（严重SJS/TEN）、光敏、血细胞减少、溶血（G6PD）、肝肾损、高胆红素。'},
+ cefprozil:{sites:['一般（≥2月）'],unit:'mg/kg',out:'mg',step:2.5,route:'口服/鼻饲',minAge:61,csum:'分散片 250mg×10片',
+  schemes:{'一般（≥2月）':[{min:61,dose:10,freq:'q12h'}]},
+  specS:'金葡（含产酶株）、肺链、化脓链球菌、流感嗜血杆菌（含产酶）、卡他莫拉菌。',
+  specR:'MRS、肠球菌、铜绿、不动杆菌（天然耐药）。',
+  caution:'≥2月适用。',
+  pk:'肾排泄原形。',
+  adverse:'腹泻/恶心/呕吐/腹痛、头晕、皮疹荨麻疹、肝胆酶升高。'},
+ clarithromycin:{sites:['一般（>28天）'],unit:'mg/kg',out:'mg',step:2.5,route:'口服/鼻饲',minAge:29,csum:'干混悬 25mg/ml 60ml',
+  schemes:{'一般（>28天）':[{min:29,dose:7.5,freq:'q12h'}]},
+  specS:'金葡、肺链、化脓链球菌、李斯特菌、流感嗜血杆菌、支原体/衣原体、幽门螺杆菌、鸟-胞内分枝杆菌。',
+  specR:'MRS多数、产ESBL肠杆菌（天然耐药）。',
+  caution:'>28天；Nelson百日咳>1月 7.5mg/kg q12h；Lexicomp肺炎>3月。',
+  pk:'肝CYP3A4代谢（强抑制剂——相互作用多）。',
+  adverse:'腹痛/腹泻/消化不良/恶心呕吐、皮疹、味觉异常、头痛、QT延长、肝毒性、CDAD。'},
+ ethambutol:{sites:['结核（>28天）'],unit:'mg/kg',out:'mg',step:5,route:'口服/鼻饲',minAge:29,csum:'片 0.25g',
+  schemes:{'结核（>28天）':[{min:29,dose:20,freq:'qd'}]},
+  specS:'结核分枝杆菌（生长繁殖期）、非结核分枝杆菌。',
+  specR:'其他细菌无活性（专用抗结核药）。',
+  caution:'>28天；视神经炎（视力模糊/红绿色盲，>25mg/kg/d易发）——<2岁安全未建立；鸟-胞内复合体与克拉霉素/阿奇联用。',
+  pk:'肾排泄原形约80%——肾功能减量；饭后服。',
+  adverse:'视神经炎（视力模糊/色盲/视野缩小）、胃肠反应、皮疹、高尿酸。'},
+ rifampicin:{sites:['<28天','>28天'],unit:'mg/kg',out:'mg',step:5,route:'口服/鼻饲',csum:'胶囊 0.15g',ageDep:true,
+  schemes:{'<28天':[{max:28,dose:10,freq:'qd'}],'>28天':[{min:29,dose:15,freq:'qd'}]},
+  specS:'结核杆菌（含麻风）、葡萄球菌（含产酶/MRSA株——联合用）、脑膜炎奈瑟菌/流感嗜血杆菌（预防）。',
+  specR:'单用迅速耐药（必须联合）；铜绿/多数肠杆菌（天然耐药）。',
+  caution:'肝毒性（随访肝功）；体液橘红色（尿泪痰——隐形眼镜染色）；间歇大剂量流感样综合征；肝药酶强诱导剂——与激素/抗真菌药/华法林相互作用极多；空腹顿服。',
+  pk:'肝代谢强诱导剂（CYP450诱导）；空腹顿服。',
+  adverse:'肝毒性、胃肠反应、体液橘红、流感样综合征、过敏。'},
+ isoniazid:{sites:['结核（>28天）'],unit:'mg/kg',out:'mg',step:2.5,route:'口服/鼻饲',minAge:29,csum:'片 100mg',
+  schemes:{'结核（>28天）':[{min:29,dose:10,freq:'qd'}]},
+  specS:'结核分枝杆菌（各型——联合治疗/单用预防）。',
+  specR:'其他细菌无活性（专用抗结核药）。',
+  caution:'>28天；周围神经炎（步态不稳/针刺感——补维生素B6）；肝毒性前驱（深色尿/黄疸/乏力）；新生儿肝乙酰化慢——半衰期延长密切观察。',
+  pk:'肝乙酰化代谢（快慢乙酰化多态性）、肾排泄；CSF穿透好。',
+  adverse:'周围神经炎、肝毒性、皮疹、血细胞减少、男性乳房发育（罕见）、抽搐（罕见）。'},
+};
+
 /* push 单次药配置表 */
 const PUSHCFG={
  fentanyl:{def:2,step:0.5,unit:'μg/kg',out:'μg',freq:'st',note:'缓推≥3min · 备气囊'},
@@ -1076,6 +1622,42 @@ function calcPush(id){
     prep,
     ck:[ck], dose};
 }
+/* 抗感染：按 剂量档×日龄/胎龄/PMA 自动推荐 scheme；IV 附溶媒行 */
+function calcAb(id){
+  const c=ABCFG[id], g=DRUGS[id];
+  const ageEl=$('dage_'+id); const ageV=ageEl?parseFloat(ageEl.value):NaN;
+  const age=(isFinite(ageV)&&ageV>=0)?ageV:(c.minAge||7);
+  const gwEl=$('dgaw_'+id); const gwV=gwEl?parseFloat(gwEl.value):NaN;
+  const gw=(isFinite(gwV)&&gwV>=22)?gwV:30;
+  const gdEl=$('dgad_'+id); const gdV=gdEl?parseFloat(gdEl.value):NaN;
+  const gd=(isFinite(gdV)&&gdV>=0)?gdV:0;
+  const ga=gw+gd/7, pma=ga+age/7;
+  const site=(c.sites&&c.sites.length>1)?((($('sit_'+id)||{}).value)||c.sites[0]):(c.sites?c.sites[0]:'');
+  const rows=c.schemes[site]||[];
+  let row=rows[rows.length-1]||{dose:c.def||20,freq:c.freq||'q12h'};
+  for(const r of rows){
+    if(r.min!==undefined&&age<r.min)continue;
+    if(r.max!==undefined&&age>r.max)continue;
+    if(r.gaMax!==undefined&&ga>=r.gaMax)continue;
+    if(r.gaMin!==undefined&&ga<r.gaMin)continue;
+    if(r.pmaMin!==undefined&&pma<r.pmaMin)continue;
+    if(r.pmaMax!==undefined&&pma>r.pmaMax)continue;
+    row=r; break;
+  }
+  const a=row.dose*W;
+  const rt=c.route||'静滴';
+  const ageline=c.gaUsed?`日龄${age}天 · 胎龄${Math.floor(ga)}周+${Math.round(ga%1*7)}天`:`日龄${age}天`;
+  const pmaline=c.pmaDep?` · PMA${Math.floor(pma)}周+${Math.round(pma%1*7)}天`:'';
+  const prep=c.solvent?[`${c.solvent} 稀释静滴`]:[];
+  const warn=(c.minAge&&age<c.minAge)?[`⚠ 本药适用年龄>${c.minAge}天（当前日龄${age}天），请上级确认`]:[];
+  const t1 = (rt==='静滴')
+    ? `${g.name} ${f2(a)}${c.out} 静滴 ${row.freq}`
+    : `${g.name} ${f2(a)}${c.out} ${rt} ${row.freq}`;
+  return {t1,
+    prep, 
+    ck:[...warn, `方案：${site}（${ageline}${pmaline}）→ ${f2(row.dose)}${c.unit} ${row.freq}`,
+        `剂量核对：${f2(row.dose)}${c.unit} × ${W.toFixed(2)}kg ＝ <b>${f2(a)}${c.out}</b>`], dose:a};
+}
 /* 换血（双倍量=2×血容量；组分=悬浮红细胞:血浆 2:1；库内实录 225ml=150+75、4小时匀速） */
 function calcExs(id){
   const bvEl=parseFloat($('din_'+id).value);
@@ -1158,6 +1740,7 @@ function linesOf(key){
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='exs'){const L=calcExs(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
+  if(form==='ab'){const L=calcAb(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
@@ -1251,6 +1834,34 @@ function cardHtml(id){
       <div class="ordbox" id="ord_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckr_${id}"></div></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@rbc" id="add_${id}_rbc">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${doseInfoHtml(g)}
+      ${moreHtml(g)}
+    </div>
+  </div>`;
+  }
+  if(dc.forms.length===1&&dc.forms[0]==='ab'){
+    const c=ABCFG[id];
+    const siteSel=(c.sites&&c.sites.length>1)?`<div class="labeq">剂量档 <select data-card="${id}" id="sit_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+c.sites.map(x=>`<option ${x===c.sites[0]?'selected':''}>${x}</option>`).join('')+`</select></div>`:'';
+    return `<div class="card" id="card_${id}">
+    <div class="chead" data-act="cap" data-card="${id}">
+      <span class="tri" id="tri_${id}">▸</span>
+      <span class="ct">${g.name}</span><span class="en">${g.en}</span>
+      <span class="cspec">${g.spec}</span>
+      <span class="csum">${c.csum}</span>
+    </div>
+    <div class="cbody" id="body_${id}" style="display:none">
+      <div class="spec">频次按 日龄/胎龄/PMA 自动推荐（本科室口服剂量表+科室手册），剂量档可切换</div>
+      ${c.ageDep?`<div class="labeq">日龄 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dage_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dage_${id}" type="number" inputmode="decimal" step="1" min="0" max="120" value="7"><button type="button" class="stp" data-act="step" data-t="dage_${id}" data-dir="1">＋</button></div> 天</div>`:''}
+      ${(c.gaDep||c.pmaDep||c.gaUsed)?`<div class="labeq">胎龄 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dgaw_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dgaw_${id}" type="number" inputmode="decimal" step="1" min="22" max="44" value="30"><button type="button" class="stp" data-act="step" data-t="dgaw_${id}" data-dir="1">＋</button></div> 周＋<div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dgad_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dgad_${id}" type="number" inputmode="decimal" step="1" min="0" max="6" value="0"><button type="button" class="stp" data-act="step" data-t="dgad_${id}" data-dir="1">＋</button></div> 天</div>`:''}
+      ${siteSel}
+      <div class="ordbox" id="ord_${id}"></div>
+      ${c.doseTableHtml||''}
+      <div class="abinfo"><div class="abt">抗菌谱</div><div><b>敏感菌：</b>${c.specS}</div><div style="margin-top:2px;"><b>耐药菌：</b>${c.specR}</div></div>
+      <div class="abinfo warnb"><div class="abt">注意事项</div>${c.caution}</div>
+      <div class="abinfo"><div class="abt">药代与代谢途径</div>${c.pk}</div>
+      <div class="abinfo badb"><div class="abt">主要不良反应</div>${c.adverse}</div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@ab" id="add_${id}_ab">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
@@ -1416,6 +2027,7 @@ const L1META=[
   {name:'消化系统用药',icon:'🍼',grps:[6]},
   {name:'内分泌及代谢用药',icon:'💉',grps:[3,16,17]},
   {name:'血液制品',icon:'🩸',grps:[13]},
+  {name:'抗感染用药',icon:'🦠',grps:[18,19,20,21,22,23,24]},
   {name:'止血药',icon:'🩹',grps:[12]},
   {name:'利尿药',icon:'💧',grps:[5,15]},
 ];
@@ -1520,6 +2132,14 @@ function updCard(id){
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='exs'){
     const L=calcExs(id);
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
+    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
+    return;
+  }
+  /* 抗感染专属卡 */
+  if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='ab'){
+    const L=calcAb(id);
+    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
@@ -1887,7 +2507,8 @@ function onInputLinkage(e){
   else if(a==='resus'){updCard('epi');}
 }
 document.addEventListener('input',onInputLinkage);
-document.addEventListener('change',e=>{const t=e.target; if(t&&t.id&&t.id.indexOf('selq_')===0){updCard(t.id.slice(5));}});
+document.addEventListener('change',e=>{const t=e.target; if(t&&t.id&&t.id.indexOf('selq_')===0){updCard(t.id.slice(5));}
+  if(t&&t.id&&t.id.indexOf('sit_')===0){updCard(t.id.slice(4));}});
 document.addEventListener('focusout',e=>{
   if(e.target.id==='wt')$('wt').value=String(W); /* 失焦时框值归一为实际计算体重 */
 });
