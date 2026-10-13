@@ -579,6 +579,96 @@ const DRUGS={
   pharm:"血浆来源四因子浓缩物，即输即效纠正 PT/INR；起效快于 FFP 且容量负荷小；不含 V 与纤维蛋白原——DIC/肝病复杂缺乏仍需血浆/冷沉淀配合。",
   adverse:"①血栓栓塞（最主要风险，含促凝血复合物）；②过敏；③经血传播感染；④DIC 患者禁忌或极慎用。",
   compat:"输注限2小时（库内原文）；专配溶媒溶解；独立通路；输后复查 PT/INR。"},
+ spironolactone:{name:"螺内酯",en:"Spironolactone",unit:"mg/kg",def:0.5,step:"0.25",
+  spec:"螺内酯片(安体舒通) 20mg/片（研配鼻饲）",
+  utd:"口服利尿 0.5–2mg/kg/d 分 q12h（保钾，常与氢氯噻嗪配对）；BPD/心衰长期利尿主力（NeoFax/文献）",
+  hb:"未收录（口服以说明书与电解质监测为准）",
+  hosp:"库内 2,291条/671人：q12h 为主（1,087条）鼻饲为主；单次 0.3–2.5mg（p50 0.8mg），与氢氯噻嗪配对开为本院惯例",
+  ind:"BPD/支气管肺发育不良、心衰、胸引流后的口服利尿维持——保钾利尿与氢氯噻嗪互补；监测血钾、电解质与体重。",
+  pharm:"醛固酮受体拮抗剂，远曲小管与集合管保钾排钠；利尿作用温和、不排钾；起效慢（2–3天），适合长程维持。",
+  adverse:"①高钾血症（与氢氯噻嗪配对可抵消，仍须监测）；②低钠；③胃肠反应；④长期内分泌影响（男性乳房发育，短期新生儿少见）。",
+  compat:"研配混悬鼻饲/口服；与氢氯噻嗪同频 q12h 配对；监测电解质（K、Na）按日复查。"},
+ hydrochlorothiazide:{name:"氢氯噻嗪",en:"Hydrochlorothiazide",unit:"mg/kg",def:0.5,step:"0.25",
+  spec:"氢氯噻嗪片(双氢克尿噻) 25mg/片（研配鼻饲）",
+  utd:"口服利尿 1–2mg/kg/d 分 q12h，常与螺内酯配对（排钾，互补保钾）；BPD 利尿一线组合（NeoFax/文献）",
+  hb:"未收录（口服以说明书与电解质监测为准）",
+  hosp:"库内 2,040条/652人：q12h 为主（944条）；单次 0.3–2.5mg（p50 0.8mg），与螺内酯同频配对",
+  ind:"与螺内酯配对的口服利尿组合（BPD、心衰、慢性肺水肿）；噻嗪类还减少尿钙排泄（对比袢利尿），适合长程。监测电解质、氯与体重。",
+  pharm:"噻嗪类利尿剂，抑制远曲小管 Na-Cl 共转运体；排钾排氯；口服起效约 1–2 小时；新生儿清除慢，q12h 即可维持。",
+  adverse:"①低钾低氯碱中毒（与螺内酯配对平衡）；②低钠；③高钙/低钙个体差异；④胆红素竞争白蛋白（早疸注意）；⑤胃肠反应。",
+  compat:"研配混悬鼻饲/口服；与螺内酯同频 q12h 配对；按日复查电解质。"},
+ levothyroxine:{name:"左甲状腺素",en:"Levothyroxine",unit:"μg",def:10,step:"2.5",
+  spec:"左甲状腺素钠片(优甲乐) 50μg/片（研配）",
+  utd:"先天性甲减：起始 10–15μg/kg/d 晨起顿服，按 TSH/FT4 滴定（AAP/文献）；早产儿一过性低甲状腺素血症按筛查随访",
+  hb:"未收录（按筛查与内分泌随访滴定）",
+  hosp:"库内 1,292条/468人：qd 晨起为主；单次 2–12.5μg（p50 10μg）绝对量滴定，口服/鼻饲各半，常与维生素D同单",
+  ind:"先天性甲状腺功能减低症替代、早产儿甲状腺功能异常的替代治疗——剂量按 TSH/FT4 复查滴定，非体重线性；晨起顿服（奶前）。",
+  pharm:"合成 T4，外周转化为 T3 起效；半衰期约 7 天，qd 稳态；奶液（尤其豆奶/铁钙）影响吸收——与喂奶间隔、固定时间服用。",
+  adverse:"按量替代不良反应少；过量：心动过速、烦躁、颅缝早闭顾虑（长程过量）；漏服/吸收不全是治疗失败主因。",
+  compat:"研配温水鼻饲/口服；与铁剂、钙剂、奶液间隔服用；晨起固定时间；按筛查周期复查甲功。"},
+ ibuprofen:{name:"布洛芬",en:"Ibuprofen",unit:"mg/kg",def:10,step:"5",
+  spec:"布洛芬混悬滴剂(美林) 40mg/ml",
+  utd:"PDA 关闭口服方案：首剂 10mg/kg、第2/3剂 5mg/kg 间隔24h×3（文献/Gentili 方案）；静脉布洛芬 10mg/kg/d×3 另见",
+  hb:"未收录（PDA 口服方案以科内规程为准）",
+  hosp:"库内 1,365条/387人：美林混悬 0.13–0.5ml 鼻饲/胃管滴注 qd×3天（三剂法）；静注路径 8mg＋5%葡萄糖1ml st 亦见；肾功能/血小板计数前置检查",
+  ind:"早产儿动脉导管未闭（PDA）的关闭治疗（口服三剂法）；肾功与血小板须在正常范围（导管关闭前评估），有 NEC/出血倾向者慎用。",
+  pharm:"NSAID，抑制前列腺素合成→导管平滑肌收缩关闭；口服吸收良好（混悬滴剂 40mg/ml）；经肾排泄，肾功能不成熟者半衰期长。",
+  adverse:"①一过性肾损伤（少尿，输前评估尿量与肌酐）；②血小板功能抑制（出血/IVH 顾虑）；③NEC/肠穿孔顾虑（极低体重慎用）；④高胆红素竞争（游离胆红素升高）。",
+  compat:"混悬滴剂直接鼻饲/口服（40mg/ml）；三剂法间隔 24h；用药前后查肾功能、电解质与血小板；禁忌=严重肾功能不全/活动性出血/NEC。"},
+ acetaminophen:{name:"对乙酰氨基酚",en:"Acetaminophen",unit:"mg/kg",def:10,step:"5",
+  spec:"对乙酰氨基酚混悬滴剂(泰诺林) 100mg/ml",
+  utd:"退热/镇痛 10–15mg/kg/次 q6–8h，24h 不超过 4 剂（NeoFax/文献）；新生儿清除慢，q6h 为上限频次",
+  hb:"未收录（口服以说明书为准）",
+  hosp:"库内 584条/271人：泰诺林混悬 0.12–0.3ml（p50 0.17ml）q6h/once 为主，鼻饲为主；库内配液样例「泰诺林13mg(0.13ml)+5%GS1ml,q6h,鼻饲」",
+  ind:"退热与轻度疼痛的 PRN 用药（疫苗接种后、操作后）；不推荐常规预防性使用；肝功能不全者减量。",
+  pharm:"中枢 COX 抑制解热镇痛，外周抗炎弱；口服吸收快；新生儿经硫酸结合代谢（葡萄糖醛酸通路不成熟），q6h 频次已接近上限。",
+  adverse:"①肝毒性（过量/长程——严格 24h ≤4 剂并记录总剂量）；②皮疹少见；③长期使用的肝功能随访。",
+  compat:"混悬滴剂直接鼻饲/口服（100mg/ml）；核对浓度（滴剂与儿童混悬液浓度不同）；24h 总量登记。"},
+ ursodiol:{name:"熊去氧胆酸",en:"Ursodeoxycholic acid",unit:"mg",def:25,step:"5",
+  spec:"熊去氧胆酸胶囊（研配鼻饲）",
+  utd:"胆汁淤积利胆 10–20mg/kg/d 分 q12h（文献）；静脉营养相关胆汁淤积的辅助（证据中等）",
+  hb:"未收录（口服以说明书与肝功随访为准）",
+  hosp:"库内 1,025条/348人：q12h 为主（632条）；单次 15–35mg（p50 25mg）绝对量，口服/鼻饲",
+  ind:"肠外营养相关胆汁淤积、胆汁黏稠的利胆辅助（配合本计算器胆汁淤积随访口径）；胆道梗阻为禁忌——用药前须影像排除。",
+  pharm:"亲水性胆汁酸，替换毒性疏水胆汁酸池、促进胆汁分泌与肝细胞保护；口服吸收后肠肝循环；起效数周。",
+  adverse:"①腹泻（最常见）；②一过性转氨酶波动；③过敏少见；④不能替代梗阻性黄疸的外科处理。",
+  compat:"研配鼻饲/口服；按肝功（GGT/胆红素）随访调整；梗阻性黄疸禁用。"},
+ simethicone:{name:"西甲硅油",en:"Simethicone",unit:"ml",def:0.5,step:"0.1",
+  spec:"西甲硅油乳剂(柏西) 100mg/1ml",
+  utd:"胀气消泡 0.3–0.5ml/次 奶前，q8h–tid（说明书）；不被吸收、物理消泡，安全性高",
+  hb:"未收录（口服以说明书为准）",
+  hosp:"库内 1,044条/552人：**单次固定 0.5ml**（p25=p50=p75=0.5ml）q8h–tid，奶前半小时鼻饲/口服",
+  ind:"喂养相关胀气、腹胀的物理消泡辅助；乳剂奶前给入；不解决外科性腹胀——腹胀进展仍须排查感染/外科。",
+  pharm:"表面活性剂物理作用降低气泡表面张力，肠道内局部消泡；不吸收入血，随粪便排出。",
+  adverse:"几乎无全身不良反应；偶见呕奶/粪便量改变；乳剂含少量对羟苯甲酸（过敏体质注意）。",
+  compat:"奶前半小时给入（库内「奶前半小时鼻饲」原文）；可与奶同管；开启后按说明书期限用完。"},
+ levetiracetam:{name:"左乙拉西坦",en:"Levetiracetam",unit:"mg/kg",def:10,step:"5",
+  spec:"10%左乙拉西坦口服溶液 100mg/ml",
+  utd:"抗惊厥维持口服 10mg/kg/次 q12h 起始（可至 20–30mg/kg/d）（文献/UpToDate）；静脉负荷后接口服序贯",
+  hb:"未收录（按惊厥随访与脑电滴定）",
+  hosp:"库内 58条/12人：10%口服溶液 0.12–0.4ml 胃管注入/口服 q12h–bid（100mg/ml，12–40mg≈10mg/kg/次）；体量小、以静脉苯巴比妥序贯为主",
+  ind:"惊厥控制后的口服维持（苯巴比妥/咪达唑仑序贯）；镇静副作用监测；n=12 体量小，剂量以医嘱滴定为准。",
+  pharm:"突触囊泡蛋白 SV2A 结合剂，广谱抗惊厥；口服生物利用度近 100%；主要经肾排泄，新生儿半衰期长。",
+  adverse:"①镇静、嗜睡；②喂养不耐受；③易激惹/行为改变（少见）；④肾功能不全减量。",
+  compat:"10%口服溶液直接胃管注入/口服（100mg/ml，勿混淆静脉剂型）；换算按 ml 核对；肾功异常减量。"},
+ propranolol:{name:"普萘洛尔",en:"Propranolol",unit:"mg",def:1,step:"0.25",
+  spec:"盐酸普萘洛尔片 10mg/片（研配鼻饲）",
+  utd:"SVT/心率控制口服 0.25–0.5mg/kg/d 起始逐段上调至 1–2mg/kg/d 分 q8–12h；婴儿血管瘤另案（文献）",
+  hb:"未收录（按心率与心电图滴定）",
+  hosp:"库内 117条/32人：q12h 为主（78条）；单次 0.25–2.45mg（p50 1.4mg）绝对量口服/鼻饲，起始小剂量逐段上调",
+  ind:"室上性心动过速的口服维持/预防、心率控制（甲亢、血管瘤另案）；用药前须血糖与心功能评估，停药须逐步减量。",
+  pharm:"非选择性β阻断剂，降低窦房结自律性、减慢房室传导；口服首过效应个体差异大；低血糖与心动过缓为主要监测点（喂奶间隔防低血糖）。",
+  adverse:"①心动过缓（用药前查心率/心电图）；②低血糖（喂奶相关，定时喂养）；③支气管痉挛（肺部疾病患儿慎用）；④骤停反跳（撤药渐减）。",
+  compat:"研配鼻饲/口服；定时喂养防低血糖；与地高辛合用加强房室阻滞须监护；停药逐周减量。"},
+ digoxin:{name:"地高辛",en:"Digoxin",unit:"μg",def:5,step:"2.5",
+  spec:"0.005%地高辛口服溶液 50μg/ml / 地高辛片 0.25mg/片",
+  utd:"洋地黄化维持口服 5–10μg/kg/d 分 q12h（新生儿）；维持治疗按血药浓度（0.5–2ng/ml）与心电图滴定（NeoFax/文献）",
+  hb:"未收录（按血药浓度与心电图滴定）",
+  hosp:"库内 58条/24人：q12h 为主；0.005%口服溶液 0.05–0.2ml（＝2.5–10μg）或地高辛片 7–8.4μg；写法样例「0700=0.2ml|1900=0.2ml」",
+  ind:"心衰（大分流/心功能不全）与室上性心律失常的口服维持；治疗窗窄——血药浓度与心电图（ST 压低/心率）随访，肾功能减量。",
+  pharm:"Na-K-ATP酶抑制剂，正性肌力＋降低房室传导；新生儿肾清除慢、半衰期长；低钾加重中毒——电解质须稳定。",
+  adverse:"①中毒：呕吐、心率过缓/传导阻滞、室性心律失常（治疗窗窄）；②低钾/低镁时中毒风险↑；③血药浓度监测是安全底线。",
+  compat:"0.005%口服溶液换算：10μg＝0.2ml（50μg/ml）；研配鼻饲/口服；与胺碘酮/普萘洛尔合用须减量并监护；定期查血药浓度与电解质。"},
 };
 /* 九药卡：维持/静推/复苏为卡内子形式（同药不重复出现） */
 const DRUGCARDS=[
@@ -617,6 +707,16 @@ const DRUGCARDS=[
  {id:'fentanyl',page:1,forms:['maint','push']},
  {id:'midazolam',page:1,forms:['maint','push']},
  {id:'vecuronium',page:1,forms:['maint','push']},
+ {id:'spironolactone',page:2,title:'螺内酯',kind:'maint',drug:'spironolactone',forms:['qd']},
+ {id:'hydrochlorothiazide',page:2,title:'氢氯噻嗪',kind:'maint',drug:'hydrochlorothiazide',forms:['qd']},
+ {id:'levothyroxine',page:2,title:'左甲状腺素',kind:'maint',drug:'levothyroxine',forms:['qd']},
+ {id:'ibuprofen',page:0,title:'布洛芬',kind:'maint',drug:'ibuprofen',forms:['qd']},
+ {id:'acetaminophen',page:2,title:'对乙酰氨基酚',kind:'maint',drug:'acetaminophen',forms:['qd']},
+ {id:'ursodiol',page:2,title:'熊去氧胆酸',kind:'maint',drug:'ursodiol',forms:['qd']},
+ {id:'simethicone',page:2,title:'西甲硅油',kind:'maint',drug:'simethicone',forms:['qd']},
+ {id:'levetiracetam',page:2,title:'左乙拉西坦',kind:'maint',drug:'levetiracetam',forms:['qd']},
+ {id:'propranolol',page:2,title:'普萘洛尔',kind:'maint',drug:'propranolol',forms:['qd']},
+ {id:'digoxin',page:2,title:'地高辛',kind:'maint',drug:'digoxin',forms:['qd']},
 ];
 const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血'};
 const DFORM_OV={amiodarone:{push:'负荷',maint:'维持'},propafenone:{push:'负荷',maint:'维持'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'}};
@@ -625,17 +725,19 @@ const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne','isoprenaline']},
  {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil']},
- {page:0,title:'抗心律失常',cards:['amiodarone','propafenone']},
- {page:2,title:'激素·内分泌',cards:['hydrocortisone','dexamethasone','insulin','glucagon']},
- {page:2,title:'抗惊厥',cards:['phenobarb']},
- {page:2,title:'利尿',cards:['furosemide','torasemide']},
- {page:2,title:'消化道',cards:['octreotide','omeprazole']},
+ {page:0,title:'抗心律失常',cards:['amiodarone','propafenone','propranolol','digoxin']},
+ {page:2,title:'激素·内分泌',cards:['hydrocortisone','dexamethasone','insulin','glucagon','levothyroxine']},
+ {page:2,title:'抗惊厥',cards:['phenobarb','levetiracetam']},
+ {page:2,title:'利尿',cards:['furosemide','torasemide','spironolactone','hydrochlorothiazide']},
+ {page:2,title:'消化道',cards:['octreotide','omeprazole','ursodiol','simethicone']},
  {page:2,title:'呼吸系统',cards:['caffeine','ps']},
  {page:1,title:'阿片镇痛',cards:['fentanyl']},
+ {page:1,title:'镇痛·退热',cards:['acetaminophen']},
  {page:1,title:'镇静',cards:['midazolam']},
  {page:1,title:'肌松',cards:['vecuronium']},
  {page:2,title:'止血药',cards:['etamsylate','hemocoag']},
  {page:2,title:'血制品',cards:['rbc','ffp','plt','cryo','alb','ivig','fibg','pcc']},
+ {page:0,title:'PDA 关闭',cards:['ibuprofen']},
 ];
 
 /* 搜索别名（临床俗名/商品名） */
@@ -660,7 +762,17 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  alb:'白蛋白 人血白蛋白 胶体 水肿',
  ivig:'丙种球蛋白 丙球 免疫球蛋白 IVIG',
  fibg:'纤维蛋白原 人纤维蛋白原',
- pcc:'凝血酶原复合物 PCC 凝血酶原'};
+ pcc:'凝血酶原复合物 PCC 凝血酶原',
+ spironolactone:'螺内酯 安体舒通 保钾利尿 口服利尿',
+ hydrochlorothiazide:'氢氯噻嗪 双氢克尿噻 噻嗪 利尿',
+ levothyroxine:'左甲状腺素 优甲乐 甲状腺 甲减 替代',
+ ibuprofen:'布洛芬 美林 PDA 动脉导管 关闭 退热',
+ acetaminophen:'对乙酰氨基酚 泰诺林 退热 解热镇痛',
+ ursodiol:'熊去氧胆酸 优思弗 利胆 胆汁淤积',
+ simethicone:'西甲硅油 柏西 胀气 消泡 奶前',
+ levetiracetam:'左乙拉西坦 开浦兰 抗惊厥 口服维持',
+ propranolol:'普萘洛尔 心得安 β阻滞 心率控制',
+ digoxin:'地高辛 强心 洋地黄 血药浓度'};
 
 /* ================= 状态 ================= */
 var W=1.5;
@@ -757,19 +869,37 @@ const PUSHCFG={
  furosemide:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'st',note:'单次利尿 0.5–1mg/kg · 库内亦见 q12h/q8h · 血制品输一半时速尿即此用法'}};
 /* 分频次维持形式（长嘱式：药 剂量 途径 频次） */
 const QDCFG={
- caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'}};
+ caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'},
+ spironolactone:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'保钾 · 常与氢氯噻嗪配对 · 监测血钾'},
+ hydrochlorothiazide:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'排钾 · 与螺内酯配对互补'},
+ levothyroxine:{def:10,step:2.5,max:50,unit:'μg',out:'μg',freq:'qd',route:'口服/鼻饲',abs:true,note:'晨起顿服 · 按 TSH/FT4 滴定 · 与奶液铁钙间隔'},
+ ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,note:'PDA三剂法：第1剂10、第2/3剂5mg/kg 间隔24h×3'},
+ acetaminophen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q6h',route:'口服/鼻饲',mlConc:100,note:'PRN · 24h ≤4剂 · 核对浓度(滴剂100mg/ml)'},
+ ursodiol:{def:25,step:5,max:100,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'利胆 · 胆道梗阻禁用 · 按肝功随访'},
+ simethicone:{def:0.5,step:0.1,max:2,unit:'ml',out:'ml',freq:'q8h',route:'口服/鼻饲',abs:true,note:'奶前半小时 · 库内固定0.5ml/次'},
+ levetiracetam:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',mlConc:100,note:'10%口服溶液100mg/ml · 静脉负荷后序贯'},
+ propranolol:{def:1,step:0.25,max:10,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'起始0.25–0.5mg/kg/d 逐段上调 · 定时喂养防低血糖'},
+ digoxin:{def:5,step:2.5,max:25,unit:'μg',out:'μg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'0.005%溶液50μg/ml（10μg=0.2ml） · 血药浓度监测'}};
 function calcQd(id){
   const g=DRUGS[id], cfg=QDCFG[id];
-  const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def, a=dose*W;
+  const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:cfg.def;
+  const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
+  const rt=cfg.route?` ${cfg.route}`:'';
   if(cfg.perMl){
     const R=a*(cfg.perMl+cfg.gsPerMg);
     return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h ${cfg.freq||'qd'}`,
       prep:[`${g.name} ${f2(a)}mg（原液 ${f2(a*cfg.perMl,2)}ml）`, `5%葡萄糖 至 ${f2(R,1)}ml`],
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
-  return {t1:`${g.name} ${f2(a)}${cfg.out} ${cfg.freq||'qd'}`,
+  if(cfg.mlConc){
+    const ml=a/cfg.mlConc;
+    return {t1:`${g.name} ${f2(ml)}ml（${f2(a)}${cfg.out}，${f2(dose,2)}${cfg.unit}）${rt} ${cfg.freq||'qd'}`,
+      prep:[],
+      ck:[`剂量核对：${f2(dose,2)}${cfg.unit}${cfg.abs?'':'×'+W.toFixed(2)+'kg'}＝<b>${f2(a)}${cfg.out}</b>＝${f2(ml)}ml（${cfg.mlConc}mg/ml）`], dose};
+  }
+  return {t1:`${g.name} ${f2(a)}${cfg.out}${rt} ${cfg.freq||'qd'}`,
     prep:[],
-    ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
+    ck:[`剂量核对：${f2(dose,2)}${cfg.unit}${cfg.abs?'':'×'+W.toFixed(2)+'kg'}＝<b>${f2(a)}${cfg.out}</b>`], dose};
 }
 /* 胺碘酮/心律平双模块（10-14用户定稿）：负荷左/维持右，配比相同自动copy同一管；库内=负荷干包+维持独立泵速两条医嘱分开写，每日弃余重配 */
 function calcPump(id){
@@ -1186,14 +1316,14 @@ function cardHtml(id){
 }
 /* 首页 7 框：两大类(血管活性/镇静镇痛,带子分类层) + 其余按系统直接一级（2026-10-13 用户拍板撤销"常用治疗药"大筐） */
 const L1META=[
-  {name:'心血管活性药',icon:'🫀',grps:[0,1,2]},
-  {name:'神经系统药',icon:'🧠',grps:[8,9,10,4]},
+  {name:'心血管活性药',icon:'🫀',grps:[0,1,2,14]},
+  {name:'神经系统药',icon:'🧠',grps:[8,9,10,11,4]},
   {name:'利尿·体液',icon:'💧',grps:[5]},
   {name:'呼吸系统',icon:'🫁',grps:[7]},
   {name:'消化系统',icon:'🍼',grps:[6]},
   {name:'内分泌·代谢',icon:'💉',grps:[3]},
-  {name:'止血药',icon:'🩹',grps:[11]},
-  {name:'血制品',icon:'🩸',grps:[12]},
+  {name:'止血药',icon:'🩹',grps:[12]},
+  {name:'血制品',icon:'🩸',grps:[13]},
 ];
 function renderCards(){
   $('viewL1').innerHTML=L1META.map((m,mi)=>{
