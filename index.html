@@ -666,6 +666,16 @@ const DRUGS={
   pharm:"非选择性β阻断剂，降低窦房结自律性、减慢房室传导；口服首过效应个体差异大；低血糖与心动过缓为主要监测点（喂奶间隔防低血糖）。",
   adverse:"①心动过缓（用药前查心率/心电图）；②低血糖（喂奶相关，定时喂养）；③支气管痉挛（肺部疾病患儿慎用）；④骤停反跳（撤药渐减）。",
   compat:"研配鼻饲/口服；定时喂养防低血糖；与地高辛合用加强房室阻滞须监护；停药逐周减量。"},
+ prnhem:{csum:"血管瘤流程：加量3天→维持>6月→一周一档减量",name:"普萘洛尔",en:"Propranolol (infantile hemangioma)",unit:"mg/kg/d",def:0.5,step:"0.25",
+  spec:"盐酸普萘洛尔片 10mg/片（研配鼻饲）",
+  utd:"婴儿血管瘤 2–3mg/kg/d 分2次（起始 0.5→1→2 逐日加量），疗程≥6月；停药须一周一档逐步减量（UpToDate/文献）",
+  hb:"未收录血管瘤流程（以本科室流程表为准）",
+  hosp:"本科室《心得安治疗血管瘤的诊疗流程表》：D2 起始0.5mg/kg.d→D3 加量1→D4 加量2（均分2次），D5 无特殊出院；监测心电监护、血糖、血压、脉搏，观察皮疹与病变范围；随访前3月每4周、3月后每6–8周；停药一周一档 2→1.5→1→0.75→0.5→停",
+  ind:"婴幼儿血管瘤（患儿>1月、高风险，首选心得安治疗）——剂量档=科室流程的加量/减量阶梯，档位即流程日。",
+  pharm:"非选择性β阻断剂；治血管瘤机制为抑制血管生成并收缩瘤体血管（β2介导）；口服首过效应个体差异大。",
+  adverse:"①低血糖（喂奶相关——定时喂养、监测血糖）；②心动过缓/低血压（心电监护、测脉搏血压）；③支气管痉挛（气道疾病患儿慎用）；④睡眠紊乱、皮疹（流程要求观察记录）；⑤骤停反跳（停药按一周一档渐减）。",
+  compat:"研配鼻饲/口服；用药期间心电监护+测血糖血压脉搏；D1 完善检查合格后才起始（见流程表）；与地高辛合用加强房室阻滞须监护。",
+  doseTableHtml:'<div class="spec" style="margin:6px 0;"><b>心得安治疗血管瘤的诊疗流程表（本科室）</b>：患儿>1月、高风险，首选心得安治疗。</div><table style="width:100%;font-size:11.5px;margin:4px 0;border-collapse:collapse;"><tr style="background:#eef4fc;"><td style="border:1px solid var(--line);padding:4px;width:56px;">D1天</td><td style="border:1px solid var(--line);padding:4px;">入院完善检查：三大常规、生化全套、心彩超、浅表＋肝脾双肾彩超；常规心电图、胸部正位片（多发血管瘤和合并肝脏血管瘤时）；行甲状腺功能等检查</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D2天</td><td style="border:1px solid var(--line);padding:4px;">经评估无特殊不适，今起口服心得安 <b>0.5mg/kg.d</b>；监测：心电监护、测血糖、血压、脉搏，观察皮肤皮疹、病变范围并记录</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D3天</td><td style="border:1px solid var(--line);padding:4px;">无特殊，即加量 心得安 <b>1mg/kg.d 分2次</b>；继续同上监测</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D4天</td><td style="border:1px solid var(--line);padding:4px;">无特殊，即加量 心得安 <b>2mg/kg.d 分2次</b>；继续同上监测</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D5天</td><td style="border:1px solid var(--line);padding:4px;">无特殊，出院</td></tr></table><div class="tip" style="font-size:12px;"><b>出院后随访</b>：前3个月每4周复查一次；3月后每6–8周复查一次；服药>6月。复查内容：肝功能＋血糖、心脏彩超（每3月1次、结束前1次）、局部彩超。<b>停药：视情况而定</b>——测量瘤体范围，准备减量（1月内减量，一周为一周期）：2→1.5→1→0.75→0.5mg/kg.d，各经一周，再经过一周停止服药（=剂量档末四键）。</div>'},
  digoxin:{csum:"0.005%溶液 50μg/ml",name:"地高辛",en:"Digoxin",unit:"μg",def:5,step:"2.5",
   spec:"0.005%地高辛口服溶液 50μg/ml / 地高辛片 0.25mg/片",
   utd:"洋地黄化维持口服 5–10μg/kg/d 分 q12h（新生儿）；维持治疗按血药浓度（0.5–2ng/ml）与心电图滴定（NeoFax/文献）",
@@ -1047,6 +1057,7 @@ const DRUGCARDS=[
  {id:'simethicone',page:2,title:'西甲硅油',kind:'maint',drug:'simethicone',forms:['qd']},
  {id:'levetiracetam',page:2,title:'左乙拉西坦',kind:'maint',drug:'levetiracetam',forms:['qd']},
  {id:'propranolol',page:2,title:'普萘洛尔',kind:'maint',drug:'propranolol',forms:['qd']},
+ {id:'prnhem',page:2,title:'普萘洛尔（血管瘤流程）',kind:'maint',drug:'prnhem',forms:['qd']},
  {id:'digoxin',page:2,title:'地高辛',kind:'maint',drug:'digoxin',forms:['qd']},
  {id:'penicillin',page:0,title:'青霉素G',kind:'maint',drug:'penicillin',forms:['ab']},
  {id:'amoxiclav',page:0,title:'阿莫西林克拉维酸',kind:'maint',drug:'amoxiclav',forms:['ab']},
@@ -1073,7 +1084,7 @@ const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne','isoprenaline']},
  {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil','sildenafil']},
- {page:0,title:'抗心律失常与强心药',cards:['amiodarone','propafenone','propranolol','digoxin']},
+ {page:0,title:'抗心律失常与强心药',cards:['amiodarone','propafenone','propranolol','prnhem','digoxin']},
  {page:2,title:'糖皮质激素',cards:['hydrocortisone','dexamethasone']},
  {page:2,title:'抗癫痫药',cards:['phenobarb','levetiracetam']},
  {page:2,title:'袢利尿剂',cards:['furosemide','torasemide']},
@@ -1151,7 +1162,7 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  ursodiol:'熊去氧胆酸 优思弗 利胆 胆汁淤积',
  simethicone:'西甲硅油 柏西 胀气 消泡 奶前',
  levetiracetam:'左乙拉西坦 开浦兰 抗惊厥 口服维持',
- propranolol:'普萘洛尔 心得安 β阻滞 心率控制',
+ propranolol:'普萘洛尔 心得安 β阻滞 心率控制',prnhem:'普萘洛尔 心得安 血管瘤 婴儿血管瘤',
  digoxin:'地高辛 强心 洋地黄 血药浓度'};
 
 /* ================= 状态 ================= */
@@ -1484,6 +1495,10 @@ const QDCFG={
  simethicone:{def:0.5,step:0.1,max:2,unit:'ml',out:'ml',freq:'q8h',route:'口服/鼻饲',abs:true,note:'奶前半小时 · 库内固定0.5ml/次'},
  levetiracetam:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',mlConc:100,note:'10%口服溶液100mg/ml · 静脉负荷后序贯'},
  propranolol:{def:1,step:0.25,max:10,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'起始0.25–0.5mg/kg/d 逐段上调 · 定时喂养防低血糖'},
+ prnhem:{def:0.5,step:0.25,unit:'mg/kg/d',out:'mg',freq:'q12h',route:'口服/鼻饲',dailyDiv:2,modeWrap:true,
+  modes:[{k:'d2',label:'D2·0.5起',def:0.5},{k:'d3',label:'D3·1加',def:1},{k:'d4',label:'D4·2目标',def:2},
+         {k:'w15',label:'减1.5',def:1.5},{k:'w10',label:'减1',def:1},{k:'w075',label:'减0.75',def:0.75},{k:'w05',label:'减0.5',def:0.5}],
+  note:'科室血管瘤流程：D2起 0.5→1→2 逐日加量（分2次）· 监测心电/血糖/血压/脉搏 · 定时喂养防低血糖 · 停药一周一档渐减'},
  digoxin:{def:5,step:2.5,max:25,unit:'μg',out:'μg',freq:'q12h',route:'口服/鼻饲',abs:true,formTgl:true,
   solName:'地高辛口服溶液',solMlPerUg:0.02,tabName:'地高辛片',tabMgPerTab:0.25,
   note:'0.005%溶液50μg/ml（10μg=0.2ml）· 片剂0.25mg/片（研配按量给）· 血药浓度监测'}};
@@ -1494,8 +1509,17 @@ function calcQd(id){
   const selEl=$('selq_'+id);
   if(cfg.freqOptions&&selEl&&selEl.value){fq=selEl.value;}
   const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:dv;
-  const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
-  const rt=cfg.route?` ${cfg.route}`:'';
+    const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
+    const rt=cfg.route?` ${cfg.route}`:'';
+    if(cfg.dailyDiv){
+      /* 按日剂量分次（普萘洛尔血管瘤流程：输入mg/kg/d，输出q12h单次mg；档位=流程日/减量周） */
+      const mm=(cfg.modes||[]).find(m=>m.k===(QMODE[id]||''));
+      const per=dose*W/cfg.dailyDiv;
+      return {t1:`${g.name} ${f(per,2)}mg${rt} ${fq}（${f(dose,2)}mg/kg/d 分${cfg.dailyDiv}次）`,
+        prep:[],
+        ck:[mm?`方案：${mm.label}（科室血管瘤流程档位，可切换）`:'方案：自定义剂量',
+            `剂量核对：${f(dose,2)}mg/kg/d × ${W.toFixed(2)}kg ＝ ${f(dose*W,2)}mg/d ÷ ${cfg.dailyDiv} ＝ <b>${f(per,2)}mg/次</b>`], dose};
+    }
   if(cfg.formTgl){
     /* 地高辛剂型切换（10-14用户：医嘱必须能照抄执行——溶液给毫升/片剂给毫克）： */
     const ckDose=[`剂量核对：${f(dose,2)}${cfg.unit}${cfg.abs?'':'×'+W.toFixed(2)+'kg'}＝<b>${f2(a)}μg</b>`];
@@ -2070,7 +2094,9 @@ function cardHtml(id){
     const q=QDCFG[id];
     const qTabs=q.modes?(()=>{
       const cur=QMODE[id]||q.modes[0].k;
-      return `<div class="modetabs" id="qm_${id}">`+q.modes.map(m=>`<button type="button" data-act="qmode" data-card="${id}" data-mode="${m.k}" class="${cur===m.k?'on':''}">${m.label}</button>`).join('')+`</div>`;
+      const wrapAtts=q.modeWrap?' style="flex-wrap:wrap;border-radius:13px;"':'';
+      const btnAtt=q.modeWrap?' style="flex:1 1 25%;border-bottom:1px solid rgba(43,92,173,.25);"':'';
+      return `<div class="modetabs" id="qm_${id}"${wrapAtts}>`+q.modes.map(m=>`<button type="button" data-act="qmode" data-card="${id}" data-mode="${m.k}" class="${cur===m.k?'on':''}"${btnAtt}>${m.label}</button>`).join('')+`</div>`;
     })():(q.freqOptions?`<div class="labeq">频次 <select data-card="${id}" id="selq_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+q.freqOptions.map(f=>`<option ${f===q.freq?'selected':''}>${f}</option>`).join('')+`</select></div>`:'');
     const qForm=q.formTgl?(()=>{
       const cur=QFORM[id]||'sol';
@@ -2086,6 +2112,7 @@ function cardHtml(id){
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinq_${id}" type="number" inputmode="decimal" step="${q.step}" min="0" value="${qdef}"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="1">＋</button></div> ${q.unit}</div>
       <div class="ordbox" id="ordq_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrq_${id}"></div></div>
+      ${g.doseTableHtml||''}
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@qd" id="add_${id}_qd">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
     </div>`;
