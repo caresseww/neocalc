@@ -1160,6 +1160,7 @@ const S={}; DRUGCARDS.forEach(c=>S[c.id]={form:c.forms[0], mode:'h24'});
 const basket={};
 const PRMODE={};
 const QMODE={};   /* qd 多档模式（布洛芬三剂法：d1/d23） */   /* push 绝对量药（巴曲亭）途径模式：iv/iv_et/iv_gt/et/gt */
+const QFORM={};   /* qd 剂型切换（地高辛：sol溶液/tab片剂） */
 const RES={iv:0.2, et:0.75};
 const META={bed:'',name:'',hosp:'',gaw:'',gad:'',dol:''};
 const $=id=>document.getElementById(id);
@@ -1483,7 +1484,9 @@ const QDCFG={
  simethicone:{def:0.5,step:0.1,max:2,unit:'ml',out:'ml',freq:'q8h',route:'口服/鼻饲',abs:true,note:'奶前半小时 · 库内固定0.5ml/次'},
  levetiracetam:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',mlConc:100,note:'10%口服溶液100mg/ml · 静脉负荷后序贯'},
  propranolol:{def:1,step:0.25,max:10,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'起始0.25–0.5mg/kg/d 逐段上调 · 定时喂养防低血糖'},
- digoxin:{def:5,step:2.5,max:25,unit:'μg',out:'μg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'0.005%溶液50μg/ml（10μg=0.2ml） · 血药浓度监测'}};
+ digoxin:{def:5,step:2.5,max:25,unit:'μg',out:'μg',freq:'q12h',route:'口服/鼻饲',abs:true,formTgl:true,
+  solName:'地高辛口服溶液',solMlPerUg:0.02,tabName:'地高辛片',tabMgPerTab:0.25,
+  note:'0.005%溶液50μg/ml（10μg=0.2ml）· 片剂0.25mg/片（研配按量给）· 血药浓度监测'}};
 function calcQd(id){
   const g=DRUGS[id], cfg=QDCFG[id];
   let dv=cfg.def, fq=cfg.freq||'qd';
@@ -1493,6 +1496,18 @@ function calcQd(id){
   const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:dv;
   const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
   const rt=cfg.route?` ${cfg.route}`:'';
+  if(cfg.formTgl){
+    /* 地高辛剂型切换（10-14用户：医嘱必须能照抄执行——溶液给毫升/片剂给毫克）： */
+    const ckDose=[`剂量核对：${f(dose,2)}${cfg.unit}${cfg.abs?'':'×'+W.toFixed(2)+'kg'}＝<b>${f2(a)}μg</b>`];
+    if((QFORM[id]||'sol')==='tab'){
+      const mg=a/1000, pcs=mg/cfg.tabMgPerTab;
+      return {t1:`${cfg.tabName} ${f(mg,3)}mg（0.25mg/片＝${f(pcs,2)}片，研配按量给）${rt} ${fq}`,
+        prep:[], ck:[...ckDose, `换算核对：${f2(a)}μg＝${f(mg,3)}mg＝${f(pcs,2)}片（0.25mg/片；库内片剂写法 0.003–0.01mg q12h，研配后按量给）`], dose};
+    }
+    const ml=a*cfg.solMlPerUg;
+    return {t1:`${cfg.solName} ${f(ml,2)}ml（${f2(a)}μg）${rt} ${fq}`,
+      prep:[], ck:[...ckDose, `换算核对：${f2(a)}μg ÷ 50μg/ml ＝ ${f(ml,2)}ml（0.005%溶液；库内 0.05–0.2ml＝2.5–10μg，样例「0700=0.2ml」）`], dose};
+  }
   if(cfg.perMl){
     const R=a*(cfg.perMl+cfg.gsPerMg);
     return {t1:`${g.name} ${f2(a)}${cfg.out} 滴速${f2(R)}ml/h ${cfg.freq||'qd'}`,
@@ -2057,9 +2072,17 @@ function cardHtml(id){
       const cur=QMODE[id]||q.modes[0].k;
       return `<div class="modetabs" id="qm_${id}">`+q.modes.map(m=>`<button type="button" data-act="qmode" data-card="${id}" data-mode="${m.k}" class="${cur===m.k?'on':''}">${m.label}</button>`).join('')+`</div>`;
     })():(q.freqOptions?`<div class="labeq">频次 <select data-card="${id}" id="selq_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+q.freqOptions.map(f=>`<option ${f===q.freq?'selected':''}>${f}</option>`).join('')+`</select></div>`:'');
+    const qForm=q.formTgl?(()=>{
+      const cur=QFORM[id]||'sol';
+      return `<div class="labeq">剂型 <div class="modetabs" id="qf_${id}">`
+        +`<button type="button" data-act="qf" data-card="${id}" data-f="sol" class="${cur==='sol'?'on':''}">溶液</button>`
+        +`<button type="button" data-act="qf" data-card="${id}" data-f="tab" class="${cur==='tab'?'on':''}">片剂</button>`
+        +`</div></div>`;
+    })():'';
     const qdef=(q.modes&&QMODE[id])?(q.modes.find(m=>m.k===QMODE[id])||q.modes[0]).def:q.def;
     qdSec=`<div id="sec_qd_${id}" style="display:${c.form==='qd'?'block':'none'}">
       ${qTabs}
+      ${qForm}
       <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dinq_${id}" type="number" inputmode="decimal" step="${q.step}" min="0" value="${qdef}"><button type="button" class="stp" data-act="step" data-t="dinq_${id}" data-dir="1">＋</button></div> ${q.unit}</div>
       <div class="ordbox" id="ordq_${id}"></div>
       <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrq_${id}"></div></div>
@@ -2658,6 +2681,9 @@ document.addEventListener('click',e=>{
     case 'backlist': exitDrugSilent(); break;
     case 'form': setForm(b.dataset.card,b.dataset.form); break;
     case 'mode': setMode(b.dataset.card,b.dataset.mode); break;
+    case 'qf': QFORM[b.dataset.card]=b.dataset.f;
+      document.querySelectorAll('#qf_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.f===b.dataset.f?'on':'');
+      updCard(b.dataset.card); break;
     case 'qmode': QMODE[b.dataset.card]=b.dataset.mode;
       document.querySelectorAll('#qm_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
       { const c2=QDCFG[b.dataset.card], mm=(c2.modes||[]).find(m=>m.k===b.dataset.mode);
