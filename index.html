@@ -603,7 +603,7 @@ const DRUGS={
   pharm:"噻嗪类利尿剂，抑制远曲小管 Na-Cl 共转运体；排钾排氯；口服起效约 1–2 小时；新生儿清除慢，q12h 即可维持。",
   adverse:"①低钾低氯碱中毒（与螺内酯配对平衡）；②低钠；③高钙/低钙个体差异；④胆红素竞争白蛋白（早疸注意）；⑤胃肠反应。",
   compat:"研配混悬鼻饲/口服；与螺内酯同频 q12h 配对；按日复查电解质。"},
- levothyroxine:{csum:"50μg/片（研配）",name:"左甲状腺素",en:"Levothyroxine",unit:"μg",def:10,step:"2.5",
+ levothyroxine:{csum:"50μg/片（研配）",name:"左甲状腺素",en:"Levothyroxine",unit:"μg/kg/d",def:10,step:"2.5",
   spec:"左甲状腺素钠片(优甲乐) 50μg/片（研配）",
   utd:"先天性甲减：起始 10–15μg/kg/d 晨起顿服，按 TSH/FT4 滴定（AAP/文献）；早产儿一过性低甲状腺素血症按筛查随访",
   hb:"未收录（按筛查与内分泌随访滴定）",
@@ -630,7 +630,7 @@ const DRUGS={
   pharm:"中枢 COX 抑制解热镇痛，外周抗炎弱；口服吸收快；新生儿经硫酸结合代谢（葡萄糖醛酸通路不成熟），q6h 频次已接近上限。",
   adverse:"①肝毒性（过量/长程——严格 24h ≤4 剂并记录总剂量）；②皮疹少见；③长期使用的肝功能随访。",
   compat:"混悬滴剂直接鼻饲/口服（100mg/ml）；核对浓度（滴剂与儿童混悬液浓度不同）；24h 总量登记。"},
- ursodiol:{csum:"胶囊研配",name:"熊去氧胆酸",en:"Ursodeoxycholic acid",unit:"mg",def:25,step:"5",
+ ursodiol:{csum:"胶囊研配",name:"熊去氧胆酸",en:"Ursodeoxycholic acid",unit:"mg/kg/d",def:10,step:"5",
   spec:"熊去氧胆酸胶囊（研配鼻饲）",
   utd:"胆汁淤积利胆 10–20mg/kg/d 分 q12h（文献）；静脉营养相关胆汁淤积的辅助（证据中等）",
   hb:"未收录（口服以说明书与肝功随访为准）",
@@ -657,7 +657,7 @@ const DRUGS={
   pharm:"突触囊泡蛋白 SV2A 结合剂，广谱抗惊厥；口服生物利用度近 100%；主要经肾排泄，新生儿半衰期长。",
   adverse:"①镇静、嗜睡；②喂养不耐受；③易激惹/行为改变（少见）；④肾功能不全减量。",
   compat:"10%口服溶液直接胃管注入/口服（100mg/ml，勿混淆静脉剂型）；换算按 ml 核对；肾功异常减量。"},
- propranolol:{csum:"10mg/片（研配）",name:"普萘洛尔",en:"Propranolol",unit:"mg",def:1,step:"0.25",
+ propranolol:{csum:"10mg/片（研配）",name:"普萘洛尔",en:"Propranolol",unit:"mg/kg/d",def:0.5,step:"0.25",
   spec:"盐酸普萘洛尔片 10mg/片（研配鼻饲）",
   utd:"SVT/心率控制口服 0.25–0.5mg/kg/d 起始逐段上调至 1–2mg/kg/d 分 q8–12h；婴儿血管瘤另案（文献）",
   hb:"未收录（按心率与心电图滴定）",
@@ -676,7 +676,7 @@ const DRUGS={
   adverse:"①低血糖（喂奶相关——定时喂养、监测血糖）；②心动过缓/低血压（心电监护、测脉搏血压）；③支气管痉挛（气道疾病患儿慎用）；④睡眠紊乱、皮疹（流程要求观察记录）；⑤骤停反跳（停药按一周一档渐减）。",
   compat:"研配鼻饲/口服；用药期间心电监护+测血糖血压脉搏；D1 完善检查合格后才起始（见流程表）；与地高辛合用加强房室阻滞须监护。",
   doseTableHtml:'<div class="spec" style="margin:6px 0;"><b>心得安治疗血管瘤的诊疗流程表（本科室）</b>：患儿>1月、高风险，首选心得安治疗。</div><table style="width:100%;font-size:11.5px;margin:4px 0;border-collapse:collapse;"><tr style="background:#eef4fc;"><td style="border:1px solid var(--line);padding:4px;width:56px;">D1天</td><td style="border:1px solid var(--line);padding:4px;">入院完善检查：三大常规、生化全套、心彩超、浅表＋肝脾双肾彩超；常规心电图、胸部正位片（多发血管瘤和合并肝脏血管瘤时）；行甲状腺功能等检查</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D2天</td><td style="border:1px solid var(--line);padding:4px;">经评估无特殊不适，今起口服心得安 <b>0.5mg/kg.d</b>；监测：心电监护、测血糖、血压、脉搏，观察皮肤皮疹、病变范围并记录</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D3天</td><td style="border:1px solid var(--line);padding:4px;">无特殊，即加量 心得安 <b>1mg/kg.d 分2次</b>；继续同上监测</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D4天</td><td style="border:1px solid var(--line);padding:4px;">无特殊，即加量 心得安 <b>2mg/kg.d 分2次</b>；继续同上监测</td></tr><tr><td style="border:1px solid var(--line);padding:4px;">D5天</td><td style="border:1px solid var(--line);padding:4px;">无特殊，出院</td></tr></table><div class="tip" style="font-size:12px;"><b>出院后随访</b>：前3个月每4周复查一次；3月后每6–8周复查一次；服药>6月。复查内容：肝功能＋血糖、心脏彩超（每3月1次、结束前1次）、局部彩超。<b>停药：视情况而定</b>——测量瘤体范围，准备减量（1月内减量，一周为一周期）：2→1.5→1→0.75→0.5mg/kg.d，各经一周，再经过一周停止服药（=剂量档末四键）。</div>'},
- digoxin:{csum:"0.005%溶液 50μg/ml",name:"地高辛",en:"Digoxin",unit:"μg",def:5,step:"2.5",
+ digoxin:{csum:"0.005%溶液 50μg/ml",name:"地高辛",en:"Digoxin",unit:"μg/kg/d",def:5,step:"1",
   spec:"0.005%地高辛口服溶液 50μg/ml / 地高辛片 0.25mg/片",
   utd:"洋地黄化维持口服 5–10μg/kg/d 分 q12h（新生儿）；维持治疗按血药浓度（0.5–2ng/ml）与心电图滴定（NeoFax/文献）",
   hb:"未收录（按血药浓度与心电图滴定）",
@@ -1056,8 +1056,7 @@ const DRUGCARDS=[
  {id:'ursodiol',page:2,title:'熊去氧胆酸',kind:'maint',drug:'ursodiol',forms:['qd']},
  {id:'simethicone',page:2,title:'西甲硅油',kind:'maint',drug:'simethicone',forms:['qd']},
  {id:'levetiracetam',page:2,title:'左乙拉西坦',kind:'maint',drug:'levetiracetam',forms:['qd']},
- {id:'propranolol',page:2,title:'普萘洛尔',kind:'maint',drug:'propranolol',forms:['qd']},
- {id:'prnhem',page:2,title:'普萘洛尔（血管瘤流程）',kind:'maint',drug:'prnhem',forms:['qd']},
+ {id:'propranolol',page:2,title:'普萘洛尔',kind:'maint',drug:'propranolol',forms:['qd','qhm']},
  {id:'digoxin',page:2,title:'地高辛',kind:'maint',drug:'digoxin',forms:['qd']},
  {id:'penicillin',page:0,title:'青霉素G',kind:'maint',drug:'penicillin',forms:['ab']},
  {id:'amoxiclav',page:0,title:'阿莫西林克拉维酸',kind:'maint',drug:'amoxiclav',forms:['ab']},
@@ -1077,14 +1076,14 @@ const DRUGCARDS=[
  {id:'fluconazole',page:0,title:'氟康唑',kind:'maint',drug:'fluconazole',forms:['ab']},
  {id:'amphotericin',page:0,title:'两性霉素B',kind:'maint',drug:'amphotericin',forms:['ab']},
 ];
-const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血'};
-const DFORM_OV={amiodarone:{push:'负荷',maint:'维持'},propafenone:{push:'负荷',maint:'维持'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'}};
+const DFORM={maint:'维持泵入',push:'静推',load:'首剂',amp:'按整支配',resus:'复苏',qd:'维持',rbc:'输血',qhm:'血管瘤'};
+const DFORM_OV={amiodarone:{push:'负荷',maint:'维持'},propafenone:{push:'负荷',maint:'维持'},ps:{push:'气管内注入'},caffeine:{push:'负荷'},etamsylate:{push:'静滴'},hydrocortisone:{push:'静滴'},propranolol:{qd:'心律失常',qhm:'血管瘤'}};
 const formName=(id,fm)=>(DFORM_OV[id]&&DFORM_OV[id][fm])||DFORM[fm];
 /* 分类容器 */
 const GROUPS=[
  {page:0,title:'儿茶酚胺类',cards:['dopamine','dobutamine','epi','ne','isoprenaline']},
  {page:0,title:'非儿茶酚胺类',cards:['milrinone','terli','alprostadil','sildenafil']},
- {page:0,title:'抗心律失常与强心药',cards:['amiodarone','propafenone','propranolol','prnhem','digoxin']},
+ {page:0,title:'抗心律失常与强心药',cards:['amiodarone','propafenone','propranolol','digoxin']},
  {page:2,title:'糖皮质激素',cards:['hydrocortisone','dexamethasone']},
  {page:2,title:'抗癫痫药',cards:['phenobarb','levetiracetam']},
  {page:2,title:'袢利尿剂',cards:['furosemide','torasemide']},
@@ -1488,20 +1487,20 @@ const QDCFG={
  spironolactone:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'保钾 · 常与氢氯噻嗪配对 · 监测血钾'},
  sildenafil:{def:1,step:0.25,unit:'mg/kg',out:'mg',freq:'q8h',route:'口服/鼻饲',freqOptions:['q8h','q6h'],note:'PPHN 撤 NO 桥接 · 库内实测0.59–1.0mg/kg/次 · 监测血压 · 撤药逐减'},
  hydrochlorothiazide:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'排钾 · 与螺内酯配对互补'},
- levothyroxine:{def:10,step:2.5,max:50,unit:'μg',out:'μg',freq:'qd',route:'口服/鼻饲',abs:true,note:'晨起顿服 · 按 TSH/FT4 滴定 · 与奶液铁钙间隔'},
+ levothyroxine:{def:10,step:2.5,max:20,unit:'μg/kg/d',out:'μg',freq:'qd',route:'口服/鼻饲',note:'起始10–15μg/kg/d 晨起顿服 · 按 TSH/FT4 滴定（维持段可低至2–4μg/kg/d，库内5–12.5μg/日）· 与奶液铁钙间隔'},
  ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,modes:[{k:'d1',label:'第1剂 DAY1',def:10},{k:'d23',label:'第2·3剂 DAY2-3',def:5}],note:'PDA三剂法间隔24h×3 · 静注路径另见 8mg＋5%葡萄糖1ml'},
  acetaminophen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q6h',route:'口服/鼻饲',mlConc:100,note:'PRN · 24h ≤4剂 · 核对浓度(滴剂100mg/ml)'},
- ursodiol:{def:25,step:5,max:100,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'利胆 · 胆道梗阻禁用 · 按肝功随访'},
+ ursodiol:{def:10,step:5,max:30,unit:'mg/kg/d',out:'mg',freq:'q12h',route:'口服/鼻饲',dailyDiv:2,note:'利胆10–20mg/kg/d分2次（库内25mg/次×2≈16mg/kg/d@3kg在域内）· 胆道梗阻禁用 · 按肝功随访'},
  simethicone:{def:0.5,step:0.1,max:2,unit:'ml',out:'ml',freq:'q8h',route:'口服/鼻饲',abs:true,note:'奶前半小时 · 库内固定0.5ml/次'},
  levetiracetam:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',mlConc:100,note:'10%口服溶液100mg/ml · 静脉负荷后序贯'},
- propranolol:{def:1,step:0.25,max:10,unit:'mg',out:'mg',freq:'q12h',route:'口服/鼻饲',abs:true,note:'起始0.25–0.5mg/kg/d 逐段上调 · 定时喂养防低血糖'},
- prnhem:{def:0.5,step:0.25,unit:'mg/kg/d',out:'mg',freq:'q12h',route:'口服/鼻饲',dailyDiv:2,modeWrap:true,
+ propranolol:{def:0.5,step:0.25,max:2,unit:'mg/kg/d',out:'mg',freq:'q12h',route:'口服/鼻饲',dailyDiv:2,dualWith:'prnhem',note:'起始0.25–0.5mg/kg/d 逐段上调至1–2（分2次）· 定时喂养防低血糖 · 按心率心电图滴定'},
+ prnhem:{def:0.5,step:0.25,unit:'mg/kg/d',out:'mg',freq:'q12h',route:'口服/鼻饲',dailyDiv:2,modeWrap:true,dualHost:'propranolol',
   modes:[{k:'d2',label:'D2·0.5起',def:0.5},{k:'d3',label:'D3·1加',def:1},{k:'d4',label:'D4·2目标',def:2},
          {k:'w15',label:'减1.5',def:1.5},{k:'w10',label:'减1',def:1},{k:'w075',label:'减0.75',def:0.75},{k:'w05',label:'减0.5',def:0.5}],
   note:'科室血管瘤流程：D2起 0.5→1→2 逐日加量（分2次）· 监测心电/血糖/血压/脉搏 · 定时喂养防低血糖 · 停药一周一档渐减'},
- digoxin:{def:5,step:2.5,max:25,unit:'μg',out:'μg',freq:'q12h',route:'口服/鼻饲',abs:true,formTgl:true,
-  solName:'地高辛口服溶液',solMlPerUg:0.02,tabName:'地高辛片',tabMgPerTab:0.25,
-  note:'0.005%溶液50μg/ml（10μg=0.2ml）· 片剂0.25mg/片（研配按量给）· 血药浓度监测'}};
+ digoxin:{def:5,step:1,max:15,unit:'μg/kg/d',out:'μg',freq:'q12h',route:'口服/鼻饲',formTgl:true,
+  solName:'地高辛口服溶液',tabName:'地高辛片',tabMgPerTab:0.25,
+  note:'5–10μg/kg/d 分q12h（按血药浓度0.5–2ng/ml与心率滴定）· 0.005%溶液50μg/ml · 片剂0.25mg/片研配'}};
 function calcQd(id){
   const g=DRUGS[id], cfg=QDCFG[id];
   let dv=cfg.def, fq=cfg.freq||'qd';
@@ -1521,16 +1520,18 @@ function calcQd(id){
             `剂量核对：${f(dose,2)}mg/kg/d × ${W.toFixed(2)}kg ＝ ${f(dose*W,2)}mg/d ÷ ${cfg.dailyDiv} ＝ <b>${f(per,2)}mg/次</b>`], dose};
     }
   if(cfg.formTgl){
-    /* 地高辛剂型切换（10-14用户：医嘱必须能照抄执行——溶液给毫升/片剂给毫克）： */
-    const ckDose=[`剂量核对：${f(dose,2)}${cfg.unit}${cfg.abs?'':'×'+W.toFixed(2)+'kg'}＝<b>${f2(a)}μg</b>`];
+    /* 地高辛剂型切换（10-14用户两轮：按体重算+医嘱能照抄执行——溶液给毫升/片剂给毫克）：
+       输入 μg/kg/d → 日量=×W → q12h 单次=÷2 → 溶液 ml=÷50 / 片剂 mg=÷1000 */
+    const daily=dose*W, per=daily/2;
+    const ckDose=[`剂量核对：${f(dose,2)}μg/kg/d × ${W.toFixed(2)}kg ＝ ${f(daily,1)}μg/d ÷ 2 ＝ <b>${f(per,1)}μg/次</b>（范围5–10μg/kg/d，按血药浓度与心率滴定）`];
     if((QFORM[id]||'sol')==='tab'){
-      const mg=a/1000, pcs=mg/cfg.tabMgPerTab;
-      return {t1:`${cfg.tabName} ${f(mg,3)}mg（0.25mg/片＝${f(pcs,2)}片，研配按量给）${rt} ${fq}`,
-        prep:[], ck:[...ckDose, `换算核对：${f2(a)}μg＝${f(mg,3)}mg＝${f(pcs,2)}片（0.25mg/片；库内片剂写法 0.003–0.01mg q12h，研配后按量给）`], dose};
+      const mg=per/1000, pcs=mg/cfg.tabMgPerTab;
+      return {t1:`${cfg.tabName} ${f(mg,3)}mg（${f(per,1)}μg＝${f(pcs,2)}片，研配按量给）${rt} ${fq}`,
+        prep:[], ck:[...ckDose, `换算核对：${f(per,1)}μg＝${f(mg,3)}mg＝${f(pcs,2)}片（0.25mg/片；库内片剂写法 0.003–0.01mg q12h）`], dose};
     }
-    const ml=a*cfg.solMlPerUg;
-    return {t1:`${cfg.solName} ${f(ml,2)}ml（${f2(a)}μg）${rt} ${fq}`,
-      prep:[], ck:[...ckDose, `换算核对：${f2(a)}μg ÷ 50μg/ml ＝ ${f(ml,2)}ml（0.005%溶液；库内 0.05–0.2ml＝2.5–10μg，样例「0700=0.2ml」）`], dose};
+    const ml=per/50;
+    return {t1:`${cfg.solName} ${f(ml,2)}ml（${f(per,1)}μg）${rt} ${fq}`,
+      prep:[], ck:[...ckDose, `换算核对：${f(per,1)}μg ÷ 50μg/ml ＝ ${f(ml,2)}ml（0.005%溶液；库内 0.05–0.2ml＝2.5–10μg/次，样例「0700=0.2ml」）`], dose};
   }
   if(cfg.perMl){
     const R=a*(cfg.perMl+cfg.gsPerMg);
@@ -1844,6 +1845,7 @@ function linesOf(key){
   if(form==='push'){const L=calcPush(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='pump'){const L=calcPump(id); return {t1:L.t1,prep:L.prep,ck:L.ck,load:L.load,maint:L.maint};}
   if(form==='qd'){const L=calcQd(id); return {t1:L.t1,prep:[],ck:L.ck};}
+  if(form==='qhm'){const L=calcQd(QDCFG[id].dualWith); return {t1:L.t1,prep:[],ck:L.ck};}
   if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='exs'){const L=calcExs(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='ab'){const L=calcAb(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
@@ -2117,6 +2119,23 @@ function cardHtml(id){
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
     </div>`;
   }
+  /* 血管瘤流程区（普萘洛尔第二形式：引擎药=prnhem，医嘱key=propranolol@qhm） */
+  let qhmSec='';
+  if(dc.forms.includes('qhm')){
+    const oId=QDCFG[id].dualWith, oc=QDCFG[oId], g2=DRUGS[oId];
+    const cur3=QMODE[oId]||oc.modes[0].k;
+    const hmModes=oc.modes?`<div class="modetabs" id="qm_${oId}" style="flex-wrap:wrap;border-radius:13px;">`+oc.modes.map(m=>`<button type="button" data-act="qmode" data-card="${oId}" data-mode="${m.k}" class="${cur3===m.k?'on':''}" style="flex:1 1 25%;border-bottom:1px solid rgba(43,92,173,.25);">${m.label}</button>`).join('')+`</div>`:'';
+    const hmDef=(oc.modes&&QMODE[oId])?(oc.modes.find(m=>m.k===QMODE[oId])||oc.modes[0]).def:oc.def;
+    qhmSec=`<div id="sec_qhm_${id}" style="display:${c.form==='qhm'?'block':'none'}">
+      ${hmModes}
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dinq_${oId}" data-dir="-1">−</button><input data-act="dose" data-card="${oId}" id="dinq_${oId}" type="number" inputmode="decimal" step="${oc.step}" min="0" value="${hmDef}"><button type="button" class="stp" data-act="step" data-t="dinq_${oId}" data-dir="1">＋</button></div> ${oc.unit}</div>
+      <div class="ordbox" id="ordq_${oId}"></div>
+      <div class="ckbox"><div class="t">核对（体重 <span class="ckw_${id}">—</span>kg）</div><div id="ckrq_${oId}"></div></div>
+      ${g2.doseTableHtml||''}
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@qhm" id="add_${id}_qhm">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+    </div>`;
+  }
   /* 复苏区 */
   let resusSec='';
   if(dc.forms.includes('resus')){
@@ -2150,7 +2169,7 @@ function cardHtml(id){
     </div>
     <div class="cbody" id="body_${id}" style="display:none">
       ${formTabs}
-      ${maintSec}${pushSec}${loadSec||''}${qdSec}${resusSec}
+      ${maintSec}${pushSec}${loadSec||''}${qdSec}${qhmSec}${resusSec}
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
     </div>
@@ -2346,6 +2365,12 @@ function updCard(id){
     $('ordq_'+id).innerHTML=`<div class="o1">${L.t1}</div>`;
     $('ckrq_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
   }
+  /* 血管瘤流程区（普萘洛尔第二形式：引擎药=prnhem） */
+  if(dcU&&dcU.forms.includes('qhm')&&QDCFG[id].dualWith){
+    const oId=QDCFG[id].dualWith, L2=calcQd(oId);
+    $('ordq_'+oId).innerHTML=`<div class="o1">${L2.t1}</div>`;
+    $('ckrq_'+oId).innerHTML=L2.ck.map(r=>`<div class="r">${r}</div>`).join('');
+  }
   /* 复苏区 */
   if(dcU&&dcU.forms.includes('resus')){
     ['iv','et'].forEach(rt=>{
@@ -2416,7 +2441,7 @@ function setMode(id,m){
 }
 function setForm(id,f){
   S[id].form=f;
-  ['load','maint','push','resus','qd'].forEach(fm=>{
+  ['load','maint','push','resus','qd','qhm'].forEach(fm=>{
     const sec=$('sec_'+fm+'_'+id);
     if(sec)sec.style.display=f===fm?'block':'none';
   });
@@ -2456,7 +2481,11 @@ function toggleBasket(key){
       if(!(L.dose>0))return;
     }
     else{
-      const box=$('din_'+id)||$('dinp_'+id)||$('dinl_'+id);
+      /* 按形式直取输入框（qd/qhm 用 dinq_，其余维持/静推/首剂用 din_/dinp_/dinl_——存在性||链在空元素上会短路） */
+      let box=null;
+      if(form==='qd')box=$('dinq_'+id);
+      else if(form==='qhm')box=$('dinq_'+((QDCFG[id]||{}).dualWith||id));
+      else box=$('din_'+id)||$('dinp_'+id)||$('dinl_'+id);
       const v=box?parseFloat(box.value):NaN;
       if(!isFinite(v)||v<=0)return;
     }
@@ -2467,8 +2496,10 @@ function toggleBasket(key){
 function delItem(k){delete basket[k]; renderBasket(); renderAddBtns();}
 /* 从医嘱单跳回对应药物的详情页（自动切到该形式） */
 function gotoDrug(key){
-  const parts=key.split('@'), id=parts[0], form=parts[1];
-  const dc=DRUGCARDS.find(x=>x.id===id); if(!dc)return;
+  const parts=key.split('@'); let id=parts[0]; const form=parts[1];
+  let dc=DRUGCARDS.find(x=>x.id===id);
+  if(!dc&&QDCFG[id]&&QDCFG[id].dualHost){id=QDCFG[id].dualHost; dc=DRUGCARDS.find(x=>x.id===id);}  /* 合并卡子药→回宿主卡 */
+  if(!dc)return;
   const gi=GROUPS.findIndex(g=>g.cards.includes(id)); if(gi<0)return;
   go(0);  /* 🔴 固定回药物浏览页——go()的页号(pMain/p2)与分类page号(0/1/2)是两套语义，go(dc.page)会让常用治疗药跳进医嘱单、page1白屏 */
   const mi=L1META.findIndex(m=>m.grps.includes(gi)&&m.grps.length>1);
@@ -2715,7 +2746,7 @@ document.addEventListener('click',e=>{
       document.querySelectorAll('#qm_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
       { const c2=QDCFG[b.dataset.card], mm=(c2.modes||[]).find(m=>m.k===b.dataset.mode);
         const inp=$('dinq_'+b.dataset.card); if(mm&&inp)inp.value=mm.def; }
-      updCard(b.dataset.card); break;
+      updCard((QDCFG[b.dataset.card]||{}).dualHost||b.dataset.card); break;
     case 'prmode': PRMODE[b.dataset.card]=b.dataset.mode;
       document.querySelectorAll('#pr_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
       updCard(b.dataset.card); break;
