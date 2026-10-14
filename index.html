@@ -1237,7 +1237,7 @@ const ABCFG={
   schemes:{'GBS菌血症':[{dose:5,freq:'q12h'}],'脑膜炎≤7天':[{dose:15,freq:'q8h'}],'脑膜炎≥8天':[{dose:12.5,freq:'q6h'}]},
   specS:'GBS（B族链球菌）、梅毒螺旋体、敏感肺炎链球菌；肠球菌中敏。',
   specR:'产青霉素酶金葡菌、多数革兰阴性杆菌、支原体、MRS（天然耐药）。',
-  caution:'用前青霉素皮试（本院常规）；80万U/支含钠1.35mmol——长程注意钠负荷；脑膜炎大剂量方案缓慢输注防神经刺激。',
+  caution:'用前青霉素皮试（本院常规）；80万U/支含钠1.35mmol——长程注意钠负荷；水溶液不稳定——现配现用、快速滴入；脑膜炎大剂量方案缓慢输注防神经刺激。',
   pk:'半衰期随日龄缩短（≤7天约3–4小时，之后1–2小时）——7天内q12h、之后加密q8h/q6h；肾排泄为主；脑膜炎时CSF穿透随炎症增加。',
   adverse:'过敏（皮试筛查）；大剂量神经刺激（肌阵挛）；高钠负荷。'},
  ampicillin:{sites:['败血症（无中枢累及）','中枢感染'],unit:'mg/kg',out:'mg',step:25,csum:'优立新 氨苄:舒巴坦2:1 0.75g/支',ivc:{base:'5%葡萄糖或0.9%氯化钠',lc:12,cap:15,min:3,max:45,src:'优立新说明书：终浓度3–45mg/ml（氨苄＋舒巴坦总量计），滴注15–30分钟；库内配液浓度10–15mg/ml、体积6–14ml'},ageDep:true,gaDep:true,
@@ -1320,7 +1320,7 @@ const ABCFG={
   schemes:{'静滴（支/衣原体）':[{dose:12.5,freq:'q6h'}],'口服（<28天）':[{max:28,dose:10,freq:'q6h'}],'口服（≥28天）':[{min:29,dose:16.5,freq:'q8h'}]},
   specS:'支原体、衣原体、百日咳杆菌、军团菌、部分革兰阳性。',
   specR:'多数肠杆菌科（产酯酶）、产酶金葡（天然耐药）。',
-  caution:'口服促胃动力（喂养不耐受，超说明书）与肥厚性幽门狭窄相关——须家属告知；静滴静脉炎；QT延长。',
+  caution:'口服促胃动力（喂养不耐受，超说明书）与肥厚性幽门狭窄相关——须家属告知；静滴静脉炎；仅注射用水溶解（忌盐水，沉淀）；QT延长。',
   pk:'肝代谢、胆汁排泄；QT延长药合用心电监护。',
   adverse:'胃肠反应、静脉炎、肥厚性幽门狭窄顾虑、肝酶升高。'},
  azithromycin:{sites:['一般','口服（序贯同量）'],unit:'mg/kg',out:'mg',step:5,csum:'注射用/干混悬(希舒美)',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:2,cap:8,min:1,max:2,src:'说明书原文：终浓度1–2mg/ml（1mg/ml滴3小时／2mg/ml滴1小时）；库内≈2mg/ml、5–8ml'},
@@ -1341,7 +1341,7 @@ const ABCFG={
   schemes:{'诱导期':[{dose:6,freq:'q12h'}],'维持期':[{dose:5,freq:'qd'}]},
   specS:'CMV（首选）、HHV-6/7。',
   specR:'其他疱疹病毒部分、UL97/UL54突变株（治疗中诱发耐药）。',
-  caution:'中性粒细胞减少为最常见剂量限制毒性——每周血常规（<0.5×10⁹/L暂停）；生殖/骨髓远期毒性——输注防护与家属知情；肾功能按肌酐调间隔。',
+  caution:'中性粒细胞减少为最常见剂量限制毒性——每周血常规（<0.5×10⁹/L暂停）；生殖/骨髓远期毒性——输注防护与家属知情；输注≥1小时；肾功能按肌酐调间隔。',
   pk:'肾排泄原形；CSF穿透50–70%；口服缬更昔洛韦16mg/kg可序贯同效。',
   adverse:'中性粒/血小板减少、肝酶升高、输注部位反应。'},
  fluconazole:{sites:['治疗','ELBW预防','口服（序贯同量）'],unit:'mg/kg',out:'mg',step:1,freqOptions:['qd','biw'],csum:'注射液/胶囊',ivc:{ready:true,conc:2,src:'即用型氯化钠注射液2mg/ml——无需稀释；口服序贯同量'},
@@ -1355,7 +1355,7 @@ const ABCFG={
   schemes:{'起始剂量':[{dose:0.5,freq:'qd'}],'目标剂量':[{dose:1,freq:'qd'}]},
   specS:'广谱真菌：念珠菌、隐球菌、毛霉、曲霉。',
   specR:'土曲霉、葡萄牙念珠菌部分、其他接合菌部分（天然/获得耐药）。',
-  caution:'仅5%GS溶解——生理盐水中沉淀！；发热寒战预处理（苯海拉明）；肾毒性几乎必见——肌酐/血钾随访+水化；每剂前评估。',
+  caution:'仅5%GS溶解——生理盐水中沉淀！避光缓滴；发热寒战预处理（苯海拉明）；肾毒性几乎必见——肌酐/血钾随访+水化；每剂前评估。',
   pk:'组织结合极高、肾排极低；长半衰期——可隔日方案；脑膜炎CSF穿透差。',
   adverse:'发热寒战（输注反应）、肾毒性、低钾低镁、静脉炎、贫血。'},
 /* ===== 口服抗菌药（本科室口服剂量表 2023.04 复旦儿科临床药学部） ===== */
@@ -1717,12 +1717,13 @@ function calcAb(id,col){
     prep, rec:row.dose, vol:iv?iv.V:0,
     ck, dose:a};
 }
-/* 卡内「配液与浓度（说明书口径）」常显块 */
+/* 卡内「配液与浓度」常显块（10-14用户定稿：一句话精简，置于主要不良反应下方） */
 function abIvInfoHtml(c){
   if(!c.ivc)return '';
-  if(c.ivc.ready)return c.ivc.src;
+  if(c.ivc.ready)return '即用型，无需稀释，医嘱以毫升开具。';
   const cu=c.ivc.cu||'mg/ml';
-  return `${c.ivc.src}。<b>推荐配液量＝一次剂量÷库内浓度${c.ivc.lc}${cu}</b>（库内常用体积≤${c.ivc.cap||15}ml），随体重自动算入医嘱行；「配液量」框可自选，超出说明书${c.ivc.min||'—'}–${c.ivc.max||'—'}${cu}会提示。`;
+  const rng=c.ivc.min&&c.ivc.max?`${c.ivc.min}–${c.ivc.max}${cu}`:c.ivc.max?`≤${c.ivc.max}${cu}`:c.ivc.min?`≥${c.ivc.min}${cu}`:'说明书未设限';
+  return `终浓度 ${rng}；推荐约${c.ivc.lc}${cu}、≤${c.ivc.cap||15}ml，「配液量」可自选。`;
 }
 /* 换血（双倍量=2×血容量；组分=悬浮红细胞:血浆 2:1；库内实录 225ml=150+75、4小时匀速） */
 function calcExs(id){
@@ -1942,12 +1943,12 @@ function cardHtml(id){
       <div class="ordbox" id="ord_${id}"></div>
       <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@ab" id="add_${id}_ab">＋ 加医嘱</button>
         <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>`}
-      ${c.ivc?`<div class="abinfo"><div class="abt">配液与浓度（说明书口径）</div>${abIvInfoHtml(c)}</div>`:''}
       ${c.doseTableHtml||''}
       <div class="abinfo"><div class="abt">抗菌谱</div><div><b>敏感菌：</b>${c.specS}</div><div style="margin-top:2px;"><b>耐药菌：</b>${c.specR}</div></div>
       <div class="abinfo warnb"><div class="abt">注意事项</div>${c.caution}</div>
       <div class="abinfo"><div class="abt">药代与代谢途径</div>${c.pk}</div>
       <div class="abinfo badb"><div class="abt">主要不良反应</div>${c.adverse}</div>
+      ${c.ivc?`<div class="abinfo"><div class="abt">配液与浓度（说明书口径）</div>${abIvInfoHtml(c)}</div>`:''}
       ${dual?`<div class="btnrow"><button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>`:''}
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
