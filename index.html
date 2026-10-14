@@ -2678,11 +2678,13 @@ const APP_VER='试验版 v2026-10-14';
 let FBL=[]; try{FBL=JSON.parse(localStorage.getItem('vasoFB')||'[]');}catch(e){}
 let FB_T='';
 function fbCtxLine(drug){
-  const t=new Date(), pad=n=>String(n).padStart(2,'0');
   const nm=drug&&DRUGS[drug]?DRUGS[drug].name:'';
-  return `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())} · ${APP_VER}${nm?' · '+nm:''} · 体重${W.toFixed(2)}kg`;
+  return `${nm?nm+' · ':''}体重${W.toFixed(2)}kg`;
 }
-function fbBuild(type,txt,drug){return `【NeoAI试用反馈】${type}\n${txt?('内容：'+txt+'\n'):''}——${fbCtxLine(drug)}`;}
+function fbBuild(type,txt,drug){
+  const nm=drug&&DRUGS[drug]?DRUGS[drug].name:'';
+  return `${nm?nm+'｜':''}${type}${txt?'：'+txt:''}`;
+}
 function fbCopyText(t,cb){
   (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>cb(true),
     ()=>{const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select();
@@ -2695,13 +2697,12 @@ function fbRenderList(){
   const n=$('fbfab'); if(n)n.textContent='⚑ 反馈'+(FBL.length?` (${FBL.length})`:'');
 }
 function fbDigest(){
-  const t=new Date(), pad=n=>String(n).padStart(2,'0');
-  return `【NeoAI反馈汇总单】共${FBL.length}条\n`+FBL.map((f,i)=>`${i+1}、${f.text}`).join('\n')+`\n——${APP_VER} ${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+  return `【NeoAI反馈】共${FBL.length}条\n`+FBL.map((f,i)=>`${i+1}. ${f.text}`).join('\n')+`\n（体重${W.toFixed(2)}kg）`;
 }
 function fbOpen(drug){
   const m=$('fbmask'); if(!m)return;
   m.style.display='block'; $('fbVer').textContent=APP_VER;
-  $('fbCtx').textContent='将自动附带：'+fbCtxLine(drug)+'（当场加入汇总单、或攒着一起发都行）';
+  $('fbCtx').textContent='自动附 '+fbCtxLine(drug)+'（可当场加入汇总单，或攒着一起发）';
   FB_T=''; document.querySelectorAll('#fbTypes .fbchip').forEach(b=>b.classList.remove('on'));
   fbRenderList();
 }
