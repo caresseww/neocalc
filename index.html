@@ -194,6 +194,8 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   .ordbox .o1,.ordbox .o2{color:#000 !important;}
   .ordbox .o2{border-top-color:#999 !important;}
 }
+.fbchip{border:1px solid #d8e2f0;background:#fff;color:#1b4f9c;border-radius:14px;padding:6px 10px;font-size:12.5px;font-weight:600;}
+.fbchip.on{background:#1b4f9c;color:#fff;border-color:#1b4f9c;}
 </style>
 </head>
 <body>
@@ -249,6 +251,34 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <span style="font-size:17px">🧺</span>
   <span class="clabel">医嘱单 <b id="cartCnt">0</b> 条</span>
   <button class="cbtn" data-act="go" data-page="2">查看医嘱单 ›</button>
+</div>
+<button id="fbfab" data-act="fbopen" style="position:fixed;left:10px;bottom:56px;z-index:60;border:1px solid #c9d8ef;background:#fff;color:#1b4f9c;border-radius:20px;padding:7px 13px;font-size:12.5px;font-weight:600;box-shadow:0 2px 8px rgba(15,35,70,.18);">⚑ 反馈</button>
+<div id="fbmask" data-act="fbclose" style="display:none;position:fixed;inset:0;z-index:90;background:rgba(15,35,70,.45);">
+  <div style="position:absolute;left:12px;right:12px;bottom:12px;max-width:420px;margin:0 auto;background:#fff;border-radius:16px;padding:14px;" onclick="event.stopPropagation()">
+    <div style="font-weight:700;font-size:15px;color:var(--ink);margin-bottom:8px;">试用反馈 <span style="font-weight:400;font-size:12px;color:#667" id="fbVer"></span></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px" id="fbTypes">
+      <button type="button" data-act="fbtype" data-t="剂量不对" class="fbchip">剂量不对</button>
+      <button type="button" data-act="fbtype" data-t="配液/溶媒" class="fbchip">配液/溶媒</button>
+      <button type="button" data-act="fbtype" data-t="文案/口径" class="fbchip">文案/口径</button>
+      <button type="button" data-act="fbtype" data-t="交互问题" class="fbchip">交互问题</button>
+      <button type="button" data-act="fbtype" data-t="漏了药" class="fbchip">漏了药</button>
+      <button type="button" data-act="fbtype" data-t="其他" class="fbchip">其他</button>
+    </div>
+    <textarea id="fbTxt" placeholder="一句话说清问题（可空，类型本身就是反馈）" style="width:100%;box-sizing:border-box;height:56px;border:1px solid #d8e2f0;border-radius:10px;padding:8px;font-size:13px;"></textarea>
+    <div id="fbCtx" style="font-size:11px;color:#889;margin:6px 0 8px;"></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn pri" data-act="fbsub" style="flex:1">复制反馈文本（微信粘贴发给Robin）</button>
+      <button class="linklike" data-act="fbclose">关闭</button>
+    </div>
+    <div id="fbTip" style="font-size:12px;color:#1a7f37;margin-top:6px;min-height:16px;"></div>
+    <details style="margin-top:4px"><summary style="font-size:12px;color:#667">反馈历史（本机）</summary>
+      <div id="fbList" style="font-size:12px;max-height:180px;overflow:auto;"></div>
+      <div style="margin-top:6px;display:flex;gap:10px">
+        <button class="linklike" data-act="fbcopyall">复制全部</button>
+        <button class="linklike" data-act="fbclear" style="color:#b00020">清空历史</button>
+      </div>
+    </details>
+  </div>
 </div>
 
 <script>
@@ -1873,7 +1903,8 @@ function moreHtml(g){
   </details>`;
 }
 function doseInfoHtml(g){
-  return `<div class="ckbox dosebox"><div class="t">剂量说明 · 三源对照（单位：${g.unit}）</div>
+  const gid=Object.keys(DRUGS).find(k=>DRUGS[k]===g)||'';   /* DRUGS 条目无 id 字段，反查键名 */
+  return `<div class="ckbox dosebox"><div class="t">剂量说明 · 三源对照（单位：${g.unit}）<button type="button" class="linklike" data-act="fbopen" data-card="${gid}" style="float:right;margin:0 2px;font-size:11.5px;">⚑ 记问题</button></div>
     <div class="r"><b>UpToDate英文版</b>：${g.utd}</div>
     <div class="r"><b>手册第六版</b>：${g.hb}</div>
     <div class="r"><b>本院医嘱库</b>：${g.hosp}</div>
@@ -2640,6 +2671,34 @@ function copyOrder(){
     ()=>{const ta=$('ordTxt'); ta.select(); document.execCommand('copy'); $('copied').textContent='✓ 已复制';});
   setTimeout(()=>$('copied').textContent='',2500);
 }
+/* ================= 试用反馈（试验版：本机暂存 + 微信汇总给Robin） ================= */
+const APP_VER='试验版 v2026-10-14';
+let FBL=[]; try{FBL=JSON.parse(localStorage.getItem('vasoFB')||'[]');}catch(e){}
+let FB_T='';
+function fbCtxLine(drug){
+  const t=new Date(), pad=n=>String(n).padStart(2,'0');
+  const nm=drug&&DRUGS[drug]?DRUGS[drug].name:'';
+  return `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())} · ${APP_VER}${nm?' · '+nm:''} · 体重${W.toFixed(2)}kg`;
+}
+function fbBuild(type,txt,drug){return `【NeoAI试用反馈】${type}\n${txt?('内容：'+txt+'\n'):''}——${fbCtxLine(drug)}`;}
+function fbCopyText(t,cb){
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>cb(true),
+    ()=>{const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select();
+      let ok=false; try{ok=document.execCommand('copy');}catch(e){}
+      document.body.removeChild(ta); cb(ok);});
+}
+function fbRenderList(){
+  const el=$('fbList'); if(!el)return;
+  el.innerHTML=FBL.length?FBL.map((f,i)=>`<div style="border-top:1px solid var(--line);padding:6px 0;white-space:pre-wrap;">${f.text} <button class="linklike" data-act="fbcopyone" data-i="${i}">复制</button> <button class="linklike" data-act="fbdel" data-i="${i}" style="color:#b00020">删</button></div>`).join(''):'<div style="color:#99a;padding:6px 0">暂无</div>';
+  const n=$('fbfab'); if(n)n.textContent='⚑ 反馈'+(FBL.length?` (${FBL.length})`:'');
+}
+function fbOpen(drug){
+  const m=$('fbmask'); if(!m)return;
+  m.style.display='block'; $('fbVer').textContent=APP_VER;
+  $('fbCtx').textContent='将自动附带：'+fbCtxLine(drug);
+  FB_T=''; document.querySelectorAll('#fbTypes .fbchip').forEach(b=>b.classList.remove('on'));
+  fbRenderList();
+}
 function go(n){
   curPage=n;
   resetView();
@@ -2758,6 +2817,19 @@ document.addEventListener('click',e=>{
     case 'prmode': PRMODE[b.dataset.card]=b.dataset.mode;
       document.querySelectorAll('#pr_'+b.dataset.card+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
       updCard(b.dataset.card); break;
+    case 'fbopen': fbOpen(b.dataset.card||view.drug||openCap||''); break;
+    case 'fbclose': $('fbmask').style.display='none'; break;
+    case 'fbtype': FB_T=b.dataset.t; document.querySelectorAll('#fbTypes .fbchip').forEach(x=>x.classList.toggle('on',x.dataset.t===FB_T)); break;
+    case 'fbsub': { const txt=$('fbTxt').value.trim();
+      if(!FB_T&&!txt){$('fbTip').textContent='选个类型或写一句'; break;}
+      const item=fbBuild(FB_T||'其他',txt,view.drug||openCap||'');
+      FBL.unshift({text:item}); try{localStorage.setItem('vasoFB',JSON.stringify(FBL));}catch(e){}
+      fbCopyText(item,ok=>{$('fbTip').textContent=ok?'✓ 已复制——打开微信粘贴发给 Robin':'复制失败——请在反馈历史里手动复制';});
+      $('fbTxt').value=''; fbRenderList(); break; }
+    case 'fbcopyall': fbCopyText(FBL.map(f=>f.text).join('\n———\n'),ok=>{$('fbTip').textContent=ok?'✓ 全部已复制':'复制失败';}); break;
+    case 'fbclear': FBL=[]; try{localStorage.setItem('vasoFB','[]');}catch(e){} fbRenderList(); break;
+    case 'fbcopyone': fbCopyText(FBL[+b.dataset.i].text,()=>{}); $('fbTip').textContent='✓ 已复制'; break;
+    case 'fbdel': FBL.splice(+b.dataset.i,1); try{localStorage.setItem('vasoFB',JSON.stringify(FBL));}catch(e){} fbRenderList(); break;
     case 'add': toggleBasket(b.dataset.key); break;
     case 'del': delItem(b.dataset.key); break;
     case 'editdrug': gotoDrug(b.dataset.key); break;
@@ -2796,6 +2868,7 @@ window.addEventListener('scroll',()=>{
   renderCards();
   updCga();
   updateAll();
+  fbRenderList();
 })();
 </script>
 </body>
