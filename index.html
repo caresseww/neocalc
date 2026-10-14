@@ -1323,8 +1323,8 @@ const ABCFG={
   caution:'口服促胃动力（喂养不耐受，超说明书）与肥厚性幽门狭窄相关——须家属告知；静滴静脉炎；QT延长。',
   pk:'肝代谢、胆汁排泄；QT延长药合用心电监护。',
   adverse:'胃肠反应、静脉炎、肥厚性幽门狭窄顾虑、肝酶升高。'},
- azithromycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'注射用/干混悬',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:2,cap:8,min:1,max:2,src:'说明书原文：终浓度1–2mg/ml（1mg/ml滴3小时／2mg/ml滴1小时）；库内≈2mg/ml、5–8ml'},
-  schemes:{'一般':[{dose:10,freq:'qd'}]},
+ azithromycin:{sites:['一般','口服（序贯同量）'],unit:'mg/kg',out:'mg',step:5,csum:'注射用/干混悬(希舒美)',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:2,cap:8,min:1,max:2,src:'说明书原文：终浓度1–2mg/ml（1mg/ml滴3小时／2mg/ml滴1小时）；库内≈2mg/ml、5–8ml'},
+  schemes:{'一般':[{dose:10,freq:'qd'}],'口服（序贯同量）':[{dose:10,freq:'qd'}]},
   specS:'支原体、衣原体、百日咳杆菌、部分革兰阳性、流感嗜血杆菌。',
   specR:'多数肠杆菌科（天然耐药）。',
   caution:'静滴≥60分钟——QT延长（心电）；婴儿口服肥厚性幽门狭窄顾虑（文献警示）；口服同量序贯。',
@@ -1640,7 +1640,9 @@ function abIv(a,ivc){
   let V=Math.max(Math.round(a/ivc.lc*2)/2,0.5), why='';
   if(V<Vlo){V=Math.ceil(Vlo*2)/2; why=`已达说明书最高浓度${ivc.max}${cu}——体积最小须配至${f(V,1)}ml`;}
   else if(V>Vhi){V=Math.floor(Vhi*2)/2; why=`已达说明书最低浓度${ivc.min}${cu}——最多稀释至${f(V,1)}ml`;}
-  else if(V>cap){V=Math.max(Math.floor(cap*2)/2, Math.ceil(Vlo*2)/2); why=`按库内体积上限${cap}ml加浓（浓度${f(a/V,1)}${cu}，说明书内）`;}
+  else if(V>cap){
+    if(Vlo>cap){V=Math.ceil(Vlo*2)/2; why=`说明书最高浓度${ivc.max}${cu}——本剂至少须配至${f(V,1)}ml`;}
+    else{V=Math.floor(cap*2)/2; why=`按库内体积上限${cap}ml加浓（浓度${f(a/V,1)}${cu}，说明书内）`;}}
   return {V, conc:a/V, cu, why};
 }
 function calcAb(id,col){
