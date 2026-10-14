@@ -1233,14 +1233,14 @@ function calcAmp(id){
 }
 /* ===== 抗感染用药专属配置：schemes 按 剂量档×日龄/胎龄 自动推荐；四区块常显 ===== */
 const ABCFG={
- penicillin:{sites:['GBS菌血症','脑膜炎≤7天','脑膜炎≥8天'],unit:'万U/kg',out:'万U',step:1,csum:'80万U/支（钠1.35mmol）',solvent:'5%葡萄糖 稀释静滴',
+ penicillin:{sites:['GBS菌血症','脑膜炎≤7天','脑膜炎≥8天'],unit:'万U/kg',out:'万U',step:1,csum:'80万U/支（钠1.35mmol）',ivc:{base:'0.9%氯化钠或5%葡萄糖',cu:'万U/ml',lc:1,cap:12,min:1,max:4,src:'临床药学常用口径1–4万U/ml（说明书未设浓度限度）；青霉素水溶液不稳定——现配现用、30分钟内快速滴入'},
   schemes:{'GBS菌血症':[{dose:5,freq:'q12h'}],'脑膜炎≤7天':[{dose:15,freq:'q8h'}],'脑膜炎≥8天':[{dose:12.5,freq:'q6h'}]},
   specS:'GBS（B族链球菌）、梅毒螺旋体、敏感肺炎链球菌；肠球菌中敏。',
   specR:'产青霉素酶金葡菌、多数革兰阴性杆菌、支原体、MRS（天然耐药）。',
   caution:'用前青霉素皮试（本院常规）；80万U/支含钠1.35mmol——长程注意钠负荷；脑膜炎大剂量方案缓慢输注防神经刺激。',
   pk:'半衰期随日龄缩短（≤7天约3–4小时，之后1–2小时）——7天内q12h、之后加密q8h/q6h；肾排泄为主；脑膜炎时CSF穿透随炎症增加。',
   adverse:'过敏（皮试筛查）；大剂量神经刺激（肌阵挛）；高钠负荷。'},
- ampicillin:{sites:['败血症（无中枢累及）','中枢感染'],unit:'mg/kg',out:'mg',step:25,csum:'优立新 氨苄:舒巴坦2:1 0.75g/支',solvent:'5%葡萄糖 稀释静滴',ageDep:true,gaDep:true,
+ ampicillin:{sites:['败血症（无中枢累及）','中枢感染'],unit:'mg/kg',out:'mg',step:25,csum:'优立新 氨苄:舒巴坦2:1 0.75g/支',ivc:{base:'5%葡萄糖或0.9%氯化钠',lc:12,cap:15,min:3,max:45,src:'优立新说明书：终浓度3–45mg/ml（氨苄＋舒巴坦总量计），滴注15–30分钟；库内配液浓度10–15mg/ml、体积6–14ml'},ageDep:true,gaDep:true,
   schemes:{'败血症（无中枢累及）':[
     {gaMax:34,max:7,dose:75,freq:'q12h'},{gaMax:34,min:8,max:28,dose:75,freq:'q8h'},{gaMax:34,min:29,dose:75,freq:'q6h'},
     {gaMin:35,max:7,dose:75,freq:'q8h'},{gaMin:35,min:8,max:28,dose:75,freq:'q8h'},{gaMin:35,min:29,dose:75,freq:'q6h'}],
@@ -1260,98 +1260,98 @@ const ABCFG={
   caution:'剂量以阿莫西林成分计；克拉维酸相关腹泻较常见——喂养不耐受时评估。',
   pk:'口服吸收好；新生儿肾清除慢，q12h足够；克拉维酸肝代谢。',
   adverse:'腹泻（最常见）、皮疹、肝酶升高。'},
- cefuroxime:{sites:['静滴（一般）','口服酯（>28天）'],unit:'mg/kg',out:'mg',step:5,csum:'注射0.75g支 / 酯片0.125g包',solvent:'5%葡萄糖 稀释静滴（盐水亦可）',
+ cefuroxime:{sites:['静滴（一般）','口服酯（>28天）'],unit:'mg/kg',out:'mg',step:5,csum:'注射0.75g支 / 酯片0.125g包',ivc:{base:'5%葡萄糖或0.9%氯化钠',lc:9,cap:15,src:'说明书：静脉输注溶于50–100ml、30–60分钟；未设浓度限度，库内约9mg/ml、15ml'},
   schemes:{'静滴（一般）':[{dose:50,freq:'q12h'}],'口服酯（>28天）':[{min:29,dose:12.5,freq:'q12h'}]},
   specS:'金葡（含产酶株）、肺链、化脓性链球菌、大肠埃希菌、流感嗜血杆菌（含产酶株）、卡他莫拉菌。',
   specR:'MRS、肠球菌、铜绿假单胞菌、不动杆菌（天然耐药）。',
   caution:'二代头孢CSF穿透不足——不作中枢感染用药；口服为头孢呋辛酯（>28天，20–30mg/kg/d bid，单次max500mg）。',
   pk:'肾排泄，新生儿半衰期延长（q12h）；炎症时CSF仅少量穿透。',
   adverse:'胃肠反应、皮疹、一过性肝酶升高。'},
- cefotaxime:{sites:['一般感染','脑膜炎','淋球菌'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'5%葡萄糖 稀释静滴（盐水亦可）',ageDep:true,
+ cefotaxime:{sites:['一般感染','脑膜炎','淋球菌'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',ivc:{base:'5%葡萄糖或0.9%氯化钠',lc:10,cap:15,src:'说明书未设浓度限度；临床常用≤40mg/ml（库内约9mg/ml）'},ageDep:true,
   schemes:{'一般感染':[{max:7,dose:50,freq:'q12h'},{min:8,dose:50,freq:'q8h'}],'脑膜炎':[{dose:75,freq:'q6h'}],'淋球菌':[{dose:25,freq:'q8h'}]},
   specS:'肠杆菌科（三代强）、流感嗜血杆菌、淋球菌、链球菌、脑膜炎奈瑟菌。',
   specR:'肠球菌、MRS、铜绿（覆盖弱）、产ESBL菌（天然耐药）。',
   caution:'<2kg减量；脑膜炎可至75mg/kg q6h；新生儿半衰期长——按日龄调间隔。',
   pk:'去乙酰代谢物有活性；CSF穿透好（炎症时）；日龄决定清除。',
   adverse:'皮疹、腹泻、菌群紊乱。'},
- ceftazidime:{sites:['外周感染','中枢/铜绿'],unit:'mg/kg',out:'mg',step:5,def:50,csum:'注射用粉针',solvent:'5%葡萄糖 稀释静滴',freqOptions:['q8h','q6h','q12h'],
+ ceftazidime:{sites:['外周感染','中枢/铜绿'],unit:'mg/kg',out:'mg',step:5,def:50,csum:'注射用粉针',ivc:{base:'5%葡萄糖或0.9%氯化钠',lc:10,cap:15,min:1,max:40,src:'说明书/临床口径：静滴终浓度1–40mg/ml，输注20–30分钟'},freqOptions:['q8h','q6h','q12h'],
   schemes:{'外周感染':[{dose:50,freq:'q8h'}],'中枢/铜绿':[{dose:50,freq:'q8h'}]},
   specS:'铜绿假单胞菌（三代中最强）、肠杆菌科。',
   specR:'肠球菌、MRS、产ESBL/AmpC菌、脆弱拟杆菌（天然耐药）。',
   caution:'三代头孢主力但产ESBL菌需美罗培南；长程注意真菌二重感染。',
   pk:'肾排泄；CSF穿透随炎症增加；新生儿半衰期长（q8h）。',
   adverse:'腹泻、静脉炎、皮疹、菌群紊乱。'},
- cefepime:{sites:['一般≤28天','一般>28天','铜绿/重症'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'5%葡萄糖 稀释静滴',ageDep:true,
+ cefepime:{sites:['一般≤28天','一般>28天','铜绿/重症'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:10,cap:15,min:1,max:40,src:'说明书原文：可配1–40mg/ml，输注约30分钟'},ageDep:true,
   schemes:{'一般≤28天':[{dose:30,freq:'q12h'}],'一般>28天':[{dose:30,freq:'q8h'}],'铜绿/重症':[{dose:50,freq:'q8h'}]},
   specS:'四代：肠杆菌（AmpC稳定）＋铜绿假单胞菌。',
   specR:'MRS、肠球菌、脆弱拟杆菌、产KPC菌（天然耐药）。',
   caution:'脑病/肌阵挛（肾功能不全或超剂量）——严格按日龄间隔；避免与肾毒药叠加。',
   pk:'肾排泄，≤28天半衰期长（q12h）——间隔错误是脑病主因。',
   adverse:'脑病/肌阵挛（罕见但重要）、皮疹、腹泻、嗜酸细胞增多。'},
- meropenem:{sites:['一般','化脑/铜绿'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',solvent:'5%葡萄糖 稀释静滴（输注≥30分钟）',
+ meropenem:{sites:['一般','化脑/铜绿'],unit:'mg/kg',out:'mg',step:5,csum:'注射用粉针',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:7.5,cap:17,min:1,max:20,src:'说明书原文：终浓度1–20mg/ml；输注≥15–30分钟（化脑延长>1小时）；库内浓度4–8mg/ml、体积8–17ml'},
   schemes:{'一般':[{dose:20,freq:'q8h'}],'化脑/铜绿':[{dose:40,freq:'q8h'}]},
   specS:'超广谱（ESBL稳定）：肠杆菌、铜绿、葡萄球菌、厌氧菌。',
   specR:'MRS（不均一）、嗜麦芽窄食单胞菌、屎肠球菌部分、产KPC菌视地区（天然/获得耐药）。',
   caution:'不与丙戊酸同用（浓度骤降→抽搐复发）；筛选耐药菌——限重症/降阶梯；输注≥30分钟、化脑延长>1小时。',
   pk:'肾排泄，半衰期按日龄；时间依赖性杀菌——延长输注策略（化脑>1小时）。',
   adverse:'腹泻、菌群紊乱/真菌二重、中枢反应（罕见抽搐）、血小板减少。'},
- vancomycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'0.5g/支（稳可信）',solvent:'5%葡萄糖 稀释静滴（输注≥60分钟）',
+ vancomycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'0.5g/支（稳可信）',ivc:{base:'5%葡萄糖',lc:2,cap:14,max:5,src:'说明书：终浓度≤5mg/ml（限液时可至10mg/ml），输注≥60分钟防红人综合征；库内≈2mg/ml、体积6–14ml'},
   schemes:{'一般':[{dose:15,freq:'q12h'}]},
   specS:'MRSA、MRCNS、链球菌。',
   specR:'全部革兰阴性菌（外膜屏障）、VRE（天然耐药）。',
   caution:'治疗窗窄：谷浓度目标10–20μg/ml（第4剂给药前抽血）；输注≥60分钟防红人综合征；肾功能与GA个体化间隔。',
   pk:'肾排泄为主，半衰期随GA/日龄/肌酐显著变化——本院常规谷浓度监测。',
   adverse:'肾毒性（谷>20）、红人综合征、耳毒性（罕见）、血小板减少。'},
- linezolid:{sites:['<34周','≥34周'],unit:'mg/kg',out:'mg',step:5,gaUsed:true,csum:'注射液/片',solvent:'即用型袋装，无需稀释',gaDep:true,
-  schemes:{'<34周':[{gaMax:34,dose:10,freq:'q12h'}],'≥34周':[{gaMin:34,dose:10,freq:'q8h'}]},
+ linezolid:{sites:['<34周','≥34周','口服（序贯同量）'],unit:'mg/kg',out:'mg',step:5,gaUsed:true,csum:'注射液/片',ivc:{ready:true,conc:2,src:'即用型葡萄糖注射液2mg/ml——无需稀释，医嘱以毫升开具；口服序贯同量'},gaDep:true,
+  schemes:{'<34周':[{gaMax:34,dose:10,freq:'q12h'}],'≥34周':[{gaMin:34,dose:10,freq:'q8h'}],'口服（序贯同量）':[{gaMax:34,dose:10,freq:'q12h'},{gaMin:34,dose:10,freq:'q8h'}]},
   specS:'MRSA、VRE、MRCNS、链球菌。',
   specR:'革兰阴性菌、多数厌氧菌（天然耐药）。',
   caution:'长程（>10–14天）血小板/白细胞减少——每周血常规；单胺氧化酶抑制（拟交感药注意）；口服生物利用度100%可序贯同量。',
   pk:'肝代谢弱、肾排代谢物；CSF穿透中等。',
   adverse:'血小板减少、乳酸酸中毒（罕见）、周围神经病变（长程）。'},
- metronidazole:{sites:['维持（首剂15单独给）','口服（厌氧菌）'],unit:'mg/kg',out:'mg',step:2.5,csum:'注射液/片',solvent:'可直接静滴',
+ metronidazole:{sites:['维持（首剂15单独给）','口服（厌氧菌）'],unit:'mg/kg',out:'mg',step:2.5,csum:'注射液/片',ivc:{ready:true,conc:5,src:'0.5%即用型注射液＝5mg/ml——无需稀释，医嘱以毫升开具'},
   schemes:{'维持（首剂15单独给）':[{dose:7.5,freq:'q12h'}],'口服（厌氧菌）':[{max:56,dose:7.5,freq:'q12h'},{min:57,dose:10,freq:'q12h'}]},
   specS:'厌氧菌（脆弱拟杆菌群）、难辨梭菌、滴虫、阿米巴。',
   specR:'全部需氧菌（天然耐药）。',
   caution:'首剂15mg/kg单独给；长程周围神经病变；双硫仑反应（禁酒精）；孕龄<40周新生儿第一周可能蓄积。',
   pk:'肝代谢，新生儿清除慢；口服＝静滴生物利用度。',
   adverse:'胃肠反应、金属味、长程神经病变、二重感染（CDAD）。'},
- erythromycin:{sites:['静滴（支/衣原体）','口服（<28天）','口服（≥28天）'],unit:'mg/kg',out:'mg',step:2.5,csum:'乳糖酸红霉素（静滴）',solvent:'注射用水溶解后加入5%葡萄糖静滴',
+ erythromycin:{sites:['静滴（支/衣原体）','口服（<28天）','口服（≥28天）'],unit:'mg/kg',out:'mg',step:2.5,csum:'乳糖酸红霉素（静滴）',ivc:{preDil:'注射用水溶解后',base:'5%葡萄糖',lc:1,cap:15,max:2,src:'乳糖酸红霉素：仅注射用水溶解（忌盐水，沉淀），加入5%葡萄糖后终浓度约1–2mg/ml缓滴'},
   schemes:{'静滴（支/衣原体）':[{dose:12.5,freq:'q6h'}],'口服（<28天）':[{max:28,dose:10,freq:'q6h'}],'口服（≥28天）':[{min:29,dose:16.5,freq:'q8h'}]},
   specS:'支原体、衣原体、百日咳杆菌、军团菌、部分革兰阳性。',
   specR:'多数肠杆菌科（产酯酶）、产酶金葡（天然耐药）。',
   caution:'口服促胃动力（喂养不耐受，超说明书）与肥厚性幽门狭窄相关——须家属告知；静滴静脉炎；QT延长。',
   pk:'肝代谢、胆汁排泄；QT延长药合用心电监护。',
   adverse:'胃肠反应、静脉炎、肥厚性幽门狭窄顾虑、肝酶升高。'},
- azithromycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'注射用/干混悬',solvent:'5%葡萄糖 稀释静滴（≥60分钟）',
+ azithromycin:{sites:['一般'],unit:'mg/kg',out:'mg',step:5,csum:'注射用/干混悬',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:2,cap:8,min:1,max:2,src:'说明书原文：终浓度1–2mg/ml（1mg/ml滴3小时／2mg/ml滴1小时）；库内≈2mg/ml、5–8ml'},
   schemes:{'一般':[{dose:10,freq:'qd'}]},
   specS:'支原体、衣原体、百日咳杆菌、部分革兰阳性、流感嗜血杆菌。',
   specR:'多数肠杆菌科（天然耐药）。',
   caution:'静滴≥60分钟——QT延长（心电）；婴儿口服肥厚性幽门狭窄顾虑（文献警示）；口服同量序贯。',
   pk:'半衰期68小时（qd）；组织高浓度；肝胆排泄。',
   adverse:'胃肠反应（轻于红霉素）、肝酶升高、QT延长。'},
- aciclovir:{sites:['≥30周','<30周'],unit:'mg/kg',out:'mg',step:5,gaUsed:true,gaDep:true,csum:'注射用粉针',solvent:'糖水/盐水（稀释至≤7mg/ml）',
+ aciclovir:{sites:['≥30周','<30周'],unit:'mg/kg',out:'mg',step:5,gaUsed:true,gaDep:true,csum:'注射用粉针',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:4,cap:20,max:7,src:'说明书：终浓度≤7mg/ml，输注≥1小时——结晶性肾病须充分水化；库内≈4mg/ml'},
   schemes:{'≥30周':[{gaMin:30,dose:20,freq:'q8h'}],'<30周':[{gaMax:30,dose:20,freq:'q12h'}]},
   specS:'HSV-1/2、VZV。',
   specR:'CMV（完全耐药）、TK基因缺失突变株（治疗中诱发）。',
   caution:'结晶性肾病——充分水化、输注≥1小时、肾功能调间隔；足程：皮肤眼口型14天、脑炎/播散型21天。',
   pk:'肾排泄原形；CSF穿透约50%；<30周清除极慢（q12h）。',
   adverse:'肾毒性（结晶）、静脉炎、中性粒细胞减少。'},
- ganciclovir:{sites:['诱导期','维持期'],unit:'mg/kg',out:'mg',step:1,csum:'注射用粉针',solvent:'5%葡萄糖 稀释静滴（≥1小时）',
+ ganciclovir:{sites:['诱导期','维持期'],unit:'mg/kg',out:'mg',step:1,csum:'注射用粉针',ivc:{base:'0.9%氯化钠或5%葡萄糖',lc:1,cap:18,max:10,src:'说明书：终浓度≤10mg/ml，输注≥1小时（库内≈1mg/ml）'},
   schemes:{'诱导期':[{dose:6,freq:'q12h'}],'维持期':[{dose:5,freq:'qd'}]},
   specS:'CMV（首选）、HHV-6/7。',
   specR:'其他疱疹病毒部分、UL97/UL54突变株（治疗中诱发耐药）。',
   caution:'中性粒细胞减少为最常见剂量限制毒性——每周血常规（<0.5×10⁹/L暂停）；生殖/骨髓远期毒性——输注防护与家属知情；肾功能按肌酐调间隔。',
   pk:'肾排泄原形；CSF穿透50–70%；口服缬更昔洛韦16mg/kg可序贯同效。',
   adverse:'中性粒/血小板减少、肝酶升高、输注部位反应。'},
- fluconazole:{sites:['治疗','ELBW预防'],unit:'mg/kg',out:'mg',step:1,freqOptions:['qd','biw'],csum:'注射液/胶囊',solvent:'5%葡萄糖 稀释静滴（可口服序贯同量）',
-  schemes:{'治疗':[{dose:6,freq:'qd'}],'ELBW预防':[{dose:3,freq:'biw'}]},
+ fluconazole:{sites:['治疗','ELBW预防','口服（序贯同量）'],unit:'mg/kg',out:'mg',step:1,freqOptions:['qd','biw'],csum:'注射液/胶囊',ivc:{ready:true,conc:2,src:'即用型氯化钠注射液2mg/ml——无需稀释；口服序贯同量'},
+  schemes:{'治疗':[{dose:6,freq:'qd'}],'ELBW预防':[{dose:3,freq:'biw'}],'口服（序贯同量）':[{dose:6,freq:'qd'}]},
   specS:'白念珠菌、近平滑念珠菌、隐球菌。',
   specR:'克柔念珠菌（天然耐药）、光滑念珠菌（剂量依赖）、毛霉/曲霉全部。',
   caution:'CYP3A/2C9强抑制——与咪达唑仑、西地那非、激素显著相互作用；肝酶随访；QT延长；口服同量序贯。',
   pk:'肾排泄原形80%；CSF与尿液穿透好；半衰期随GA/日龄30–70小时——qd/biw。',
   adverse:'肝酶升高、胃肠反应、QT延长、药物相互作用。'},
- amphotericin:{sites:['起始剂量','目标剂量'],unit:'mg/kg',out:'mg',step:0.25,csum:'注射用粉针（去氧胆酸盐）',solvent:'仅5%葡萄糖（生理盐水中沉淀）',
+ amphotericin:{sites:['起始剂量','目标剂量'],unit:'mg/kg',out:'mg',step:0.25,csum:'注射用粉针（去氧胆酸盐）',ivc:{base:'5%葡萄糖',lc:0.1,cap:20,max:0.1,src:'说明书：终浓度≤0.1mg/ml——仅5%葡萄糖稀释（生理盐水中沉淀），避光缓滴'},
   schemes:{'起始剂量':[{dose:0.5,freq:'qd'}],'目标剂量':[{dose:1,freq:'qd'}]},
   specS:'广谱真菌：念珠菌、隐球菌、毛霉、曲霉。',
   specR:'土曲霉、葡萄牙念珠菌部分、其他接合菌部分（天然/获得耐药）。',
@@ -1629,8 +1629,23 @@ function calcPush(id){
     ck:[ck], dose};
 }
 /* 抗感染：按 剂量档×日龄/胎龄/PMA 自动推荐 scheme；IV 附溶媒行 */
-function calcAb(id){
-  const c=ABCFG[id], g=DRUGS[id];
+/* IV配液体积（10-14用户两轮定稿）：推荐体积=药量÷库内浓度lc；库内体积上限cap=软上限（超了加浓，浓度仍在说明书内）；
+   说明书浓度区间=硬红线（最高浓度→体积硬下限Vlo不可压；最低浓度→体积硬上限Vhi不可超）；医生可在「配液量」框自选 */
+function abIv(a,ivc){
+  const cu=ivc.cu||'mg/ml';
+  const cap=ivc.cap||15;
+  const VmaxConc=ivc.max?a/ivc.max:0;   /* 说明书最高浓度→体积硬下限 */
+  const VminConc=ivc.min?a/ivc.min:0;   /* 说明书最低浓度→体积硬上限 */
+  const Vlo=Math.max(2, VmaxConc), Vhi=VminConc||Infinity;
+  let V=Math.max(Math.round(a/ivc.lc*2)/2,0.5), why='';
+  if(V<Vlo){V=Math.ceil(Vlo*2)/2; why=`已达说明书最高浓度${ivc.max}${cu}——体积最小须配至${f(V,1)}ml`;}
+  else if(V>Vhi){V=Math.floor(Vhi*2)/2; why=`已达说明书最低浓度${ivc.min}${cu}——最多稀释至${f(V,1)}ml`;}
+  else if(V>cap){V=Math.max(Math.floor(cap*2)/2, Math.ceil(Vlo*2)/2); why=`按库内体积上限${cap}ml加浓（浓度${f(a/V,1)}${cu}，说明书内）`;}
+  return {V, conc:a/V, cu, why};
+}
+function calcAb(id,col){
+  const c=ABCFG[id], g=DRUGS[id], suf=col?'2':'';
+  const man=col?'abzMan2':'abzMan', qman=col?'abqMan2':'abqMan';
   const ageEl=$('dage_'+id); const ageV=ageEl?parseFloat(ageEl.value):NaN;
   const age=(isFinite(ageV)&&ageV>=0)?ageV:(c.minAge||7);
   const gwEl=$('dgaw_'+id); const gwV=gwEl?parseFloat(gwEl.value):NaN;
@@ -1638,7 +1653,8 @@ function calcAb(id){
   const gdEl=$('dgad_'+id); const gdV=gdEl?parseFloat(gdEl.value):NaN;
   const gd=(isFinite(gdV)&&gdV>=0)?gdV:0;
   const ga=gw+gd/7, pma=ga+age/7;
-  const site=(c.sites&&c.sites.length>1)?((($('sit_'+id)||{}).value)||c.sites[0]):(c.sites?c.sites[0]:'');
+  const sites=col?(c.sites||[]).filter(x=>x.indexOf('口服')>=0):(c.sites||[]).filter(x=>x.indexOf('口服')<0);
+  const site=sites.length>1?((($('sit'+suf+'_'+id)||{}).value)||sites[0]):(sites[0]||'');
   const rows=c.schemes[site]||[];
   let row=rows[rows.length-1]||{dose:c.def||20,freq:c.freq||'q12h'};
   for(const r of rows){
@@ -1650,24 +1666,61 @@ function calcAb(id){
     if(r.pmaMax!==undefined&&pma>r.pmaMax)continue;
     row=r; break;
   }
-  const bzEl=$('dabz_'+id);
+  const bzEl=$('dabz'+suf+'_'+id);
   const bzV=bzEl?parseFloat(bzEl.value):NaN;
-  const dose=(S[id].abzMan&&isFinite(bzV)&&bzV>0)?bzV:row.dose;   /* 剂量空间：默认推荐值，可自调 */
-  const fqs=$('fqab_'+id);
-  const fq=(S[id].abqMan&&fqs&&fqs.value)?fqs.value:row.freq;     /* 频次选择权留给医生 */
+  const dose=(S[id][man]&&isFinite(bzV)&&bzV>0)?bzV:row.dose;   /* 剂量空间：默认推荐值，可自调 */
+  const fqs=$('fqab'+suf+'_'+id);
+  const fq=(S[id][qman]&&fqs&&fqs.value)?fqs.value:row.freq;     /* 频次选择权留给医生 */
   const a=dose*W;
-  const rt=c.route||'静滴';
+  const rt=site.indexOf('口服')>=0?'口服/鼻饲':(c.route||'静滴');
   const ageline=c.gaUsed?`日龄${age}天 · 胎龄${Math.floor(ga)}周+${Math.round(ga%1*7)}天`:`日龄${age}天`;
   const pmaline=c.pmaDep?` · PMA${Math.floor(pma)}周+${Math.round(pma%1*7)}天`:'';
-  const prep=c.solvent?[c.solvent]:[];
+  /* 配液行：静滴按 ivc 算具体毫升数（推荐值可自选）；即用型直接给毫升；口服列无配液 */
+  let prep=[], iv=null;
+  if(rt==='静滴'&&c.ivc){
+    if(c.ivc.ready){
+      const V=a/c.ivc.conc;
+      prep=[`即用型${f(c.ivc.conc,2)}mg/ml：${f2(a)}${c.out}＝${f(V,1)}ml，无需稀释`];
+      iv={V, conc:c.ivc.conc, cu:'mg/ml', ready:true};
+    }else{
+      const vEl=$('vabz_'+id);
+      const vV=vEl?parseFloat(vEl.value):NaN;
+      if(S[id].abvMan&&isFinite(vV)&&vV>0){
+        /* 医生自选配液量：按说明书区间校验 */
+        const V=vV, conc=a/V, cu=c.ivc.cu||'mg/ml';
+        iv={V, conc, cu, man:true};
+        prep=[`${c.ivc.preDil?c.ivc.preDil+'加入':''}${c.ivc.base} ${f(V,1)}ml`];
+        if(c.ivc.max&&conc>c.ivc.max)iv.why=`⚠ 自选${f(V,1)}ml浓度${f(conc,1)}${cu}，超说明书最高${c.ivc.max}${cu}——请加液稀释`;
+        else if(c.ivc.min&&conc<c.ivc.min)iv.why=`⚠ 自选${f(V,1)}ml浓度${f(conc,1)}${cu}，低于说明书最低${c.ivc.min}${cu}——过稀`;
+      }else{
+        iv=abIv(a,c.ivc);
+        prep=[`${c.ivc.preDil?c.ivc.preDil+'加入':''}${c.ivc.base} ${f(iv.V,1)}ml`];
+        if(iv.why)iv.why=`⚠ ${iv.why}`;
+      }
+    }
+  }
   const warn=(c.minAge&&age<c.minAge)?[`⚠ 本药适用年龄>${c.minAge}天（当前日龄${age}天），请上级确认`]:[];
-  const t1 = (rt==='静滴')
+  const t1 = (c.ivc&&c.ivc.ready&&rt==='静滴')
+    ? `${g.name} ${f2(a)}${c.out}（${f(iv.V,1)}ml） 静滴 ${fq}`
+    : (rt==='静滴')
     ? `${g.name} ${f2(a)}${c.out} 静滴 ${fq}`
     : `${g.name} ${f2(a)}${c.out} ${rt} ${fq}`;
+  const ck=[...warn, `方案：${site}（${ageline}${pmaline}）→ 推荐 ${f2(row.dose)}${c.unit} ${row.freq}`,
+      `剂量核对：${f2(row.dose)}${c.unit} × ${W.toFixed(2)}kg ＝ <b>${f2(a)}${c.out}</b>`];
+  if(iv)ck.push(iv.ready
+    ?`容量核对：${f2(a)}${c.out} ÷ ${iv.conc}mg/ml ＝ ${f(iv.V,1)}ml（说明书口径：${c.ivc.src}）`
+    :`配液核对：${f2(a)}${c.out} ÷ ${f(iv.V,1)}ml ＝ ${f(iv.conc,1)}${iv.cu}${iv.man?'（自选体积）':`（推荐，库内浓度${c.ivc.lc}${iv.cu}）`}——说明书${c.ivc.min||'—'}–${c.ivc.max||'—'}${iv.cu}`);
+  if(iv&&iv.why)ck.push(iv.why);
   return {t1,
-    prep, rec:row.dose,
-    ck:[...warn, `方案：${site}（${ageline}${pmaline}）→ 推荐 ${f2(row.dose)}${c.unit} ${row.freq}`,
-        `剂量核对：${f2(row.dose)}${c.unit} × ${W.toFixed(2)}kg ＝ <b>${f2(a)}${c.out}</b>`], dose:a};
+    prep, rec:row.dose, vol:iv?iv.V:0,
+    ck, dose:a};
+}
+/* 卡内「配液与浓度（说明书口径）」常显块 */
+function abIvInfoHtml(c){
+  if(!c.ivc)return '';
+  if(c.ivc.ready)return c.ivc.src;
+  const cu=c.ivc.cu||'mg/ml';
+  return `${c.ivc.src}。<b>推荐配液量＝一次剂量÷库内浓度${c.ivc.lc}${cu}</b>（库内常用体积≤${c.ivc.cap||15}ml），随体重自动算入医嘱行；「配液量」框可自选，超出说明书${c.ivc.min||'—'}–${c.ivc.max||'—'}${cu}会提示。`;
 }
 /* 换血（双倍量=2×血容量；组分=悬浮红细胞:血浆 2:1；库内实录 225ml=150+75、4小时匀速） */
 function calcExs(id){
@@ -1752,6 +1805,7 @@ function linesOf(key){
   if(form==='rbc'){const L=calcRbc(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='exs'){const L=calcExs(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='ab'){const L=calcAb(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
+  if(form==='ab2'){const L=calcAb(id,'b'); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
@@ -1853,7 +1907,22 @@ function cardHtml(id){
   }
   if(dc.forms.length===1&&dc.forms[0]==='ab'){
     const c=ABCFG[id];
-    const siteSel=(c.sites&&c.sites.length>1)?`<div class="labeq">剂量档 <select data-card="${id}" id="sit_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+c.sites.map(x=>`<option ${x===c.sites[0]?'selected':''}>${x}</option>`).join('')+`</select></div>`:'';
+    const ivSites=(c.sites||[]).filter(x=>x.indexOf('口服')<0), poSites=(c.sites||[]).filter(x=>x.indexOf('口服')>=0);
+    const dual=ivSites.length>0&&poSites.length>0;
+    /* 双剂型左右分栏：左=静滴（配液行写毫升数），右=口服（序贯）——10-14 用户要求 */
+    const colBlock=(sites,suf,title,color,btnLabel)=>{
+      const sel=(sites.length>1)?`<div class="labeq">剂量档 <select data-card="${id}" id="sit${suf}_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+sites.map(x=>`<option ${x===sites[0]?'selected':''}>${x}</option>`).join('')+`</select></div>`:'';
+      return `<div style="flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:#fbfcff;">
+      <div style="font-size:12.5px;font-weight:700;color:${color};margin:0 0 7px;">${title}</div>
+      ${sel}
+      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dabz${suf}_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dabz${suf}_${id}" type="number" inputmode="decimal" step="${c.step}" min="0" value=""><button type="button" class="stp" data-act="step" data-t="dabz${suf}_${id}" data-dir="1">＋</button></div> ${c.unit}</div>
+      ${(!suf&&c.ivc&&!c.ivc.ready)?`<div class="labeq">配液量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="vabz_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="vabz_${id}" type="number" inputmode="decimal" step="0.5" min="0" value=""><button type="button" class="stp" data-act="step" data-t="vabz_${id}" data-dir="1">＋</button></div> ml（推荐值可自选）</div>`:''}
+      ${c.freqOptions?`<div class="labeq">频次 <select data-card="${id}" id="fqab${suf}_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+c.freqOptions.map(fr=>`<option ${fr===(c.freq||c.freqOptions[0])?'selected':''}>${fr}</option>`).join('')+`</select></div>`:''}
+      <div class="ordbox" id="ord${suf}_${id}"></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" ${suf?'':'data-dual="1"'} data-key="${id}@ab${suf}" id="add_${id}_ab${suf}">＋ ${btnLabel}</button></div>
+    </div>`;
+    };
+    const sel1=(c.sites&&c.sites.length>1&&!dual)?`<div class="labeq">剂量档 <select data-card="${id}" id="sit_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+c.sites.map(x=>`<option ${x===c.sites[0]?'selected':''}>${x}</option>`).join('')+`</select></div>`:'';
     return `<div class="card" id="card_${id}">
     <div class="chead" data-act="cap" data-card="${id}">
       <span class="tri" id="tri_${id}">▸</span>
@@ -1865,17 +1934,19 @@ function cardHtml(id){
       <div class="spec">频次按 日龄/胎龄/PMA 自动推荐（本科室口服剂量表+科室手册），剂量档可切换</div>
       ${c.ageDep?`<div class="labeq">日龄 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dage_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dage_${id}" type="number" inputmode="decimal" step="1" min="0" max="120" value="7"><button type="button" class="stp" data-act="step" data-t="dage_${id}" data-dir="1">＋</button></div> 天</div>`:''}
       ${(c.gaDep||c.pmaDep||c.gaUsed)?`<div class="labeq">胎龄 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dgaw_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dgaw_${id}" type="number" inputmode="decimal" step="1" min="22" max="44" value="30"><button type="button" class="stp" data-act="step" data-t="dgaw_${id}" data-dir="1">＋</button></div> 周＋<div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dgad_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dgad_${id}" type="number" inputmode="decimal" step="1" min="0" max="6" value="0"><button type="button" class="stp" data-act="step" data-t="dgad_${id}" data-dir="1">＋</button></div> 天</div>`:''}
-      ${siteSel}
-      <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dabz_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dabz_${id}" type="number" inputmode="decimal" step="${c.step}" min="0" value=""><button type="button" class="stp" data-act="step" data-t="dabz_${id}" data-dir="1">＋</button></div> ${c.unit}</div>
-      ${c.freqOptions?`<div class="labeq">频次 <select data-card="${id}" id="fqab_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+c.freqOptions.map(f=>`<option ${f===(c.freq||c.freqOptions[0])?'selected':''}>${f}</option>`).join('')+`</select></div>`:''}
+      ${dual?`<div style="display:flex;gap:10px;align-items:flex-start;">${colBlock(ivSites,'','静滴（静脉）','#1b4f9c','静脉医嘱')}${colBlock(poSites,'2','口服（序贯）','#7a5c1e','口服医嘱')}</div>`:sel1+`<div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="dabz_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="dabz_${id}" type="number" inputmode="decimal" step="${c.step}" min="0" value=""><button type="button" class="stp" data-act="step" data-t="dabz_${id}" data-dir="1">＋</button></div> ${c.unit}</div>
+      ${c.ivc&&!c.ivc.ready?`<div class="labeq">配液量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="vabz_${id}" data-dir="-1">−</button><input data-act="dose" data-card="${id}" id="vabz_${id}" type="number" inputmode="decimal" step="0.5" min="0" value=""><button type="button" class="stp" data-act="step" data-t="vabz_${id}" data-dir="1">＋</button></div> ml（推荐值可自选）</div>`:''}
+      ${c.freqOptions?`<div class="labeq">频次 <select data-card="${id}" id="fqab_${id}" style="flex:1;padding:7px;border:1px solid #d8e2f0;border-radius:10px;font-size:14px;background:#fff;color:#1b2c4f">`+c.freqOptions.map(fr=>`<option ${fr===(c.freq||c.freqOptions[0])?'selected':''}>${fr}</option>`).join('')+`</select></div>`:''}
       <div class="ordbox" id="ord_${id}"></div>
+      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@ab" id="add_${id}_ab">＋ 加医嘱</button>
+        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>`}
+      ${c.ivc?`<div class="abinfo"><div class="abt">配液与浓度（说明书口径）</div>${abIvInfoHtml(c)}</div>`:''}
       ${c.doseTableHtml||''}
       <div class="abinfo"><div class="abt">抗菌谱</div><div><b>敏感菌：</b>${c.specS}</div><div style="margin-top:2px;"><b>耐药菌：</b>${c.specR}</div></div>
       <div class="abinfo warnb"><div class="abt">注意事项</div>${c.caution}</div>
       <div class="abinfo"><div class="abt">药代与代谢途径</div>${c.pk}</div>
       <div class="abinfo badb"><div class="abt">主要不良反应</div>${c.adverse}</div>
-      <div class="btnrow"><button class="btn pri" data-act="add" data-key="${id}@ab" id="add_${id}_ab">＋ 加医嘱</button>
-        <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      ${dual?`<div class="btnrow"><button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>`:''}
       ${doseInfoHtml(g)}
       ${moreHtml(g)}
     </div>
@@ -2149,12 +2220,22 @@ function updCard(id){
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
   }
-  /* 抗感染专属卡 */
+  /* 抗感染专属卡（双剂型卡左右两栏各刷各的；⚠夹线只进卡内预览，不进医嘱） */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='ab'){
-    const L=calcAb(id);
-    if(!S[id].abzMan){const bz=$('dabz_'+id); if(bz&&!bz.value)bz.value=L.rec;}
-    $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
-    $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    const c=ABCFG[id];
+    const dual=(c.sites||[]).some(x=>x.indexOf('口服')<0)&&(c.sites||[]).some(x=>x.indexOf('口服')>=0);
+    const renderAbCol=(col)=>{
+      const suf=col?'2':'';
+      const L=calcAb(id,col);
+      if(!S[id][col?'abzMan2':'abzMan']){const bz=$('dabz'+suf+'_'+id); if(bz&&!bz.value)bz.value=L.rec;}
+      if(!S[id].abvMan&&!col){const vz=$('vabz_'+id); if(vz&&!vz.value&&L.vol)vz.value=f(L.vol,1);}
+      const el=$('ord'+suf+'_'+id);
+      if(el)el.innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`
+        +(L.prep&&L.prep.length&&L.ck.filter(r=>r.indexOf('⚠')===0).length?`<div class="o2" style="color:#b00020;">${L.ck.filter(r=>r.indexOf('⚠')===0).join('<br>')}</div>`:'');
+      const ckr=$('ckr'+suf+'_'+id);
+      if(ckr)ckr.innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+    };
+    renderAbCol(undefined); if(dual)renderAbCol(true);
     document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
     return;
   }
@@ -2316,6 +2397,11 @@ function toggleBasket(key){
   else{
     const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
     if(form==='resus'){ if(!(RES[rt]>0))return; }
+    else if(form==='ab'||form==='ab2'){
+      /* 抗感染卡无 din_ 输入框——守卫改为剂量>0（原 din 守卫使加医嘱按钮在真 DOM 中失效） */
+      const L=calcAb(id,form==='ab2'?'b':undefined);
+      if(!(L.dose>0))return;
+    }
     else{
       const box=$('din_'+id)||$('dinp_'+id)||$('dinl_'+id);
       const v=box?parseFloat(box.value):NaN;
@@ -2347,6 +2433,16 @@ function renderAddBtns(){
           const on=!!basket[c.id+'@resus@'+rt];
           b.className='btn '+(rt==='iv'?'red':'pri')+(on?' added':'');
           b.textContent=on?'✓ 已加医嘱':(rt==='iv'?'＋ 复苏静推加医嘱':'＋ 气管内加医嘱');
+        });
+        return;
+      }
+      if(fm==='ab'){
+        /* 双剂型分栏：静/口服两个按钮各按各的篮键回显 */
+        [['ab',false],['ab2',true]].forEach(([suf,isPo])=>{
+          const b=$('add_'+c.id+'_'+suf); if(!b)return;
+          const on=!!basket[c.id+'@'+suf];
+          b.className='btn pri'+(on?' added':'');
+          b.textContent=on?'✓ 已加医嘱':(isPo?'＋ 口服医嘱':(b.dataset.dual?'＋ 静脉医嘱':'＋ 加医嘱'));
         });
         return;
       }
@@ -2502,8 +2598,15 @@ function onInputLinkage(e){
     try{localStorage.setItem('vasoMeta',JSON.stringify(META));}catch(err){}
     updCga(); renderBasket(); return;
   }
-  if(t.id.indexOf('dabz_')===0){S[t.dataset.card].abzMan=true; return;}
-  if(t.id&&(t.id.indexOf('dage_')===0||t.id.indexOf('dgaw_')===0||t.id.indexOf('dgad_')===0)){S[t.dataset.card].abzMan=false;}
+  if(t.id.indexOf('dabz_')===0){const cid=t.dataset.card; S[cid].abzMan=true; /* 剂量变动→配液量重置为推荐 */
+    S[cid].abvMan=false; const vz=$('vabz_'+cid); if(vz)vz.value=''; updCard(cid); return;}
+  if(t.id.indexOf('dabz2_')===0){S[t.dataset.card].abzMan2=true; updCard(t.dataset.card); return;}
+  if(t.id.indexOf('vabz_')===0){S[t.dataset.card].abvMan=true; updCard(t.dataset.card); return;}
+  if(t.id&&(t.id.indexOf('dage_')===0||t.id.indexOf('dgaw_')===0||t.id.indexOf('dgad_')===0)){
+    /* 日龄/胎龄变动：双栏剂量空间与配液量一并重置为推荐值 */
+    const cid=t.dataset.card; S[cid].abzMan=false; S[cid].abzMan2=false; S[cid].abvMan=false;
+    ['dabz_','dabz2_','vabz_'].forEach(p=>{const el=$(p+cid); if(el)el.value='';});
+  }
   const a=t.dataset.act;
   if(a==='dose'||a==='rate'||a==='amprate'||a==='loadrate'){
     if(a==='rate'||a==='amprate')S[t.dataset.card].rateTouched=true;
@@ -2524,7 +2627,14 @@ function onInputLinkage(e){
 }
 document.addEventListener('input',onInputLinkage);
 document.addEventListener('change',e=>{const t=e.target; if(t&&t.id&&t.id.indexOf('selq_')===0){updCard(t.id.slice(5));}
-  if(t&&t.id&&t.id.indexOf('sit_')===0){updCard(t.id.slice(4));}});
+  if(t&&t.id&&(t.id.indexOf('sit_')===0||t.id.indexOf('sit2_')===0)){
+    /* 档位切换：两栏剂量空间与配液量重置为该档推荐值 */
+    const cid=t.id.slice(t.id.indexOf('sit2_')===0?5:4);
+    if(S[cid]){S[cid].abzMan=false; S[cid].abzMan2=false; S[cid].abvMan=false; ['dabz_','dabz2_','vabz_'].forEach(p=>{const el=$(p+cid); if(el)el.value='';});}
+    updCard(cid);
+  }
+  if(t&&t.id&&t.id.indexOf('fqab2_')===0){const cid=t.id.slice(6); if(S[cid]){S[cid].abqMan2=true; updCard(cid);}}
+  else if(t&&t.id&&t.id.indexOf('fqab_')===0){const cid=t.id.slice(5); if(S[cid]){S[cid].abqMan=true; updCard(cid);}}});
 document.addEventListener('focusout',e=>{
   if(e.target.id==='wt')$('wt').value=String(W); /* 失焦时框值归一为实际计算体重 */
 });
