@@ -1477,8 +1477,8 @@ const PUSHCFG={
  omeprazole:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'qd',note:'应激性溃疡/消化道出血 · NS/GS溶解缓推（库内无标化体积）'},
  phenobarb:{def:20,step:5,unit:'mg/kg',out:'mg',freq:'st',note:'负荷；维持5mg/kg q12h · 缓推 · 监测呼吸'},
  ps:{def:100,step:50,unit:'mg/kg',out:'mg',route:'气管内注入',freq:'st',note:'复温摇匀 · 给药后禁吸痰6小时 · 100–200mg/kg'},
- etamsylate:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'静滴',note:'出血倾向辅助 · 库内静滴伴滴速5–18ml/h · 大体重固定写法125/250mg'},
- hemocoag:{def:0.5,step:0.05,unit:'iu',out:'iu',freq:'st',abs:true,note:'静推为主 · 可气管内/胃管内局部 · 0.25–1iu · 不替代成分输血'},
+ etamsylate:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'静滴',dil:{base:'5%葡萄糖或0.9%氯化钠',lc:10,cap:20,src:'说明书未设浓度限度；库内终浓度约8–13mg/ml（滴速10–19ml/h干包）'},note:'出血倾向辅助 · 配液约10mg/ml · 大体重固定写法125/250mg'},
+ hemocoag:{def:0.5,step:0.05,unit:'iu',out:'iu',freq:'st',abs:true,dissolve:'注射用水 1ml 溶解',note:'静推为主 · 可气管内/胃管内局部 · 0.25–1iu · 粉针附注射用水溶解 · 不替代成分输血'},
  furosemide:{def:1,step:0.5,unit:'mg/kg',out:'mg',freq:'st',note:'单次利尿 0.5–1mg/kg · 库内亦见 q12h/q8h · 血制品输一半时速尿即此用法'},
  morphine:{def:0.1,step:0.05,unit:'mg/kg',out:'mg',freq:'st',note:'疼痛/操作前推注 · 缓推≥5分钟 · 呼吸抑制备气囊'}};
 /* 分频次维持形式（长嘱式：药 剂量 途径 频次） */
@@ -1652,7 +1652,15 @@ function calcPush(id){
       ck:[`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`], dose};
   }
   const rt=(cfg.route&&cfg.route!=='静推')?' '+cfg.route:'';
-  const prep=cfg.dilPerMg?[`${cfg.diluent||'5%葡萄糖'} ${f(a*cfg.dilPerMg,1)}ml`]:[];
+  let prep=cfg.dilPerMg?[`${cfg.diluent||'5%葡萄糖'} ${f(a*cfg.dilPerMg,1)}ml`]:[];
+  let dilCk=[];
+  if(cfg.dil){
+    /* 静滴推注药的配液行（止血敏）：体积=剂量÷库内浓度，软上限加浓——与抗感染配液体系同构 */
+    const ivd=abIv(a,{lc:cfg.dil.lc,cap:cfg.dil.cap});
+    prep=[...prep, `${cfg.dil.base} ${f(ivd.V,1)}ml`];
+    dilCk=[`配液核对：${f2(a)}mg ÷ ${f(ivd.V,1)}ml ＝ ${f(a/ivd.V,1)}mg/ml（${cfg.dil.src}）`];
+    if(ivd.why)dilCk.push(`⚠ ${ivd.why}`);
+  }
   if(cfg.abs){
     const m=PRMODE[id]||'iv', half=a/2;
     const L={iv:  {t1:`${g.name} ${f2(a)}${cfg.out} st`},
@@ -1660,13 +1668,13 @@ function calcPush(id){
       iv_gt:{t1:`${g.name} ${f2(half)}${cfg.out} 静推 st`, prep:[`${g.name} ${f2(half)}${cfg.out} 胃管内注入 st`]},
       et:   {t1:`${g.name} ${f2(a)}${cfg.out} 气管插管内滴入 st`},
       gt:   {t1:`${g.name} ${f2(a)}${cfg.out} 胃管内注入 st`}}[m]||{t1:`${g.name} ${f2(a)}${cfg.out} st`};
-    return {t1:L.t1, prep:L.prep||[],
+    return {t1:L.t1, prep:[...(cfg.dissolve?[cfg.dissolve]:[]), ...(L.prep||[])],
       ck:[`剂量核对：绝对剂量 <b>${f2(a)}${cfg.out}</b>（库内 0.25–1iu；组合用法＝静推＋局部各半）`], dose};
   }
   const ck=`剂量核对：${f(dose,2)}${cfg.unit}×${W.toFixed(2)}kg＝<b>${f2(a)}${cfg.out}</b>`;
   return {t1:`${g.name} ${f2(a)}${cfg.out}${rt} ${cfg.freq||'st'}`,
     prep,
-    ck:[ck], dose};
+    ck:[ck,...dilCk], dose};
 }
 /* 抗感染：按 剂量档×日龄/胎龄/PMA 自动推荐 scheme；IV 附溶媒行 */
 /* IV配液体积（10-14用户两轮定稿）：推荐体积=药量÷库内浓度lc；库内体积上限cap=软上限（超了加浓，浓度仍在说明书内）；
