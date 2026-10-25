@@ -196,6 +196,96 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 }
 .fbchip{border:1px solid #d8e2f0;background:#fff;color:#1b4f9c;border-radius:14px;padding:6px 10px;font-size:12.5px;font-weight:600;}
 .fbchip.on{background:#1b4f9c;color:#fff;border-color:#1b4f9c;}
+/* ================= 模块选择首页 p0 + 临床情景 p3 ================= */
+.mod-wrap{padding:6px 2px 4px;}
+.mod-hero{text-align:center;padding:20px 10px 14px;}
+.mod-hero .t{font-size:21px;font-weight:850;color:var(--ink);letter-spacing:1.5px;}
+.mod-hero .s{font-size:12px;color:var(--ink2);margin-top:5px;}
+.mod-tile{display:flex;align-items:center;gap:13px;margin-bottom:12px;padding:17px 16px;border-radius:17px;cursor:pointer;
+  background:#fff;border:1.5px solid #e3e9f2;box-shadow:0 2px 10px rgba(15,35,70,.07);}
+.mod-tile:active{transform:scale(.985);}
+.mod-tile .mico{font-size:25px;width:50px;height:50px;border-radius:15px;display:flex;align-items:center;justify-content:center;flex:none;}
+.mod-tile .mt{font-size:16.5px;font-weight:800;color:var(--ink);}
+.mod-tile .ms{font-size:12px;color:var(--ink2);margin-top:3px;line-height:1.5;}
+.mod-tile .marr{margin-left:auto;font-size:18px;color:#9fb2cc;font-weight:700;}
+.mod-tile.mdrug .mico{background:#eef4fd;}
+.mod-tile.memg .mico{background:#ede7f6;}
+.emg-det{border:1.5px solid #e3e9f2;border-radius:13px;background:#fbfcfe;margin-bottom:9px;}
+.emg-det summary{list-style:none;cursor:pointer;padding:11px 13px;font-size:13.5px;font-weight:750;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.emg-det summary::-webkit-details-marker{display:none;}
+.emg-det summary .n{width:21px;height:21px;border-radius:7px;background:#eef4fd;color:#1b4f9c;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;}
+.emg-det summary:after{content:'▾';margin-left:auto;color:#9fb2cc;font-size:13px;}
+.emg-det[open] summary:after{content:'▴';}
+.emg-det .dbody{padding:2px 13px 12px;}
+.emg-grp{font-size:11px;font-weight:800;color:#8a97a8;letter-spacing:1.2px;margin:13px 4px 5px;}
+.emg-grp:first-child{margin-top:2px;}
+.emg-tile{display:flex;align-items:center;gap:11px;margin-bottom:9px;padding:13px 14px;border-radius:14px;cursor:pointer;
+  background:#fff;border:1.5px solid #e3e9f2;box-shadow:0 1px 6px rgba(15,35,70,.06);}
+.emg-tile:active{transform:scale(.985);}
+.emg-tile .ico{font-size:22px;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex:none;}
+.emg-tile .tt{font-size:15px;font-weight:750;color:var(--ink);}
+.emg-tile .ss{font-size:11.5px;color:var(--ink2);margin-top:2px;line-height:1.45;}
+.emg-tile .arr{margin-left:auto;color:#9fb2cc;font-size:15px;font-weight:700;}
+.emg-tile.off{opacity:.55;background:#f6f8fb;}
+.emg-tile.off .arr{font-size:10.5px;color:#8a97a8;font-weight:600;}
+.emg-back{display:flex;align-items:center;gap:6px;margin:2px 0 10px;padding:9px 13px;border-radius:12px;cursor:pointer;
+  background:#eef3fa;color:#1b4f9c;font-size:13.5px;font-weight:700;width:fit-content;}
+.emg-hero{border-radius:15px;padding:12px 15px;margin-bottom:11px;color:#fff;
+  background:linear-gradient(105deg,#283593,#3949ab 60%,#5e35b1);box-shadow:0 3px 12px rgba(40,53,147,.22);}
+.emg-hero .h1{font-size:17px;font-weight:850;letter-spacing:.5px;}
+.emg-hero .h2{font-size:11.5px;opacity:.92;margin-top:3px;line-height:1.55;}
+.emg-sec{background:#fff;border:1.5px solid #e3e9f2;border-radius:15px;padding:12px 14px;margin-bottom:11px;}
+.emg-sec .sh{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:800;color:var(--ink);margin-bottom:8px;}
+.emg-sec .sh .n{width:22px;height:22px;border-radius:8px;background:var(--navy);color:#fff;font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex:none;}
+.emg-step{border:1.5px solid #e3e9f2;border-radius:13px;padding:11px 12px;margin-bottom:9px;background:#fbfcfe;}
+.emg-step .st{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:800;color:var(--ink);}
+.emg-step .st .sn{width:21px;height:21px;border-radius:50%;background:#1b4f9c;color:#fff;font-size:11.5px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex:none;}
+.emg-step .sb{font-size:12.5px;color:#33415c;line-height:1.7;margin-top:5px;}
+.emg-step .sb b{color:#1b4f9c;}
+.emg-step .sb .warn{color:#b00020;font-weight:700;}
+.emg-calc{background:#fff;border:1.5px dashed #b7c8e4;border-radius:12px;padding:10px 11px;margin-top:9px;}
+.emg-calc .ct{font-size:12px;font-weight:800;color:#1b4f9c;letter-spacing:.5px;margin-bottom:6px;}
+.flx-io{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px;font-size:13px;color:var(--ink);}
+.flx-io input[type=number]{width:64px;}
+.flx-io select{width:auto;padding:5px 6px;font-size:12px;}
+.flx-io .arrow{font-weight:800;color:#1b4f9c;}
+.flx-sum{background:#f0f4fb;border-radius:9px;padding:7px 10px;font-size:12.5px;color:#1b4f9c;font-weight:600;margin-bottom:2px;}
+.mflx{background:linear-gradient(135deg,#eef7f0,#e2f0e6);border-color:#bcd9c6;}
+.emg-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.emg-tbl th{background:#1b4f9c;color:#fff;padding:7px 8px;text-align:left;font-weight:700;font-size:11.5px;}
+.emg-tbl td{border:1px solid #e0e7f1;padding:6.5px 8px;color:#2a3854;line-height:1.55;vertical-align:top;}
+.emg-tbl td b{color:#1b4f9c;}
+.emg-tbl .rl{color:#b00020;font-weight:700;}
+.emg-ecg{display:flex;flex-direction:column;gap:0;border:1.5px solid #e3e9f2;border-radius:12px;overflow:hidden;}
+.emg-ecg .row{display:flex;align-items:center;gap:10px;padding:8px 11px;font-size:12.5px;border-bottom:1px solid #eef2f8;background:#fff;}
+.emg-ecg .row:last-child{border-bottom:none;}
+.emg-ecg .k{font-family:var(--mono);font-weight:800;font-size:12px;width:88px;flex:none;}
+.emg-ecg .f{color:#2a3854;line-height:1.5;}
+.emg-src{font-size:11.5px;color:#66748c;line-height:1.75;}
+.emg-src b{color:#33415c;}
+/* 高钾·分级阶梯（10-24 三修：素净行式，去花哨） */
+.ek-lad{border:1.5px solid #e3e9f2;border-radius:12px;overflow:hidden;}
+.ek-lad .row{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:12.5px;border-bottom:1px solid #eef2f8;background:#fff;}
+.ek-lad .row:last-child{border-bottom:none;}
+.ek-lad .k{font-weight:800;font-size:12.5px;width:96px;flex:none;}
+.ek-lad .f{color:#2a3854;line-height:1.5;}
+.ek-lad .row.hot{background:#fdecea;}
+.ek-lad .row.cut{background:#f8fafd;}
+.ek-check{font-size:12px;color:#33415c;background:#eef4fd;border:1px solid #d5e2f4;border-radius:10px;padding:8px 11px;margin-bottom:8px;line-height:1.6;}
+.ek-check b{color:#1b4f9c;}
+.ek-grid{display:grid;grid-template-columns:1fr 1fr 1.18fr;gap:7px;margin-bottom:8px;}
+.ek-col{border-radius:11px;padding:9px 10px;border:1.5px solid transparent;}
+.ek-col .kv{font-size:12.5px;font-weight:800;line-height:1.3;}
+.ek-col .kd{font-size:10.5px;margin-top:2px;}
+.ek-col .ka{font-size:11px;margin-top:6px;line-height:1.55;font-weight:650;}
+.ek-col.g{background:#e8f5e9;border-color:#bfe0c3;}
+.ek-col.g .kv{color:#256b31;}.ek-col.g .kd{color:#4c7a52;}.ek-col.g .ka{color:#2f5c36;}
+.ek-col.a{background:#fff8e1;border-color:#ecd9a0;}
+.ek-col.a .kv{color:#9a6b00;}.ek-col.a .kd{color:#a8842c;}.ek-col.a .ka{color:#7a5b00;}
+.ek-col.r{background:#fdecea;border-color:#f0bab4;}
+.ek-col.r .kv{color:#b00020;}.ek-col.r .kd{color:#c04a3a;}.ek-col.r .ka{color:#8b1a12;}
 </style>
 </head>
 <body>
@@ -213,7 +303,26 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
 </header>
 
 <div class="wrap">
-<div class="page on" id="pMain">
+<div class="page on" id="p0">
+  <div class="mod-wrap">
+    <div class="mod-hero">
+      <div class="t">NeoAI</div>
+      <div class="s">新生儿床旁工具 · 两模块共用体重与医嘱单</div>
+    </div>
+    <div class="mod-tile mdrug" data-act="go" data-page="0">
+      <div class="mico">💊</div>
+      <div><div class="mt">药物计算器</div><div class="ms">80 药 · 泵速 / 配液 / 剂量 · 临时医嘱单</div></div>
+      <div class="marr">›</div>
+    </div>
+    <div class="mod-tile memg" data-act="go" data-page="3">
+      <div class="mico">⚡</div>
+      <div><div class="mt">临床情景</div><div class="ms">高钾 · 酸中毒 · 电解质 · 大补液调整 · 剂量计算</div></div>
+      <div class="marr">›</div>
+    </div>
+  </div>
+</div>
+<div class="page" id="pMain">
+  <div class="emg-back" data-act="go" data-page="4">‹ 模块选择</div>
   <div id="viewL1"></div>
   <div id="viewL2" style="display:none"></div>
   <div id="viewL3" style="display:none"></div>
@@ -246,6 +355,993 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   </div>
   <details class="ref"><summary>🖼 长图预览（长按保存/转发）</summary><div class="ref-body"><img id="imgPrev" style="display:none"></div></details>
   <details class="ref"><summary>📄 复制文本预览</summary><div class="ref-body"><textarea id="ordTxt"></textarea></div></details>
+</div>
+<div class="page" id="p3">
+  <!-- 临床情景列表 -->
+  <div id="emgList">
+    <div class="emg-hero">
+      <div class="h1">⚡ 临床情景</div>
+      <div class="h2">原则 · 步骤 · 计算器 —— 与药物计算器共用体重与医嘱单</div>
+    </div>
+    <div class="emg-grp">电解质紊乱</div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hyperk">
+      <div class="ico" style="background:#ede7f6;">⚡</div>
+      <div><div class="tt">高钾血症</div>
+      <div class="ss">辨真假 → 断钾源 → 保心脏（钙）→ 移钾入胞 → 排钾出体</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypok">
+      <div class="ico" style="background:#eef4fd;">↓K</div>
+      <div><div class="tt">低钾血症</div>
+      <div class="ss">见尿补钾 · ≤0.3% · ≤0.5mmol/kg/h · 先纠镁 · 续 4–6 天</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hyperna">
+      <div class="ico" style="background:#eef2fa;">🧂</div>
+      <div><div class="tt">高钠血症</div>
+      <div class="ss">时间锁 ≤0.5 mmol/L/h · 每日≤10–12 · 自由水 · 两路泵 q4h 调</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypona">
+      <div class="ico" style="background:#eef2fa;">↓Na</div>
+      <div><div class="tt">低钠血症</div>
+      <div class="ss">先分型（失钠/稀释）· (目标−实际)×W×0.7 · 宁慢勿快</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypoca">
+      <div class="ico" style="background:#eef4fd;">↓Ca</div>
+      <div><div class="tt">低钙血症</div>
+      <div class="ss">有症状才急补 · ≥15min 慢入 · 无症状入大补液维持</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypomg">
+      <div class="ico" style="background:#eef2fa;">↓Mg</div>
+      <div><div class="tt">低镁血症</div>
+      <div class="ss">血镁＜0.75 先补镁 · 50%原液＋5%糖组液 2h · 常与低钙并存</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypermg">
+      <div class="ico" style="background:#f3eefa;">↑Mg</div>
+      <div><div class="tt">高镁血症</div>
+      <div class="ss">母亲硫酸镁暴露 · 呼吸抑制 · 钙剂解救</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypop">
+      <div class="ico" style="background:#fdf6ec;">↓P</div>
+      <div><div class="tt">低磷血症</div>
+      <div class="ss">ELBW/再喂养 · 格列福斯 IV · 瑞安吉口服 · 同降查镁钾糖</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypercl">
+      <div class="ico" style="background:#eef2fa;">↑Cl</div>
+      <div><div class="tt">高氯血症</div>
+      <div class="ss">NS 过量 · AG 正常代酸 · 钠源换碳酸氢钠</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypocl">
+      <div class="ico" style="background:#eef2fa;">↓Cl</div>
+      <div><div class="tt">低氯血症</div>
+      <div class="ss">呋塞米/胃引流 · 补氯补钾 · 98% 呋塞米患者配氯化钾</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-grp">代谢 · 血糖 · 呼吸</div>
+    <div class="emg-tile" data-act="emgopen" data-emg="acid">
+      <div class="ico" style="background:#e8f0e8;">🧪</div>
+      <div><div class="tt">代谢性酸中毒</div>
+      <div class="ss">先治因 · 宁少勿多 · 半量纠酸（BE×W×0.15）</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="ealk">
+      <div class="ico" style="background:#e8f0e8;">🧪</div>
+      <div><div class="tt">代谢性碱中毒</div>
+      <div class="ss">多为氯反应型 · 补氯补钾 · 呋塞米减停</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="hypo">
+      <div class="ico" style="background:#fdeeee;">🩸</div>
+      <div><div class="tt">低血糖症</div>
+      <div class="ss">＜40 即干预 · 10%GS 2ml/kg · GIR 阶梯 · 撤药三步</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-tile" data-act="emgopen" data-emg="apnea">
+      <div class="ico" style="background:#eef2fa;">⏸</div>
+      <div><div class="tt">呼吸暂停（早产儿）</div>
+      <div class="ss">先排六因 · 枸橼酸咖啡因 20 负荷/5 维持 · 勿急判效</div></div>
+      <div class="arr">›</div>
+    </div>
+    <div class="emg-grp">每日工具</div>
+    <div class="emg-tile" data-act="emgopen" data-emg="flx">
+      <div class="ico" style="background:#eef7f0;">🎛</div>
+      <div><div class="tt">大补液中途调整</div>
+      <div class="ss">血气回来 · 糖/钠/钾/钙/磷 追加 · 泵速不变 · 追加 TFI</div></div>
+      <div class="arr">›</div>
+    </div>
+  </div>
+  </div>
+  <!-- 高钾血症 -->
+  <div id="emgHyperK" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">⚡ 高钾血症（新生儿）</div>
+      <div class="h2">血清钾 ＞5.5 mmol/L（生后 3–7 天后口径）｜生后 10 天内 5–7 可为生理性（ELBW 非少尿性高钾窗）</div>
+    </div>
+
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-check">先辨真假：溶血假象最常见 → <b>即刻 ECG ＋ 复测静脉非溶血标本</b>；ECG 已有改变＝不等复测，直接处置</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">K ＜ 6.0</span><span class="f">生理窗／轻度 → 限钾寻因 · 观察</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">K 6.0–6.5</span><span class="f">ECG 正常 → 停钾源 · 持续监护</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">K ≥6.6 / ＞7.0</span><span class="f">伴 ECG 改变，或 ＞7.0 不论 ECG → <b>立即处置：钙 → 移钾 → 排钾 ↓</b></span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">停一切钾入量 · 停螺内酯 · 禁库存血</span></div>
+      </div>
+      <details class="emg-det" style="margin-top:8px;">
+        <summary>监测 · 查因 · 难治 ▾</summary>
+        <div class="dbody emg-src">
+          <b>监测</b>：持续 ECG；复钾 q2–4h；胰岛素期间血糖 q30–60min。<br>
+          <b>查因</b>：肾功/尿量 · 酸中毒 · 组织坏死（IVH/NEC）· 溶血/库存血 · 药物 · CAH；生后 10 天内 5–7 mmol/L 可为生理性（ELBW 非少尿性高钾窗）。<br>
+          <b>难治</b>：K 持续＞8 或无尿 → 腹膜透析 / 血液透析 / 双倍量换血——早请肾内。
+        </div>
+      </details>
+    </div>
+
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 三步（可叠加）</div>
+
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>钙 · 稳定心肌（1–3min 起效 · 不降钾）</div>
+        <div class="sb">ECG 有改变第一步永远是钙；按<b>≈5ml/kg/h 泵入</b>（1ml/kg 约12分钟），<span class="warn">勿与碳酸氢钠同管</span>，外渗致坏死。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 10%葡萄糖酸钙</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ekca_d" data-dir="-1">−</button><input data-emg="ekca" id="ekca_d" type="number" inputmode="decimal" step="0.5" min="0.5" max="2" value="1"><button type="button" class="stp" data-act="step" data-t="ekca_d" data-dir="1">＋</button></div> ml/kg（1–2）</div>
+          <div class="ordbox" id="eord_ekca"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ekca"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ekca@emg" id="add_ekca_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>移钾入细胞（15–30min 起效）</div>
+        <div class="sb"><b>胰岛素＋葡萄糖</b>首选；<b>8.4%碳酸氢钠</b>（＋2.5倍5%GS 稀释）限酸中毒者（1mmol/kg≈降钾 1mmol/L）；血糖 q30–60min。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 胰岛素＋10%葡萄糖（固定方案）</div>
+          <div class="sb" style="margin:6px 0 4px">固定方案：<b>胰岛素 0.1iu/kg/h ＋ 10%葡萄糖 2ml/kg/h</b> 同组泵入（组＝1iu＋10%葡萄糖至20ml），维持 2 小时——速度与胰岛素量按下体重直接算：</div>
+          <div class="ordbox" id="eord_ekins"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ekins"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ekins@emg" id="add_ekins_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 8.4%碳酸氢钠（＋2.5倍5%GS，科室现行）</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ekbic_d" data-dir="-1">−</button><input data-emg="ekbic" id="ekbic_d" type="number" inputmode="decimal" step="0.6" min="0.6" max="2.4" value="1.2"><button type="button" class="stp" data-act="step" data-t="ekbic_d" data-dir="1">＋</button></div> mmol/kg（高钾 1.2–2.4；纠酸按 BE×W×0.15 另算）</div>
+          <div class="labeq">滴注时长 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ekbic_h" data-dir="-1">−</button><input data-emg="ekbic" id="ekbic_h" type="number" inputmode="decimal" step="1" min="1" max="12" value="2"><button type="button" class="stp" data-act="step" data-t="ekbic_h" data-dir="1">＋</button></div> 小时（急用 2 · 纠酸常规 4–8）</div>
+          <div class="ordbox" id="eord_ekbic"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ekbic"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ekbic@emg" id="add_ekbic_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+
+      <div class="emg-step">
+        <div class="st"><span class="sn">3</span>排钾出体外</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 呋塞米</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ekfuro_d" data-dir="-1">−</button><input data-emg="ekfuro" id="ekfuro_d" type="number" inputmode="decimal" step="0.5" min="0.5" max="2" value="1"><button type="button" class="stp" data-act="step" data-t="ekfuro_d" data-dir="1">＋</button></div> mg/kg（0.5–2）</div>
+          <div class="ordbox" id="eord_ekfuro"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ekfuro"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ekfuro@emg" id="add_ekfuro_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="emgdrug">打开呋塞米药卡 ›</button></div>
+        </div>
+        <div class="sb" style="margin-top:6px">需有尿——<span class="warn">无尿 / 难治（K 持续＞8）→ 腹膜透析 · 血液透析 · 双倍量换血，早请肾内</span>；阳离子交换树脂新生儿 NEC/穿孔风险，慎用。</div>
+      </div>
+    </div>
+
+    <details class="emg-det">
+      <summary><span class="n">3</span>剂量速查表 ▾</summary>
+      <div class="dbody">
+      <table class="emg-tbl">
+        <tr><th>措施</th><th>剂量（新生儿）</th><th>起效</th><th>机制</th><th>注意</th></tr>
+        <tr><td><b>10%葡萄糖酸钙</b></td><td>1–2 ml/kg，≈5ml/kg/h 泵入</td><td>1–3 min</td><td>稳定心肌膜电位（<span class="rl">不降钾</span>）</td><td>心电监护下推；勿与碳酸氢钠同管；外渗致坏死</td></tr>
+        <tr><td><b>胰岛素（可溶性）</b></td><td>0.1U/kg/h＋10%GS 2ml/kg/h（同组1iu＋10%GS至20ml→2×W ml/h），维持2h</td><td>15–30 min</td><td>促钾入细胞</td><td>血糖 q30–60min 防医源性低血糖</td></tr>
+        <tr><td><b>5%碳酸氢钠</b></td><td>8.4%：高钾 1.2–2.4 mmol/kg（1ml=1mmol）；纠酸半量 ml=BE×W×0.15</td><td>15–30 min</td><td>纠酸促钾入细胞（1mmol/kg≈降钾1mmol/L）</td><td>酸中毒者获益最大；勿与钙同管；复血气</td></tr>
+        <tr><td><b>呋塞米</b></td><td>1 mg/kg 静推</td><td>—</td><td>肾排钾</td><td>需有尿；无尿/肾衰无效→透析</td></tr>
+        <tr><td>阳离子交换树脂</td><td>0.5–1 g/kg 直肠 q6h</td><td>慢（小时级）</td><td>肠道交换钾</td><td class="rl">新生儿 NEC/穿孔风险·慎用</td></tr>
+        <tr><td>透析 / 换血</td><td>腹透 · 血透 · CVVH；双倍量换血</td><td>快（透析）</td><td>直接清除钾</td><td>难治性/肾衰——早会诊</td></tr>
+      </table>
+      </div>
+    </details>
+
+    <details class="emg-det">
+      <summary><span class="n">4</span>血钾–心电图阶梯 ▾</summary>
+      <div class="dbody">
+      <div class="emg-ecg">
+        <div class="row"><span class="k" style="color:#256b31;">K 5.5–6.0</span><span class="f">正常，或 T 波轻度高尖——最早征象，已需警觉</span></div>
+        <div class="row"><span class="k" style="color:#7a5b00;">K 6.0–7.0</span><span class="f">T 波高尖（帐篷样 tent-shaped）、基底部窄</span></div>
+        <div class="row"><span class="k" style="color:#c04a12;">K 7.0–8.0</span><span class="f">QRS 波增宽</span></div>
+        <div class="row"><span class="k" style="color:#b00020;">K 8.0–9.0</span><span class="f">PR 间期延长、P 波低平增宽、ST 压低、R 波变低 S 波加深</span></div>
+        <div class="row"><span class="k" style="color:#b00020;">K 9.0–10.0</span><span class="f">P 波消失（房静止）</span></div>
+        <div class="row" style="background:#fdecea;"><span class="k" style="color:#b00020;">K ＞10</span><span class="f"><b>正弦波 → 室速 / 室颤 / 心跳停止</b>——即刻复苏 + 上述全部措施并行</span></div>
+      </div>
+      </div>
+    </details>
+
+    <details class="emg-det">
+      <summary><span class="n">5</span>依据来源（口径对照） ▾</summary>
+      <div class="dbody emg-src">
+        <b>科室课件</b>：张澜《第4讲 新生儿水电解质紊乱与液体疗法》2021.12.15 —— 定义（生后3–7天后＞5.5）、轻症 6.0–6.5 / 重症 6.6–7.0伴ECG或＞7 分级、各药剂量（钙 1–2ml/kg、碳酸氢钠 2–4ml/kg 及 1mmol/kg 降钾 1mmol/L、胰岛素首剂 0.05U/kg＋10%GS 2ml/kg / 维持 0.1U/kg/h＋2–4ml/kg/h）、生后10天生理性高钾窗、血钾-ECG 阶梯；<b>泵速规律为本库实测</b>（钙/碳酸氢钠成分行滴速÷出生体重≈5ml/kg/h，p25–75 4.6–6.1，n=174/5,387）；胰岛素组浓度库内个体化（0.05–0.18iu/ml 均见，n=509），本卡取 0.05iu/ml＝课件配比（0.1iu/kg/h∶10%GS 2ml/kg/h）的唯一解。<br>
+        <b>《实用新生儿学》第5版</b>（人卫）—— 三步序贯原则：钙稳定心肌膜 → 糖＋胰岛素移钾 → 利尿/树脂排钾，同时停一切钾入量；先排除溶血假象。<br>
+        <b>UpToDate：Neonatal hyperkalemia</b> —— 非溶血标本确认＋即刻ECG；钙 100mg/kg（1ml/kg）；胰岛素 0.05–0.1U/kg/h＋葡萄糖 0.5–1g/kg/h；碳酸氢钠限酸中毒者；树脂新生儿不推荐常规；透析用于难治性。<br>
+        <b>⚠ 口径差异</b>：科室方案胰岛素∶糖 ≈ 1U∶2–4g，较 UpToDate（1U∶5–10g）胰岛素偏重——按科室起步、以血糖滴定微调；两口径均要求密切监测血糖。
+      </div>
+    </details>
+  </div>
+
+  <!-- 代谢性酸中毒 -->
+  <div id="emgAcid" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">🧪 代谢性酸中毒</div>
+      <div class="h2">先治因 · 宁少勿多 · 半量纠酸（BE×W×0.15，科室幻灯片口径）</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-check">先治因：低灌注/低氧/通气不足是首位——扩容、改善循环、调呼吸机；复血气＋乳酸确认</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">BE −5～−10</span><span class="f">pH≥7.25 → 治因 · 复查 · 不常规补碱</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">BE −10～−15</span><span class="f">pH 7.20–7.25 → 治因优先 · 评估半量纠酸</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">BE ＜−15 / pH＜7.20</span><span class="f">先评估通气 → <b>半量纠酸（下方计算器）</b></span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">宁少勿多 · 半量 · 复血气 q4–8h · 纠酸后防低钾低钙（钾入胞、蛋白结合钙↑）</span></div>
+      </div>
+      <details class="emg-det" style="margin-top:8px;">
+        <summary>病因 · 监测 · 注意 ▾</summary>
+        <div class="dbody emg-src">
+          <b>病因</b>：腹泻失碱 · 肾小管酸中毒 · 早产儿晚发性代酸 · 乳酸酸中毒（休克/低氧）· 摄入（氨基酸/PN）。<br>
+          <b>监测</b>：复血气 q4–8h；同步血糖（低血糖→酸中毒）；尿量。<br>
+          <b>注意</b>：与高钠并存不推碱（渗透负荷）；PN 内醋酸盐缓慢纠酸替代推碱；早产儿晚代酸以增加摄入/热卡为主。
+        </div>
+      </details>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 半量纠酸</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>治因（第一步，永远先做）</div>
+        <div class="sb">低灌注→<b>等渗扩容</b>；通气不足→<b>调呼吸机</b>；多数轻中度酸中毒治因后自纠，不推碱。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>8.4%碳酸氢钠 · 半量纠酸（科室现行：＋2.5倍5%GS）</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 8.4%碳酸氢钠（半量纠酸）</div>
+          <div class="labeq">BE <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="eacid_be" data-dir="-1">−</button><input data-emg="eacid" id="eacid_be" type="number" inputmode="decimal" step="1" min="5" max="20" value="10"><button type="button" class="stp" data-act="step" data-t="eacid_be" data-dir="1">＋</button></div> mmol/L（取绝对值，−5～−20）</div>
+          <div class="labeq">滴注时长 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="eacid_h" data-dir="-1">−</button><input data-emg="eacid" id="eacid_h" type="number" inputmode="decimal" step="1" min="1" max="12" value="8"><button type="button" class="stp" data-act="step" data-t="eacid_h" data-dir="1">＋</button></div> 小时（常规 4–8）</div>
+          <div class="ordbox" id="eord_eacid"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_eacid"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="eacid@emg" id="add_eacid_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>科室幻灯片</b>《碳酸氢钠半量纠酸使用方法更改》：8.4% NaHCO₃（1ml含钠1mmol），需要量 ml＝BE×体重×0.15，稀释＝＋2.5倍 5%GS（渗透压≈750 mOsm/L）。<br>
+        <b>《实用新生儿学》第5版</b>：pH＜7.2 方考虑纠酸；宁少勿多、半量给予；纠酸后注意低钾低钙。<br>
+        <b>UpToDate</b>：治疗原发病为主；碳酸氢钠限严重酸中毒伴通气足够者。
+      </div>
+    </details>
+  </div>
+
+  <!-- 高钠血症 -->
+  <div id="emgHyperNa" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">🧂 高钠血症</div>
+      <div class="h2">血钠 ＞145 mmol/L · 死于脑水肿而非高钠——时间锁 ≤0.5 mmol/(L·h) · 总纠正 48–72h</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-check">先对高危画像（ELBW 经皮失水 / 喂养不足 / 碳酸氢钠摄入）＋急慢性三样（起病时间、体重下降曲线、稳定度）——复测静脉血钠确认</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">146–149</span><span class="f">轻度 → 查因 · 调整补液/喂养 · 能口服给水优先</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">150–169</span><span class="f">中度 → 三块液体 · 两路泵 <b>75/25</b>（A 低张多）· q4h 血钠</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">≥170 / 循环不稳</span><span class="f">重度→两路泵 <b>25/75</b>（越重越偏等张）；不稳→<b>先等渗扩容</b>别管血钠</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">时间锁</span><span class="f">≤0.5 mmol/(L·h) · ≤10–12/24h · 总纠 48–72h · 惊厥勿推 3% 盐（先想脑水肿）</span></div>
+      </div>
+      <details class="emg-det" style="margin-top:8px;">
+        <summary>监测调泵 · 三个不要 · ELBW ▾</summary>
+        <div class="dbody emg-src">
+          <b>q4h 调泵</b>：每次复查降 ≤2 为宜；<b>降快（＞2）→ 泵 B 加、泵 A 减，立即回调不等下次</b>；降慢（＜1）→ 泵 A 加。记每小时尿量，每日同时间称重，血糖 q6h。<br>
+          <b>三个不要</b>：高血糖不打胰岛素（渗透分子）· 代酸不补 NaHCO₃（钠负荷）· 惊厥不推 3% NaCl（瞬间改张力）。<br>
+          <b>ELBW</b>：经皮失水占 2/3——暖箱加湿、减少光疗暴露是治本；常在生后 24–48h 利尿期飙升。<br>
+          <b>极重 ＞180</b>：本院无商品化 3% 盐——停钠（Na0）＋灭菌注射用水稀释＋q2h 血钠＋请示上级（腹膜透析评估）。
+        </div>
+      </details>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 三块液体与两路泵</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>先救命（循环不稳时）</div>
+        <div class="sb">0.9%氯化钠 10–20ml/kg 等渗扩容——恢复灌注优先，<span class="warn">血钠交给后续 48–72h 缓降</span>。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>再算账（三块液体 → 总泵速 → 两路分配）</div>
+        <div class="emg-calc">
+          <div class="ct">🧮 分步计算 · 三块液体 → 总量 → 泵速分段（与《高钠指南》计算器同构）</div>
+          <div class="labeq">当前血钠 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2o_na" data-dir="-1">−</button><input data-emg="enh2o" id="enh2o_na" type="number" inputmode="decimal" step="2" min="146" max="190" value="160"><button type="button" class="stp" data-act="step" data-t="enh2o_na" data-dir="1">＋</button></div> mmol/L</div>
+          <div class="labeq">今日目标钠 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2o_tgt" data-dir="-1">−</button><input data-emg="enh2o" id="enh2o_tgt" type="number" inputmode="decimal" step="1" min="130" max="190" value="" placeholder="建议 150"><button type="button" class="stp" data-act="step" data-t="enh2o_tgt" data-dir="1">＋</button></div> mmol/L（你来定；建议当前−10~12，最终145）</div>
+          <div class="labeq">出生体重 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2o_bwt" data-dir="-1">−</button><input data-emg="enh2o" id="enh2o_bwt" type="number" inputmode="decimal" step="0.1" min="0.3" max="5" value="3.0"><button type="button" class="stp" data-act="step" data-t="enh2o_bwt" data-dir="1">＋</button></div> kg</div>
+          <div class="labeq">当前体重 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2o_cwt" data-dir="-1">−</button><input data-emg="enh2o" id="enh2o_cwt" type="number" inputmode="decimal" step="0.1" min="0.3" max="5" value="2.7"><button type="button" class="stp" data-act="step" data-t="enh2o_cwt" data-dir="1">＋</button></div> kg（差值＝既往丢失，1g≈1ml）</div>
+          <div class="labeq">已扩容 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2o_exp" data-dir="-1">−</button><input data-emg="enh2o" id="enh2o_exp" type="number" inputmode="decimal" step="10" min="0" max="200" value="0"><button type="button" class="stp" data-act="step" data-t="enh2o_exp" data-dir="1">＋</button></div> ml（急救已入量，从丢失中扣除）</div>
+          <div class="labeq">今日时长 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2o_h" data-dir="-1">−</button><input data-emg="enh2o" id="enh2o_h" type="number" inputmode="decimal" step="6" min="12" max="48" value="24"><button type="button" class="stp" data-act="step" data-t="enh2o_h" data-dir="1">＋</button></div> 小时（最短＝今日ΔNa÷0.5）</div>
+          <div class="labeq">暖箱/光疗 <div class="modetabs" id="emm_enh2o"><button type="button" data-act="emgmode" data-emg="enh2o" data-mode="n" class="on">否</button><button type="button" data-act="emgmode" data-emg="enh2o" data-mode="w">是（维持+20）</button></div></div>
+          <div class="ordbox" id="eord_enh2o"></div>
+          <div class="ckbox"><div class="t">核对（液体按当前体重计）</div><div id="eck_enh2o"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="enh2o@emg" id="add_enh2o_emg">＋ 加医嘱（大补液＋两路泵＋注射用水）</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">3</span>调整方块 · q4h 调泵（复查后用）</div>
+        <div class="emg-calc">
+          <div class="ct">🎚 ±20 ml/(kg·d) 调泵器（泵速自动取上方两路分配）</div>
+          <div class="labeq">上次血钠 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2adj_n0" data-dir="-1">−</button><input data-emg="enh2adj" id="enh2adj_n0" type="number" inputmode="decimal" step="1" min="145" max="190" value="160"><button type="button" class="stp" data-act="step" data-t="enh2adj_n0" data-dir="1">＋</button></div> mmol/L</div>
+          <div class="labeq">本次血钠 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enh2adj_n1" data-dir="-1">−</button><input data-emg="enh2adj" id="enh2adj_n1" type="number" inputmode="decimal" step="1" min="140" max="190" value="158"><button type="button" class="stp" data-act="step" data-t="enh2adj_n1" data-dir="1">＋</button></div> mmol/L（q4h 复查值）</div>
+          <div class="ordbox" id="eord_enh2adj"></div>
+          <div class="ckbox"><div class="t">核对</div><div id="eck_enh2adj"></div></div>
+        </div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">4</span>监测（q4h 一个决策点）</div>
+        <div class="sb">q4h 血钠：<b>降＞2 → 泵B加泵A减（立即）</b>；降＜1 → 泵A加；在 1–2 → 不动。暖箱/光疗者维持量 +20ml/(kg·d)。</div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>科室配液课件</b>（17 页，全流程详见《新生儿高钠血症床旁指南》v1.4）：三块液体（维持 40ml/kg/d＋既往丢失＋自由水缺口）· 两路泵三档（中度 75/25 · 重度 25/75 · 极重停钠+注射用水）· q4h 调泵 ±20 口诀 · 三个不要 · 课件 Case（Na165→36h 750ml≈20.8ml/h；Na182→72h 930ml≈13ml/h）。<br>
+        <b>张澜《第4讲》</b>：安全降钠 0.5–1 mmol/(L·h)、24h≤10；快纠与脑水肿相关（Fang C, J Paediatr Child Health 2010；本院 18 例实测中位降速 0.25）。<br>
+        <b>UpToDate：Neonatal hypernatremia</b>——①先评估容量：低容量先等渗恢复灌注；②缺水量 TBW 法 0.6×W×(Na/140−1)；③缺水＋维持＋继续丢失在 ~48h 内补（≤0.5 mmol/(L·h)，重度更慢）；④q4–6h 复钠防矫枉过正。
+      </div>
+    </details>
+  </div>
+
+  <!-- 低钾血症 -->
+  <div id="emgHypoK" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↓K 低钾血症</div>
+      <div class="h2">血钾 ＜3.5 mmol/L · 见尿补钾 · ≤0.3% · ≤0.5mmol/(kg·h) · 细胞内恢复慢，续补 4–6 天</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-check">先寻因：摄入不足 / 丢失（利尿剂、呕吐腹泻、胃肠引流）/ 碱中毒移入胞 / 肾小管——ECG 看 T 波低平、U 波</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">3.0–3.5</span><span class="f">轻度 → 寻因 · 增加摄入 / 口服补钾</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">2.5–3.0</span><span class="f">中度 → 静脉补钾（见尿）· 心电监护</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">＜2.5 / ECG 改变</span><span class="f">U 波＞T、QT 延长、麻痹 → <b>静脉泵钾 + 持续心电</b></span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">见尿补钾 · 先纠镁（顽固低钾补镁才有效）· 勿急（续 4–6 天）</span></div>
+      </div>
+      <details class="emg-det" style="margin-top:8px;">
+        <summary>监测 · 查因 · 注意 ▾</summary>
+        <div class="dbody emg-src">
+          <b>监测</b>：ECG（U 波/QT）；复钾 q12–24h；尿量。<br>
+          <b>查因</b>：利尿剂/两性霉素背景查尿钾；碱中毒；呕吐/胃肠引流失钾；肾小管酸中毒；胰岛素/碱化后移入胞。<br>
+          <b>注意</b>：生理需钾 1–2mmol/kg/d；细胞内钾恢复慢，总量分日给勿单日追平。
+        </div>
+      </details>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>补钾原则（先记这五条）</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">见尿</span><span class="f">有尿才静脉补——无尿先查因，勿盲目给</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">≤0.3%</span><span class="f"><b>10%氯化钾 X ml 必须配至 ≥33.4×X ml</b>（0.3%＝40mmol/L，外周静脉硬上限）</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">≤0.5</span><span class="f">速度 ≤0.5mmol/(kg·h)（心电监护）；<b>24h 匀速泵入天然达标</b></span></div>
+        <div class="row"><span class="k" style="color:#1b4f9c;">2–3ml</span><span class="f">10%氯化钾 2–3ml/(kg·d)（＝2.7–4mmol/kg/d）；生理需钾仅 1–2mmol≈0.75–1.5ml</span></div>
+        <div class="row"><span class="k" style="color:#66748c;">4–6天</span><span class="f">细胞内钾恢复慢——续补 4–6 天勿单日追平；顽固者先纠镁（25%硫酸镁 0.2–0.4ml/kg）；能肠道给优先</span></div>
+      </div>
+    </div>
+
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>张澜《第4讲》</b>：见尿补钾；10% KCl 2–3ml/kg/d 缓慢静滴、浓度≤0.3%；需持续补给 4–6 天；生理需要 1–2mmol/kg/d。<br>
+        <b>《实用新生儿学》第5版</b>：补钾前先纠镁；外周浓度≤40mmol/L、速率≤0.5mmol/(kg·h)（心电监护）。
+      </div>
+    </details>
+  </div>
+
+  <!-- 低钠血症 -->
+  <div id="emgHypoNa" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↓Na 低钠血症</div>
+      <div class="h2">血钠 ＜130 mmol/L · 先分型（失钠/稀释）· (目标−实际)×W×0.7 · 宁慢勿快 24–48h</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-check">先分型（处理相反）：失钠型（脱水/利尿剂/呕吐腹泻/肾上腺——补钠）vs 稀释型（SIADH/水潴留——<b>限液</b>）；伴低血糖+高钾+失盐 → 查皮质醇/17-OHP（CAH）</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">130–135</span><span class="f">轻度 → 按型处理（限液或补钠）· 复钠</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">125–130 无症状</span><span class="f">中度 → 按型补钠 · 每日 ≤10mmol/L</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">＜125 / 惊厥</span><span class="f">→ <b>3%NaCl 分段快纠</b>（前 4–6h 提 4–6，下方计算器）</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">前 4–6h≤4–6 · 每日≤10 · 24–48h 至正常 · 4h 复钠 · 慢丢慢补宁慢勿快</span></div>
+      </div>
+      <details class="emg-det" style="margin-top:8px;">
+        <summary>监测 · 分型 · 注意 ▾</summary>
+        <div class="dbody emg-src">
+          <b>监测</b>：4–6h 复血钠调整；血钠＞130 后延长监测频率并减少纠正量。<br>
+          <b>分型线索</b>：尿钠高+脱水=失钠型；尿钠高+血浓缩=SIADH（限液）；稀释型补钠=越补越肿。<br>
+          <b>注意</b>：生理需钠 2mmol/kg/d；第二段（4h 后复测）目标再算，剩 48–72h 缓纠；快纠＞10–12/日 → 渗透性脱髓鞘风险。
+        </div>
+      </details>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 分段补钠（张澜课件两阶段）</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>定型（决定方向）</div>
+        <div class="sb">失钠型（脱水/利尿剂/呕吐腹泻）→ 补钠；稀释型（SIADH/水潴留）→ <b>限液</b>为主（补钠越补越肿）；伴低血糖+高钾+失盐 → 查皮质醇/17-OHP（CAH→氢化可的松，药物计算器·内分泌框）。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>补钠计算（先救急段，复测后切第二段）</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 3%氯化钠（10%NaCl＋2倍糖水自配，库内实开同式）</div>
+          <div class="modetabs" id="emm_enacl">
+            <button type="button" data-act="emgmode" data-emg="enacl" data-mode="s1" class="on">第一阶段·救急</button>
+            <button type="button" data-act="emgmode" data-emg="enacl" data-mode="s2">第二阶段·缓纠</button>
+          </div>
+          <div class="labeq">当前血钠 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enacl_cur" data-dir="-1">−</button><input data-emg="enacl" id="enacl_cur" type="number" inputmode="decimal" step="1" min="110" max="132" value="120"><button type="button" class="stp" data-act="step" data-t="enacl_cur" data-dir="1">＋</button></div> mmol/L</div>
+          <div class="labeq">目标血钠 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="enacl_tgt" data-dir="-1">−</button><input data-emg="enacl" id="enacl_tgt" type="number" inputmode="decimal" step="1" min="112" max="130" value="125"><button type="button" class="stp" data-act="step" data-t="enacl_tgt" data-dir="1">＋</button></div> mmol/L（救急段先到 120，第二段再到 126）</div>
+          <div class="ordbox" id="eord_enacl"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_enacl"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="enacl@emg" id="add_enacl_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+    </div>
+
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>张澜《第4讲》计算示例口径</b>：丢失Na(mmol)＝(目标−实际)×kg×0.7；10%NaCl 1ml＝1.7mmol、配3%＝10%NaCl＋2倍5%GS；急性中重度前 4–6h 先提 4–6，每日≤10，24–48h 纠正；示例 2.5kg Na116 → (120−116)×2.5×0.7＝7mmol→10%NaCl 4ml＋5%GS 8ml，3ml/h 维持 4h 复查。<br>
+        <b>换算（课件附录）</b>：3%NaCl 1ml＝0.51mmol Na；生理需钠 2mmol/kg/d。
+      </div>
+    </details>
+  </div>
+<div id="emgHyperMg" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↑Mg 高镁血症</div>
+      <div class="h2">母亲硫酸镁（子痫前期保胎）暴露为主因 · 生后 48–72h 自行排泄 · 症状性才解救</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">母镁暴露·无症状</span><span class="f">血镁高但吃奶呼吸好 → <b>观察</b>，48–72h 肾排自行回落；勿预防性补钙</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">轻度症状</span><span class="f">嗜睡/吸吮弱/肌张力低/反射抑制 → 支持+观察，监测血镁与呼吸</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">症状性·呼吸抑制</span><span class="f">呼吸浅慢/暂停/APNEA → <b>10%葡萄糖酸钙 2ml/kg 解救</b>（下方计算器）＋必要时呼吸支持</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">过量三联＝<b>呼吸抑制·肌张力低·反射消失</b>（与低镁过量表现相同）； calcium 逆转镁对神经肌肉接头抑制；极重（惊厥/循环差）→ 换血/透析极罕见</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 钙剂解救</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>解救 · 10%葡萄糖酸钙 2ml/kg（≥15min）</div>
+        <div class="sb"><b>全程心电监护，HR＜100 暂停</b>；前后 NS 冲管；<span class="warn">勿与碳酸氢钠同管</span>；可与低钙急补同一套配法。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 解救计算 · 10%葡萄糖酸钙</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ehm_d" data-dir="-1">−</button><input data-emg="ehm" id="ehm_d" type="number" inputmode="decimal" step="0.5" min="1" max="2" value="2"><button type="button" class="stp" data-act="step" data-t="ehm_d" data-dir="1">＋</button></div> ml/kg（解救固定 2）</div>
+          <div class="ordbox" id="eord_ehm"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ehm"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ehm@emg" id="add_ehm_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>实用新生儿学第5版</b>：母硫酸镁综合征（呼吸抑制/肌张力低）、钙剂逆转；<b>UpToDate Neonatal hypermagnesemia</b>：48–72h 肾排、症状性解救钙 100–200mg/kg；<b>本院库</b>：葡萄糖酸钙 6.1 万条为最大品种，急推绝对 ml；本院硫酸镁新生儿医嘱（0.022–0.13g＝25–50mg/kg）见「低镁血症」页。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgHypoP" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↓P 低磷血症</div>
+      <div class="h2">ELBW/再喂养综合征高发 · IV＝甘油磷酸钠 · 口服＝瑞安吉嵌奶 · 磷镁钾钙糖同查同补</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">血磷 1.1–1.8 mmol/L</span><span class="f">正常（早产目标偏高位）→ 常规 TFI 磷 P 1.1–2（库内规格），口服奶方供给</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">0.5–1.1</span><span class="f">低磷 → <b>加磷</b>（下方计算器 IV；或瑞安吉口服嵌奶）；q12h 复磷</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">＜0.5 / 再喂养样</span><span class="f">重度 → <b>IV 补磷加量＋磷镁钾钙糖五项同查同补</b>；入院禁食久/ELBW 首周热量缓升防再喂养</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">低磷表现＝肌无力/呼吸机撤不掉/溶血/白细胞趋化差；<b>磷带入钠 2mmol/ml</b> 计入袋钠；钙磷同袋防沉淀（格列福斯专用通道思维）</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 补磷两路</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>IV · 甘油磷酸钠（格列福斯）</div>
+        <div class="sb">1ml＝磷 1mmol，<b>带入钠 2mmol/ml</b>；10ml∶2.16g 一支；入大补液泵速不变。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 甘油磷酸钠</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ep_d" data-dir="-1">−</button><input data-emg="ep" id="ep_d" type="number" inputmode="decimal" step="0.5" min="0.5" max="2.5" value="1"><button type="button" class="stp" data-act="step" data-t="ep_d" data-dir="1">＋</button></div> mmol/kg·d（治疗 1–2，重度可加）</div>
+          <div class="ordbox" id="eord_ep"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ep"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ep@emg" id="add_ep_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>口服 · 瑞安吉（果糖二磷酸钠口服液）嵌奶</div>
+        <div class="sb">库内 <b>2,023 条口服/鼻饲</b>（bid/q8h 随奶）；药房口径把口服磷计入 TFI——库原文照录：「瑞安吉 2.5ml 口服 q8h <b>磷128（奶74.9＋药53.1，总钠共7.2）</b>」；奶方本身含磷，补磷先看奶量+奶方磷密度，缺口再药补。</div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>实用新生儿学第5版</b>：早产儿磷需求、磷在骨矿化作用；<b>UpToDate Refeeding syndrome</b>：磷镁钾钙糖同查、热量缓升；<b>本院库</b>：格列福斯 34,158 条/1,873 人（1.9ml↔P1.1@1.75kg 实证）；瑞安吉口服 2,023 条；TFI「钠4+2.2P」＝磷带钠入账。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgHyperCl" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↑Cl 高氯血症</div>
+      <div class="h2">NS/浓钠过量所致 AG 正常代酸 · 治法＝钠源换碳酸氢钠，钠不变氯降</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>判读与路径</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">血氯 98–106</span><span class="f">正常；与血钠同看：<b>Na−Cl＝AG 粗算</b>，AG 正常而 BE 负 → 高氯性代酸</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">Cl 110–115 · BE −5～−8</span><span class="f">NS 依赖性酸中毒 → <b>部分钠源换碳酸氢钠</b>（下方计算器），复查血气</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">Cl＞115 · BE＜−8</span><span class="f">→ 加大置换比例＋查肾功能（排酸障碍）；勿用 NS 扩容雪上加霜</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">氯全跟着钠走：<b>每补 1mmol NS 钠同时带 1mmol 氯</b>；碳酸氢钠只带钠不带氯——这是唯一"钠不变氯降"的杠杆</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 钠源置换</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>8.4%碳酸氢钠 替换部分 10%氯化钠</div>
+        <div class="sb">库式原文照录：「10%浓氯化钠加入大补液中，液速不变，新增钠2mmol/kg<b>（浓氯化钠＋碳酸氢钠）</b>」——药房把钠分两源正是为了控氯。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 置换计算 · 钠源调整</div>
+          <div class="labeq">置换 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="eclh_na" data-dir="-1">−</button><input data-emg="eclh" id="eclh_na" type="number" inputmode="decimal" step="0.5" min="0.5" max="4" value="2"><button type="button" class="stp" data-act="step" data-t="eclh_na" data-dir="1">＋</button></div> mmol/kg·d 钠改由碳酸氢钠供</div>
+          <div class="ordbox" id="eord_eclh"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_eclh"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="eclh@emg" id="add_eclh_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>UpToDate Metabolic acidosis</b>：NS 依赖性（高氯性）AG 正常代酸、等张盐水氯负荷机制；<b>本院库</b>：钠源置换原文「新增钠2mmol/kg（浓氯化钠＋碳酸氢钠）」；8.4%碳酸氢钠 1ml=1mmol（钠 1 无氯）。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgHypoCl" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↓Cl 低氯血症</div>
+      <div class="h2">呋塞米与胃引流是两大来源 · 补氯首选氯化钾（顺带补钾）· 碱中毒随氯回</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>来源与路径</div>
+      <div class="ek-lad">
+        <div class="row hot"><span class="k" style="color:#b00020;">呋塞米相关</span><span class="f">慢性利尿 → Cl⁺K⁺ 双丢 → 低氯代碱；<b>库内呋塞米患者 98%（1,156/1,180）配氯化钾</b>——不是巧合，是标配</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">胃引流相关</span><span class="f">胃肠减压/呕吐（库内 2,213 条/1,088 人）丢胃液＝丢 H⁺Cl⁻ → 碱中毒；引流量记量，按含氯 ≈100mmol/L 估损</span></div>
+        <div class="row"><span class="k" style="color:#1b4f9c;">处置</span><span class="f">补氯首选 <b>10%氯化钾</b>（氯钾双补，浓度守 0.3%）——下方计算器；钾已高者改 0.9%NS；呋塞米该减就减</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">血氯＜95 且尿氯＜20＝氯反应型，补氯有效；监测血气 BE 转正、血氯回 98–106</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 补氯计算</div>
+      <div class="emg-calc">
+        <div class="ct">💉 补氯计算 · 10%氯化钾</div>
+        <div class="labeq">当前血氯 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ehl_cl" data-dir="-1">−</button><input data-emg="ehl" id="ehl_cl" type="number" inputmode="decimal" step="1" min="70" max="110" value="92"><button type="button" class="stp" data-act="step" data-t="ehl_cl" data-dir="1">＋</button></div> mmol/L（目标 100）</div>
+        <div class="ordbox" id="eord_ehl"></div>
+        <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ehl"></div></div>
+        <div class="btnrow"><button class="btn pri" data-act="add" data-key="ehl@emg" id="add_ehl_emg">＋ 加医嘱</button>
+          <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>本院库</b>：呋塞米 3,962 条/1,180 人，其中 98% 同期用氯化钾；胃肠减压 2,213 条/1,088 人；10%KCl 1ml=1.34mmol（Cl 同量）；胃液氯 ≈100–140mmol/L。<br>
+        <b>UpToDate Metabolic alkalosis</b>：氯反应型尿 Cl＜20、补氯补钾为治本。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgAlk" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">🧪 代谢性碱中毒</div>
+      <div class="h2">新生儿绝大多数是氯反应型 · 治本＝补氯补钾＋治因 · 勿用酸性药盲目"中和"</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>判读与路径</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#1b4f9c;">认它</span><span class="f">血气 pH↑／HCO₃⁻↑／BE 正值↑，代偿性 pCO₂↑（呼吸变浅是身体在保碱）</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">氯反应型（尿Cl＜20）</span><span class="f">呋塞米慢性使用 / 呕吐·胃引流（幽门狭窄样） / 高碳酸血后 → <b>补氯补钾治本</b>（→ 见「低氯血症」计算器），呋塞米减停</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">氯不反应型（罕见）</span><span class="f">醛固酮增多/Bartter 综合征 → 查内分泌，螺内酯类试验</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">重症（pH＞7.55）：心律失常风险，纠因要快但<b>无"半量纠碱"公式</b>——治因+补氯为主；呕吐者先恢复胃管引流平衡再谈其他</span></div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">2</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>UpToDate Metabolic alkalosis</b>：氯反应/不反应分型、尿氯判读；<b>本院库</b>：呋塞米×氯化钾 98% 配对（1,156/1,180）＝临床自发印证"补氯补钾"路径；胃肠减压 1,088 人。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgHypo" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">🩸 低血糖症（新生儿）</div>
+      <div class="h2">本院口径：＜2.7 处理线 · 目标带 3.5–6.0 · GIR 起步 10（10→12→15→18）· 两个计算器（急救量／糖速配液）</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>六个数字 · 三条铁律</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#b00020;">＜2.7</span><span class="f">本院<b>处理线</b>（诊断线）——低于即处理，全球口径最严一档</span></div>
+        <div class="row"><span class="k" style="color:#256b31;">3.5–6.0</span><span class="f">本院<b>目标带</b>（mmol/L）——处理到这条带里才算稳</span></div>
+        <div class="row hot"><span class="k" style="color:#b00020;">＜1.4 或有症状</span><span class="f">＝<b>立即推糖</b>，不等喂养阶梯——任何"再喂一次试试"都是在赌脑的能源底线</span></div>
+        <div class="row"><span class="k" style="color:#1b4f9c;">10→12→15→18</span><span class="f">本院 GIR 阶梯（mg/kg·min），<b>起步就是 10</b>——见第 4 节</span></div>
+        <div class="row"><span class="k" style="color:#66748c;">2ml/kg ／ 6h</span><span class="f">D10W 2ml/kg bolus＝200mg/kg；出院前 6h 安全禁食试验（＜3.5 立即终止）</span></div>
+      </div>
+      <div class="ek-check" style="margin-top:8px;"><b>三条铁律</b>：①有症状或＜1.4，不等阶梯直接 D10W 2ml/kg 静推；②血糖＜50mg/dL 的那一刻、<b>补糖之前</b>留关键标本（补糖后胰岛素/酮体/FFA 全失真）；③确诊和判读必须用<b>实验室血浆糖</b>——POCT 全血低约 15%，标本延迟每小时掉 6mg/dL。</div>
+      <details class="emg-det" style="margin-top:8px;">
+        <summary>全球干预阈值对照 · POCT 三坑 ▾</summary>
+        <div class="dbody emg-src">
+          AAP 2011（美）：0–4h＜25／4–24h＜35 mg/dL 干预，目标＞40/45；PES 2015（国际）：＜50 干预，持续期目标＞70；CPS/NICE（加/英）：＜2.6mmol/L 干预，凝胶一线；JHACH：出生–4h＜50／4–24h＜55；中国 2021 共识：＜2.6；中国 2025 基层：2.2–2.6 喂养、＜2.2 静脉；<b>本院：＜2.7 处理、目标 3.5–6.0，仅用于生后 12h 后或 12h 内反复者</b>。<br>
+          <b>POCT 三坑</b>：全血比血浆低 ~15%；标本每延迟 1h 掉 ~6mg/dL；只做筛查与趋势，数值判读一律血浆。
+        </div>
+      </details>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>筛查监测 · 谁要测怎么测</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>高危名单（只有他们需要常规筛查）</div>
+        <div class="sb">IDM（糖尿病母亲）· SGA/IUGR · LGA · 早产 · 低体温 · 窒息 · 感染 · 红细胞增多症 · Beckwith-Wiedemann。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>时点与频率</div>
+        <div class="sb">生后 <b>1h 内开奶</b>（母乳优先促酮体；完全不能喂养者 JHACH 口径生后即 D10 80ml/(kg·d)）；<b>喂后 30min POCT</b> 第一次；之后餐前 q2–3h。<b>本院两档</b>：前 24h 出现＜3.5 → 喂养前/q3h；24h 全正常＋临床稳＋糖速＜12 → 延长 q6h。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">3</span>停测 · 症状两组</div>
+        <div class="sb">停测：IDM/LGA 连续达标 <b>12h</b>；SGA/早产 <b>24h</b>；＞24h 者需连续 2 次＞50。症状两组：<b>神经组</b>（萎靡/张力低/喂养困难/哭声异常/惊厥/震颤——出现即按"有症状"处理，不进喂养观察）；<b>自主神经组</b>（发绀/呼吸暂停/心率快/低体温）。</div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">3</span>处置 · 急救与判读（计算器①）</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>红旗与三级</div>
+        <div class="sb"><b>红旗＝惊厥/意识改变/心跳骤停·严重心动过缓</b>：立即 D10W 2ml/kg 静推＋同步评估气道，<b>不为留标本拖延</b>（推糖准备同时快速采血）。三级：<b>喂养</b>（所有指南第一步）→ <b>葡萄糖凝胶</b>（全球一线，本院未纳入）→ <b>静脉</b>。本院口径更积极：＜3.5 即需处理；无症状 2.7–3.4 灰区先喂养 30min 复查。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 计算器① · 急救判读（输 mmol/L，本院报告口径）</div>
+          <div class="labeq">血糖 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ehypo_g" data-dir="-1">−</button><input data-emg="ehypo" id="ehypo_g" type="number" inputmode="decimal" step="0.1" min="0" max="8" value="2.5"><button type="button" class="stp" data-act="step" data-t="ehypo_g" data-dir="1">＋</button></div> mmol/L（×18＝mg/dL）</div>
+          <div class="ordbox" id="eord_ehypo"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ehypo"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ehypo@emg" id="add_ehypo_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">4</span>糖速阶梯 · GIR 与加浓（计算器②）</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>本院起步 GIR 10 —— 起步即加浓</div>
+        <div class="sb">D10W 要给到 GIR 10 需要 <b>144ml/kg/d</b>（GIR×144÷浓度）——液量先爆，糖还没到位。所以<b>本院起步 GIR 10 的医嘱几乎必然伴随一张加浓配液单</b>：限液 100 → 配 D15；限液 120 → 配 D12。阶梯 <b>10→12→15→18</b>；＞12–15 仍低 → 查因（第 5 节）。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 计算器② · GIR 档 × 体重 → 泵速与配液</div>
+          <div class="labeq">GIR <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="egir_g" data-dir="-1">−</button><input data-emg="egir" id="egir_g" type="number" inputmode="decimal" step="2" min="2" max="18" value="10"><button type="button" class="stp" data-act="step" data-t="egir_g" data-dir="1">＋</button></div> mg/(kg·min)（本院 10→12→15→18）</div>
+          <div class="labeq">糖浓度 <select data-emg="egir" id="egir_c" style="padding:5px 6px;font-size:12px;"><option value="10">D10（外周起步）</option><option value="12.5">D12.5（外周上限）</option><option value="15" selected>D15（中心静脉）</option><option value="20">D20</option></select></div>
+          <div class="ordbox" id="eord_egir"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_egir"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="egir@emg" id="add_egir_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>加浓配液表（以 D10 为基液，每 100ml 终体积）</div>
+        <table class="emg-tbl"><tr><th>目标</th><th>50%葡萄糖加</th><th>D10W 基液</th><th>液量可给 GIR</th></tr>
+        <tr><td>D12.5</td><td>6.25ml</td><td>至 100ml</td><td>限液100→GIR 8.7</td></tr>
+        <tr><td>D15</td><td>12.5ml</td><td>至 100ml</td><td>限液100→GIR 10.4</td></tr>
+        <tr><td>D20</td><td>25ml</td><td>至 100ml</td><td>限液100→GIR 13.9</td></tr></table>
+        <div class="sb" style="margin-top:6px;">反查：GIR×144÷浓度＝所需 ml/(kg·d)——限液 100 要 GIR 10 → 需 D14.4，即配 D15；限液 120 要 GIR 10 → D12。</div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">5</span>查因 · 补糖前留标本</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>六条触发（满足其一就动手）</div>
+        <div class="sb">①＞72h 血糖仍＜3.3；②GIR 需＞10–12 才能维持；③静脉糖已用＞7 天；④反复＜2.5–2.8；⑤早产儿全肠内喂养后仍＜3.3×2 次；⑥怀疑综合征（BWS/Turner/中线缺陷/家族史）。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>标本清单（时机＝补糖之前）</div>
+        <div class="sb"><b>必查 6</b>：血浆葡萄糖 / 胰岛素 / β-羟丁酸 / 游离脂肪酸 / 皮质醇 / 生长激素。<b>按需 7</b>：乳酸 / 碳酸氢根 / C 肽 / 血氨 / 酰基肉碱 / 尿有机酸 / IGFBP-1。采血困难优先级：<b>葡萄糖→β-羟丁酸→胰岛素→皮质醇</b>；确诊必须血浆。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">3</span>判读三方向</div>
+        <div class="sb">低糖状态下"<b>应该见到</b>"：胰岛素应被压低、酮体与 FFA 应升高、GH/皮质醇应升高——<b>胰岛素高＋酮体低</b>＝高胰岛素血症指纹；<b>低胰岛素＋低酮体＋高乳酸</b>＝糖原分解/氧化障碍方向；<b>皮质醇/GH 低</b>＝垂体-肾上腺轴方向。</div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">6</span>顽固低糖 · HI 用药桥接→治本→二线</div>
+      <div class="sb">确诊 HI 后目标血糖 <b>＞3.9（70mg/dL）</b>。顺序：<b>胰高糖素（桥接）→ 二氮嗪（一线治本）→ 奥曲肽（二线）→ 基因/外科</b>。⚠ 库内实证：<b>本院奥曲肽在用（298 条/11 人）、二氮嗪 0 条未进——二线提前为本院实际二线</b>；指南口径（二氮嗪一线）保留备查，用前须上级/内分泌会诊。</div>
+      <div class="ek-check" style="margin-top:8px;"><b>三条用药红线</b>：①胰高糖素<b>只能配 D5W</b>（遇 NS/肝素结晶，配错泵报废）；②二氮嗪"不裸奔"——基线 ECHO＋同步双克＋限液＜150＋基线 CBC/尿酸；③奥曲肽快速耐受＋NEC 风险——仅二氮嗪失败/禁忌时用，q6–8h 皮下或持续泵入，小剂量起始（本院库内个体化）。</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">7</span>撤药 · 三步法（前提三选一）</div>
+      <div class="sb"><b>前提任一</b>：糖速＜12＋24h 血糖全正常；或糖速≥12＋48h 正常；或 24h 内一次＞6.0。</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>第一步：糖速降到 GIR＜10</div>
+        <div class="sb">高浓度者<b>先降浓度</b>；血糖正常时<b>每 12h 降 1</b> mg/(kg·min)；BG＜2.7 → 立即加回；<b>2.7–3.4 灰区 → 原地站 24h</b>，之后全 ≥3.5 → 改每 12h 降 0.5。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>第二步：减胰高糖素（如有）</div>
+        <div class="sb">血糖正常时<b>每 12h 降 0.2ml（20%）</b>；反跳同上；<b>因低糖降不下来＋HI 证据 → 转治本药</b>（本院：内分泌会诊定）。</div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">3</span>第三步：从 GIR 10 继续降</div>
+        <div class="sb"><b>每 12h 降 2</b>（比第一步快——已入安全区且喂养已建立）。<b>反跳规则统一</b>：＜2.7 回退上一档；2.7–3.4 原地 24h。撤药期监测跟着节奏走；<b>撤药不是减药，是喂训</b>——口饲量上来同步降静脉糖。</div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">8</span>出院前 · 随访 · 依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>出院前</b>：6h 安全禁食试验（本院＜3.5 立即终止——试验是找安全间隔，不是诱导发作）；带药出院四件套（血糖仪/测糖频率/正常范围/急救药教学），缺一不放。<br>
+        <b>随访</b>：反复低血糖儿神经发育随访（低血糖脑病风险 30–50% 文献区间）；出院后任何"奶量下降/感染应激"都可能复发，监测跟临床状态走。<br>
+        <b>依据</b>：《新生儿低血糖临床决策手册（全球指南整合·贵院对齐版）》＋床旁住院医师指南 v1.1（16 页体系：判读/筛查/急救/GIR/查因/HI用药/撤药/出院/JHACH 双路径全文）；AAP 2011 / PES 2015 / CPS 2019 / 中国 2021 共识 / JHACH 2024·2025；本院库：10%葡萄糖静推 72 条、奥曲肽 298 条/11 人、二氮嗪 0 条。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgApnea" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">⏸ 呼吸暂停（早产儿）</div>
+      <div class="h2">先排继发六因再归"原发性" · 枸橼酸咖啡因 20 负荷 / 5 维持 · 半衰期 ~100h 勿急判效</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>定义 · 分型与路径</div>
+      <div class="ek-lad">
+        <div class="row"><span class="k" style="color:#256b31;">原发性 AOP</span><span class="f">纠正胎龄＜34–36 周高发，发育不成熟所致 → <b>咖啡因</b>（下方计算器）</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">继发性</span><span class="f">→ <b>先治因</b>：低氧/呼吸病、感染、贫血、低糖<b>低钙低镁</b>、低体温/体温不稳、胃食管反流±误吸、镇静药/颅内问题</span></div>
+        <div class="row"><span class="k" style="color:#1b4f9c;">混合</span><span class="f">→ 治因 + 咖啡因同上；发作时先触觉刺激，无效复苏囊</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">定义＝呼吸停 <b>＞20s</b>，或 ＜20s 伴<b>心动过缓（HR＜80–100）／血氧下降／发绀</b>；频发药物难控 → CPAP → 上气道评估</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 枸橼酸咖啡因</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>负荷 20 → 24h 后维持 5</div>
+        <div class="sb">负荷 <b>20mg/kg</b>（30–60min 泵入），<b>首剂 24h 后</b>转维持 <b>5mg/kg/d qd</b>（库式：绝对 mg，qd）；半衰期 ~100h，<b>给足 4–5 天再判效</b>，勿两三天就换药。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 枸橼酸咖啡因</div>
+          <div class="modetabs" id="emm_ecaf" style="margin-bottom:6px;"><button type="button" data-act="emgmode" data-emg="ecaf" data-mode="load" class="on">负荷 20mg/kg</button><button type="button" data-act="emgmode" data-emg="ecaf" data-mode="maint">维持 qd</button></div>
+          <div class="labeq">维持剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ecaf_d" data-dir="-1">−</button><input data-emg="ecaf" id="ecaf_d" type="number" inputmode="decimal" step="2.5" min="2.5" max="10" value="5"><button type="button" class="stp" data-act="step" data-t="ecaf_d" data-dir="1">＋</button></div> mg/kg/d（维持档用；负荷档忽略）</div>
+          <div class="ordbox" id="eord_ecaf"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ecaf"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ecaf@emg" id="add_ecaf_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>无效加量 · 停药</div>
+        <div class="sb">无效（仍频发）→ <b>维持加至 7.5–10mg/kg/d</b> 或查<b>谷浓度</b>（目标 10–20μg/ml，中毒＞40–50：心动过速/烦躁/惊厥）。<b>停药指征</b>：纠正胎龄 ≥34–36 周、无呼吸暂停 5–7 天；拔管前后风险期不停药。</div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>实用新生儿学第5版</b>：定义/原发继发分型/咖啡因一线；<b>UpToDate Neonatal apnea</b>：负荷 20、维持 5、谷浓度 10–20、CAP 试验远期获益；<b>本院库</b>：8,213 条/2,237 人，维持为绝对 mg qd（样例 9–12mg＝5mg/kg/d），「首剂24小时后执行」在案。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgHypoCa" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↓Ca 低钙血症</div>
+      <div class="h2">有症状才急补 · ≥15min 慢入全程心电监护 · 无症状入大补液维持</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-lad">
+        <div class="row hot"><span class="k" style="color:#b00020;">有症状</span><span class="f">惊厥/喉痉挛/抽搐样动作/QTc 延长/心功能差 → <b>10%葡萄糖酸钙 1–2ml/kg 急补</b>（下方计算器）</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">无症状+血钙低</span><span class="f">总钙＜1.8 mmol/L（早产＜1.7）或游离钙低 → <b>钙入大补液维持</b>（TFI 规格 Ca 2、与磷同配），不静推</span></div>
+        <div class="row"><span class="k" style="color:#1b4f9c;">早发 vs 晚发</span><span class="f">早发（24–72h：母糖尿病/窒息/早产/母 VitD 缺乏）多一过性；晚发（＞7d：高磷喂养/低镁/VitD 缺乏）→ 调奶方+补 VitD</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f"><b>补钙无效先查血镁</b>（＜0.75 mmol/L → 见「低镁血症」页先补镁）；钙磷同袋防沉淀；钙勿与碳酸氢钠同管</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 10%葡萄糖酸钙</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>急补 · 1–2ml/kg（≥15min）</div>
+        <div class="sb"><b>全程心电监护，HR＜100 暂停</b>；前后 NS 冲管；<span class="warn">勿与碳酸氢钠同管、外渗致组织坏死</span>。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 10%葡萄糖酸钙</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="ecal_d" data-dir="-1">−</button><input data-emg="ecal" id="ecal_d" type="number" inputmode="decimal" step="0.5" min="0.5" max="2" value="1"><button type="button" class="stp" data-act="step" data-t="ecal_d" data-dir="1">＋</button></div> ml/kg（1–2）</div>
+          <div class="ordbox" id="eord_ecal"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_ecal"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="ecal@emg" id="add_ecal_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">2</span>维持 · 钙入大补液</div>
+        <div class="sb">症状缓解后转 PN 维持（元素钙 20–40mg/kg/d；库式 TFI 规格 Ca 2 与磷同配）；晚发者查 VitD/奶方磷含量；顽固低钙 → <b>查血镁</b>（见低镁页）。</div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>实用新生儿学第5版</b>：急补 10%葡萄糖酸钙 1–2ml/kg 慢入、总钙/游离钙界值；<b>UpToDate Neonatal hypocalcemia</b>：元素钙维持、QTc；<b>本院库</b>：钙 6.1 万条（绝大多数入大补液，急推为绝对 ml）。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgHypoMg" style="display:none">
+    <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+    <div class="emg-hero">
+      <div class="h1">↓Mg 低镁血症</div>
+      <div class="h2">血镁＜0.75 mmol/L（1.8 mg/dL）→ 先补镁 · 常与低钙并存，不纠镁补钙无效 · 组液 2h 入</div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">1</span>分级与路径</div>
+      <div class="ek-lad">
+        <div class="row hot"><span class="k" style="color:#b00020;">血镁＜0.75</span><span class="f">→ <b>硫酸镁 25–50mg/kg 补镁</b>（下方计算器）；合并低钙时先补镁、后评钙</span></div>
+        <div class="row"><span class="k" style="color:#9a6b00;">低钙难纠/顽固</span><span class="f">补钙两剂仍低/惊厥不退 → <b>必查血镁</b>；低镁性低钙补钙无效，镁补上钙自然回</span></div>
+        <div class="row"><span class="k" style="color:#1b4f9c;">病因</span><span class="f">母糖尿病（新生儿低镁+低钙）、早产/SGA、肠道丢失（腹泻/短肠）、利尿剂、换血后、氨基糖苷类</span></div>
+        <div class="row cut"><span class="k" style="color:#66748c;">贯穿</span><span class="f">过量表现＝<b>呼吸抑制/膝反射消失/血压下降</b> → 10%葡萄糖酸钙解救；输注中监测呼吸/膝反射/血压</span></div>
+      </div>
+    </div>
+    <div class="emg-sec">
+      <div class="sh"><span class="n">2</span>处置 · 硫酸镁</div>
+      <div class="emg-step">
+        <div class="st"><span class="sn">1</span>补镁 · 25–50mg/kg（组液 2h 入）</div>
+        <div class="sb"><b>组液配法（库式）</b>：硫酸镁注射液为 <b>50% 原液（10ml∶5g，1ml＝0.5g）</b>，按剂量抽取后 <b>＋5%葡萄糖注射液（库内实取 0.3–2ml，常 1ml）</b> 组成硫酸镁组液，<b>泵入 2 小时</b>（库原文样例：「硫酸镁注射液 0.035g 静滴 once顿)25mg/kg ＋(基)5%葡萄糖 1ml」「以上硫酸镁组液泵速3.3ml/h」）；必要时 q6–12h 重复 3–4 剂，复测血镁滴定；过量→10%葡萄糖酸钙解救。</div>
+        <div class="emg-calc">
+          <div class="ct">💉 剂量计算 · 硫酸镁</div>
+          <div class="labeq">剂量 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="emg_d" data-dir="-1">−</button><input data-emg="emg" id="emg_d" type="number" inputmode="decimal" step="25" min="25" max="50" value="50"><button type="button" class="stp" data-act="step" data-t="emg_d" data-dir="1">＋</button></div> mg/kg（25–50）</div>
+          <div class="ordbox" id="eord_emg"></div>
+          <div class="ckbox"><div class="t">核对（体重 <span class="ckw_ek">—</span>kg）</div><div id="eck_emg"></div></div>
+          <div class="btnrow"><button class="btn pri" data-act="add" data-key="emg@emg" id="add_emg_emg">＋ 加医嘱</button>
+            <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+        </div>
+      </div>
+    </div>
+    <details class="emg-det">
+      <summary><span class="n">3</span>依据来源 ▾</summary>
+      <div class="dbody emg-src">
+        <b>实用新生儿学第5版</b>：硫酸镁 25–50mg/kg、低镁性低钙补钙无效；<b>UpToDate Neonatal hypomagnesemia</b>：界值 0.75mmol/L、过量解救；<b>本院库</b>：硫酸镁 0.022–0.13g（＝25–50mg/kg 绝对 g 数）＋「组液2小时内入」。
+      </div>
+    </details>
+  </div>
+
+  <div id="emgFlx" style="display:none">
+
+  <div class="emg-back" data-act="emgback">‹ 临床情景列表</div>
+  <div class="emg-hero" style="background:linear-gradient(105deg,#1b5e20,#2e7d32 60%,#00695c);box-shadow:0 3px 12px rgba(27,94,32,.22);">
+    <div class="h1">🎛 大补液中途调整</div>
+    <div class="h2">血气回来发现糖/钠/钾偏离 → 算清往在走的袋里追加多少浓缩液 · 泵速不变</div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">1</span>本袋参数（按 24h 袋走 · 只算这袋，不含奶量/其他路）</div>
+    <div class="flx-io" id="fmx_rt">
+      本袋泵速 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="flx_r" data-dir="-1">−</button><input data-flx="fxbag" id="flx_r" type="number" inputmode="decimal" step="0.5" min="0.5" value="5"><button type="button" class="stp" data-act="step" data-t="flx_r" data-dir="1">＋</button></div> ml/h
+      ｜ 已走 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="flx_t" data-dir="-1">−</button><input data-flx="fxbag" id="flx_t" type="number" inputmode="decimal" step="1" min="0" max="24" value="8"><button type="button" class="stp" data-act="step" data-t="flx_t" data-dir="1">＋</button></div> 小时
+    </div>
+    <div class="flx-io" style="margin-top:2px;">
+      袋内：钠 <input data-flx="fxbag" id="flx_na" type="number" inputmode="decimal" step="0.5" min="0" value="3" style="width:52px;"> 钾 <input data-flx="fxbag" id="flx_k" type="number" inputmode="decimal" step="0.5" min="0" value="2" style="width:52px;"> mmol/kg·d ｜ 糖速 <input data-flx="fxbag" id="flx_gir" type="number" inputmode="decimal" step="0.5" min="0" value="7.5" style="width:56px;"> mg/(kg·min) ｜ 渗透压 <input data-flx="fxbag" id="flx_osm" type="number" inputmode="decimal" step="10" min="0" value="890" style="width:60px;"> mOsm/L
+    </div>
+    <div class="flx-sum" id="flxsum">—</div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">2</span>钠 · 追加 10%氯化钠（1.7 mmol/ml）</div>
+    <div class="flx-io">
+      <span id="fxna_now" style="color:var(--ink2);font-size:12.5px;">现状 —（取自①袋钠）</span>
+      <span class="arrow">→ 目标</span> <input data-flx="fxna" id="fxna_tgt" type="number" inputmode="decimal" step="0.05" min="0" value="0.5">
+      <select data-flxunit="fxna" id="fxna_u"><option value="ton">张力（1张=0.9%钠）</option><option value="mmolL">mmol/L</option><option value="mmolkd">mmol/kg·d</option></select>
+    </div>
+    <div class="ordbox" id="eord_fxna"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckwfx">—</span>kg）</div><div id="eck_fxna"></div></div>
+    <div class="btnrow"><button class="btn pri" data-act="add" data-key="fxna@flx" id="add_fxna_flx">＋ 加医嘱</button>
+      <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">3</span>钾 · 追加 10%氯化钾（1.34 mmol/ml）</div>
+    <div class="flx-io">
+      <span id="fxk_now" style="color:var(--ink2);font-size:12.5px;">现状 —（取自①袋钾）</span>
+      <span class="arrow">→ 目标</span> <input data-flx="fxk" id="fxk_tgt" type="number" inputmode="decimal" step="0.05" min="0" value="0.3">
+      <select data-flxunit="fxk" id="fxk_u"><option value="pct" selected>袋钾 %（0.3%上限）</option><option value="mmolL">mmol/L</option><option value="mmolkd">mmol/kg·d</option></select>
+    </div>
+    <div class="ordbox" id="eord_fxk"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckwfx">—</span>kg）</div><div id="eck_fxk"></div></div>
+    <div class="btnrow"><button class="btn pri" data-act="add" data-key="fxk@flx" id="add_fxk_flx">＋ 加医嘱</button>
+      <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">4</span>糖 · 升＝追加 50%葡萄糖 ／ 降＝灭菌注射用水稀释</div>
+    <div class="flx-io">
+      <span id="fxg_now" style="color:var(--ink2);font-size:12.5px;">现状 —（取自①糖速）</span>
+      <span class="arrow">→ 目标</span> <input data-flx="fxg" id="fxg_tgt" type="number" inputmode="decimal" step="0.5" min="0" value="8">
+      <select data-flxunit="fxg" id="fxg_u"><option value="gir" selected>糖速 mg/(kg·min)</option><option value="pct">糖浓度 %</option></select>
+    </div>
+    <div class="ordbox" id="eord_fxg"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckwfx">—</span>kg）</div><div id="eck_fxg"></div></div>
+    <div class="btnrow"><button class="btn pri" data-act="add" data-key="fxg@flx" id="add_fxg_flx">＋ 加医嘱</button>
+      <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">5</span>钙 · 追加 10%葡萄糖酸钙（1ml＝元素钙 9.3mg＝0.232mmol）</div>
+    <div class="flx-io">
+      追加 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="fxca_d" data-dir="-1">−</button><input data-flx="fxca" id="fxca_d" type="number" inputmode="decimal" step="0.5" min="0.5" max="3" value="2"><button type="button" class="stp" data-act="step" data-t="fxca_d" data-dir="1">＋</button></div> mmol/kg·d（库内 TFI 常写 Ca 1.1–2）
+    </div>
+    <div class="ordbox" id="eord_fxca"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckwfx">—</span>kg）</div><div id="eck_fxca"></div></div>
+    <div class="btnrow"><button class="btn pri" data-act="add" data-key="fxca@flx" id="add_fxca_flx">＋ 加医嘱</button>
+      <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">6</span>磷 · 追加 甘油磷酸钠（1ml＝1mmol 磷，带入钠 2mmol）</div>
+    <div class="flx-io">
+      追加 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="fxp_d" data-dir="-1">−</button><input data-flx="fxp" id="fxp_d" type="number" inputmode="decimal" step="0.5" min="0.5" max="2.5" value="2"><button type="button" class="stp" data-act="step" data-t="fxp_d" data-dir="1">＋</button></div> mmol/kg·d（库内 TFI 常写 P 1.1–2）
+    </div>
+    <div class="ordbox" id="eord_fxp"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckwfx">—</span>kg）</div><div id="eck_fxp"></div></div>
+    <div class="btnrow"><button class="btn pri" data-act="add" data-key="fxp@flx" id="add_fxp_flx">＋ 加医嘱</button>
+      <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+  </div>
+
+  <div class="emg-sec">
+    <div class="sh"><span class="n">7</span>追加 TFI · 5%/10% 糖水注进大补液（奶量减半/加量时）</div>
+    <div class="flx-io" id="fxcg">
+      追加 <div class="stepwrap"><button type="button" class="stp" data-act="step" data-t="fxtfi_x" data-dir="-1">−</button><input data-flx="fxtfi" id="fxtfi_x" type="number" inputmode="decimal" step="5" min="0" value="10"><button type="button" class="stp" data-act="step" data-t="fxtfi_x" data-dir="1">＋</button></div> ml/kg·d
+      <button type="button" data-act="flxconc" data-conc="5" style="padding:5px 10px;border-radius:8px;border:1.5px solid #bcd9c6;background:#dff0e5;font-size:12px;font-weight:700;">5%糖</button>
+      <button type="button" data-act="flxconc" data-conc="10" style="padding:5px 10px;border-radius:8px;border:1.5px solid #bcd9c6;background:#fff;font-size:12px;font-weight:700;">10%糖</button>
+      <span style="color:var(--ink2);font-size:12px;">注入后泵速上调，剩余时段走完</span>
+    </div>
+    <div class="ordbox" id="eord_fxtfi"></div>
+    <div class="ckbox"><div class="t">核对（体重 <span class="ckwfx">—</span>kg）</div><div id="eck_fxtfi"></div></div>
+    <div class="btnrow"><button class="btn pri" data-act="add" data-key="fxtfi@flx" id="add_fxtfi_flx">＋ 加医嘱</button>
+      <button class="linklike" data-act="go" data-page="2">查看医嘱单 ›</button></div>
+  </div>
+
+  <details class="emg-det">
+    <summary><span class="n">8</span>本院库内做法（依据） ▾</summary>
+    <div class="dbody emg-src">
+      <b>医嘱库 168 万条中「加入大补液」共 7,681 条</b>：10%氯化钾 1,767 / 10%氯化钠 1,168 / 50%葡萄糖 136 / 葡萄糖酸钙 127，几乎全部为临时医嘱＋泵速不变。标准写法照录：<br>
+      · 10%氯化钾 1.3ml 静滴(干包) 滴速:9 入大补液追加至0.3%<br>
+      · 10%浓氯化钠 1.6ml 滴速:5 加入大补液中，追加钠3mmol/kg.d<br>
+      · 灭菌注射用水 14.4ml 加入大补液，泵速不变，糖速降至5<br>
+      · 追加10ml/kg液体，总TFI100，糖速7.8（糖浓度12.4%）<br>
+      · 奶量减半，追加液体48ml，钠2，钾2<br>
+      · 钙入袋：葡萄糖酸钙注射液 2.8ml 加入大补液中／15.6ml（＝Ca2 mmol/kg·d×1.75kg 实测对上）<br>
+      · 磷入袋：甘油磷酸钠(格列福斯) 1.9ml（＝P1.1×1.75kg）；TFI「钠4+2.2P」＝磷带入钠<br>
+      <b>实例（481251，1.75kg，TFI150）</b>：TFI 规格 K6(0.3%)(PN5.3+干包0.7)——袋内 5.3 + 追加 0.7 mmol/kg·d = 6，对应袋钾终浓度 0.3%；当日追加 10%氯化钾 1.3ml，与本工具算法一致。<br>
+      <b>换算</b>：10%氯化钠 1ml=1.7mmol · 10%氯化钾 1ml=1.34mmol（0.3%＝40.2mmol/L）· 50%葡萄糖 1ml=0.5g · 糖速=浓度%×泵速÷(6×体重)。
+    </div>
+  </details>
+
+</div>
 </div>
 <div id="cartbar">
   <span style="font-size:17px">🧺</span>
@@ -527,6 +1623,15 @@ const DRUGS={
   pharm:"天然猪肺磷脂制剂，降低肺泡表面张力、防止呼气末肺泡塌陷；经气管导管分体位注入，分布依赖注药手法与体位变换；起效数分钟（氧合迅速改善）。",
   adverse:"注药时一过性SpO₂下降/心动过缓（暂停注药即恢复）、急性气道阻塞；肺出血（极早产儿风险↑）；注后呼吸机参数需即刻重调。",
   compat:"复温摇匀后抽吸（禁剧烈振荡）；双人核对剂量；单次气道内给入，给药后禁吸痰6小时（库内护理配套口径）。"},
+ ino:{name:"一氧化氮吸入",en:"Inhaled nitric oxide (iNO)",unit:"ppm",def:20,step:"5",csum:"ppm 计量 · 装置设定 · 非体重药",
+  spec:"医用一氧化氮气体（呼吸机NO模块混配）",
+  utd:"足月/近足月 PPHN 与低氧性呼吸衰竭：起始 20ppm；短暂试验无 PaO₂ 改善者应停用而非加量，一般不超过 40ppm；有效者先撤呼吸机参数再阶梯撤 NO；起始及每次调浓度后监测 MetHb（>5% 减停）",
+  hb:"手册第六版 PPHN 策略（P11–12）：初始 20ppm；氧合改善（PaO₂≥60mmHg/SaO₂≥0.9）持续 1h 以上→先降 FiO₂ 至<0.6；随后每 4h 撤 5ppm，至 5ppm 后每 2–4h 撤 1ppm 直至停止；西地那非 0.5–1mg/kg q6h 口服桥接",
+  hosp:"库内 69 条长嘱/54 人：「NO吸入」34、「NO吸入治疗」8、「持续NO吸入」5、「一氧化氮吸入」5；qd 为主（40条）；医嘱不载 ppm 浓度（浓度在 NO 装置上设定）——本卡 ppm＝装置当前设定浓度，医嘱行随档位活算补上便于核对",
+  ind:"足月/近足月儿 PPHN（新生儿持续肺动脉高压）、低氧性呼吸衰竭肺动脉高压危象的抢救性治疗；重度 RDS/胎粪吸入/先天性膈疝合并 PPHN。极早早产儿不常规使用（预防性使用无获益）",
+  pharm:"选择性肺血管扩张剂：NO 经肺泡弥散至通气良好区域的肺血管平滑肌，激活 sGC→cGMP 扩张肺动脉——只扩张有通气的肺血管（改善 V/Q 匹配、降肺动脉压而不加重分流）；入血即与血红蛋白结合失活，半衰期秒级：全身低血压罕见，但停药即刻失效→撤药必须阶梯防反跳",
+  adverse:"① 撤药反跳（阶梯撤降＋西地那非桥接，停药后 30–60min 内密切监测氧合）；② 高铁血红蛋白血症（MetHb>5% 减停）；③ NO₂ 蓄积（装置联动监测）；④ 血小板功能抑制（活动性出血/重度 IVH 慎用）；⑤ 左心流出道梗阻型先心慎用——肺血流增加可致肺水肿",
+  compat:"气体治疗：经呼吸机 NO 模块或专用吸入装置持续混配，无静脉配液与配伍问题；装置自带 NO/NO₂ 浓度与 MetHb 监测；转运途中需备气瓶衔接；西地那非/米力农为常规撤 NO 桥接"},
  etamsylate:{name:"止血敏",en:"Etamsylate",unit:"mg/kg",def:10,step:"5",
   spec:"酚磺乙胺注射液 500mg/2ml",specMg:500,stockConc:250,
   utd:"出血倾向辅助止血 5–10mg/kg IV qd–bid（文献/药物手册）；预防早产儿IVH的常规使用获益证据不足（Cochrane）",
@@ -1051,6 +2156,7 @@ const DRUGCARDS=[
  {id:'omeprazole',page:2,forms:['push']},
  {id:'caffeine',page:2,title:'枸橼酸咖啡因',kind:'maint',drug:'caffeine',forms:['push','qd']},
  {id:'ps',page:2,forms:['push']},
+ {id:'ino',page:2,title:'一氧化氮吸入',kind:'maint',drug:'ino',forms:['qd']},
  {id:'etamsylate',page:2,forms:['push']},
  {id:'hemocoag',page:2,forms:['push']},
  {id:'rbc',page:2,title:'红细胞输血',kind:'maint',drug:'rbc',forms:['rbc']},
@@ -1120,7 +2226,7 @@ const GROUPS=[
  {page:2,title:'抗癫痫药',cards:['phenobarb','levetiracetam']},
  {page:2,title:'袢利尿剂',cards:['furosemide','torasemide']},
  {page:2,title:'消化系统',cards:['octreotide','omeprazole','ursodiol','simethicone']},
- {page:2,title:'呼吸系统',cards:['caffeine','ps']},
+ {page:2,title:'呼吸系统',cards:['caffeine','ps','ino']},
  {page:1,title:'阿片类镇痛药',cards:['fentanyl','morphine']},
  {page:1,title:'解热镇痛药',cards:['acetaminophen']},
  {page:1,title:'镇静催眠药',cards:['midazolam','dexmedetomidine']},
@@ -1165,6 +2271,7 @@ const ALIAS={dopamine:'多巴',dobutamine:'多巴',epi:'副肾 复苏 急救',ne
  fibg:'纤维蛋白原 人纤维蛋白原',
  pcc:'凝血酶原复合物 PCC 凝血酶原',
  sildenafil:'西地那非 降肺压 PPHN 肺高压 撤NO',
+ ino:'一氧化氮 NO吸入 PPHN 肺高压 撤NO',
  exs:'换血 双倍量 换血疗法 高胆红素血症 胆红素',
  penicillin:'青霉素G 青霉素 GBS 皮试',
  amoxiclav:'阿莫西林克拉维酸 阿莫西林 克拉维酸',
@@ -1518,6 +2625,10 @@ const QDCFG={
  caffeine:{def:5,step:5,unit:'mg/kg',out:'mg',freq:'qd',load:true,perMl:0.05,gsPerMg:0.2,note:'维持稀释泵入 · 每日一次'},
  spironolactone:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'保钾 · 常与氢氯噻嗪配对 · 监测血钾'},
  sildenafil:{def:1,step:0.25,unit:'mg/kg',out:'mg',freq:'q8h',route:'口服/鼻饲',freqOptions:['q8h','q6h'],note:'PPHN 撤 NO 桥接 · 库内实测0.59–1.0mg/kg/次 · 监测血压 · 撤药逐减'},
+ ino:{def:20,step:5,unit:'ppm',out:'ppm',freq:'qd',abs:true,ppmPlan:true,modeWrap:true,
+  modes:[{k:'start',label:'起始 20ppm',def:20},{k:'w15',label:'撤至 15',def:15},{k:'w10',label:'撤至 10',def:10},
+         {k:'w5',label:'撤至 5',def:5},{k:'w2',label:'撤至 2',def:2},{k:'stop',label:'停药观察',def:0}],
+  note:'吸入一氧化氮（ppm域非体重药）：起始20 · 氧合改善持续1h先降FiO₂<0.6再撤 · 每4h撤5ppm → 5ppm后每2–4h撤1ppm · 停药后30–60min监测反跳'},
  hydrochlorothiazide:{def:0.5,step:0.25,unit:'mg/kg',out:'mg',freq:'q12h',route:'口服/鼻饲',note:'排钾 · 与螺内酯配对互补'},
  levothyroxine:{def:10,step:2.5,max:20,unit:'μg/kg/d',out:'μg',freq:'qd',route:'口服/鼻饲',note:'起始10–15μg/kg/d 晨起顿服 · 按 TSH/FT4 滴定（维持段可低至2–4μg/kg/d，库内5–12.5μg/日）· 与奶液铁钙间隔'},
  ibuprofen:{def:10,step:5,unit:'mg/kg',out:'mg',freq:'qd',route:'口服/鼻饲',mlConc:40,modes:[{k:'d1',label:'第1剂 DAY1',def:10},{k:'d23',label:'第2·3剂 DAY2-3',def:5}],note:'PDA三剂法间隔24h×3 · 静注路径另见 8mg＋5%葡萄糖1ml'},
@@ -1542,6 +2653,19 @@ function calcQd(id){
   const dEl=parseFloat($('dinq_'+id).value), dose=(isFinite(dEl)&&dEl>0)?dEl:dv;
     const a=cfg.abs?dose:dose*W;               /* abs=true＝绝对量滴定（左甲状腺素μg/熊去氧mg/西甲硅油ml/普萘洛尔mg/地高辛μg） */
     const rt=cfg.route?` ${cfg.route}`:'';
+    if(cfg.ppmPlan){
+      /* 吸入一氧化氮（10-15新增）：ppm 域非体重药，医嘱行=装置当前设定浓度；撤降阶梯=手册第六版 PPHN 策略；
+         库内医嘱不载浓度（浓度在装置上设），本卡随档位活算补上便于核对；停药档（p≤0）输出停用+反跳监测行，不入篮（非新医嘱） */
+      const mm=(cfg.modes||[]).find(m=>m.k===(QMODE[id]||''));
+      const p=dose;
+      const ckBase=[mm?`方案：${mm.label}（手册 PPHN 策略档位，可切换）`:'方案：自定义浓度',
+        `撤降路径：氧合改善（PaO₂≥60mmHg/SaO₂≥0.9）持续1h以上→先降 FiO₂<0.6 → 每4h撤5ppm → 至5ppm后每2–4h撤1ppm 直至停止`,
+        `监测：MetHb>5% 减停 · NO₂ 蓄积 · 血小板/出血倾向；备西地那非 0.5–1mg/kg q6h 口服桥接`];
+      if(p<=0)return {t1:`停用一氧化氮吸入（撤降完毕；停药后 30–60min 内监测氧合反跳）`, prep:[], ck:ckBase, dose:0};
+      return {t1:`${g.name} ${f2(p)}ppm 持续吸入 qd`,
+        prep:[],
+        ck:[...ckBase, `浓度核对：NO 装置当前设定 <b>${f2(p)}ppm</b>（起始20ppm；库内医嘱不载浓度，本行随档位活算）`], dose:p};
+    }
     if(cfg.dailyDiv){
       /* 按日剂量分次（普萘洛尔血管瘤流程：输入mg/kg/d，输出q12h单次mg；档位=流程日/减量周） */
       const mm=(cfg.modes||[]).find(m=>m.k===(QMODE[id]||''));
@@ -1807,7 +2931,9 @@ function abIvInfoHtml(c){
 }
 /* 换血（双倍量=2×血容量；组分=悬浮红细胞:血浆 2:1；库内实录 225ml=150+75、4小时匀速） */
 function calcExs(id){
-  const bvEl=parseFloat($('din_'+id).value);
+  /* 换血卡已从 GROUPS 撤下（待「临床场景」模块）——真 DOM 无输入框，空值守卫防 updateAll 中断（10-23 抓：体重改动后全线不刷新） */
+  const din=$('din_'+id);
+  const bvEl=din?parseFloat(din.value):NaN;
   const bv=(isFinite(bvEl)&&bvEl>=60&&bvEl<=150)?bvEl:90;   /* 血容量 ml/kg（早产90–100/足月80–85） */
   const V=Math.round(2*bv*W);
   const rbc=Math.round(V*2/3), pla=V-rbc;
@@ -1878,6 +3004,511 @@ function calcResus(rt){
   return {t1,t2,ck:[`剂量核对：${d}ml/kg×${W.toFixed(2)}kg＝<b>${f2(ml)}ml</b>＝${f2(mg)}mg`]};
 }
 
+/* ================= 临床情景（p3）· 情景计算器（医嘱行共用篮） ================= */
+const EMGMODE={ekins:'maint',enacl:'s1',enh2o:'n',ecaf:'load'};         /* 胰岛素：maint维持泵(库内实开) / load首剂(课件备查) */
+const EMGS=['ekca','ekins','ekbic','ekfuro','eacid','enh2o','enh2adj','enacl','ehypo','egir','ecaf','ecal','emg','ehm','ep','eclh','ehl'];
+const EMGVIEW={ekca:'hyperk',ekins:'hyperk',ekbic:'hyperk',ekfuro:'hyperk',eacid:'acid',enh2o:'hyperna',enh2adj:'hyperna',enacl:'hypona',ehypo:'hypo',egir:'hypo',ecaf:'apnea',ecal:'hypoca',emg:'hypomg',ehm:'hypermg',ep:'hypop',eclh:'hypercl',ehl:'hypocl'};   /* 计算器key→所属急症页（改药跳转用） */
+function ekNum(id,suf,def){const el=$(id+'_'+suf);const v=el?parseFloat(el.value):NaN;return (isFinite(v)&&v>0)?v:def;}
+function calcEkca(){
+  const d=ekNum('ekca','d',1), ml=d*W;
+  const R=Math.max(1, Math.round(ml/0.25*2)/2);   /* 滴速＝总量÷15分钟：随剂量×体重联动（库内锚 0.5ml→2ml/h、7ml组液体15min入） */
+  return {t1:`葡萄糖酸钙注射液 ${f2(ml)}ml 滴速${f2(R)}ml/h`,
+    prep:[`0.9%氯化钠 1ml（钙前冲管）`, `0.9%氯化钠 1ml（钙后冲管）`],
+    ck:[`剂量核对：${f2(d)}ml/kg × ${W.toFixed(2)}kg ＝ <b>${f2(ml)}ml</b>；滴速＝总量÷15分钟，约 ${f2(ml/R*60)} 分钟入`], dose:ml};
+}
+function calcEkins(){
+  /* 原则性固定方案（张澜课件+UTD）：胰岛素 0.1iu/kg/h ＋ 10%葡萄糖 2ml/kg/h 同组泵入，维持2小时
+     配比唯一解＝0.05iu/ml 组（1iu＋10%葡萄糖至20ml）→ 速度 2×W ml/h；2h 组内胰岛素 0.2×W iu
+     库内组浓度个体化（0.05–0.18iu/ml 均见，n=509），个案（0.45kg 0.8ml/h+0.08iu）仅验证写法 */
+  const mlh=2*W, iu2=0.2*W;
+  return {t1:`胰岛素 ${f2(mlh)}ml/h＝0.1iu/kg/h，维持2小时`,
+    prep:[`人胰岛素注射液 ${f2(iu2)}iu`, `10%葡萄糖 至 20ml`],
+    ck:[`剂量核对：胰岛素 0.1iu/kg/h ＋ 10%GS 2ml/kg/h（组＝1iu＋10%GS至20ml）→ 速度＝2×${W.toFixed(2)}kg＝<b>${f2(mlh)}ml/h</b>；2小时共入胰岛素 ${f2(iu2)}iu`], dose:mlh};
+}
+function calcEkbic(){
+  /* 科室现行（幻灯片《碳酸氢钠半量纠酸使用方法更改》）：8.4% NaHCO3（1ml=1mmol Na）
+     配法＝8.4% ＋ 2.5 倍 5%GS 稀释（渗透压≈750 mOsm/L）；纠酸半量公式 ml＝BE×W×0.15
+     滴速＝稀释后总量 ÷ 滴注时长（剂量×体重经体积联动；库内纠酸滴注 4–8h 为主、8h 最多，高钾急用可缩短） */
+  const mm=ekNum('ekbic','d',1.2);
+  const h=ekNum('ekbic','h',2);
+  const ml=mm*W, gs=ml*2.5, tot=ml+gs;
+  const R=Math.max(0.5, Math.round(tot/h*10)/10);
+  return {t1:`8.4%碳酸氢钠 ${f2(ml)}ml 滴速${f2(R)}ml/h`,
+    prep:[`5%葡萄糖 ${f2(gs)}ml`],
+    ck:[`剂量核对：${f2(mm)}mmol/kg × ${W.toFixed(2)}kg ＝ <b>${f2(ml)}ml</b>（8.4%＝1ml∶1mmol）；纠酸半量 ml＝BE×${W.toFixed(2)}×0.15`], dose:ml};
+}
+function calcEkfuro(){
+  const d=ekNum('ekfuro','d',1), mg=d*W;
+  return {t1:`呋塞米 ${f2(mg)}mg`, prep:[],
+    ck:[`剂量核对：${f2(d)}mg/kg × ${W.toFixed(2)}kg ＝ <b>${f2(mg)}mg</b>`], dose:mg};
+}
+function calcEhypo(){
+  /* 本院口径 mmol/L：＜1.4或有症状红旗 / ＜2.7 处理线 / 2.7–3.4 灰区 / ≥3.5 目标带；D10W 2ml/kg 慢推≈20min */
+  const g=ekNum('ehypo','g',2.5);
+  const vol=Math.round(2*W*10)/10, R=Math.round(vol*3);
+  const mgdl=Math.round(g*18);
+  let grade,need;
+  if(g<1.4){grade='<b style="color:#b00020;">红旗（＜1.4）→ 立即静推</b>，不等喂养阶梯，推糖同时快速采血留标本';need=1;}
+  else if(g<2.7){grade='<b style="color:#b00020;">低于本院处理线 2.7 → 静脉处理</b>：先喂养者 30min 复查仍＜2.7 → 直接推糖';need=1;}
+  else if(g<3.5){grade='<b style="color:#9a6b00;">灰区 2.7–3.4（无症状）→ 先喂养/加喂，30min 复糖</b>；反复出现或持续期 → 按处理线走';need=0;}
+  else{grade='<b style="color:#256b31;">目标带内（3.5–6.0）</b>，按风险监测即可；<b>有症状者不论数值都静推</b>';need=0;}
+  const t1=need?'10%葡萄糖 '+f2(vol)+'ml 滴速 '+R+'ml/h':(g<3.5?'先喂养＋30min 复糖（备：10%葡萄糖 '+f2(vol)+'ml）':'无需处理，按风险监测');
+  return {t1:t1,
+    prep:need?['推后 30min 复糖，接持续输注（起步 GIR 10 → 计算器②）','推糖前先留关键标本（胰岛素/酮体/FFA/皮质醇/GH）']:['喂后 30min POCT 复查；＜2.7 → 回本档升级'],
+    html:'<div class="o1">'+grade+'</div><div class="o1">'+t1+(need?'（慢推 ≈20min，D10W 2ml/kg＝200mg/kg）':'')+'</div>'+(need?'<div class="o2">有症状（惊厥/萎靡/张力低）不论数值都推；POCT 只做筛查，判读送血浆</div>':''),
+    ck:['剂量核对：2ml/kg × '+W.toFixed(2)+'kg ＝ <b>'+f2(vol)+'ml</b>（200mg/kg）；血糖 '+g+' mmol/L＝'+mgdl+' mg/dL；POCT 全血低 ~15%、延迟每小时掉 ~6mg/dL'],
+    dose:need?vol:0.1};
+}
+function calcEgir(){
+  /* GIR 档×体重→泵速+全天液量+加浓配方：ml/h=GIR×6×W/浓度；ml/kg/d=GIR×144/浓度 */
+  const gir=ekNum('egir','g',10);
+  const cEl=$('egir_c'); const c=cEl?parseFloat(cEl.value):15;
+  const mlh=Math.round(gir*6*W/c*10)/10;
+  const mkd=Math.round(gir*144/c);
+  const extra={10:0,'12.5':6.25,15:12.5,20:25}[c];
+  const x=extra?('每 100ml 终体积＝D10W '+f2(100-extra)+'ml＋50%葡萄糖 '+f2(extra)+'ml'):'D10 原液，无需加浓';
+  const cap=mkd>100?'<b style="color:#b00020;">超限液 100 → 必须加浓</b>':(mkd>90?'接近限液，留意其他路液量':'在限液 100 内');
+  const t1='D'+c+' 糖水 '+f2(mlh)+'ml/h（＝GIR '+f2(gir)+' mg/(kg·min)，全天 '+mkd+'ml/kg·d）';
+  const warn=gir>10&&gir<=12?'本院阶梯第二档；≥12–15 仍低 → 查因':(gir>=15?'高阶档——查因＋HI 用药评估走起':(gir>12&&gir<15?'阶梯第三档':'本院起步档'));
+  return {t1:t1,
+    prep:['加浓配法：'+x],
+    ck:['泵速核对：GIR '+f2(gir)+'×6×'+W.toFixed(2)+'÷'+c+' ＝ <b>'+f2(mlh)+'ml/h</b>；全天液量 '+mkd+'ml/kg·d——'+cap+'（'+warn+'）','GIR 12 需 D12（限120）/D15（限100）；GIR 15 需 D15（限144→D20 才能压进 108）——液量顶到哪档，浓度就得跟到哪档'],
+    dose:mlh,
+    html:'<div class="o1">'+t1+'</div><div class="o2">加浓配法：'+x+'</div>'};
+}
+function calcEcaf(){
+  /* 枸橼酸咖啡因：负荷20mg/kg（30–60min）→24h后维持5mg/kg/d qd（库式绝对mg） */
+  if(EMGMODE.ecaf==='load'){
+    const mg=Math.round(20*W*10)/10;
+    return {t1:'枸橼酸咖啡因 '+f2(mg)+'mg（20mg/kg 负荷）',
+      prep:['30–60min 泵入；首剂 24 小时后转维持 5mg/kg/d'],
+      ck:['剂量核对：20mg/kg × '+W.toFixed(2)+'kg ＝ <b>'+f2(mg)+'mg</b>；半衰期~100h，给足 4–5 天再判效'],
+      dose:mg};
+  }
+  const d=ekNum('ecaf','d',5);
+  const mg=Math.round(d*W*10)/10;
+  return {t1:'枸橼酸咖啡因 '+f2(mg)+'mg（'+f2(d)+'mg/kg/d）',
+    prep:['qd；无效加至 7.5–10mg/kg/d 或查谷浓度（目标 10–20μg/ml）'],
+    ck:['剂量核对：'+f2(d)+'mg/kg/d × '+W.toFixed(2)+'kg ＝ <b>'+f2(mg)+'mg</b>；库内维持写法＝绝对mg qd'],
+    dose:mg};
+}
+function calcEcal(){
+  /* 低钙急补：10%葡萄糖酸钙 1–2ml/kg，≥15min（总量÷15min），前后NS冲管（与高钾钙卡同构） */
+  const d=ekNum('ecal','d',1);
+  const ml=Math.round(d*W*10)/10, R=Math.max(1,Math.round(ml/0.25*2)/2);
+  return {t1:'10%葡萄糖酸钙 '+f2(ml)+'ml 滴速 '+R+'ml/h',
+    prep:['0.9%氯化钠 1ml（钙前冲管）','0.9%氯化钠 1ml（钙后冲管）'],
+    ck:['剂量核对：'+f2(d)+'ml/kg × '+W.toFixed(2)+'kg ＝ <b>'+f2(ml)+'ml</b>；≥15min 慢入；全程心电监护 HR＜100 暂停；勿与碳酸氢钠同管；外渗坏死'],
+    dose:ml};
+}
+function calcEmg(){
+  /* 硫酸镁 25–50mg/kg（库式：50%原液 10ml:5g 抽取 + 5%葡萄糖组成组液，2h 泵入）
+     库样例：硫酸镁注射液 0.035g 静滴 once顿)25mg/kg ＋5%葡萄糖 1ml；"以上硫酸镁组液泵速3.3ml/h" */
+  const d=ekNum('emg','d',50);
+  const mg=d*W, g=Math.round(mg/1000*1000)/1000;
+  const gs=g>=0.1?f2(g):String(g);
+  const ml=Math.round(mg/500*100)/100;      /* 50%原液 0.5g/ml */
+  const gsV=1, tot=Math.round((ml+gsV)*100)/100, rate=Math.round(tot/2*100)/100;
+  return {t1:'硫酸镁 '+gs+'g（'+d+'mg/kg）',
+    prep:['50%硫酸镁注射液 '+f2(ml)+'ml（10ml:5g 原液抽取）＋5%葡萄糖 '+gsV+'ml 组液',
+          '硫酸镁组液 '+f2(tot)+'ml 2 小时内入，泵速 '+f2(rate)+'ml/h'],
+    ck:['剂量核对：'+d+'mg/kg × '+W.toFixed(2)+'kg ＝ <b>'+gs+'g</b>＝50%原液 '+f2(ml)+'ml；必要时 q6–12h×3–4剂；监测呼吸/膝反射/血压；过量→10%葡萄糖酸钙解救'],
+    dose:g};
+}
+function calcEhm(){
+  /* 高镁解救：10%葡萄糖酸钙 2ml/kg，≥15min（同低钙急补配法） */
+  const d=ekNum('ehm','d',2);
+  const ml=Math.round(d*W*10)/10, R=Math.max(1,Math.round(ml/0.25*2)/2);
+  return {t1:'10%葡萄糖酸钙 '+f2(ml)+'ml 滴速 '+R+'ml/h',
+    prep:['0.9%氯化钠 1ml（钙前冲管）','0.9%氯化钠 1ml（钙后冲管）'],
+    ck:['解救核对：'+f2(d)+'ml/kg × '+W.toFixed(2)+'kg ＝ <b>'+f2(ml)+'ml</b>；≥15min 慢入＋心电监护；母镁暴露 48–72h 自排，症状性才解救'],
+    dose:ml};
+}
+function calcEp(){
+  /* 低磷 IV 补磷：甘油磷酸钠 1ml=1mmol磷，带入钠 2mmol */
+  const d=ekNum('ep','d',1);
+  const ml=Math.round(d*W*10)/10;
+  const naKd=Math.round(2*d*100)/100;
+  return {t1:'甘油磷酸钠 '+f2(ml)+'ml 加入大补液（磷 '+f2(d)+' mmol/kg·d，带入钠 '+f2(naKd)+' mmol/kg·d）',
+    prep:['格列福斯 10ml∶2.16g；注入原袋后轻摇混匀'],
+    ck:['剂量核对：'+f2(d)+'mmol/kg·d × '+W.toFixed(2)+'kg ＝ <b>'+f2(ml)+'ml</b>（1ml＝1mmol磷）','⚠ 带入钠 '+f2(naKd)+' mmol/kg·d 计入袋钠口径','q12h 复磷＋镁钾钙糖同查；口服可瑞安吉嵌奶（库式 bid/q8h 随奶，药房磷计入 TFI）'],
+    dose:ml,
+    html:'<div class="o1">甘油磷酸钠 '+f2(ml)+'ml 加入大补液（磷 '+f2(d)+' mmol/kg·d，带入钠 '+f2(naKd)+' mmol/kg·d）</div><div class="o2">注入原袋后轻摇混匀</div>'};
+}
+function calcEclh(){
+  /* 高氯·钠源置换：8.4%碳酸氢钠（1ml=1mmol Na 无Cl）替换等钠量 10%氯化钠（1ml=1.7mmol） */
+  const na=ekNum('eclh','na',2);
+  const ml8=Math.round(na*W*100)/100, mlNa=Math.round(na*W/1.7*100)/100;
+  return {t1:'8.4%碳酸氢钠 '+f2(ml8)+'ml 替换 10%氯化钠 '+f2(mlNa)+'ml 入大补液（钠不变，氯 −'+f2(na)+' mmol/kg·d）',
+    prep:['注入原袋后轻摇混匀；复查血气看 BE/Cl 走向'],
+    ck:['置换核对：'+f2(na)+'mmol/kg·d × '+W.toFixed(2)+'kg ＝ '+f2(ml8)+'ml 8.4%碳酸氢钠（1ml＝1mmol Na，无Cl）；等效替换 10%氯化钠 '+f2(mlNa)+'ml','高氯性代酸＝AG 正常（Na−Cl 不变窄）＋BE 负；NS 每带 1mmol Na 必带 1mmol Cl'],
+    dose:ml8,
+    html:'<div class="o1">8.4%碳酸氢钠 '+f2(ml8)+'ml 替换 10%氯化钠 '+f2(mlNa)+'ml 入大补液（钠不变，氯 −'+f2(na)+' mmol/kg·d）</div><div class="o2">注入原袋后轻摇混匀；复查血气</div>'};
+}
+function calcEhl(){
+  /* 低氯·补氯：ΔCl=(100−cur)，量=Δ×W×0.3（ECF），首选 10%KCl（Cl:K 1:1） */
+  const cur=ekNum('ehl','cl',92);
+  const dNa=Math.max(0,100-cur);
+  if(dNa<1)return {t1:'血氯 ≥100，无需补氯',prep:[],ck:['复查即可'],dose:0,
+    html:'<div class="o1">血氯 '+cur+' ≥100，无需补氯</div>'};
+  const mmol=Math.round(dNa*W*0.3*100)/100;
+  const kcl=Math.round(mmol/1.34*10)/10;
+  const kd=Math.round(mmol/W*100)/100;
+  const nsml=Math.round(mmol/0.154*10)/10;
+  const kwarn=kd>4?' <b style="color:#b00020;">⚠ 钾 '+f2(kd)+'mmol/kg·d 超 4，分次或改 NS</b>':'';
+  return {t1:'10%氯化钾 '+f2(kcl)+'ml 加入大补液（补氯 '+f2(mmol)+' mmol/kg·d，顺带补钾 '+f2(kd)+' mmol/kg·d）'+kwarn,
+    prep:['钾已高或已达 0.3% 上限 → 改 0.9%氯化钠 '+f2(nsml)+'ml（体积大）'],
+    ck:['补氯核对：(100−'+cur+')×'+W.toFixed(2)+'×0.3 ＝ <b>'+f2(mmol)+'mmol</b>＝10%KCl '+f2(kcl)+'ml（1ml＝1.34mmol Cl⁺K）','浓度守 0.3% 原则（→ 低钾页）；呋塞米相关者同步评估减量；q12h 复血气看 BE/Cl'],
+    dose:kcl,
+    html:'<div class="o1">10%氯化钾 '+f2(kcl)+'ml 加入大补液（补氯 '+f2(mmol)+' mmol/kg·d，顺带补钾 '+f2(kd)+' mmol/kg·d）</div><div class="o2">0.3% 上限内入袋；钾已高改 0.9%NS '+f2(nsml)+'ml</div>'};
+}
+function calcEacid(){
+  /* 代谢性酸中毒半量纠酸（科室幻灯片）：ml(8.4%)＝|BE|×W×0.15；＋2.5倍5%GS；滴注4–8h */
+  const be=Math.abs(ekNum('eacid','be',10));
+  const h=ekNum('eacid','h',8);
+  const ml=be*W*0.15, gs=ml*2.5, tot=ml+gs;
+  const R=Math.max(0.5, Math.round(tot/h*10)/10);
+  return {t1:`8.4%碳酸氢钠 ${f2(ml)}ml 滴速${f2(R)}ml/h`,
+    prep:[`5%葡萄糖 ${f2(gs)}ml`],
+    ck:[`剂量核对：BE −${f(be,0)} × ${W.toFixed(2)}kg × 0.15 ＝ <b>${f2(ml)}ml</b>（8.4%＝1ml∶1mmol，半量纠酸）；滴注 ${f2(h)}小时`], dose:ml};
+}
+function calcEnh2o(){
+  /* 高钠·分天纠正（每日≤10–12，UTD）：目标钠由用户输入，工具只给建议路线
+     中/重度两路泵配方（每100ml）：0.45%张=10%NaCl 4.5ml＋50%GS 10ml＋注射用水至100；0.9%张=10%NaCl 9ml＋50%GS 10ml＋注射用水至100
+     极重>180：本院真实操作=停钠+注射用水+q2h+上级；浓钠自配（课件教学口径）=目标液钠≈Na−10~15，
+       每100ml 3%盐=(液钠−154)÷3.59 ml（3%由10%自配：10% 0.3＋注射用水0.7），其余0.9%NS补足 */
+  const na=ekNum('enh2o','na',160), bw=ekNum('enh2o','bwt',3.0), cw=ekNum('enh2o','cwt',2.7);
+  const exp=ekNum('enh2o','exp',0), hrs=ekNum('enh2o','h',24);
+  const warm=(EMGMODE.enh2o==='w');
+  const r1=x=>Math.round(x*10)/10;
+  /* 分天建议：每日降 10，至 145 */
+  const stage=[]; let st=na;
+  while(st-145>0.01){ st=Math.max(145,st-10); stage.push(st); }
+  const stages=stage.length?stage:[145];
+  const sug=stages[0];
+  const lbl=i=>i===0?'今日':(i===1?'明日':'第'+(i+1)+'天');
+  const routeTxt=stages.map((x,i)=>lbl(i)+' '+x).join(' → ')+'（每日≤10，共 '+stages.length+' 天至 145）';
+  const tp=$('enh2o_tgt'); if(tp)tp.placeholder='建议 '+sug;
+  const tv=tp?parseFloat(tp.value):NaN;
+  if(!isFinite(tv)||tv<=0)return {t1:'（请填今日目标钠——建议 '+sug+'）',prep:[],ck:['目标钠由你输入，工具只提示：首日常用 当前−10~12（每日降幅≤10–12，UTD），最终 145'],dose:0,
+    html:'<div class="o1">目标钠你来定（此处只提示）：首日常用 <b>当前−10~12</b>（每日降幅≤10–12，UTD），最终 145</div><div class="o1">分天建议：'+na+' → '+routeTxt+'</div>'};
+  if(tv>=na)return {t1:'（今日目标钠应低于当前）',prep:[],ck:['当前 '+na+'，目标 '+tv+'——请填低于当前的目标（建议 '+sug+'）'],dose:0,
+    html:'<div class="o1">目标 '+tv+' 不低于当前 '+na+'——请填今日目标（建议 '+sug+'）</div>'};
+  const dNa=r1(na-tv);
+  const dropWarn=(na-tv>12)?'<span style="color:#b00020;font-weight:700;">⚠ 单日降幅 '+dNa+'＞12 超每日上限</span>':((tv<145)?'（注意：最终目标通常 145）':'');
+  const k=na>170?3:4;
+  const fw=Math.round(cw*k*dNa);                    /* 今日自由水缺口 */
+  const fwAll=Math.round(cw*k*Math.max(0,na-145));  /* 全程至145参考 */
+  const days=Math.max(1,hrs/24), fwDay=Math.round(fw/days);
+  const maint=Math.round((40+(warm?20:0))*cw*days);
+  const loss=Math.max(0,Math.round((bw-cw)*1000-exp));
+  const total=maint+loss, rate=Math.round(total/hrs*10)/10, tfi=Math.round(rate*24);
+  const first=Math.min(hrs,24), firstVol=Math.round(rate*first), rem=total-firstVol;
+  const speed=Math.round(dNa/hrs*100)/100;
+  const okSpeed=speed<=0.5+1e-9;
+  const warn=okSpeed?'≤0.5 ✓（本院18例中位0.25）':'<span style="color:#b00020;font-weight:700;">⚠ ＞0.5——今日时长须 ≥'+Math.ceil(dNa/0.5)+'h，或目标少降一点</span>';
+  const tbw=Math.round(0.6*cw*(na/140-1)*1000);
+  if(na>180){
+    /* 极重：浓钠自配（先上级确认） */
+    const C=na-12;                                  /* 目标液钠（Na−10~15 取中） */
+    const bagV=Math.round(firstVol/10)*10;          /* 先开袋体积 */
+    const s3=r1(bagV*(C-154)/359);                  /* 本袋需 3% 盐 ml */
+    const n10=r1(s3*0.3), w=r1(s3*0.7), ns=r1(bagV-s3);
+    const rN=r1(bagV/first);                        /* 泵速≈bagV/first */
+    const html=`<div class="o1" style="color:#b00020;font-weight:700;">极重（Na＞180）——须上级确认；本院真实操作：停钠（Na0）＋灭菌注射用水稀释＋q2h 血钠＋腹透评估</div>
+      <div class="o1">分天：${na} → ${routeTxt}</div>
+      <div class="o1">① 今日自由水缺口：<b>${fw}ml</b>（课件经验法 ${k}×${cw}×ΔNa${dNa}；全程至145共${fwAll}ml；UTD·TBW 全程法 0.6×${cw}×(${na}÷140−1)＝${tbw}ml）——每日注射用水≈${fwDay}ml/d 另路</div>
+      <div class="o1">② 今日共需补液：<b>${total}ml</b>（维持${maint}＋丢失${loss}，自由水不进总账）</div>
+      <div class="o1">③ 浓钠自配（课件口径，教学对照）：目标液钠＝${na}−10~15≈<b>${C}</b> mmol/L——比常规更浓，降速靠「液钠只比血钠低 10~15」锁住 ${dropWarn}</div>
+      <div class="o2">本袋（${bagV}ml／${first}h，泵速≈${rN}ml/h）：<b>10%氯化钠 ${n10}ml＋灭菌注射用水 ${w}ml（先配成 3% 盐 ${s3}ml）</b>，再以 <b>0.9%氯化钠 至 ${bagV}ml</b>（混合液钠≈${C}）</div>
+      <div class="o2">速度核验：今日降 ${dNa}÷${hrs}h＝${f2(speed)} ${warn}；糖按大补液另计；q2h 复钠</div>`;
+    return {t1:`浓钠液（液钠≈${C}）${bagV}ml ÷ ${first}h ≈ ${rN}ml/h（先开，q2h 复钠）`,
+      prep:[`10%氯化钠 ${n10}ml＋灭菌注射用水 ${w}ml（配成3%盐 ${s3}ml）`, `0.9%氯化钠 至 ${bagV}ml（混合后液钠≈${C}）`, `灭菌注射用水 ≈${fwDay}ml/d 另路（停常规钠入量）`],
+      html, ck:[`极重自配：目标液钠${C}＝${na}−12；每100ml 3%盐＝(${C}−154)÷3.59＝${r1((C-154)/3.59)}ml`], dose:bagV};
+  }
+  const sev=na>=170;
+  const a=r1((sev?0.25:0.75)*rate), b=Math.round(rate*10)/10-a;
+  const Va=Math.round(a*first), Vb=Math.round(b*first);
+  const nA=r1(Va*0.045), gA=r1(Va*0.1), nB=r1(Vb*0.09), gB=r1(Vb*0.1);
+  const html=`<div class="o1">第0步 容量评估（UTD）：循环不稳→先等渗扩容别管血钠；稳定→按下方算</div>
+    <div class="o1">分天：${na} → ${routeTxt}</div>
+    <div class="o1">① 今日自由水缺口：<b>${fw}ml</b>（课件经验法 ${k}ml/kg×${cw}kg×ΔNa${dNa} ${dropWarn}；全程至145共${fwAll}ml；UTD·TBW 全程法＝${tbw}ml）——每日注射用水≈${fwDay}ml/d 另路，能口服/胃管给水优先</div>
+    <div class="o1">② 今日共需补液：<b>${total}ml</b>＝维持 ${(40+(warm?20:0))}×${cw}×${f(days,1)}天=${maint}ml ＋ 既往丢失(${bw}−${cw}−已扩容${exp}g)=${loss}ml</div>
+    <div class="o1">③ 泵速与分段：<b>${rate}ml/h</b>（${total}÷${hrs}h，TFI≈${tfi}ml/d）——先开 ${first}h 一组≈${firstVol}ml，q4h 复查调泵，剩 ${rem}ml 于余 ${hrs-first}h 续</div>
+    <div class="o1">④ 具体配液（先开 ${first}h 两袋，可照抄）：</div>
+    <table class="emg-tbl"><tr><th>袋</th><th>10%氯化钠</th><th>50%葡萄糖</th><th>注射用水至</th><th>泵速</th></tr>
+    <tr><td><b>A</b>（0.45%张）</td><td>${nA}ml</td><td>${gA}ml</td><td>${Va}ml</td><td>${a}ml/h（${sev?'25':'75'}%）</td></tr>
+    <tr><td><b>B</b>（0.9%张）</td><td>${nB}ml</td><td>${gB}ml</td><td>${Vb}ml</td><td>${f2(b)}ml/h（${sev?'75':'25'}%）</td></tr></table>
+    <div class="o2">速度核验：今日降 ${dNa}÷${hrs}h＝${f2(speed)} mmol/(L·h) ${warn}；q4–6h 复钠（UTD），每次降≤2</div>`;
+  return {t1:`大补液（维持＋丢失）${total}ml ÷ ${hrs}h ≈ ${rate}ml/h`,
+    prep:[`泵A袋（0.45%张${Va}ml）：10%氯化钠 ${nA}ml＋50%葡萄糖 ${gA}ml＋灭菌注射用水至${Va}ml`,
+          `泵B袋（0.9%张${Vb}ml）：10%氯化钠 ${nB}ml＋50%葡萄糖 ${gB}ml＋灭菌注射用水至${Vb}ml`,
+          `灭菌注射用水 ≈${fwDay}ml/d 另路（自由水，追 ${f2(fwDay/cw)}ml/(kg·d)）`],
+    html, ck:[`每100ml配法：0.45%张＝10%NaCl 4.5ml；0.9%张＝10%NaCl 9ml（50%GS 10ml/100ml，余注射用水）`], dose:total};
+}
+function calcEnh2adj(){
+  /* q4h 调泵器（床旁指南 calcPump 同构）：±20ml/(kg·d)＝每次调 ±20×kg÷24 ml/h
+     降快(>0.5)→B加A减；降慢(<0.5)→A加B减；在轨不动；反升→查因 */
+  const cw=ekNum('enh2o','cwt',2.7), na=ekNum('enh2o','na',160), hrs=ekNum('enh2o','h',48);
+  const bw=ekNum('enh2o','bwt',3.0), exp=ekNum('enh2o','exp',0);
+  const n0=ekNum('enh2adj','n0',na), n1=ekNum('enh2adj','n1',na-2);
+  const rate0=Math.round((40*cw*hrs/24+Math.max(0,(bw-cw)*1000-exp))/hrs*10)/10;
+  const a=Math.round(((na>=170)?0.25:0.75)*rate0*10)/10, b=Math.round(rate0*10)/10-a;
+  const drop=n0-n1, r=drop/4, d=Math.round(20*cw/24*10)/10;
+  let html;
+  if(drop<0){
+    html=`<div class="o1" style="color:#b00020;font-weight:700;">血钠不降反升（+${f(-drop,1)}）——先查因：入钠超标 / 自由水给少 / 等张扩容，再谈调泵</div>`;
+  }else if(r>0.5+1e-9){
+    const b2=Math.round((b+d)*10)/10, a2=Math.round(Math.max(0,a-d)*10)/10;
+    html=`<div class="o1" style="color:#b00020;font-weight:700;">降太快：${f(drop,1)}/4h＝${f2(r)} mmol/(L·h) ＞0.5 → 立即回调</div>
+      <div class="o2">泵B（0.9%）加 ${d}：${f2(b)} → <b>${b2}ml/h</b>；泵A（0.45%）减 ${d}：${a} → <b>${a2}ml/h</b></div>
+      <div class="o2">院内句：大补液泵控减至 ${f(a2+b2,1)}ml/h，TFI至${Math.round((a2+b2)*24)}ml；或减停注射用水 ${d}ml/h（减自由水）</div>`;
+  }else if(r<0.5-1e-9){
+    const a3=Math.round((a+d)*10)/10, b3=Math.round(Math.max(0,b-d)*10)/10;
+    html=`<div class="o1" style="color:#1b4f9c;font-weight:700;">降太慢：${f(drop,1)}/4h＝${f2(r)} mmol/(L·h) ＜0.5 → 加自由水</div>
+      <div class="o2">泵A（0.45%）加 ${d}：${a} → <b>${a3}ml/h</b>；泵B（0.9%）减 ${d}：${f2(b)} → <b>${b3}ml/h</b></div>
+      <div class="o2">院内句：灭菌注射用水 +${d}ml/h 加入大补液（追 +20ml/(kg·d)，TFI至${Math.round((a3+b3)*24)}）——不得突破 0.5 上限</div>`;
+  }else{
+    html=`<div class="o1" style="color:#256b31;font-weight:700;">在轨：${f2(r)} mmol/(L·h)——泵速不动，继续 q4h</div>`;
+  }
+  return {t1:'q4h 调泵', prep:[], html, ck:[`±20ml/(kg·d)＝每次调 ±${d}ml/h（体重${cw}kg）；有尿后补K⁺ 1–2mEq/(kg·d)（15%KCl 0.5–1.0ml/(kg·d) 入大补液）`], dose:1};
+}
+function calcEkcl(){
+  /* 低钾·0.3% 原则（张澜课件+实用新生儿学）：10%KCl 2–3ml/(kg·d)（1ml=1.34mmol）
+     浓度硬上限 0.3%（=40mmol/L）→ 10%KCl Xml 须配至 ≥33.4X ml；24h 匀速即远低于 0.5mmol/(kg·h) */
+  const d=ekNum('ekcl','d',2);
+  const ml=d*W, mmol=Math.round(ml*1.34*10)/10;
+  const vol=Math.ceil(ml*33.4/10)*10;
+  const rate=Math.round(mmol/24/W*100)/100;
+  return {t1:`10%氯化钾 ${f2(ml)}ml（${f2(d)}ml/kg/d）`,
+    prep:[`加入补液配至 ≥${vol}ml（0.3% 上限）`],
+    ck:[`剂量核对：${f2(d)}ml/kg/d × ${W.toFixed(2)}kg ＝ <b>${f2(ml)}ml</b>（＝${f2(mmol)}mmol，1ml=1.34mmol）；0.3% 原则：本量至少配至 ${vol}ml；24h 匀速＝${f2(rate)}mmol/(kg·h)＜0.5 ✓ 见尿补钾`], dose:ml};
+}
+function calcEnacl(){
+  /* 低钠两阶段（张澜课件示例口径+库内实开）：
+     缺Na=(目标−实际)×kg×0.7；3%盐 1ml=0.51mmol、10%NaCl 1ml=1.7mmol（配3%=10%+2倍5%GS）
+     第一阶段（救急）：提到 120 左右，4h（库内亦见5–6h入）
+     第二阶段（缓纠）：复测后新目标＋生理需钠 2mmol/kg/d，48–72h（课件示例 8.75+5≈8ml 10%NaCl） */
+  const cur=ekNum('enacl','cur',120), tgt=ekNum('enacl','tgt',125);
+  if((EMGMODE.enacl||'s1')==='s2'){
+    const need=(tgt-cur)*W*0.7, phys=2*W, tot=need+phys, ml10=tot/1.7;
+    return {t1:`10%氯化钠 ${f2(ml10)}ml（配3% 静滴5–6小时）`,
+      prep:[`5%葡萄糖 ${f2(ml10*2)}ml（配成3%共 ${f2(ml10*3)}ml）`],
+      ck:[`第二段核对：缺钠(${tgt}−${cur})×${W.toFixed(2)}×0.7＝${f2(need)}mmol ＋ 生理需钠 2×${W.toFixed(2)}＝${f2(phys)}mmol ＝ 共${f2(tot)}mmol→10%NaCl <b>${f2(ml10)}ml</b>；48–72h 缓纠，每日≤10`], dose:ml10};
+  }
+  const na=(tgt-cur)*W*0.7;
+  const ml3=na/0.51, ml10=na/1.7;
+  const R=Math.max(0.5, Math.round(ml3/4*10)/10);
+  return {t1:`3%氯化钠 ${f2(ml3)}ml 滴速${f2(R)}ml/h`,
+    prep:[`10%氯化钠 ${f2(ml10)}ml＋5%葡萄糖 ${f2(ml10*2)}ml（配成3%）`],
+    ck:[`第一阶段核对：(${tgt}−${cur})×${W.toFixed(2)}kg×0.7＝${f2(na)}mmol＝3%NaCl <b>${f2(ml3)}ml</b>（1ml=0.51mmol）；约4小时入（库内亦见5–6h），4h 后复钠再算第二段（勿一次到位）`], dose:ml3};
+}
+const EMGCALC={ekca:calcEkca,ekins:calcEkins,ekbic:calcEkbic,ekfuro:calcEkfuro,eacid:calcEacid,enh2o:calcEnh2o,enh2adj:calcEnh2adj,enacl:calcEnacl,ehypo:calcEhypo,ecaf:calcEcaf,ecal:calcEcal,emg:calcEmg,ehm:calcEhm,ep:calcEp,egir:calcEgir,eclh:calcEclh,ehl:calcEhl};
+function updEmg(which){
+  EMGS.forEach(k=>{
+    if(which&&which!==k)return;
+    const fn=EMGCALC[k]; if(!fn)return;
+    const L=fn();
+    const o=$('eord_'+k);
+    if(o)o.innerHTML=L.html?L.html:`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
+    const c=$('eck_'+k);
+    if(c)c.innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
+  });
+  document.querySelectorAll('#p3 [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
+}
+const EMGVIEWS=['hyperk','acid','hyperna','hypok','hypona','hypo','apnea','hypoca','hypomg','hypermg','hypop','hypercl','hypocl','ealk','flx'];
+function showEmg(which){
+  $('emgList').style.display=which?'none':'block';
+  const ids={hyperk:'emgHyperK',acid:'emgAcid',hyperna:'emgHyperNa',hypok:'emgHypoK',hypona:'emgHypoNa',hypo:'emgHypo',apnea:'emgApnea',hypoca:'emgHypoCa',hypomg:'emgHypoMg',hypermg:'emgHyperMg',hypop:'emgHypoP',hypercl:'emgHyperCl',hypocl:'emgHypoCl',ealk:'emgAlk',flx:'emgFlx'};
+  EMGVIEWS.forEach(v=>{const el=$(ids[v]); if(el)el.style.display=(which===v)?'block':'none';});
+  if(which)updEmg();
+  if(which==='flx')updFlx();
+  window.scrollTo(0,0);
+}
+
+
+/* ================= 🎛 补液调整（大补液中途追加 · 库式医嘱） ================= */
+const FLXS=['fxna','fxk','fxg','fxca','fxp','fxtfi'];
+const FLXUNIT={fxna:'ton',fxk:'pct',fxg:'gir'};
+const FLXCONC={fxtfi:5};
+function flxR(){
+  let R=NaN;
+  {const el=$('flx_r'); const v=el?parseFloat(el.value):NaN; if(isFinite(v)&&v>0)R=v;}
+  const el=$('flx_t'); const tv=el?parseFloat(el.value):NaN;
+  const t=isFinite(tv)?Math.min(24,Math.max(0,tv)):NaN;
+  const ok=isFinite(R)&&isFinite(t);
+  return {R:ok?R:NaN,t:ok?t:NaN,V24:ok?R*24:NaN,tfi:ok?R*24/W:NaN,Vrem:ok?Math.max(0,R*(24-t)):NaN};
+}
+function flxBagComp(){
+  const bag=flxR();
+  const g=function(id){const el=$(id); return el?parseFloat(el.value):NaN;};
+  const tfi=isFinite(bag.tfi)?bag.tfi:NaN;
+  const naKd=g('flx_na'),kKd=g('flx_k'),girIn=g('flx_gir'),osm=g('flx_osm');
+  return {bag:bag,tfi:tfi,naKd:naKd,kKd:kKd,girIn:girIn,osm:osm,
+    naC:(isFinite(naKd)&&isFinite(tfi))?naKd*1000/tfi:NaN,
+    kC:(isFinite(kKd)&&isFinite(tfi))?kKd*1000/tfi:NaN,
+    gluC:(isFinite(girIn)&&isFinite(bag.R))?girIn*60*W/bag.R:NaN,
+    gir:girIn};
+}
+/* 目标单位 → 标准浓度：钠钾 mmol/L，糖 g/L */
+function fxToStd(comp,u,v,bag){
+  if(!isFinite(v)||!isFinite(bag.tfi)||!isFinite(bag.R))return NaN;
+  if(comp==='fxna'){if(u==='ton')return v*154; if(u==='mmolL')return v; return v*1000/bag.tfi;}
+  if(comp==='fxk'){if(u==='pct')return v*134; if(u==='mmolL')return v; return v*1000/bag.tfi;}
+  if(u==='gir')return v*60*W/bag.R;
+  return v*10;
+}
+function fxGir(c,bag){return c*bag.R/(60*W);}   /* g/L → mg/kg/min */
+/* 渗透压混合式：袋 osm×V ＋ 添加液 osmC×X，总体积 V＋X */
+const FXOSMC={fxna:3400,fxk:2680,fxg:2778,water:0,gs5:278,gs10:556};
+function fxOsmMix(osm,V,osmC,X){return (osm*V+osmC*X)/(V+X);}
+function fxOsmVerdict(o){return o<=900?' ✓ 外周常用带（库内 850–950）':(o<1000?' ⚠ 超 900，核对导管位置':' ⚠ ≥1000，建议中心静脉');}
+function fxCalc(comp,cc,verdict){
+  const bc=flxBagComp(); const bag=bc.bag;
+  const need={fxna:'钠',fxk:'钾',fxg:'糖'}[comp];
+  const bad=function(m){return {t1:'（'+m+'）',prep:[],ck:[m],dose:0,html:'<div class="o1">—</div>'};};
+  if(!isFinite(bag.R)||!isFinite(bag.t))return bad('请先填本袋泵速与已走时间');
+  if(bag.Vrem<=0.5)return {t1:'本袋 24h 已走完——追加无意义，请按明晨新袋计算',prep:[],ck:['剩余液量 0ml'],dose:0,html:'<div class="o1">本袋已走完，请新配一袋再算</div>'};
+  const Cc=(comp==='fxna')?bc.naC:(comp==='fxk')?bc.kC:bc.gluC;
+  if(!isFinite(Cc))return bad('请先在①填袋'+need+(comp==='fxg'?'速（mg/kg·min）':'（mmol/kg·d）'));
+  const tgEl=$(comp+'_tgt'); const tv=tgEl?parseFloat(tgEl.value):NaN;
+  if(!isFinite(tv))return bad('请填目标值');
+  const Ct=fxToStd(comp,FLXUNIT[comp],tv,bag);
+  if(!isFinite(Ct))return bad('请先填本袋泵速与已走时间');
+  if(Math.abs(Ct-Cc)<1e-9)return {t1:'现状已达标，无需追加',prep:[],ck:['现状＝目标'],dose:0,html:'<div class="o1">现状已达标，无需追加</div>'};
+  const V=bag.Vrem, down=Ct<Cc;
+  let X,kind;
+  if(down){
+    if(comp!=='fxg')return {t1:'袋内浓度无法下调（已混入）：建议停本袋换新袋，或下调泵速并复核全天累计',prep:[],ck:['目标低于现状——下调只能换袋/减速'],dose:0,html:'<div class="o1">袋内已混入，无法下调——换新袋或降泵速</div>'};
+    kind='water'; X=V*(Cc-Ct)/Ct;                       /* 灭菌注射用水稀释 */
+  }else{
+    kind='add'; X=(Ct-Cc)*V/(cc-Ct);                    /* 浓缩液注入 */
+  }
+  if(X<0.05)return {t1:'差距过小（＜0.1ml），无需追加',prep:[],ck:['追加量按 0.1ml 取整后为 0'],dose:0,html:'<div class="o1">差距过小，无需追加</div>'};
+  const Xr=Math.max(0.1,Math.round(X*10)/10);
+  let Cact, t1, prepCk=[], ck=[];
+  if(kind==='water'){
+    Cact=(Cc*V)/(V+Xr);
+    const gir=fxGir(Cact,bag);
+    t1='灭菌注射用水 '+f2(Xr)+'ml 加入大补液，泵速不变，糖速降至 '+gir.toFixed(1);
+    ck.push('稀释后袋糖 '+ (Cact/10).toFixed(1)+'% ＝ 糖速 '+gir.toFixed(1)+' mg/(kg·min)');
+    const f=V/(V+Xr);
+    if(isFinite(bc.naC))ck.push('⚠ 稀释同步降钠：袋钠 '+f2(bc.naC)+'→'+f2(bc.naC*f)+' mmol/L');
+    if(isFinite(bc.kC))ck.push('⚠ 稀释同步降钾：袋钾 '+f2(bc.kC/134)+'%→'+f2(bc.kC*f/134)+'%');
+    if(isFinite(bc.osm))ck.push('稀释后袋渗透压 '+Math.round(bc.osm)+'→'+Math.round(fxOsmMix(bc.osm,V,FXOSMC.water,Xr))+' mOsm/L');
+    ck.push('注：注水不减糖总量——全天平均糖速仍 '+((Cc*bag.V24/1000)/W/1.44).toFixed(1)+' mg/(kg·min)，仅后段降到 '+fxGir(Cact,bag).toFixed(1));
+  }else{
+    const addAmt=cc*Xr/1000;
+    Cact=(Cc*V+cc*Xr)/(V+Xr);
+    const addKg=addAmt/W;
+    if(comp==='fxna'){
+      t1='10%氯化钠 '+f2(Xr)+'ml 加入大补液，钠追加 '+f2(addKg)+'mmol/kg·d，泵速不变';
+      ck.push('追加 '+f2(Xr)+'ml（含钠 '+f2(addAmt)+' mmol ＝ '+f2(addKg)+' mmol/kg·d）');
+      ck.push('追加后袋钠 '+f2(Cact)+' mmol/L ＝ '+f2(Cact/154)+' 张'+verdict(Cact));
+      ck.push('全天钠累计 '+f2((Cc*bag.V24/1000+addAmt)/W)+' mmol/kg·d（原袋 '+f2(Cc*bag.V24/1000/W)+'＋追加 '+f2(addKg)+'）');
+    }else if(comp==='fxk'){
+      t1='10%氯化钾 '+f2(Xr)+'ml 加入大补液中，追加至 '+f2(Cact/134)+'%，泵速不变';
+      ck.push('追加 '+f2(Xr)+'ml（含钾 '+f2(addAmt)+' mmol ＝ '+f2(addKg)+' mmol/kg·d）');
+      ck.push('追加后袋钾 '+f2(Cact/134)+'%（'+f2(Cact)+' mmol/L）'+verdict(Cact));
+      ck.push('剩余段钾速 '+f2(Cact*bag.R/1000/W)+' mmol/(kg·h)'+(Cact*bag.R/1000/W<=0.5?' ＜0.5 ✓':' ⚠ 超 0.5，减速或分袋'));
+      ck.push('全天钾累计 '+f2((Cc*bag.V24/1000+addAmt)/W)+' mmol/kg·d（原袋 '+f2(Cc*bag.V24/1000/W)+'＋追加 '+f2(addKg)+'）');
+    }else{
+      const gir=fxGir(Cact,bag);
+      t1='50%葡萄糖 '+f2(Xr)+'ml 加入大补液中，泵速不变，糖速升至 '+gir.toFixed(1);
+      ck.push('追加 '+f2(Xr)+'ml（含糖 '+f2(addAmt)+' g ＝ '+f2(addKg)+' g/kg·d）');
+      ck.push('追加后袋糖 '+(Cact/10).toFixed(1)+'% ＝ 糖速 '+gir.toFixed(1)+' mg/(kg·min)'+(gir>=4&&gir<=12?'（4–12 常用带）':'（⚠ 超出 4–12 常用带，警惕高/低血糖）'));
+      ck.push('全天平均糖速 '+f2((Cc*bag.V24/1000+addAmt)/W/1.44)+' mg/(kg·min)');
+    }
+    if(isFinite(bc.osm))ck.push('追加后袋渗透压 '+Math.round(bc.osm)+'→'+Math.round(fxOsmMix(bc.osm,V,FXOSMC[comp],Xr))+' mOsm/L'+fxOsmVerdict(fxOsmMix(bc.osm,V,FXOSMC[comp],Xr)));
+    prepCk.push('注入原袋（剩余约 '+f2(V)+'ml）后轻摇混匀');
+  }
+  return {t1:t1,prep:prepCk.length?prepCk:[],ck:ck,dose:Xr,html:'<div class="o1">'+t1+'</div>'+(prepCk.length?'<div class="o2">'+prepCk.join('<br>')+'</div>':'')};
+}
+function calcFxca(){
+  /* 钙追加：10%葡萄糖酸钙 1ml=元素钙9.3mg=0.232mmol；库内 TFI Ca2 ↔ 8.6ml/kg/d（15.6ml@1.75kg 实证） */
+  const d=ekNum('fxca','d',2);
+  const ml=Math.round(d*W/0.232*10)/10;
+  return {t1:'10%葡萄糖酸钙 '+f2(ml)+'ml 加入大补液，钙追加 '+f2(d)+'mmol/kg·d，泵速不变',
+    prep:['注入原袋后轻摇混匀；钙磷同袋按 TFI 规格同配，勿单独推注'],
+    ck:['剂量核对：'+f2(d)+'mmol/kg·d × '+W.toFixed(2)+'kg ÷ 0.232mmol/ml ＝ <b>'+f2(ml)+'ml</b>（1ml＝元素钙 9.3mg）','只入袋不推注——过快致心律失常、外渗致坏死'],
+    dose:ml,
+    html:'<div class="o1">10%葡萄糖酸钙 '+f2(ml)+'ml 加入大补液，钙追加 '+f2(d)+'mmol/kg·d，泵速不变</div><div class="o2">注入原袋后轻摇混匀</div>'};
+}
+function calcFxp(){
+  /* 磷追加：甘油磷酸钠(格列福斯) 1ml=1mmol 磷，带入钠 2mmol；库内 1.9ml↔P1.1@1.75kg 实证 */
+  const d=ekNum('fxp','d',2);
+  const ml=Math.round(d*W*10)/10;
+  const naKd=Math.round(2*d*100)/100;
+  return {t1:'甘油磷酸钠 '+f2(ml)+'ml 加入大补液（磷 '+f2(d)+' mmol/kg·d，带入钠 '+f2(naKd)+' mmol/kg·d）',
+    prep:['格列福斯 10ml∶2.16g＝磷 10mmol/支；注入原袋后轻摇混匀'],
+    ck:['剂量核对：'+f2(d)+'mmol/kg·d × '+W.toFixed(2)+'kg ＝ <b>'+f2(ml)+'ml</b>（1ml＝1mmol磷）','⚠ 带入钠 '+f2(naKd)+' mmol/kg·d——计入①袋钠口径再算钠块','低磷高危＝ELBW/禁食久/延迟入PN；磷镁钾同降警惕再喂养样'],
+    dose:ml,
+    html:'<div class="o1">甘油磷酸钠 '+f2(ml)+'ml 加入大补液（磷 '+f2(d)+' mmol/kg·d，带入钠 '+f2(naKd)+' mmol/kg·d）</div><div class="o2">注入原袋后轻摇混匀</div>'};
+}
+function calcFxtfi(){
+  const bc=flxBagComp(); const bag=bc.bag;
+  const el=$('fxtfi_x'); const x=el?parseFloat(el.value):NaN;
+  const bad=function(m){return {t1:'（'+m+'）',prep:[],ck:[m],dose:0,html:'<div class="o1">—</div>'};};
+  if(!isFinite(bag.R)||!isFinite(bag.t))return bad('请先填本袋泵速与已走时间');
+  if(bag.t>=24)return {t1:'本袋 24h 已走完——追加 TFI 请并入明晨新袋计算',prep:[],ck:['剩余时段 0h'],dose:0,html:'<div class="o1">本袋已走完，请新配一袋再算</div>'};
+  if(!isFinite(x)||x<=0)return bad('请填追加量 ml/kg·d');
+  const hrs=24-bag.t, V=bag.Vrem;
+  const vol=Math.round(x*W*10)/10;
+  const conc=FLXCONC.fxtfi, gsL=conc*10;                       /* g/L */
+  const rate=Math.round((V+vol)/hrs*10)/10;                    /* 注入后泵速上调，24h 走完 */
+  const t1=conc+'%葡萄糖注射液 '+f2(vol)+'ml 加入大补液，泵速上调至 '+f2(rate)+'ml/h（'+f2(hrs)+'h 走完，追加 TFI '+f2(x)+'ml/kg·d）';
+  const ck=[
+    '追加 '+f2(x)+'ml/kg·d × '+W.toFixed(2)+'kg ＝ '+f2(vol)+'ml 注入剩余 '+f2(V)+'ml → 共 '+f2(V+vol)+'ml，泵速 '+f2(bag.R)+'→'+f2(rate)+'ml/h（'+f2(hrs)+'h 走完）'
+  ];
+  const f=V/(V+vol);
+  if(isFinite(bc.gluC)){
+    const Cact=(bc.gluC*V+gsL*vol)/(V+vol);
+    const gir=Cact*rate/(60*W);
+    ck.push('追加后袋糖 '+(Cact/10).toFixed(1)+'% ＝ 糖速 '+gir.toFixed(1)+' mg/(kg·min)（浓度↑泵速↑双升，'+(gir>=4&&gir<=12?'4–12 常用带':'⚠ 超出 4–12 常用带，警惕高血糖')+'）');
+  }else ck.push('（①未填糖速，糖浓度/糖速未算）');
+  const dil=[];
+  if(isFinite(bc.naC))dil.push('袋钠 '+f2(bc.naC)+'→'+f2(bc.naC*f)+' mmol/L');
+  if(isFinite(bc.kC))dil.push('袋钾 '+f2(bc.kC/134)+'%→'+f2(bc.kC*f/134)+'%');
+  if(dil.length)ck.push('⚠ 同步稀释：'+dil.join('、')+'（钠钾日总量不变，仅浓度降）');
+  if(isFinite(bc.osm))ck.push('追加后袋渗透压 '+Math.round(bc.osm)+'→'+Math.round(fxOsmMix(bc.osm,V,conc===5?FXOSMC.gs5:FXOSMC.gs10,vol))+' mOsm/L（'+conc+'%糖 ≈'+(conc===5?278:556)+'，比袋稀）');
+  ck.push('24h 后全天液量 ＋'+f2(vol)+'ml（TFI ＋'+f2(x)+'ml/kg·d）');
+  return {t1:t1,prep:['注入原袋（剩余约 '+f2(V)+'ml）后轻摇混匀'],dose:vol,ck:ck,
+    html:'<div class="o1">'+t1+'</div><div class="o2">注入原袋（剩余约 '+f2(V)+'ml）后轻摇混匀</div>'};
+}
+const FLXCALC={
+  fxna:()=>fxCalc('fxna',1700,c=>' '+(c<=154?'✓ 不超生理盐水':c<=300?' ⚠ 超 1 张，核对张力依据':' ✗ 超 2 张，除非极重度低钠自配，禁外周')),
+  fxk:()=>fxCalc('fxk',1340,c=>{const p=c/134; return p<=0.3?' ✓ ≤0.3 上限':(p<=0.4?' ⚠ 0.3–0.4：库内极端补救案例上限，须中心静脉':' ✗ 超 0.4 红线，分袋或减速');}),
+  fxg:()=>fxCalc('fxg',500,()=>''),
+  fxca:calcFxca,fxp:calcFxp,fxtfi:calcFxtfi
+};
+function updFlx(which){
+  const bc=flxBagComp(); const bag=bc.bag; const sum=$('flxsum');
+  if(sum){
+    let h=isFinite(bag.R)&&isFinite(bag.t)?'本袋全天 '+f2(bag.V24)+'ml（泵速×24）· 已走 '+f2(bag.t)+'h（已入 '+f2(bag.R*bag.t)+'ml）· <b>剩余 '+f2(bag.Vrem)+'ml</b>':'—';
+    const parts=[];
+    if(isFinite(bc.naC))parts.push('袋钠 '+f2(bc.naC)+' mmol/L（'+f2(bc.naC/154)+'张）');
+    if(isFinite(bc.kC))parts.push('袋钾 '+f2(bc.kC/134)+'%');
+    if(isFinite(bc.gir))parts.push('糖速 '+bc.gir.toFixed(1)+' mg/(kg·min)（'+f2(bc.gluC/10)+'%）');
+    if(isFinite(bc.osm))parts.push('渗透压 '+Math.round(bc.osm)+' mOsm/L');
+    if(parts.length)h+='<br>'+parts.join(' · ');
+    sum.innerHTML=h;
+  }
+  const nows={
+    fxna:isFinite(bc.naC)?function(){return '现状 '+f2(bc.naKd)+' mmol/kg·d ＝ '+f2(bc.naC)+' mmol/L（'+f2(bc.naC/154)+'张）';}:null,
+    fxk:isFinite(bc.kC)?function(){return '现状 '+f2(bc.kKd)+' mmol/kg·d ＝ '+f2(bc.kC/134)+'%（'+f2(bc.kC)+' mmol/L）';}:null,
+    fxg:isFinite(bc.gir)?function(){return '现状 糖速 '+bc.gir.toFixed(1)+' mg/(kg·min)（'+f2(bc.gluC/10)+'% ＝ '+f2(bc.gir*8)+' mmol/kg·d）';}:null};
+  FLXS.forEach(k=>{
+    if(which&&which!=='fxbag'&&which!==k)return;
+    const L=FLXCALC[k]();
+    const o=$('eord_'+k); if(o)o.innerHTML=L.html;
+    const c=$('eck_'+k); if(c)c.innerHTML=L.ck.map(r=>'<div class="r">'+r+'</div>').join('');
+    const n=$(k+'_now'); if(n&&nows[k])n.textContent=nows[k]();
+  });
+  document.querySelectorAll('#emgFlx .ckwfx').forEach(el=>el.textContent=W.toFixed(2));
+}
+/* 目标单位切换（现状恒取①袋成分，无需换算数值） */
+function flxUnitSwitch(comp,nu){FLXUNIT[comp]=nu; updFlx(comp);}
+
 /* 医嘱篮取行：key=id@form[@route]（唯一入口，医嘱单/长图/复制共用） */
 function linesOf(key){
   const parts=key.split('@'), id=parts[0], form=parts[1], rt=parts[2];
@@ -1891,6 +3522,8 @@ function linesOf(key){
   if(form==='ab'){const L=calcAb(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='ab2'){const L=calcAb(id,'b'); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
   if(form==='prod'){const L=calcProd(id); return {t1:L.t1,prep:L.prep||[],ck:L.ck};}
+  if(form==='emg'){const fn=EMGCALC[id]; const L=fn?fn():null; return L?{t1:L.t1,prep:L.prep||[],ck:L.ck,dose:L.dose,html:L.html}:null;}
+  if(form==='flx'){const fn=FLXCALC[id]; const L=fn?fn():null; return L?{t1:L.t1,prep:L.prep||[],ck:L.ck,dose:L.dose}:null;}
   if(form==='load'){const L=calcLoad(id); return {t1:L.t1,prep:[L.t2],ck:L.ck};}
   return S[id].mode==='amp'? calcAmp(id) : calcH24(id);
 }
@@ -2327,6 +3960,7 @@ function updCard(id){
   }
   /* 换血单形式卡 */
   if(dcU&&dcU.forms.length===1&&dcU.forms[0]==='exs'){
+    if(!$('ord_'+id))return;   /* 卡未上架＝无 DOM（10-24 抓：null.innerHTML 曾中断 updateAll 全线刷新） */
     const L=calcExs(id);
     $('ord_'+id).innerHTML=`<div class="o1">${L.t1}</div>${L.prep&&L.prep.length?`<div class="o2">${L.prep.join('<br>')}</div>`:''}`;
     $('ckr_'+id).innerHTML=L.ck.map(r=>`<div class="r">${r}</div>`).join('');
@@ -2425,7 +4059,7 @@ function updCard(id){
   }
   document.querySelectorAll('#card_'+id+' [class*=ckw]').forEach(el=>el.textContent=W.toFixed(2));
 }
-function updateAll(){DRUGCARDS.forEach(c=>updCard(c.id)); renderBasket();}
+function updateAll(){DRUGCARDS.forEach(c=>updCard(c.id)); updEmg(); renderBasket();}
 
 /* ================= 搜索（跨两页聚合，DOM 移动保留输入状态） ================= */
 var searching=false, curPage=0;
@@ -2453,8 +4087,10 @@ function applySearch(qraw){
     }
   });
   $('sEmpty').style.display=hits.length?'none':'block';
+  $('p0').className='page';
   $('pMain').className='page';
   $('p2').className='page';
+  $('p3').className='page';
   $('pS').className='page on';
 }
 function rehome(){
@@ -2521,6 +4157,11 @@ function toggleBasket(key){
       const L=calcAb(id,form==='ab2'?'b':undefined);
       if(!(L.dose>0))return;
     }
+    else if(form==='emg'||form==='flx'){
+      /* 急症/补液调整计算器：按计算结果剂量>0 守卫（拒掉"无需追加/换袋"等 0 剂量行） */
+      const L=linesOf(key);
+      if(!(L&&L.dose>0))return;
+    }
     else{
       /* 按形式直取输入框（qd/qhm 用 dinq_，其余维持/静推/首剂用 din_/dinp_/dinl_——存在性||链在空元素上会短路） */
       let box=null;
@@ -2538,6 +4179,8 @@ function delItem(k){delete basket[k]; renderBasket(); renderAddBtns();}
 /* 从医嘱单跳回对应药物的详情页（自动切到该形式） */
 function gotoDrug(key){
   const parts=key.split('@'); let id=parts[0]; const form=parts[1];
+  if(form==='emg'){go(3); showEmg(EMGVIEW[parts[0]]||'hyperk'); return;}
+  if(form==='flx'){go(3); showEmg('flx'); return;}   /* 补液调整条目：跳回大补液调整页 */
   let dc=DRUGCARDS.find(x=>x.id===id);
   if(!dc&&QDCFG[id]&&QDCFG[id].dualHost){id=QDCFG[id].dualHost; dc=DRUGCARDS.find(x=>x.id===id);}  /* 合并卡子药→回宿主卡 */
   if(!dc)return;
@@ -2576,6 +4219,20 @@ function renderAddBtns(){
       b.className='btn pri'+(on?' added':'');
       b.textContent=on?'✓ 已加医嘱':'＋ 加医嘱';
     });
+  });
+  /* 急症计算器按钮回显（ek* 不在 DRUGCARDS，单独刷） */
+  EMGS.forEach(k=>{
+    const b=$('add_'+k+'_emg'); if(!b)return;
+    const on=!!basket[k+'@emg'];
+    b.className='btn pri'+(on?' added':'');
+    b.textContent=on?'✓ 已加医嘱':'＋ 加医嘱';
+  });
+  /* 补液调整按钮回显（fx* 不在 DRUGCARDS，单独刷） */
+  FLXS.forEach(k=>{
+    const b=$('add_'+k+'_flx'); if(!b)return;
+    const on=!!basket[k+'@flx'];
+    b.className='btn pri'+(on?' added':'');
+    b.textContent=on?'✓ 已加医嘱':'＋ 加医嘱';
   });
 }
 function metaSummary(){
@@ -2674,7 +4331,7 @@ function copyOrder(){
   setTimeout(()=>$('copied').textContent='',2500);
 }
 /* ================= 试用反馈（试验版：本机暂存 + 微信汇总给Robin） ================= */
-const APP_VER='试验版 v2026-10-14.20';
+const APP_VER='试验版 v2026-10-27.1';
 let FBL=[]; try{FBL=JSON.parse(localStorage.getItem('vasoFB')||'[]');}catch(e){}
 let FB_T='';
 function fbCtxLine(drug){
@@ -2706,16 +4363,21 @@ function fbOpen(drug){
   FB_T=''; document.querySelectorAll('#fbTypes .fbchip').forEach(b=>b.classList.remove('on'));
   fbRenderList();
 }
+const EMGDIVS=['emgHyperK','emgAcid','emgHyperNa','emgHypoK','emgHypoNa','emgHypo','emgApnea','emgHypoCa','emgHypoMg','emgHyperMg','emgHypoP','emgHyperCl','emgHypoCl','emgAlk','emgFlx'];
 function go(n){
   curPage=n;
   resetView();
+  if(n!==3)EMGDIVS.forEach(id=>{const el=$(id); if(el)el.style.display='none';});   /* 离开临床情景时收起视图（修残留泄漏） */
   if(searching){searching=false; $('q').value=''; rehome();}
+  $('p0').className='page'+(n===4?' on':'');
   $('pMain').className='page'+(n===0?' on':'');
   $('p2').className='page'+(n===2?' on':'');
-  $('pS').className='page';
-  $('searchrow').style.display=n===2?'none':'';
+  $('p3').className='page'+(n===3?' on':'');
+    $('pS').className='page';
+  $('searchrow').style.display=(n===2||n===3)?'none':'';
   $('cartbar').style.display=n===2?'none':'flex';
   document.querySelector('header').className=n===2?'compact':'';
+  if(n===3)updEmg();
   window.scrollTo(0,0);
 }
 
@@ -2744,6 +4406,9 @@ document.addEventListener('pointerdown',e=>{
 function onInputLinkage(e){
   const t=e.target;
   if(t.id==='q'){applySearch(t.value); return;}
+  if(t.dataset.emg){updEmg(t.dataset.emg); return;}   /* 急症计算器输入（含步进按钮冒泡） */
+  if(t.dataset.flxunit){flxUnitSwitch(t.dataset.flxunit,t.value); return;}   /* 补液调整单位切换 */
+  if(t.dataset.flx){updFlx(t.dataset.flx); return;}   /* 补液调整输入（含步进冒泡） */
   if(t.id==='wt'){
     const v=parseFloat(t.value); if(!isFinite(v))return;
     W=Math.min(6,Math.max(0.3,v));
@@ -2848,6 +4513,20 @@ document.addEventListener('click',e=>{
     case 'editdrug': gotoDrug(b.dataset.key); break;
     case 'step': if(stepLong){stepLong=false; break;} doStep(b); break;
     case 'go': go(parseInt(b.dataset.page,10)); break;
+    case 'emgopen': showEmg(b.dataset.emg); break;
+    case 'flxconc': FLXCONC.fxtfi=parseFloat(b.dataset.conc);
+      document.querySelectorAll('#fxcg [data-conc]').forEach(x=>x.style.background=(parseFloat(x.dataset.conc)===FLXCONC.fxtfi)?'#dff0e5':'#fff');
+      updFlx('fxtfi'); break;
+    case 'emgback': showEmg(null); break;
+    case 'emgdrug': gotoDrug('furosemide@push'); break;
+    case 'emgmode': EMGMODE[b.dataset.emg]=b.dataset.mode;
+      document.querySelectorAll('#emm_'+b.dataset.emg+' button').forEach(x=>x.className=x.dataset.mode===b.dataset.mode?'on':'');
+      if(b.dataset.emg==='ekins'){
+        const lb=$('ekins_loadbox'), mb=$('ekins_maintbox');
+        if(lb)lb.style.display=b.dataset.mode==='load'?'block':'none';
+        if(mb)mb.style.display=b.dataset.mode==='maint'?'block':'none';
+      }
+      updEmg(b.dataset.emg); break;
     case 'copy': copyOrder(); break;
     case 'img': makeImg(); break;
     case 'print': window.print(); break;
