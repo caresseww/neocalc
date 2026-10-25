@@ -293,7 +293,7 @@ details.ref{margin-top:8px;} details.ref summary{font-size:13px; font-weight:700
   <div class="t0">新生儿药物计算器</div>
   <div class="wtrow">
     <label>体重</label>
-    <input id="wt" type="number" inputmode="decimal" step="0.05" min="0.3" max="6" value="1.5"><span class="unit">kg</span>
+    <input id="wt" type="number" inputmode="decimal" step="0.05" min="0.3" value="1.5"><span class="unit">kg</span>
     <span class="wtnow" id="wtNow"></span>
     <span class="brand" style="margin-left:auto">NeoAI</span><span class="t2">To make your life easier</span>
   </div>
@@ -4331,7 +4331,7 @@ function copyOrder(){
   setTimeout(()=>$('copied').textContent='',2500);
 }
 /* ================= 试用反馈（试验版：本机暂存 + 微信汇总给Robin） ================= */
-const APP_VER='试验版 v2026-10-27.1';
+const APP_VER='试验版 v2026-10-27.2';
 let FBL=[]; try{FBL=JSON.parse(localStorage.getItem('vasoFB')||'[]');}catch(e){}
 let FB_T='';
 function fbCtxLine(drug){
@@ -4411,7 +4411,7 @@ function onInputLinkage(e){
   if(t.dataset.flx){updFlx(t.dataset.flx); return;}   /* 补液调整输入（含步进冒泡） */
   if(t.id==='wt'){
     const v=parseFloat(t.value); if(!isFinite(v))return;
-    W=Math.min(6,Math.max(0.3,v));
+    W=Math.max(0.3,v);   /* 上限取消（用户 10-24：大婴儿/外科病例超 6kg 也要能算） */
     $('wtNow').textContent='按 '+W.toFixed(2)+'kg 计算';
     try{localStorage.setItem('vasoW',String(W));}catch(err){}
     updateAll(); return;
@@ -4550,7 +4550,7 @@ window.addEventListener('scroll',()=>{
   let sv=NaN;
   try{sv=parseFloat(localStorage.getItem('vasoW'));}catch(e){}
   if(isFinite(sv))$('wt').value=sv;
-  const wv=parseFloat($('wt').value); if(isFinite(wv))W=Math.min(6,Math.max(0.3,wv));
+  const wv=parseFloat($('wt').value); if(isFinite(wv))W=Math.max(0.3,wv);
   $('wtNow').textContent='按 '+W.toFixed(2)+'kg 计算';
   try{
     const m=JSON.parse(localStorage.getItem('vasoMeta')||'{}');
